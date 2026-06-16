@@ -1,25 +1,903 @@
-/* modern_ui.css - Premium Futuristic Dark Cyberpunk UI with Glassmorphism & Left Collapsible Sidebar */
+/* modern_ui.css - Combined Dual-Layout Stylesheet (Classic & Futuristic) */
 
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 :root {
+  /* Classic Layout Variables */
+  --cyan-glow: #00f2fe;
+  --magenta-glow: #ff007f;
+  --gold-glow: #d4af37;
+  --gold-dark: #b89020;
+  --gold-light: #f3e5ab;
+  --pearl-bg: rgba(248, 247, 243, 0.95);
+  --pearl-border: rgba(180, 175, 160, 0.75);
+  --prism-gradient: linear-gradient(135deg, rgba(0,242,254,0.15), rgba(255,0,127,0.15), rgba(212,175,55,0.15));
+
+  /* Futuristic Layout Variables */
   --neon-cyan: #00f2fe;
   --neon-blue: #0055ff;
   --neon-magenta: #ff007f;
   --cyber-bg: rgba(8, 14, 24, 0.75);
   --cyber-bg-solid: #080e18;
   --cyber-border: rgba(0, 242, 254, 0.2);
-  --tech-font: 'Share Tech Mono', monospace;
-  --ui-font: 'Outfit', sans-serif;
   --text-primary: #ffffff;
   --text-secondary: rgba(255, 255, 255, 0.7);
   --text-muted: rgba(255, 255, 255, 0.45);
   --glow-cyan: 0 0 10px rgba(0, 242, 254, 0.4), 0 0 20px rgba(0, 85, 255, 0.2);
   --glow-magenta: 0 0 10px rgba(255, 0, 127, 0.4), 0 0 20px rgba(255, 0, 127, 0.2);
+
+  /* Shared Variables */
+  --tech-font: 'Share Tech Mono', monospace;
+  --ui-font: 'Outfit', sans-serif;
 }
+/* modern_ui.css - Premium Accessible UI with Compact Mega Menu & Localized High Contrast styling */
+
+
+
+
 
 /* Base resets & fonts for UI overlays */
-.modern-ui-overlay {
+.layout-classic .modern-ui-overlay {
+  font-family: var(--ui-font);
+  color: #1a1a17;
+  user-select: none;
+  pointer-events: auto;
+}
+
+/* 1. Collapsible Vertical Tool Stack on the Right (Hover Expand) */
+.layout-classic .vertical-tool-stack {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+  pointer-events: auto;
+  padding: 16px 8px; /* Slightly adjusted padding */
+}
+
+/* Settings Toggle Button - ACCESSIBLE MEDIUM SIZE & SOFT CORNERS */
+.layout-classic .settings-toggle-btn {
+  position: relative;
+  width: 46px; /* Increased from 40px for accessibility */
+  height: 46px; /* Increased from 40px for accessibility */
+  border-radius: 14px;
+  background: var(--pearl-bg);
+  border: 1.5px solid var(--pearl-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    0 3px 10px rgba(0, 0, 0, 0.12),
+    inset 0 -1px 1.5px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1002;
+  color: #201f1c; /* High contrast default gear */
+}
+
+.layout-classic .settings-toggle-btn svg {
+  width: 20px; /* Scaled to match 46px box */
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layout-classic .settings-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(212, 175, 55, 0.85);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(212, 175, 55, 0.3);
+  color: var(--gold-dark);
+}
+
+/* Rotate gear when expanded on hover */
+.vertical-tool-stack:hover .settings-toggle-btn svg,
+.layout-classic .vertical-tool-stack.expanded .settings-toggle-btn svg {
+  transform: rotate(90deg);
+}
+
+.vertical-tool-stack:hover .settings-toggle-btn,
+.layout-classic .vertical-tool-stack.expanded .settings-toggle-btn {
+  border-color: rgba(212, 175, 55, 0.8);
+}
+
+/* Collapsible Sub-Stack (Expanded upwards) */
+.layout-classic .tool-buttons-sub-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  max-height: 0;
+  transform: translateY(15px) scale(0.9);
+  pointer-events: none;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1001;
+  margin-bottom: 0px;
+}
+
+/* Expanded state spacing */
+.vertical-tool-stack:hover .tool-buttons-sub-stack,
+.layout-classic .vertical-tool-stack.expanded .tool-buttons-sub-stack {
+  opacity: 1;
+  max-height: 300px;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  margin-bottom: 10px; /* Slightly adjusted gap */
+}
+
+/* Sub-stack buttons - ACCESSIBLE SIZING & SOFT CORNERS */
+.layout-classic .tool-button {
+  position: relative;
+  width: 42px; /* Increased from 36px for accessibility */
+  height: 42px; /* Increased from 36px for accessibility */
+  margin: 5px 0; /* Adjusted from 4px */
+  border-radius: 12px;
+  background: var(--pearl-bg);
+  border: 1.5px solid var(--pearl-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #201f1c; /* Default high contrast dark charcoal color */
+}
+
+/* Default SVG line styling - High contrast */
+.layout-classic .tool-button svg * {
+  stroke: currentColor;
+  transition: stroke 0.4s ease, fill 0.4s ease;
+}
+
+.layout-classic .tool-button svg *[fill="currentColor"] {
+  fill: currentColor;
+}
+
+/* Hover transitions to bioluminescent gradients */
+.layout-classic .tool-button:hover {
+  transform: translateX(-4px) scale(1.05);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 
+    0 6px 15px rgba(0, 0, 0, 0.12),
+    0 0 10px rgba(0, 242, 254, 0.25),
+    0 0 10px rgba(255, 0, 127, 0.15);
+  color: #000;
+}
+
+/* Apply gradient outline to icons on hover */
+.layout-classic .tool-button:hover svg * {
+  stroke: url(#bio-gradient) !important;
+}
+
+.layout-classic .tool-button:hover svg *[fill="currentColor"] {
+  fill: url(#bio-gradient) !important;
+}
+
+.layout-classic .tool-button svg {
+  width: 21px; /* Scaled from 18px */
+  height: 21px;
+}
+
+/* Mono tech labels on hover */
+.layout-classic .tool-label {
+  position: absolute;
+  right: 58px;
+  background: rgba(15, 15, 15, 0.9);
+  color: #fff;
+  font-family: var(--tech-font);
+  font-size: 9px;
+  letter-spacing: 1px;
+  padding: 4px 8px;
+  border-radius: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  pointer-events: none;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layout-classic .tool-button:hover .tool-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+
+/* 2. Bottom Nav Bar */
+.layout-classic .bottom-nav-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: auto;
+  pointer-events: none;
+}
+
+.layout-classic .bottom-nav-bar {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--pearl-bg);
+  border: 1.5px solid var(--pearl-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 26px;
+  padding: 4px 10px;
+  gap: 10px;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    0 8px 30px rgba(0, 0, 0, 0.12),
+    inset 0 -1.5px 3px rgba(0, 0, 0, 0.04);
+  position: relative;
+  min-width: 480px;
+}
+
+/* Fluid active glow backing */
+.layout-classic .active-nav-glow {
+  position: absolute;
+  width: 60px;
+  height: 38px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, rgba(0, 242, 254, 0.08) 50%, transparent 75%);
+  border-radius: 16px;
+  z-index: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: blur(2px);
+  opacity: 0;
+}
+
+/* Nav Item */
+.layout-classic .nav-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 42px;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.layout-classic .nav-item svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: #45443f;
+  stroke-width: 1.8;
+  transition: all 0.4s ease;
+}
+
+.layout-classic .nav-item span {
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 3px;
+  color: #55524a;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
+  font-family: var(--ui-font);
+}
+
+.layout-classic .nav-item:hover svg {
+  stroke: #050505;
+  transform: translateY(-1.5px);
+}
+
+.layout-classic .nav-item:hover span {
+  color: #050505;
+}
+
+/* Active Nav State */
+.layout-classic .nav-item.active svg {
+  stroke: #000000;
+  stroke-width: 2.2;
+  transform: translateY(-0.5px);
+  filter: drop-shadow(0 0 3px rgba(212, 175, 55, 0.5));
+}
+
+.layout-classic .nav-item.active span {
+  color: #000000;
+  font-weight: 700;
+}
+
+/* Center Logo Node styled as nav-item */
+.layout-classic .center-logo-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 78px;
+  height: 42px;
+  border-radius: 21px;
+  background: radial-gradient(circle at center, #ffffff 0%, #f6f5f0 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 1px white,
+    0 0 10px rgba(212, 175, 55, 0.25);
+  margin: 0 4px;
+  cursor: pointer;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.layout-classic .center-logo-node:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 
+    0 6px 15px rgba(0,0,0,0.1),
+    0 0 20px rgba(212, 175, 55, 0.5),
+    0 0 6px rgba(0, 242, 254, 0.2);
+  border-color: rgba(212, 175, 55, 0.95);
+}
+
+.layout-classic .logo-script-top {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #aa841e;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.8);
+  margin-bottom: -1px;
+}
+
+.layout-classic .logo-script-sub {
+  font-size: 5px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #403f3a;
+  text-transform: uppercase;
+}
+
+.layout-classic .logo-script-wave {
+  width: 24px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold-glow), transparent);
+  margin: 1px 0;
+  opacity: 0.8;
+}
+
+/* 2.1 Floating Submenu (flyout) */
+.layout-classic .nav-submenu {
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.95);
+  background: rgba(248, 247, 243, 0.96);
+  border: 1.5px solid var(--pearl-border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5px;
+  min-width: 130px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.22),
+    0 0 15px rgba(212, 175, 55, 0.1),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.9);
+  z-index: 1050;
+}
+
+/* HOVER BRIDGE - Constrained to parent item width to prevent bleed-over collision */
+.layout-classic .nav-submenu::before {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 66px; /* Constrained exactly to parent nav item width (was 100%) */
+  height: 20px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* Floating indicator arrow */
+.layout-classic .nav-submenu::after {
+  content: '';
+  position: absolute;
+  bottom: -5.5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 9px;
+  height: 9px;
+  background: rgba(248, 247, 243, 0.96);
+  border-right: 1.5px solid var(--pearl-border);
+  border-bottom: 1.5px solid var(--pearl-border);
+  z-index: -1;
+}
+
+/* Center logo submenu adjusts */
+.layout-classic .center-logo-node .nav-submenu {
+  bottom: 64px;
+}
+.layout-classic .center-logo-node .nav-submenu::before {
+  bottom: -22px;
+  height: 22px;
+  width: 78px; /* Constrained exactly to center logo width to prevent collision */
+}
+
+/* Reveal flyout on hover or active is-open class (Sticky Pinned Mode) */
+.nav-item:hover .nav-submenu,
+.layout-classic .nav-item.is-open .nav-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Submenu interactive items */
+.layout-classic .submenu-item {
+  padding: 5px 12px;
+  border-radius: 8px;
+  color: #302f2a;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-align: center;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.layout-classic .submenu-item:hover {
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold-dark);
+  text-shadow: 0 0 3px rgba(212, 175, 55, 0.15);
+}
+
+.layout-classic .submenu-item.active {
+  background: linear-gradient(135deg, var(--gold-glow) 0%, var(--gold-dark) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  box-shadow: 0 3px 8px rgba(212, 175, 55, 0.3);
+}
+
+/* 2.2 SPECIAL: "La tiên" Image-based Mega Menu - REFINED COMPACT & PREMIUM */
+.layout-classic .bottom-nav-bar .nav-submenu.mega-menu {
+  flex-direction: row;
+  gap: 8px; /* Reduced from 10px */
+  padding: 8px; /* Reduced from 10px */
+  min-width: 384px; /* Reduced from 480px to be very compact and lightweight */
+  border-radius: 14px; /* Softened slightly smaller corners to match box */
+  transform: translateX(-50%) translateY(10px) scale(0.97); /* Soft slide-up offset */
+}
+
+/* Card layout wrapper - SLEEK, COMPACT & LIGHTWEIGHT */
+.layout-classic .mega-card {
+  position: relative;
+  width: 86px; /* Reduced from 104px */
+  height: 60px; /* Reduced from 76px */
+  border-radius: 8px; /* Softened corners */
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(180, 175, 160, 0.35); /* Thinner, lighter border */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05); /* Softer drop shadow */
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  background: #0d0e10;
+}
+
+/* Mega card image */
+.layout-classic .mega-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Linear dark vignette overlay */
+.layout-classic .mega-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.1) 60%, transparent 100%);
+  transition: background 0.35s ease;
+  z-index: 1;
+}
+
+/* Card title positioning - MINIMALIST TYPOGRAPHY */
+.layout-classic .mega-card-title {
+  position: absolute;
+  bottom: 5px; /* Compacted */
+  left: 6px;
+  right: 6px;
+  font-size: 8px; /* Reduced to 8px for thin tech look */
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  text-transform: uppercase;
+  text-align: left;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s ease;
+}
+
+/* CARD HOVER ANIMATIONS: sleek, elegant zoom & text shift */
+.layout-classic .mega-card:hover {
+  transform: translateY(-2px); /* Softer float */
+  border-color: var(--gold-glow);
+  box-shadow: 0 5px 12px rgba(212, 175, 55, 0.22);
+}
+
+.layout-classic .mega-card:hover .mega-card-img {
+  transform: scale(1.05); /* Very subtle, modern zoom */
+}
+
+.layout-classic .mega-card:hover .mega-card-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+}
+
+.layout-classic .mega-card:hover .mega-card-title {
+  transform: translateY(-1px);
+  color: var(--gold-light);
+}
+
+/* Active Card State */
+.layout-classic .mega-card.active {
+  border-color: var(--gold-dark);
+  border-width: 1.5px;
+  box-shadow: 0 3px 10px rgba(212, 175, 55, 0.35);
+}
+
+.layout-classic .mega-card.active .mega-card-title {
+  color: var(--gold-light);
+  font-weight: 700;
+  text-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
+}
+
+
+/* 3. Holographic Map Markers (Pano2VR Hotspots) */
+.layout-classic .hologram-marker-container {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  cursor: pointer;
+}
+
+/* Capture hits only on the main marker head and stem */
+.layout-classic .hologram-marker-hitbox {
+  position: absolute;
+  width: 44px;
+  height: 70px;
+  left: 38px;
+  top: 10px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Bioluminescent ground projection */
+.layout-classic .marker-ground-shadow {
+  position: absolute;
+  width: 50px;
+  height: 16px;
+  left: 35px;
+  bottom: 15px;
+  background: radial-gradient(ellipse, rgba(0, 242, 254, 0.6) 0%, rgba(0, 242, 254, 0.2) 50%, transparent 70%);
+  transform: rotateX(65deg);
+  filter: blur(2px);
+  animation: breathe-shadow 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.layout-classic .hologram-marker-container.active .marker-ground-shadow {
+  background: radial-gradient(ellipse, rgba(255, 0, 127, 0.6) 0%, rgba(255, 0, 127, 0.2) 50%, transparent 70%);
+}
+
+/* Vertical glowing stem */
+.layout-classic .marker-stem {
+  position: absolute;
+  width: 1.5px;
+  height: 40px;
+  background: linear-gradient(to top, rgba(0, 242, 254, 0.2), rgba(0, 242, 254, 0.95));
+  left: 59px;
+  bottom: 23px;
+  pointer-events: none;
+}
+
+.layout-classic .hologram-marker-container.active .marker-stem {
+  background: linear-gradient(to top, rgba(255, 0, 127, 0.2), rgba(255, 0, 127, 0.95));
+}
+
+/* Translucent prism head */
+.layout-classic .marker-prism-head {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 44px;
+  top: 15px;
+  background: rgba(10, 30, 45, 0.45);
+  border: 1px solid rgba(0, 242, 254, 0.6);
+  box-shadow: 
+    0 0 15px rgba(0, 242, 254, 0.45),
+    inset 0 0 8px rgba(0, 242, 254, 0.3);
+  transform: rotate(45deg);
+  border-radius: 6px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float-prism 4s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.layout-classic .hologram-marker-container.active .marker-prism-head {
+  border-color: rgba(255, 0, 127, 0.7);
+  box-shadow: 
+    0 0 15px rgba(255, 0, 127, 0.45),
+    inset 0 0 8px rgba(255, 0, 127, 0.3);
+  background: rgba(45, 10, 30, 0.45);
+}
+
+/* Rotated back content to stay upright */
+.layout-classic .prism-content {
+  transform: rotate(-45deg);
+  font-family: var(--tech-font);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--cyan-glow);
+  text-shadow: 0 0 4px rgba(0, 242, 254, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-classic .hologram-marker-container.active .prism-content {
+  color: var(--magenta-glow);
+  text-shadow: 0 0 4px rgba(255, 0, 127, 0.6);
+}
+
+/* Hover scales up prism */
+.layout-classic .hologram-marker-hitbox:hover ~ .marker-prism-head {
+  transform: rotate(45deg) scale(1.18);
+  border-color: #ffffff;
+  box-shadow: 
+    0 0 25px rgba(0, 242, 254, 0.7),
+    inset 0 0 12px rgba(0, 242, 254, 0.5);
+}
+
+.layout-classic .hologram-marker-container.active .hologram-marker-hitbox:hover ~ .marker-prism-head {
+  box-shadow: 
+    0 0 25px rgba(255, 0, 127, 0.7),
+    inset 0 0 12px rgba(255, 0, 127, 0.5);
+}
+
+/* Extended Holographic UI Data Projection (Glassmorphic data cube card) */
+.layout-classic .marker-data-projection {
+  position: absolute;
+  left: 95px;
+  top: -25px;
+  width: 210px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(0, 242, 254, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  opacity: 0;
+  transform: scale(0.9) translateY(10px);
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+/* Show data projection on marker hover */
+.layout-classic .hologram-marker-hitbox:hover ~ .marker-data-projection {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.layout-classic .projection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.layout-classic .projection-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.layout-classic .projection-tag {
+  font-family: var(--tech-font);
+  font-size: 9px;
+  color: var(--cyan-glow);
+  background: rgba(0, 242, 254, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.layout-classic .hologram-marker-container.active .projection-tag {
+  color: var(--magenta-glow);
+  background: rgba(255, 0, 127, 0.15);
+}
+
+.layout-classic .projection-body {
+  font-size: 9.5px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.layout-classic .projection-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.layout-classic .projection-label {
+  color: rgba(255,255,255,0.5);
+}
+
+.layout-classic .projection-value {
+  font-family: var(--tech-font);
+  font-weight: bold;
+}
+
+/* Floor Plan wireframe mock */
+.layout-classic .projection-wireframe {
+  height: 48px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.layout-classic .projection-wireframe svg {
+  width: 80%;
+  height: 80%;
+}
+
+
+/* Animations */
+@keyframes prism-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float-prism {
+  0% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(-5px); }
+  100% { transform: rotate(45deg) translateY(0); }
+}
+
+@keyframes breathe-shadow {
+  0% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
+  50% { transform: rotateX(65deg) scale(1.15); opacity: 0.8; }
+  100% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
+}
+
+/* Pulse animation for active node logo */
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+  50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6), 0 0 10px rgba(0, 242, 254, 0.2); }
+  100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .layout-classic .bottom-nav-bar {
+    min-width: 92vw;
+    border-radius: 24px;
+    padding: 4px 8px;
+    gap: 6px;
+  }
+  .layout-classic .center-logo-node {
+    width: 68px;
+    height: 36px;
+    margin: 0 3px;
+    border-width: 1.5px;
+    border-radius: 18px;
+  }
+  .layout-classic .logo-script-top {
+    font-size: 7.5px;
+  }
+  .layout-classic .logo-script-sub {
+    font-size: 4px;
+  }
+  .layout-classic .nav-item {
+    width: 58px;
+    height: 36px;
+  }
+  .layout-classic .nav-item span {
+    font-size: 6.5px;
+  }
+  .layout-classic .nav-item svg {
+    width: 14px;
+    height: 14px;
+  }
+  .layout-classic .vertical-tool-stack {
+    right: 10px;
+  }
+  .layout-classic .settings-toggle-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+  .layout-classic .settings-toggle-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  .layout-classic .tool-button {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+  .layout-classic .tool-button svg {
+    width: 15px;
+    height: 15px;
+  }
+  .layout-classic .nav-submenu {
+    bottom: 52px;
+    min-width: 120px;
+  }
+  .layout-classic .center-logo-node .nav-submenu {
+    bottom: 56px;
+  }
+  
+  /* Mega Menu responsive adjustments */
+  .layout-classic .bottom-nav-bar .nav-submenu.mega-menu {
+    min-width: 86vw;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    padding: 6px;
+  }
+  .layout-classic .mega-card {
+    width: 46%;
+    height: 52px;
+  }
+  .layout-classic .mega-card-title {
+    font-size: 7.5px;
+    bottom: 3px;
+    left: 5px;
+  }
+}
+
+/* modern_ui.css - Premium Futuristic Dark Cyberpunk UI with Glassmorphism & Left Collapsible Sidebar */
+
+
+
+
+
+/* Base resets & fonts for UI overlays */
+.layout-futuristic .modern-ui-overlay {
   font-family: var(--ui-font);
   color: var(--text-primary);
   user-select: none;
@@ -34,12 +912,12 @@
 }
 
 /* Enable pointer events on interactive UI controls */
-.modern-ui-overlay * {
+.layout-futuristic .modern-ui-overlay * {
   pointer-events: auto;
 }
 
 /* 1. Settings Toggle Button - Top-Right Corner */
-.settings-toggle-btn {
+.layout-futuristic .settings-toggle-btn {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -60,7 +938,7 @@
   color: var(--text-primary);
 }
 
-.settings-toggle-btn svg {
+.layout-futuristic .settings-toggle-btn svg {
   width: 18px;
   height: 18px;
   fill: none;
@@ -69,19 +947,19 @@
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
 }
 
-.settings-toggle-btn:hover {
+.layout-futuristic .settings-toggle-btn:hover {
   background: rgba(8, 14, 24, 0.9);
   border-color: var(--neon-cyan);
   box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3), 0 0 10px rgba(0, 242, 254, 0.15);
   color: var(--neon-cyan);
 }
 
-.settings-toggle-btn:hover svg {
+.layout-futuristic .settings-toggle-btn:hover svg {
   transform: rotate(90deg);
 }
 
 /* 2. Vertical Tool Stack / Settings Panel on the Right side */
-.vertical-tool-stack {
+.layout-futuristic .vertical-tool-stack {
   position: absolute;
   top: 66px;
   right: 16px;
@@ -105,14 +983,14 @@
 }
 
 /* Expanded state from top-right settings trigger */
-.vertical-tool-stack.expanded {
+.layout-futuristic .vertical-tool-stack.expanded {
   opacity: 1;
   transform: translateX(0) scale(1);
   pointer-events: auto;
   visibility: visible;
 }
 
-.tool-stack-header {
+.layout-futuristic .tool-stack-header {
   font-family: var(--tech-font);
   font-size: 10px;
   font-weight: 600;
@@ -124,14 +1002,14 @@
   text-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
 }
 
-.tool-buttons-sub-stack {
+.layout-futuristic .tool-buttons-sub-stack {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 /* Redesigned tool button - Sleek Cybernetic List Item */
-.tool-button {
+.layout-futuristic .tool-button {
   display: flex;
   align-items: center;
   width: 100%;
@@ -146,23 +1024,23 @@
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.tool-button svg {
+.layout-futuristic .tool-button svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
 }
 
-.tool-button svg * {
+.layout-futuristic .tool-button svg * {
   stroke: currentColor;
   transition: stroke 0.3s ease, fill 0.3s ease;
 }
 
-.tool-button svg *[fill="currentColor"] {
+.layout-futuristic .tool-button svg *[fill="currentColor"] {
   fill: currentColor;
 }
 
 /* Label text inline */
-.tool-label {
+.layout-futuristic .tool-label {
   font-family: var(--tech-font);
   font-size: 9px;
   letter-spacing: 0.8px;
@@ -174,7 +1052,7 @@
 }
 
 /* Hover effects */
-.tool-button:hover {
+.layout-futuristic .tool-button:hover {
   background: rgba(0, 242, 254, 0.07);
   border-color: rgba(0, 242, 254, 0.35);
   color: var(--text-primary);
@@ -182,21 +1060,21 @@
   box-shadow: 0 4px 12px rgba(0, 242, 254, 0.15);
 }
 
-.tool-button:hover svg * {
+.layout-futuristic .tool-button:hover svg * {
   stroke: var(--neon-cyan) !important;
 }
 
-.tool-button:hover svg *[fill="currentColor"] {
+.layout-futuristic .tool-button:hover svg *[fill="currentColor"] {
   fill: var(--neon-cyan) !important;
 }
 
-.tool-button:hover .tool-label {
+.layout-futuristic .tool-button:hover .tool-label {
   color: var(--neon-cyan);
   text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
 }
 
 /* 3. Left Navigation Sidebar */
-.sidebar-container {
+.layout-futuristic .sidebar-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -206,12 +1084,12 @@
   pointer-events: none;
 }
 
-.sidebar-container * {
+.layout-futuristic .sidebar-container * {
   pointer-events: auto;
 }
 
 /* Sidebar main content pane */
-.sidebar-content {
+.layout-futuristic .sidebar-content {
   position: absolute;
   top: 0;
   left: 0;
@@ -231,12 +1109,12 @@
   z-index: 1005; /* Establish higher stacking context so submenus render over toggle button */
 }
 
-.sidebar-container.expanded .sidebar-content {
+.layout-futuristic .sidebar-container.expanded .sidebar-content {
   transform: translateX(0);
 }
 
 /* Collapsible toggle arrow button */
-.sidebar-toggle-btn {
+.layout-futuristic .sidebar-toggle-btn {
   position: absolute;
   left: 12px; /* Float on screen when collapsed */
   top: 50%;
@@ -257,20 +1135,20 @@
   z-index: 1000; /* Stacked below .sidebar-content stacking context */
 }
 
-.sidebar-container.expanded .sidebar-toggle-btn {
+.layout-futuristic .sidebar-container.expanded .sidebar-toggle-btn {
   left: 232px; /* Sidebar width (220px) + offset (12px) */
 }
 
 /* Push toggle button further when submenu/mega-menu is open */
-.sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
+.layout-futuristic .sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
   left: 390px; /* 220px (sidebar) + 150px (submenu) + 8px (gap) + 12px (offset) */
 }
-.sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+.layout-futuristic .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
   left: 410px; /* 220px (sidebar) + 170px (mega menu) + 8px (gap) + 12px (offset) */
 }
 
 
-.sidebar-toggle-btn svg {
+.layout-futuristic .sidebar-toggle-btn svg {
   width: 14px; /* Slimmer icon */
   height: 14px;
   fill: none;
@@ -279,7 +1157,7 @@
   transition: transform 0.3s ease;
 }
 
-.sidebar-toggle-btn:hover {
+.layout-futuristic .sidebar-toggle-btn:hover {
   color: var(--text-primary);
   background: rgba(0, 242, 254, 0.12);
   box-shadow: 0 0 15px rgba(0, 242, 254, 0.3), 0 4px 15px rgba(0, 0, 0, 0.4);
@@ -288,7 +1166,7 @@
 }
 
 /* Branding Logo Section */
-.sidebar-logo {
+.layout-futuristic .sidebar-logo {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -297,7 +1175,7 @@
   padding-bottom: 12px;
 }
 
-.logo-script-top {
+.layout-futuristic .logo-script-top {
   font-family: var(--ui-font);
   font-size: 15px; /* Thinner logo */
   font-weight: 700;
@@ -306,7 +1184,7 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
-.logo-script-wave {
+.layout-futuristic .logo-script-wave {
   width: 50px;
   height: 1.5px;
   background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
@@ -314,7 +1192,7 @@
   opacity: 0.8;
 }
 
-.logo-script-sub {
+.layout-futuristic .logo-script-sub {
   font-family: var(--ui-font);
   font-size: 7px;
   font-weight: 600;
@@ -324,7 +1202,7 @@
 }
 
 /* Sidebar Nav list */
-.sidebar-nav-list {
+.layout-futuristic .sidebar-nav-list {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -333,7 +1211,7 @@
 }
 
 /* Vertical Active Nav sliding highlight */
-.active-nav-glow {
+.layout-futuristic .active-nav-glow {
   position: absolute;
   left: 0;
   width: 100%;
@@ -348,7 +1226,7 @@
 }
 
 /* Nav item styles */
-.nav-item {
+.layout-futuristic .nav-item {
   position: relative;
   display: flex;
   align-items: center;
@@ -364,7 +1242,7 @@
   z-index: 1;
 }
 
-.nav-item svg {
+.layout-futuristic .nav-item svg {
   width: 16px; /* Slimmer icons */
   height: 16px;
   fill: none;
@@ -374,7 +1252,7 @@
   transition: all 0.3s ease;
 }
 
-.nav-item span {
+.layout-futuristic .nav-item span {
   font-family: var(--ui-font);
   font-size: 11px; /* Smaller typography */
   font-weight: 500;
@@ -386,33 +1264,33 @@
 }
 
 /* Hover navigation item */
-.nav-item:hover {
+.layout-futuristic .nav-item:hover {
   color: var(--text-primary);
   border-color: rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.02);
 }
 
-.nav-item:hover svg {
+.layout-futuristic .nav-item:hover svg {
   transform: translateX(2px);
 }
 
 /* Active navigation item */
-.nav-item.active {
+.layout-futuristic .nav-item.active {
   color: var(--neon-cyan);
 }
 
-.nav-item.active svg {
+.layout-futuristic .nav-item.active svg {
   stroke: var(--neon-cyan);
   filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4));
   stroke-width: 2.2;
 }
 
-.nav-item.active span {
+.layout-futuristic .nav-item.active span {
   font-weight: 600;
 }
 
 /* 4. Submenu Panels (Slide-out Flyout to the Right) */
-.nav-submenu {
+.layout-futuristic .nav-submenu {
   position: absolute;
   left: calc(100% + 24px); /* 100% of nav-item (188px) + 24px = 212px + 16px padding = 228px (8px gap next to 220px sidebar) */
   top: 0;
@@ -437,7 +1315,7 @@
 }
 
 /* Hover Bridge area to prevent cursor loss */
-.nav-submenu::before {
+.layout-futuristic .nav-submenu::before {
   content: '';
   position: absolute;
   left: -24px; /* Matches the 24px gap */
@@ -449,7 +1327,7 @@
 }
 
 /* Indicator arrow pointing left */
-.nav-submenu::after {
+.layout-futuristic .nav-submenu::after {
   content: '';
   position: absolute;
   left: -6px;
@@ -465,7 +1343,7 @@
 }
 
 /* Active parent item highlights child section's diamond indicator */
-.nav-item.active .nav-submenu::after {
+.layout-futuristic .nav-item.active .nav-submenu::after {
   background: var(--neon-cyan);
   border-left-color: var(--neon-cyan);
   border-bottom-color: var(--neon-cyan);
@@ -473,7 +1351,7 @@
 }
 
 /* Slide out transition when parent has .is-open class */
-.nav-item.is-open .nav-submenu {
+.layout-futuristic .nav-item.is-open .nav-submenu {
   opacity: 1;
   pointer-events: auto;
   visibility: visible; /* Make interactive when open */
@@ -481,7 +1359,7 @@
 }
 
 /* Hide submenus completely when sidebar is collapsed to prevent hover activation */
-.sidebar-container:not(.expanded) .nav-submenu {
+.layout-futuristic .sidebar-container:not(.expanded) .nav-submenu {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
@@ -489,7 +1367,7 @@
 }
 
 /* Submenu option items */
-.submenu-item {
+.layout-futuristic .submenu-item {
   padding: 6px 12px; /* Thinner padding */
   border-radius: 6px;
   color: var(--text-secondary);
@@ -503,13 +1381,13 @@
   background: transparent;
 }
 
-.submenu-item:hover {
+.layout-futuristic .submenu-item:hover {
   background: rgba(0, 242, 254, 0.08);
   color: var(--neon-cyan);
   text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
 }
 
-.submenu-item.active {
+.layout-futuristic .submenu-item.active {
   background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
   color: #ffffff;
   font-weight: 600;
@@ -518,7 +1396,7 @@
 }
 
 /* 4.1 SPECIAL: Vertical Single-Column Image Mega Menu for Latien Villa */
-.sidebar-container .nav-submenu.mega-menu {
+.layout-futuristic .sidebar-container .nav-submenu.mega-menu {
   display: flex;
   flex-direction: column;
   gap: 8px; /* Thinner gap */
@@ -527,7 +1405,7 @@
   box-sizing: border-box;
 }
 
-.mega-card {
+.layout-futuristic .mega-card {
   position: relative;
   width: 100%;
   height: 52px; /* Slimmer height */
@@ -540,7 +1418,7 @@
   background: var(--cyber-bg-solid);
 }
 
-.mega-card-img {
+.layout-futuristic .mega-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -548,7 +1426,7 @@
   transition: transform 0.4s ease;
 }
 
-.mega-card-overlay {
+.layout-futuristic .mega-card-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to top, rgba(8, 14, 24, 0.85) 0%, rgba(8, 14, 24, 0.25) 60%, transparent 100%);
@@ -556,7 +1434,7 @@
   z-index: 1;
 }
 
-.mega-card-title {
+.layout-futuristic .mega-card-title {
   position: absolute;
   bottom: 8px;
   left: 8px;
@@ -572,28 +1450,28 @@
   transition: color 0.3s ease;
 }
 
-.mega-card:hover {
+.layout-futuristic .mega-card:hover {
   transform: translateY(-2px);
   border-color: var(--neon-cyan);
   box-shadow: 0 5px 15px rgba(0, 242, 254, 0.25);
 }
 
-.mega-card:hover .mega-card-img {
+.layout-futuristic .mega-card:hover .mega-card-img {
   transform: scale(1.06);
 }
 
-.mega-card:hover .mega-card-title {
+.layout-futuristic .mega-card:hover .mega-card-title {
   color: var(--neon-cyan);
 }
 
 /* Active State of Card */
-.mega-card.active {
+.layout-futuristic .mega-card.active {
   border-color: var(--neon-cyan);
   border-width: 1.5px;
   box-shadow: 0 0 15px rgba(0, 242, 254, 0.45);
 }
 
-.mega-card.active .mega-card-title {
+.layout-futuristic .mega-card.active .mega-card-title {
   color: var(--neon-cyan);
   font-weight: 700;
   text-shadow: 0 0 5px rgba(0, 242, 254, 0.4);
@@ -601,7 +1479,7 @@
 
 
 /* 5. Holographic Map Hotspot Markers (Pano2VR Hotspots) */
-.hologram-marker-container {
+.layout-futuristic .hologram-marker-container {
   position: absolute;
   width: 120px;
   height: 120px;
@@ -610,7 +1488,7 @@
   cursor: pointer;
 }
 
-.hologram-marker-hitbox {
+.layout-futuristic .hologram-marker-hitbox {
   position: absolute;
   width: 44px;
   height: 70px;
@@ -621,7 +1499,7 @@
 }
 
 /* Cybernetic Glowing shadow on ground */
-.marker-ground-shadow {
+.layout-futuristic .marker-ground-shadow {
   position: absolute;
   width: 50px;
   height: 16px;
@@ -634,12 +1512,12 @@
   pointer-events: none;
 }
 
-.hologram-marker-container.active .marker-ground-shadow {
+.layout-futuristic .hologram-marker-container.active .marker-ground-shadow {
   background: radial-gradient(ellipse, rgba(255, 0, 127, 0.7) 0%, rgba(255, 0, 127, 0.2) 50%, transparent 70%);
 }
 
 /* Vertical hologram ray */
-.marker-stem {
+.layout-futuristic .marker-stem {
   position: absolute;
   width: 1.5px;
   height: 40px;
@@ -649,12 +1527,12 @@
   pointer-events: none;
 }
 
-.hologram-marker-container.active .marker-stem {
+.layout-futuristic .hologram-marker-container.active .marker-stem {
   background: linear-gradient(to top, rgba(255, 0, 127, 0.15), rgba(255, 0, 127, 0.95));
 }
 
 /* Translucent floating crystal head */
-.marker-prism-head {
+.layout-futuristic .marker-prism-head {
   position: absolute;
   width: 32px;
   height: 32px;
@@ -673,13 +1551,13 @@
   pointer-events: none;
 }
 
-.hologram-marker-container.active .marker-prism-head {
+.layout-futuristic .hologram-marker-container.active .marker-prism-head {
   border-color: rgba(255, 0, 127, 0.7);
   box-shadow: 0 0 15px rgba(255, 0, 127, 0.4), inset 0 0 8px rgba(255, 0, 127, 0.25);
   background: rgba(24, 8, 14, 0.65);
 }
 
-.prism-content {
+.layout-futuristic .prism-content {
   transform: rotate(-45deg);
   font-family: var(--tech-font);
   font-size: 11px;
@@ -691,24 +1569,24 @@
   justify-content: center;
 }
 
-.hologram-marker-container.active .prism-content {
+.layout-futuristic .hologram-marker-container.active .prism-content {
   color: var(--neon-magenta);
   text-shadow: 0 0 4px rgba(255, 0, 127, 0.6);
 }
 
 /* Hover zoom marker */
-.hologram-marker-hitbox:hover ~ .marker-prism-head {
+.layout-futuristic .hologram-marker-hitbox:hover ~ .marker-prism-head {
   transform: rotate(45deg) scale(1.15);
   border-color: #ffffff;
   box-shadow: 0 0 25px rgba(0, 242, 254, 0.75), inset 0 0 10px rgba(0, 242, 254, 0.4);
 }
 
-.hologram-marker-container.active .hologram-marker-hitbox:hover ~ .marker-prism-head {
+.layout-futuristic .hologram-marker-container.active .hologram-marker-hitbox:hover ~ .marker-prism-head {
   box-shadow: 0 0 25px rgba(255, 0, 127, 0.75), inset 0 0 10px rgba(255, 0, 127, 0.4);
 }
 
 /* Glassmorphic projection data panel on hover */
-.marker-data-projection {
+.layout-futuristic .marker-data-projection {
   position: absolute;
   left: 95px;
   top: -25px;
@@ -727,12 +1605,12 @@
   z-index: 10;
 }
 
-.hologram-marker-hitbox:hover ~ .marker-data-projection {
+.layout-futuristic .hologram-marker-hitbox:hover ~ .marker-data-projection {
   opacity: 1;
   transform: scale(1) translateY(0);
 }
 
-.projection-header {
+.layout-futuristic .projection-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -741,14 +1619,14 @@
   margin-bottom: 8px;
 }
 
-.projection-title {
+.layout-futuristic .projection-title {
   font-size: 10.5px;
   font-weight: 600;
   color: #ffffff;
   letter-spacing: 1px;
 }
 
-.projection-tag {
+.layout-futuristic .projection-tag {
   font-family: var(--tech-font);
   font-size: 9px;
   color: var(--neon-cyan);
@@ -758,36 +1636,36 @@
   letter-spacing: 0.5px;
 }
 
-.hologram-marker-container.active .projection-tag {
+.layout-futuristic .hologram-marker-container.active .projection-tag {
   color: var(--neon-magenta);
   background: rgba(255, 0, 127, 0.12);
 }
 
-.projection-body {
+.layout-futuristic .projection-body {
   font-size: 9.5px;
   color: var(--text-secondary);
   line-height: 1.4;
   margin-bottom: 8px;
 }
 
-.projection-row {
+.layout-futuristic .projection-row {
   display: flex;
   justify-content: space-between;
   margin-bottom: 4px;
 }
 
-.projection-label {
+.layout-futuristic .projection-label {
   color: var(--text-muted);
 }
 
-.projection-value {
+.layout-futuristic .projection-value {
   font-family: var(--tech-font);
   font-weight: bold;
   color: var(--text-primary);
 }
 
 /* Projection interior wireframe sketch */
-.projection-wireframe {
+.layout-futuristic .projection-wireframe {
   height: 48px;
   width: 100%;
   background: rgba(0, 0, 0, 0.35);
@@ -799,7 +1677,7 @@
   overflow: hidden;
 }
 
-.projection-wireframe svg {
+.layout-futuristic .projection-wireframe svg {
   width: 80%;
   height: 80%;
 }
@@ -807,7 +1685,7 @@
 .projection-wireframe svg path,
 .projection-wireframe svg rect,
 .projection-wireframe svg circle,
-.projection-wireframe svg line {
+.layout-futuristic .projection-wireframe svg line {
   stroke: var(--neon-cyan);
   opacity: 0.85;
 }
@@ -828,23 +1706,23 @@
 
 /* Media Queries for Tablets & Small Desktops */
 @media (max-width: 1024px) {
-  .sidebar-content {
+  .layout-futuristic .sidebar-content {
     width: 200px; /* Compact on tablets */
     padding: 24px 12px;
   }
-  .sidebar-container.expanded .sidebar-toggle-btn {
+  .layout-futuristic .sidebar-container.expanded .sidebar-toggle-btn {
     left: 212px; /* 200px (sidebar) + 12px (offset) */
   }
-  .sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
+  .layout-futuristic .sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
     left: 370px; /* 200px (sidebar) + 150px (submenu) + 8px (gap) + 12px (offset) */
   }
-  .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+  .layout-futuristic .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
     left: 380px; /* 200px (sidebar) + 160px (mega menu) + 8px (gap) + 12px (offset) */
   }
-  .nav-submenu {
+  .layout-futuristic .nav-submenu {
     left: calc(100% + 20px);
   }
-  .sidebar-container .nav-submenu.mega-menu {
+  .layout-futuristic .sidebar-container .nav-submenu.mega-menu {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -852,7 +1730,7 @@
     width: 160px;
     box-sizing: border-box;
   }
-  .mega-card {
+  .layout-futuristic .mega-card {
     width: 100%;
     height: 48px;
   }
@@ -860,19 +1738,19 @@
 
 @media (max-width: 768px) {
   /* Handle mobile/small-tablet layouts */
-  .sidebar-content {
+  .layout-futuristic .sidebar-content {
     width: 200px;
   }
-  .sidebar-container.expanded .sidebar-toggle-btn {
+  .layout-futuristic .sidebar-container.expanded .sidebar-toggle-btn {
     left: 212px; /* Reset push on mobile */
   }
   .sidebar-container.expanded.submenu-open .sidebar-toggle-btn,
-  .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+  .layout-futuristic .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
     left: 212px; /* Reset push on mobile */
   }
   
   /* Submenus on mobile fly upwards or hover overlap */
-  .nav-submenu {
+  .layout-futuristic .nav-submenu {
     position: fixed;
     left: 16px;
     bottom: 70px;
@@ -882,13 +1760,13 @@
     transform: translateY(15px) scale(0.95);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
   }
-  .nav-submenu::after {
+  .layout-futuristic .nav-submenu::after {
     display: none; /* Hide indicator arrow on mobile to prevent layout disconnect */
   }
-  .nav-item.is-open .nav-submenu {
+  .layout-futuristic .nav-item.is-open .nav-submenu {
     transform: translateY(0) scale(1);
   }
-  .sidebar-container .nav-submenu.mega-menu {
+  .layout-futuristic .sidebar-container .nav-submenu.mega-menu {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -896,18 +1774,132 @@
     max-width: 300px;
     box-sizing: border-box;
   }
-  .mega-card {
+  .layout-futuristic .mega-card {
     width: 100%;
     height: 52px;
   }
   
-  .vertical-tool-stack {
+  .layout-futuristic .vertical-tool-stack {
     right: 12px;
     top: 60px;
     width: 180px;
   }
-  .settings-toggle-btn {
+  .layout-futuristic .settings-toggle-btn {
     top: 12px;
     right: 12px;
   }
+}
+
+
+/* ==========================================
+   LAYOUT SWITCHER WIDGET STYLES
+   ========================================== */
+.layout-switcher-pill {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  border-radius: 18px;
+  z-index: 2200;
+  pointer-events: auto;
+  box-sizing: border-box;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Adapt switcher theme dynamically based on body layout class */
+.layout-classic .layout-switcher-pill {
+  background: var(--pearl-bg);
+  border: 1.5px solid var(--pearl-border);
+}
+
+.layout-futuristic .layout-switcher-pill {
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.switcher-segment {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--ui-font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0 14px;
+  border-radius: 15px;
+  z-index: 2;
+  transition: color 0.35s ease;
+  white-space: nowrap;
+}
+
+.layout-classic .switcher-segment {
+  color: #55524a;
+}
+.layout-classic .switcher-segment.active {
+  color: #ffffff;
+}
+
+.layout-futuristic .switcher-segment {
+  color: rgba(255, 255, 255, 0.45);
+}
+.layout-futuristic .switcher-segment.active {
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+}
+
+.switcher-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 15px;
+  z-index: 1;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layout-classic .switcher-slider {
+  background: linear-gradient(135deg, var(--gold-glow) 0%, var(--gold-dark) 100%);
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.4);
+}
+
+.layout-futuristic .switcher-slider {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
+  box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
+}
+
+/* Hover effect on segments */
+.switcher-segment:hover {
+  transform: translateY(-0.5px);
+}
+
+.layout-classic .switcher-segment:not(.active):hover {
+  color: var(--gold-dark);
+}
+
+.layout-futuristic .switcher-segment:not(.active):hover {
+  color: var(--neon-cyan);
+}
+
+/* Overlay transitions during layout switching */
+.modern-ui-overlay {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.modern-ui-overlay.switching {
+  opacity: 0 !important;
+  transform: scale(0.98) !important;
+  pointer-events: none !important;
+}
+
+.modern-ui-overlay.switching * {
+  pointer-events: none !important;
 }
