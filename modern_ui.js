@@ -1,0 +1,688 @@
+/* modern_ui.js - Restructured UI with Vietnamese Localization, High Contrast SVGs, and Compact Mega Menu */
+
+(function () {
+  console.log("Modern UI Script updating for Vietnamese Localization and High Contrast SVGs...");
+
+  // 1. Shared SVG Gradients definitions to inject
+  const gradientDefs = `
+    <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
+      <defs>
+        <linearGradient id="bio-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00f2fe" />
+          <stop offset="100%" stop-color="#ff007f" />
+        </linearGradient>
+        <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f3e5ab" />
+          <stop offset="50%" stop-color="#d4af37" />
+          <stop offset="100%" stop-color="#aa841e" />
+        </linearGradient>
+        <linearGradient id="cyan-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#e0ffff" />
+          <stop offset="100%" stop-color="#00f2fe" />
+        </linearGradient>
+      </defs>
+    </svg>
+  `;
+
+  // 2. HTML template for Settings Toggle Button (independent at top-right corner)
+  const settingsToggleHTML = `
+    <div class="settings-toggle-btn" id="btn-settings-toggle" title="Cài đặt hệ thống">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </div>
+  `;
+
+  // 3. HTML template for Vertical Tool Stack (Vietnamese localized and high contrast stroke="currentColor")
+  const verticalToolStackHTML = `
+    <div class="vertical-tool-stack" id="right-tool-stack">
+      <div class="tool-stack-header">
+        <span>ĐO LƯỜNG</span>
+      </div>
+      <!-- Sub-stack containing 5 biometric buttons -->
+      <div class="tool-buttons-sub-stack" id="tool-sub-stack">
+        <!-- Button 1: Retinal Compass -->
+        <div class="tool-button" data-action="compass" id="btn-compass">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
+            <circle cx="18" cy="18" r="10" stroke="currentColor" stroke-width="1.5" />
+            <circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1" stroke-dasharray="8 4" />
+            <path d="M18 2V8M18 28V34M2 18H8M28 18H34" stroke="currentColor" stroke-width="1" opacity="0.7"/>
+            <circle cx="18" cy="18" r="2" fill="currentColor"/>
+          </svg>
+          <div class="tool-label">LA BÀN SINH TRẮC</div>
+        </div>
+
+        <!-- Button 2: Biometric Facade (Handprint + Building) -->
+        <div class="tool-button" data-action="facade" id="btn-facade">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 8H28V30H8V8Z" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+            <path d="M13 8V30M18 8V30M23 8V30M8 14H28M8 20H28M8 26H28" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
+            <path d="M15 15C15 14 16 12 18 12C20 12 21 14 21 15V22M13 18C13 16.5 14 15 15 15M23 18C23 16.5 22 15 21 15M11 20C11 19 12 18 13 18M25 20C25 19 24 18 23 18M18 26C14 26 12 23 12 21.5V18M18 26C22 26 24 23 24 21.5V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="tool-label">MẶT ĐỨNG KIẾN TRÚC</div>
+        </div>
+
+        <!-- Button 3: Vault / Archway Eye -->
+        <div class="tool-button" data-action="security" id="btn-security">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 30V18C6 11.3726 11.3726 6 18 6C24.6274 6 30 11.3726 30 18V30" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
+            <path d="M10 30V18C10 13.5817 13.5817 10 18 10C22.4183 10 26 13.5817 26 18V30" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
+            <path d="M11 20C13.5 16.5 17.5 15 18 15C18.5 15 22.5 16.5 25 20C22.5 23.5 18.5 25 18 25C17.5 25 13.5 23.5 11 20Z" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="18" cy="20" r="3.5" stroke="currentColor" stroke-width="1"/>
+            <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
+          </svg>
+          <div class="tool-label">KIỂM SOÁT AN NINH</div>
+        </div>
+
+        <!-- Button 4: DNA Villa Structure -->
+        <div class="tool-button" data-action="analytics" id="btn-analytics">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 24L18 12L30 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M11 24H25M18 12V24" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+            <path d="M12 28C14 26 14 20 18 20C22 20 22 14 24 12" stroke="currentColor" stroke-width="1" stroke-dasharray="1 2"/>
+            <path d="M12 12C14 14 14 20 18 20C22 20 22 26 24 28" stroke="currentColor" stroke-width="1" stroke-dasharray="1 2"/>
+            <circle cx="15.5" cy="17" r="1.5" fill="currentColor" />
+            <circle cx="20.5" cy="23" r="1.5" fill="currentColor" />
+            <circle cx="18" cy="20" r="2" fill="currentColor" />
+          </svg>
+          <div class="tool-label">CẤU TRÚC THIẾT KẾ</div>
+        </div>
+
+        <!-- Button 5: Fingerprint Target -->
+        <div class="tool-button" data-action="target" id="btn-target">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="7" y="7" width="22" height="22" rx="11" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
+            <rect x="11" y="11" width="14" height="14" rx="7" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+            <path d="M18 14C19.5 14 20 15 20 16.5V20.5M16 16V20M14 18C14 17 15 15.5 18 15.5C21 15.5 22 17 22 18.5V22M18 24C16 24 13.5 23 13.5 20.5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M4 10V4H10M32 10V4H26M4 26V32H10M32 26V32H26" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <div class="tool-label">ĐO LƯỜNG HỆ THỐNG</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 4. HTML template for Left Navigation Sidebar
+  const sidebarNavHTML = `
+    <div class="sidebar-container" id="sidebar-container">
+      <div class="sidebar-toggle-btn" id="btn-sidebar-toggle" title="Mở rộng menu">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="sidebar-content">
+        <div class="sidebar-logo" id="sidebar-logo">
+          <div class="logo-script-top">LA TIÊN</div>
+          <div class="logo-script-wave"></div>
+          <div class="logo-script-sub">V I L L A</div>
+        </div>
+        <div class="sidebar-nav-list" id="sidebar-main-nav">
+          <!-- Active Back Glow element -->
+          <div class="active-nav-glow" id="nav-glow"></div>
+
+          <!-- 1. TỔNG QUAN -->
+          <div class="nav-item active" data-id="overview" id="nav-home">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M3 9.5L12 3L21 9.5V20C21 20.5 20.5 21 20 21H4C3.5 21 3 20.5 3 20V9.5Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M9 21V12H15V21" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Tổng Quan</span>
+
+            <!-- Submenu -->
+            <div class="nav-submenu">
+              <div class="submenu-item active" data-action="overview-general">Tổng quan Villa</div>
+              <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
+              <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
+              <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+            </div>
+          </div>
+
+          <!-- 2. VỊ TRÍ -->
+          <div class="nav-item" data-id="location" id="nav-location">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Vị Trí</span>
+
+            <!-- Submenu -->
+            <div class="nav-submenu">
+              <div class="submenu-item" data-action="location-general">Vị trí địa lý</div>
+              <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
+              <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
+              <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+            </div>
+          </div>
+
+          <!-- 3. LA TIÊN VILLA (Center script-node) -->
+          <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M3 21h18M3 10h18M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M10 21V14h4v7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+            </svg>
+            <span>La Tiên Villa</span>
+
+            <!-- MEGA MENU: Refined compact cards -->
+            <div class="nav-submenu mega-menu">
+              <!-- Card 1: Toàn cảnh dự án (Node 1) -->
+              <div class="mega-card active" data-pano-node="node1">
+                <img src="pano_aerial.png" alt="Toàn cảnh dự án" class="mega-card-img">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Toàn cảnh dự án</div>
+              </div>
+              <!-- Card 2: Biệt thự Đơn lập A (Node 2) -->
+              <div class="mega-card" data-pano-node="node2">
+                <img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Biệt thự Đơn lập A</div>
+              </div>
+              <!-- Card 3: Biệt thự Song lập B (Node 3) -->
+              <div class="mega-card" data-pano-node="node3">
+                <img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Biệt thự Song lập B</div>
+              </div>
+              <!-- Card 4: Biệt thự Liền kề C (Node 4) -->
+              <div class="mega-card" data-pano-node="node4">
+                <img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Biệt thự Liền kề C</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. TIỆN ÍCH -->
+          <div class="nav-item" data-id="amenities" id="nav-amenities">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12L12 17L22 12" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Tiện Ích</span>
+
+            <!-- Submenu -->
+            <div class="nav-submenu">
+              <div class="submenu-item" data-action="experience">Trải nghiệm</div>
+              <div class="submenu-item" data-action="masterplan">Tổng mặt bằng</div>
+              <div class="submenu-item" data-action="connections">Liên kết vùng</div>
+              <div class="submenu-item" data-action="intro">Giới thiệu</div>
+              <div class="submenu-item" data-action="aboutsite">Về website</div>
+              <div class="submenu-item" data-action="interiors">Nội thất</div>
+            </div>
+          </div>
+
+          <!-- 5. CỘNG ĐỒNG -->
+          <div class="nav-item" data-id="community" id="nav-community">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M23 21V19C22.9993 18.1137 22.6944 17.2541 22.1361 16.5683C21.5777 15.8824 20.7998 15.4093 19.93 15.22" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 3.13C16.8699 3.31885 17.6478 3.79188 18.2062 4.47775C18.7645 5.16362 19.0694 6.02324 19.07 6.91C19.0694 7.79676 18.7645 8.65638 18.2062 9.34225C17.6478 10.0281 16.8699 10.5012 16 10.69" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Cộng Đồng</span>
+
+            <!-- Submenu -->
+            <div class="nav-submenu">
+              <div class="submenu-item" data-action="community-residents">Cộng đồng cư dân</div>
+              <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
+              <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
+              <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // 4. Map Markers Data & Config
+  const mapMarkers = [
+    {
+      id: "pin_villa_a1",
+      pan: -45,
+      tilt: -20,
+      label: "01",
+      title: "BIỆT THỰ ĐƠN LẬP A1",
+      area: "420 m²",
+      status: "Còn Trống",
+      colorClass: "",
+      nodeTarget: "node2"
+    },
+    {
+      id: "pin_villa_a2",
+      pan: -25,
+      tilt: -15,
+      label: "02",
+      title: "BIỆT THỰ ĐƠN LẬP A2",
+      area: "420 m²",
+      status: "Đã Đặt",
+      colorClass: "active",
+      nodeTarget: "node2"
+    },
+    {
+      id: "pin_villa_b1",
+      pan: 15,
+      tilt: -22,
+      label: "03",
+      title: "BIỆT THỰ SONG LẬP B1",
+      area: "320 m²",
+      status: "Còn Trống",
+      colorClass: "",
+      nodeTarget: "node3"
+    },
+    {
+      id: "pin_villa_b2",
+      pan: 35,
+      tilt: -12,
+      label: "04",
+      title: "BIỆT THỰ SONG LẬP B2",
+      area: "320 m²",
+      status: "Còn Trống",
+      colorClass: "",
+      nodeTarget: "node3"
+    },
+    {
+      id: "pin_villa_c1",
+      pan: 75,
+      tilt: -28,
+      label: "05",
+      title: "BIỆT THỰ LIỀN KỀ C1",
+      area: "250 m²",
+      status: "Còn Trống",
+      colorClass: "",
+      nodeTarget: "node4"
+    },
+    {
+      id: "pin_clubhouse",
+      pan: -85,
+      tilt: -18,
+      label: "CH",
+      title: "CLUBHOUSE TRUNG TÂM",
+      area: "1,200 m²",
+      status: "Mở Cửa (8:00 - 22:00)",
+      colorClass: "active",
+      nodeTarget: "node1",
+      isAmenity: true
+    },
+    {
+      id: "pin_beach_bar",
+      pan: -135,
+      tilt: -24,
+      label: "BL",
+      title: "BEACH LOUNGE & BAR",
+      area: "650 m²",
+      status: "Mở Cửa (16:00 - 24:00)",
+      colorClass: "",
+      nodeTarget: "node1",
+      isAmenity: true
+    }
+  ];
+
+  // Helper notification overlay
+  let notificationTimeout;
+  function showNotification(text) {
+    let container = document.getElementById("ui-notification");
+    if (!container) {
+      container = document.createElement("div");
+      container.id = "ui-notification";
+      container.style.cssText = `
+        position: absolute;
+        top: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-10px);
+        background: rgba(8, 14, 24, 0.85);
+        color: #00f2fe;
+        border: 1px solid rgba(0, 242, 254, 0.3);
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 11px;
+        letter-spacing: 1.5px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 242, 254, 0.15);
+        z-index: 2000;
+        opacity: 0;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        pointer-events: none;
+      `;
+      document.body.appendChild(container);
+    }
+    container.textContent = `HỆ THỐNG: ${text}`; // Localized alert prefix
+    container.style.opacity = "1";
+    container.style.transform = "translateX(-50%) translateY(0)";
+
+    clearTimeout(notificationTimeout);
+    notificationTimeout = setTimeout(() => {
+      container.style.opacity = "0";
+      container.style.transform = "translateX(-50%) translateY(-10px)";
+    }, 3000);
+  }
+
+  // Inject UI nodes into DOM
+  function injectUI() {
+    // 1. Create a wrapper and inject HTML parts
+    const uiWrapper = document.createElement("div");
+    uiWrapper.className = "modern-ui-overlay";
+    uiWrapper.innerHTML = gradientDefs + settingsToggleHTML + verticalToolStackHTML + sidebarNavHTML;
+    document.body.appendChild(uiWrapper);
+
+    // 2. Setup Collapsible Settings panel on the right side
+    const settingsToggle = document.getElementById("btn-settings-toggle");
+    const rightToolStack = document.getElementById("right-tool-stack");
+
+    settingsToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      rightToolStack.classList.toggle("expanded");
+      if (rightToolStack.classList.contains("expanded")) {
+        showNotification("Bảng điều khiển đã mở rộng");
+      }
+    });
+
+    // 2.1 Setup Collapsible Left Sidebar panel
+    const sidebarContainer = document.getElementById("sidebar-container");
+    const sidebarToggle = document.getElementById("btn-sidebar-toggle");
+    const navItems = document.querySelectorAll(".nav-item");
+
+    sidebarToggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      sidebarContainer.classList.toggle("expanded");
+      const isExpanded = sidebarContainer.classList.contains("expanded");
+      sidebarToggle.querySelector("path").setAttribute("d", isExpanded ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7");
+      showNotification(isExpanded ? "Đã mở rộng thanh điều hướng" : "Đã thu gọn thanh điều hướng");
+      
+      // Close all submenus when collapsing sidebar
+      if (!isExpanded) {
+        navItems.forEach(n => n.classList.remove("is-open"));
+        sidebarContainer.classList.remove("submenu-open");
+        sidebarContainer.classList.remove("mega-open");
+      } else {
+        // Snap active glow to correct vertical position when expanded
+        const activeItem = document.querySelector(".nav-item.active");
+        updateActiveGlow(activeItem);
+      }
+    });
+
+    // 3. Add event listeners to Right tool buttons
+    const toolButtons = document.querySelectorAll(".tool-button");
+    toolButtons.forEach(btn => {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        const action = this.getAttribute("data-action");
+        const toolLabel = this.querySelector(".tool-label");
+        const labelText = toolLabel ? toolLabel.textContent : action.toUpperCase();
+        showNotification(`Kích hoạt đo lường: ${labelText}`);
+        
+        // Soft button feedback
+        this.style.transform = "scale(0.9)";
+        setTimeout(() => {
+          this.style.transform = "";
+        }, 150);
+      });
+    });
+
+    // 4. Setup Navigation parent items (Clicking updates active glow position)
+    const activeGlow = document.getElementById("nav-glow");
+
+    function updateActiveGlow(activeItem) {
+      if (!activeItem || !activeGlow) return;
+      const rect = activeItem.getBoundingClientRect();
+      const parentRect = activeItem.parentElement.getBoundingClientRect();
+      
+      const topOffset = rect.top - parentRect.top;
+      
+      activeGlow.style.opacity = "1";
+      activeGlow.style.height = `${rect.height}px`;
+      activeGlow.style.top = `${topOffset}px`;
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener("click", function (e) {
+        // If clicked on a submenu item, do not toggle is-open here
+        if (e.target.closest(".nav-submenu")) return;
+        
+        e.stopPropagation(); // Prevent document click from closing immediately
+        
+        // Force expand sidebar if a nav item is clicked while sidebar is collapsed
+        if (!sidebarContainer.classList.contains("expanded")) {
+          sidebarContainer.classList.add("expanded");
+          sidebarToggle.querySelector("path").setAttribute("d", "M15 19l-7-7 7-7");
+        }
+        
+        const isOpen = this.classList.contains("is-open");
+        
+        // Close all other submenus
+        navItems.forEach(n => {
+          if (n !== this) n.classList.remove("is-open");
+        });
+        
+        // Toggle is-open on this one
+        this.classList.toggle("is-open", !isOpen);
+        
+        // Update sidebar container classes for toggle button pushing
+        const anyOpen = Array.from(navItems).some(n => n.classList.contains("is-open"));
+        sidebarContainer.classList.toggle("submenu-open", anyOpen);
+        
+        const isMegaOpen = Array.from(navItems).some(n => n.classList.contains("is-open") && n.classList.contains("center-logo-node"));
+        sidebarContainer.classList.toggle("mega-open", isMegaOpen);
+        
+        navItems.forEach(n => n.classList.remove("active"));
+        this.classList.add("active");
+        updateActiveGlow(this);
+      });
+    });
+
+    // 5. Setup Action events for Submenu items (Both text items and mega menu image cards)
+    const subMenuItems = document.querySelectorAll(".submenu-item, .mega-card");
+    subMenuItems.forEach(subItem => {
+      subItem.addEventListener("click", function (e) {
+        e.stopPropagation(); // prevent parent nav click behavior
+        
+        // Mark this submenu item active among its siblings
+        const siblings = this.parentElement.querySelectorAll(".submenu-item, .mega-card");
+        siblings.forEach(s => s.classList.remove("active"));
+        this.classList.add("active");
+
+        // Close parent submenu container (if open)
+        const parentNavItem = this.closest(".nav-item");
+        if (parentNavItem) {
+          parentNavItem.classList.remove("is-open");
+          sidebarContainer.classList.remove("submenu-open");
+          sidebarContainer.classList.remove("mega-open");
+        }
+
+        // Get navigation / actions
+        const panoNode = this.getAttribute("data-pano-node");
+        const action = this.getAttribute("data-action");
+        
+        let titleText = this.textContent.trim();
+        if (this.classList.contains("mega-card")) {
+          const cardTitle = this.querySelector(".mega-card-title");
+          if (cardTitle) titleText = cardTitle.textContent.trim();
+        }
+
+        if (panoNode && window.pano) {
+          console.log(`Navigating to Pano Node: ${panoNode}`);
+          window.pano.openNext(`{${panoNode}}`);
+          showNotification(`Đang chuyển đến: ${titleText.toUpperCase()}`);
+        } else if (action) {
+          showNotification(`Đang tải: ${titleText}`);
+          console.log(`Submenu Action Triggered: ${action}`);
+        }
+      });
+    });
+
+    // Prevent clicks inside the submenu from closing it or propagating to the nav-item
+    const submenus = document.querySelectorAll(".nav-submenu");
+    submenus.forEach(submenu => {
+      submenu.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
+    });
+
+
+    // Position active glow initially
+    setTimeout(() => {
+      const activeItem = document.querySelector(".nav-item.active");
+      updateActiveGlow(activeItem);
+    }, 500);
+
+    // Dismiss pinned submenus when clicking outside
+    document.addEventListener("click", function () {
+      navItems.forEach(n => n.classList.remove("is-open"));
+      sidebarContainer.classList.remove("submenu-open");
+      sidebarContainer.classList.remove("mega-open");
+      if (rightToolStack) {
+        rightToolStack.classList.remove("expanded");
+      }
+    });
+
+    // Reposition active glow on window resize
+    window.addEventListener("resize", () => {
+      const activeItem = document.querySelector(".nav-item.active");
+      updateActiveGlow(activeItem);
+    });
+  }
+
+  // Create holographic hotspot DOM element
+  function createHologramMarker(pin) {
+    const container = document.createElement("div");
+    container.className = `hologram-marker-container ${pin.colorClass}`;
+    container.id = `marker-${pin.id}`;
+
+    const wireframeSVG = pin.isAmenity ? `
+      <svg viewBox="0 0 100 40" fill="none" stroke="rgba(0, 242, 254, 0.6)" stroke-width="1">
+        <rect x="10" y="5" width="40" height="30" rx="2" />
+        <rect x="55" y="10" width="35" height="20" rx="10" />
+        <line x1="10" y1="20" x2="50" y2="20" />
+        <line x1="25" y1="5" x2="25" y2="35" />
+      </svg>
+    ` : `
+      <svg viewBox="0 0 100 40" fill="none" stroke="rgba(0, 242, 254, 0.6)" stroke-width="1">
+        <rect x="5" y="5" width="25" height="30" />
+        <rect x="30" y="5" width="40" height="30" />
+        <rect x="70" y="5" width="25" height="15" />
+        <rect x="70" y="20" width="25" height="15" />
+        <circle cx="17.5" cy="35" r="2" fill="#00f2fe" />
+        <circle cx="50" cy="35" r="2" fill="#00f2fe" />
+      </svg>
+    `;
+
+    container.innerHTML = `
+      <div class="marker-ground-shadow"></div>
+      <div class="marker-stem"></div>
+      <div class="hologram-marker-hitbox" title="Click to view"></div>
+      <div class="marker-prism-head">
+        <div class="prism-content">${pin.label}</div>
+      </div>
+      <div class="marker-data-projection">
+        <div class="projection-header">
+          <div class="projection-title">${pin.title}</div>
+          <div class="projection-tag">${pin.status}</div>
+        </div>
+        <div class="projection-body">
+          <div class="projection-row">
+            <span class="projection-label">DIỆN TÍCH:</span>
+            <span class="projection-value">${pin.area}</span>
+          </div>
+          <div class="projection-row">
+            <span class="projection-label">HỆ THỐNG:</span>
+            <span class="projection-value">BIOMETRIC OK</span>
+          </div>
+        </div>
+        <div class="projection-wireframe">
+          ${wireframeSVG}
+        </div>
+      </div>
+    `;
+
+    // Click handler to navigate
+    const hitbox = container.querySelector(".hologram-marker-hitbox");
+    hitbox.addEventListener("click", function (e) {
+      e.stopPropagation();
+      console.log(`Marker clicked: ${pin.id} -> target ${pin.nodeTarget}`);
+      
+      const subItems = document.querySelectorAll(".submenu-item, .mega-card");
+      let found = false;
+      subItems.forEach(sub => {
+        if (sub.getAttribute("data-pano-node") === pin.nodeTarget) {
+          sub.click();
+          found = true;
+        }
+      });
+      
+      if (!found && window.pano) {
+        window.pano.openNext(`{${pin.nodeTarget}}`);
+      }
+    });
+
+    return container;
+  }
+
+  // Handle panorama node change
+  function onNodeChange() {
+    if (!window.pano) return;
+    const currentNodeId = window.pano.qd();
+    console.log(`Current Node: ${currentNodeId}`);
+
+    // Update active state in bottom submenu / mega cards
+    const subItems = document.querySelectorAll(".submenu-item, .mega-card");
+    subItems.forEach(sub => {
+      const pNode = sub.getAttribute("data-pano-node");
+      if (pNode === currentNodeId) {
+        const siblings = sub.parentElement.querySelectorAll(".submenu-item, .mega-card");
+        siblings.forEach(s => s.classList.remove("active"));
+        sub.classList.add("active");
+
+        const parentNav = sub.closest(".nav-item");
+        if (parentNav) {
+          const navItems = document.querySelectorAll(".nav-item");
+          navItems.forEach(n => n.classList.remove("active"));
+          parentNav.classList.add("active");
+          window.dispatchEvent(new Event('resize'));
+        }
+      }
+    });
+
+    // Clear existing holographic hotspots
+    if (typeof window.pano.removeHotspots === 'function') {
+      window.pano.removeHotspots();
+    }
+
+    // Only add map markers on node1 (aerial view)
+    if (currentNodeId === "node1") {
+      console.log("Adding holographic map markers...");
+      mapMarkers.forEach(pin => {
+        const markerEl = createHologramMarker(pin);
+        if (typeof window.pano.addHotspot === 'function') {
+          window.pano.addHotspot(pin.id, pin.pan, pin.tilt, markerEl);
+        }
+      });
+    }
+  }
+
+  // Poll for Pano2VR ready
+  function initPanoHooks() {
+    if (window.pano && typeof window.pano.addListener === 'function') {
+      console.log("Pano2VR Player detected. Registering hooks...");
+      
+      window.pano.addListener("configloaded", onNodeChange);
+      window.pano.addListener("changenode", onNodeChange);
+      
+      onNodeChange();
+    } else {
+      setTimeout(initPanoHooks, 200);
+    }
+  }
+
+  // Inject UI structure on page load
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    injectUI();
+    initPanoHooks();
+  } else {
+    window.addEventListener("DOMContentLoaded", () => {
+      injectUI();
+      initPanoHooks();
+    });
+  }
+
+})();

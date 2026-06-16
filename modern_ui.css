@@ -1,0 +1,913 @@
+/* modern_ui.css - Premium Futuristic Dark Cyberpunk UI with Glassmorphism & Left Collapsible Sidebar */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+:root {
+  --neon-cyan: #00f2fe;
+  --neon-blue: #0055ff;
+  --neon-magenta: #ff007f;
+  --cyber-bg: rgba(8, 14, 24, 0.75);
+  --cyber-bg-solid: #080e18;
+  --cyber-border: rgba(0, 242, 254, 0.2);
+  --tech-font: 'Share Tech Mono', monospace;
+  --ui-font: 'Outfit', sans-serif;
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-muted: rgba(255, 255, 255, 0.45);
+  --glow-cyan: 0 0 10px rgba(0, 242, 254, 0.4), 0 0 20px rgba(0, 85, 255, 0.2);
+  --glow-magenta: 0 0 10px rgba(255, 0, 127, 0.4), 0 0 20px rgba(255, 0, 127, 0.2);
+}
+
+/* Base resets & fonts for UI overlays */
+.modern-ui-overlay {
+  font-family: var(--ui-font);
+  color: var(--text-primary);
+  user-select: none;
+  pointer-events: none; /* Let clicks pass through to panorama container by default */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* Enable pointer events on interactive UI controls */
+.modern-ui-overlay * {
+  pointer-events: auto;
+}
+
+/* 1. Settings Toggle Button - Top-Right Corner */
+.settings-toggle-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1002;
+  color: var(--text-primary);
+}
+
+.settings-toggle-btn svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
+}
+
+.settings-toggle-btn:hover {
+  background: rgba(8, 14, 24, 0.9);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3), 0 0 10px rgba(0, 242, 254, 0.15);
+  color: var(--neon-cyan);
+}
+
+.settings-toggle-btn:hover svg {
+  transform: rotate(90deg);
+}
+
+/* 2. Vertical Tool Stack / Settings Panel on the Right side */
+.vertical-tool-stack {
+  position: absolute;
+  top: 66px;
+  right: 16px;
+  width: 200px;
+  box-sizing: border-box;
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 14px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateX(50px) scale(0.95);
+  pointer-events: none;
+  visibility: hidden;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Expanded state from top-right settings trigger */
+.vertical-tool-stack.expanded {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.tool-stack-header {
+  font-family: var(--tech-font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--neon-cyan);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
+}
+
+.tool-buttons-sub-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Redesigned tool button - Sleek Cybernetic List Item */
+.tool-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tool-button svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.tool-button svg * {
+  stroke: currentColor;
+  transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.tool-button svg *[fill="currentColor"] {
+  fill: currentColor;
+}
+
+/* Label text inline */
+.tool-label {
+  font-family: var(--tech-font);
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+  margin-left: 10px;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* Hover effects */
+.tool-button:hover {
+  background: rgba(0, 242, 254, 0.07);
+  border-color: rgba(0, 242, 254, 0.35);
+  color: var(--text-primary);
+  transform: translateX(-4px);
+  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.15);
+}
+
+.tool-button:hover svg * {
+  stroke: var(--neon-cyan) !important;
+}
+
+.tool-button:hover svg *[fill="currentColor"] {
+  fill: var(--neon-cyan) !important;
+}
+
+.tool-button:hover .tool-label {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+}
+
+/* 3. Left Navigation Sidebar */
+.sidebar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0; /* Let clicks pass through when collapsed */
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.sidebar-container * {
+  pointer-events: auto;
+}
+
+/* Sidebar main content pane */
+.sidebar-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px; /* Thinner sidebar */
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--cyber-bg);
+  border-right: 1px solid var(--cyber-border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  padding: 30px 16px; /* Compact padding */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 45px rgba(0, 0, 0, 0.5);
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1005; /* Establish higher stacking context so submenus render over toggle button */
+}
+
+.sidebar-container.expanded .sidebar-content {
+  transform: translateX(0);
+}
+
+/* Collapsible toggle arrow button */
+.sidebar-toggle-btn {
+  position: absolute;
+  left: 12px; /* Float on screen when collapsed */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px; /* Compact width */
+  height: 36px; /* Compact height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px; /* Refined corner */
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(15px);
+  color: var(--neon-cyan);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000; /* Stacked below .sidebar-content stacking context */
+}
+
+.sidebar-container.expanded .sidebar-toggle-btn {
+  left: 232px; /* Sidebar width (220px) + offset (12px) */
+}
+
+/* Push toggle button further when submenu/mega-menu is open */
+.sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
+  left: 390px; /* 220px (sidebar) + 150px (submenu) + 8px (gap) + 12px (offset) */
+}
+.sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+  left: 410px; /* 220px (sidebar) + 170px (mega menu) + 8px (gap) + 12px (offset) */
+}
+
+
+.sidebar-toggle-btn svg {
+  width: 14px; /* Slimmer icon */
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-toggle-btn:hover {
+  color: var(--text-primary);
+  background: rgba(0, 242, 254, 0.12);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3), 0 4px 15px rgba(0, 0, 0, 0.4);
+  border-color: var(--neon-cyan);
+  transform: translateY(-50%) scale(1.05);
+}
+
+/* Branding Logo Section */
+.sidebar-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
+}
+
+.logo-script-top {
+  font-family: var(--ui-font);
+  font-size: 15px; /* Thinner logo */
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.logo-script-wave {
+  width: 50px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  margin: 4px 0;
+  opacity: 0.8;
+}
+
+.logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* Sidebar Nav list */
+.sidebar-nav-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px; /* Reduced gap */
+  margin-top: 10px;
+}
+
+/* Vertical Active Nav sliding highlight */
+.active-nav-glow {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 40px; /* matches item height (40px) */
+  background: linear-gradient(90deg, rgba(0, 242, 254, 0.08) 0%, rgba(0, 85, 255, 0.02) 100%);
+  border-left: 3px solid var(--neon-cyan);
+  border-radius: 10px;
+  z-index: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+}
+
+/* Nav item styles */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px; /* Compact height */
+  box-sizing: border-box;
+  padding: 8px 12px; /* Thinner padding */
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.nav-item svg {
+  width: 16px; /* Slimmer icons */
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.nav-item span {
+  font-family: var(--ui-font);
+  font-size: 11px; /* Smaller typography */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-left: 10px; /* Adjusted spacing */
+  text-transform: uppercase;
+  color: currentColor;
+  transition: all 0.3s ease;
+}
+
+/* Hover navigation item */
+.nav-item:hover {
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-item:hover svg {
+  transform: translateX(2px);
+}
+
+/* Active navigation item */
+.nav-item.active {
+  color: var(--neon-cyan);
+}
+
+.nav-item.active svg {
+  stroke: var(--neon-cyan);
+  filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4));
+  stroke-width: 2.2;
+}
+
+.nav-item.active span {
+  font-weight: 600;
+}
+
+/* 4. Submenu Panels (Slide-out Flyout to the Right) */
+.nav-submenu {
+  position: absolute;
+  left: calc(100% + 24px); /* 100% of nav-item (188px) + 24px = 212px + 16px padding = 228px (8px gap next to 220px sidebar) */
+  top: 0;
+  transform: translateX(-10px) scale(0.95);
+  background: rgba(8, 14, 24, 0.85);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 12px; /* Smoother corner */
+  padding: 6px; /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Reduced gap */
+  width: 150px; /* Thinner submenu */
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover Bridge area to prevent cursor loss */
+.nav-submenu::before {
+  content: '';
+  position: absolute;
+  left: -24px; /* Matches the 24px gap */
+  top: 0;
+  width: 24px;
+  height: 100%;
+  background: transparent;
+  pointer-events: auto;
+}
+
+/* Indicator arrow pointing left */
+.nav-submenu::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 24px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: rgba(8, 14, 24, 0.85);
+  border-left: 1px solid rgba(0, 242, 254, 0.25);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.25);
+  z-index: -1;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Active parent item highlights child section's diamond indicator */
+.nav-item.active .nav-submenu::after {
+  background: var(--neon-cyan);
+  border-left-color: var(--neon-cyan);
+  border-bottom-color: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+/* Slide out transition when parent has .is-open class */
+.nav-item.is-open .nav-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible; /* Make interactive when open */
+  transform: translateX(0) scale(1);
+}
+
+/* Hide submenus completely when sidebar is collapsed to prevent hover activation */
+.sidebar-container:not(.expanded) .nav-submenu {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+/* Submenu option items */
+.submenu-item {
+  padding: 6px 12px; /* Thinner padding */
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 10.5px; /* Lighter font size */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  background: transparent;
+}
+
+.submenu-item:hover {
+  background: rgba(0, 242, 254, 0.08);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+}
+
+.submenu-item.active {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.25);
+}
+
+/* 4.1 SPECIAL: Vertical Single-Column Image Mega Menu for Latien Villa */
+.sidebar-container .nav-submenu.mega-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Thinner gap */
+  padding: 10px; /* Thinner padding */
+  width: 170px; /* More compact width */
+  box-sizing: border-box;
+}
+
+.mega-card {
+  position: relative;
+  width: 100%;
+  height: 52px; /* Slimmer height */
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--cyber-bg-solid);
+}
+
+.mega-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.mega-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 14, 24, 0.85) 0%, rgba(8, 14, 24, 0.25) 60%, transparent 100%);
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.mega-card-title {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  text-transform: uppercase;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.mega-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 5px 15px rgba(0, 242, 254, 0.25);
+}
+
+.mega-card:hover .mega-card-img {
+  transform: scale(1.06);
+}
+
+.mega-card:hover .mega-card-title {
+  color: var(--neon-cyan);
+}
+
+/* Active State of Card */
+.mega-card.active {
+  border-color: var(--neon-cyan);
+  border-width: 1.5px;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.45);
+}
+
+.mega-card.active .mega-card-title {
+  color: var(--neon-cyan);
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.4);
+}
+
+
+/* 5. Holographic Map Hotspot Markers (Pano2VR Hotspots) */
+.hologram-marker-container {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.hologram-marker-hitbox {
+  position: absolute;
+  width: 44px;
+  height: 70px;
+  left: 38px;
+  top: 10px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Cybernetic Glowing shadow on ground */
+.marker-ground-shadow {
+  position: absolute;
+  width: 50px;
+  height: 16px;
+  left: 35px;
+  bottom: 15px;
+  background: radial-gradient(ellipse, rgba(0, 242, 254, 0.7) 0%, rgba(0, 242, 254, 0.2) 50%, transparent 70%);
+  transform: rotateX(65deg);
+  filter: blur(2px);
+  animation: breathe-shadow 3s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.hologram-marker-container.active .marker-ground-shadow {
+  background: radial-gradient(ellipse, rgba(255, 0, 127, 0.7) 0%, rgba(255, 0, 127, 0.2) 50%, transparent 70%);
+}
+
+/* Vertical hologram ray */
+.marker-stem {
+  position: absolute;
+  width: 1.5px;
+  height: 40px;
+  background: linear-gradient(to top, rgba(0, 242, 254, 0.15), rgba(0, 242, 254, 0.95));
+  left: 59px;
+  bottom: 23px;
+  pointer-events: none;
+}
+
+.hologram-marker-container.active .marker-stem {
+  background: linear-gradient(to top, rgba(255, 0, 127, 0.15), rgba(255, 0, 127, 0.95));
+}
+
+/* Translucent floating crystal head */
+.marker-prism-head {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  left: 44px;
+  top: 15px;
+  background: rgba(8, 14, 24, 0.65);
+  border: 1px solid rgba(0, 242, 254, 0.6);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4), inset 0 0 8px rgba(0, 242, 254, 0.25);
+  transform: rotate(45deg);
+  border-radius: 6px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: float-prism 4s infinite ease-in-out;
+  pointer-events: none;
+}
+
+.hologram-marker-container.active .marker-prism-head {
+  border-color: rgba(255, 0, 127, 0.7);
+  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4), inset 0 0 8px rgba(255, 0, 127, 0.25);
+  background: rgba(24, 8, 14, 0.65);
+}
+
+.prism-content {
+  transform: rotate(-45deg);
+  font-family: var(--tech-font);
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 4px rgba(0, 242, 254, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hologram-marker-container.active .prism-content {
+  color: var(--neon-magenta);
+  text-shadow: 0 0 4px rgba(255, 0, 127, 0.6);
+}
+
+/* Hover zoom marker */
+.hologram-marker-hitbox:hover ~ .marker-prism-head {
+  transform: rotate(45deg) scale(1.15);
+  border-color: #ffffff;
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.75), inset 0 0 10px rgba(0, 242, 254, 0.4);
+}
+
+.hologram-marker-container.active .hologram-marker-hitbox:hover ~ .marker-prism-head {
+  box-shadow: 0 0 25px rgba(255, 0, 127, 0.75), inset 0 0 10px rgba(255, 0, 127, 0.4);
+}
+
+/* Glassmorphic projection data panel on hover */
+.marker-data-projection {
+  position: absolute;
+  left: 95px;
+  top: -25px;
+  width: 215px;
+  background: rgba(8, 14, 24, 0.85);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  opacity: 0;
+  transform: scale(0.9) translateY(10px);
+  pointer-events: none;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+.hologram-marker-hitbox:hover ~ .marker-data-projection {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.projection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+  margin-bottom: 8px;
+}
+
+.projection-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+.projection-tag {
+  font-family: var(--tech-font);
+  font-size: 9px;
+  color: var(--neon-cyan);
+  background: rgba(0, 242, 254, 0.12);
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.hologram-marker-container.active .projection-tag {
+  color: var(--neon-magenta);
+  background: rgba(255, 0, 127, 0.12);
+}
+
+.projection-body {
+  font-size: 9.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.projection-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.projection-label {
+  color: var(--text-muted);
+}
+
+.projection-value {
+  font-family: var(--tech-font);
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+/* Projection interior wireframe sketch */
+.projection-wireframe {
+  height: 48px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.projection-wireframe svg {
+  width: 80%;
+  height: 80%;
+}
+
+.projection-wireframe svg path,
+.projection-wireframe svg rect,
+.projection-wireframe svg circle,
+.projection-wireframe svg line {
+  stroke: var(--neon-cyan);
+  opacity: 0.85;
+}
+
+
+/* Keyframe Animations */
+@keyframes float-prism {
+  0% { transform: rotate(45deg) translateY(0); }
+  50% { transform: rotate(45deg) translateY(-5px); }
+  100% { transform: rotate(45deg) translateY(0); }
+}
+
+@keyframes breathe-shadow {
+  0% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
+  50% { transform: rotateX(65deg) scale(1.15); opacity: 0.85; }
+  100% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
+}
+
+/* Media Queries for Tablets & Small Desktops */
+@media (max-width: 1024px) {
+  .sidebar-content {
+    width: 200px; /* Compact on tablets */
+    padding: 24px 12px;
+  }
+  .sidebar-container.expanded .sidebar-toggle-btn {
+    left: 212px; /* 200px (sidebar) + 12px (offset) */
+  }
+  .sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
+    left: 370px; /* 200px (sidebar) + 150px (submenu) + 8px (gap) + 12px (offset) */
+  }
+  .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+    left: 380px; /* 200px (sidebar) + 160px (mega menu) + 8px (gap) + 12px (offset) */
+  }
+  .nav-submenu {
+    left: calc(100% + 20px);
+  }
+  .sidebar-container .nav-submenu.mega-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    width: 160px;
+    box-sizing: border-box;
+  }
+  .mega-card {
+    width: 100%;
+    height: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Handle mobile/small-tablet layouts */
+  .sidebar-content {
+    width: 200px;
+  }
+  .sidebar-container.expanded .sidebar-toggle-btn {
+    left: 212px; /* Reset push on mobile */
+  }
+  .sidebar-container.expanded.submenu-open .sidebar-toggle-btn,
+  .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+    left: 212px; /* Reset push on mobile */
+  }
+  
+  /* Submenus on mobile fly upwards or hover overlap */
+  .nav-submenu {
+    position: fixed;
+    left: 16px;
+    bottom: 70px;
+    top: auto;
+    width: calc(100% - 32px);
+    max-width: 300px;
+    transform: translateY(15px) scale(0.95);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  }
+  .nav-submenu::after {
+    display: none; /* Hide indicator arrow on mobile to prevent layout disconnect */
+  }
+  .nav-item.is-open .nav-submenu {
+    transform: translateY(0) scale(1);
+  }
+  .sidebar-container .nav-submenu.mega-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: calc(100% - 32px);
+    max-width: 300px;
+    box-sizing: border-box;
+  }
+  .mega-card {
+    width: 100%;
+    height: 52px;
+  }
+  
+  .vertical-tool-stack {
+    right: 12px;
+    top: 60px;
+    width: 180px;
+  }
+  .settings-toggle-btn {
+    top: 12px;
+    right: 12px;
+  }
+}
