@@ -68,9 +68,8 @@
 /* 1. Collapsible Vertical Tool Stack on the Right (Hover Expand) */
 .layout-classic .vertical-tool-stack {
   position: absolute;
-  /* Positioned at 35% from top to stay clear of any Pano2VR compass/minimap elements
-     that typically appear at top-right and bottom-right corners */
-  top: 35%;
+  /* Centered perfectly now that legacy tall icons are removed */
+  top: 45%;
   right: 20px;
   transform: translateY(-50%);
   display: flex;
@@ -213,27 +212,29 @@
   height: 21px;
 }
 
-/* Mono tech labels on hover */
-.layout-classic .tool-label {
+/* Modern tech tooltips on hover */
+.layout-classic .tool-tooltip {
   position: absolute;
-  right: 58px;
-  background: rgba(15, 15, 15, 0.9);
-  color: #fff;
-  font-family: var(--tech-font);
-  font-size: 9px;
-  letter-spacing: 1px;
-  padding: 4px 8px;
-  border-radius: 5px;
+  right: calc(100% + 12px);
+  background: rgba(250, 249, 246, 0.95);
+  color: #201f1c;
+  font-family: var(--ui-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  padding: 6px 10px;
+  border-radius: 8px;
   white-space: nowrap;
   opacity: 0;
   transform: translateX(8px);
   pointer-events: none;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.12);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
 }
 
-.layout-classic .tool-button:hover .tool-label {
+.layout-classic .tool-button:hover .tool-tooltip {
   opacity: 1;
   transform: translateX(0);
 }
@@ -422,15 +423,15 @@
   z-index: 1050;
 }
 
-/* HOVER BRIDGE - Constrained to parent item width to prevent bleed-over collision */
+/* HOVER BRIDGE - Expanded and reinforced to prevent flickering */
 .layout-classic .nav-submenu::before {
   content: '';
   position: absolute;
   bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 66px; /* Constrained exactly to parent nav item width (was 100%) */
-  height: 20px;
+  width: 120px; /* Wide enough to catch diagonal mouse movements */
+  height: 24px;
   background: transparent;
   pointer-events: auto;
 }
@@ -1073,16 +1074,26 @@
   fill: currentColor;
 }
 
-/* Label text inline */
-.layout-futuristic .tool-label {
-  font-family: var(--tech-font);
-  font-size: 9px;
-  letter-spacing: 0.8px;
-  color: var(--text-secondary);
-  margin-left: 10px;
+/* Tooltip style */
+.layout-futuristic .tool-tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  background: rgba(10, 12, 16, 0.9);
+  color: #fff;
+  font-family: var(--ui-font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 6px 10px;
+  border-radius: 8px;
   white-space: nowrap;
-  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(8px);
   pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
 }
 
 /* Hover effects */
@@ -1102,9 +1113,9 @@
   fill: var(--neon-cyan) !important;
 }
 
-.layout-futuristic .tool-button:hover .tool-label {
-  color: var(--neon-cyan);
-  text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+.layout-futuristic .tool-button:hover .tool-tooltip {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* 3. Left Navigation Sidebar */
@@ -1348,14 +1359,14 @@
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Hover Bridge area to prevent cursor loss */
+/* Hover Bridge area to prevent cursor loss - reinforced for smooth diagonally mouse movement */
 .layout-futuristic .nav-submenu::before {
   content: '';
   position: absolute;
-  left: -24px; /* Matches the 24px gap */
-  top: 0;
-  width: 24px;
-  height: 100%;
+  left: -32px; /* A bit larger than the gap to be safe */
+  top: -20px;
+  width: 40px;
+  height: calc(100% + 40px);
   background: transparent;
   pointer-events: auto;
 }
@@ -1937,3 +1948,412 @@
 .modern-ui-overlay.switching * {
   pointer-events: none !important;
 }
+
+/* ==========================================
+   SHARED WIDGETS & OVERLAYS
+   ========================================== */
+
+/* Social Dropdown Menu */
+.social-dropdown {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 15px);
+  transform: translateY(-50%) translateX(10px);
+  background: rgba(10, 12, 16, 0.85);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(0, 242, 254, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 1000;
+}
+
+.social-dropdown.open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.layout-classic .social-dropdown {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15), 0 0 10px rgba(212, 175, 55, 0.1);
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-family: var(--ui-font);
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.layout-classic .social-link {
+  color: #333;
+}
+
+.social-link:hover {
+  background: rgba(0, 242, 254, 0.1);
+  color: #fff;
+}
+
+.layout-classic .social-link:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: #000;
+}
+
+/* Active Tool Button State */
+.tool-button.active-tool {
+  background: rgba(0, 242, 254, 0.15);
+  border-color: #00f2fe;
+}
+.layout-classic .tool-button.active-tool {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold-dark);
+}
+
+/* Compass Widget */
+.compass-widget {
+  position: fixed;
+  bottom: 100px; /* Lifted from 70px to avoid overlapping with layout switcher readout */
+  left: 20px;
+  width: 72px;
+  height: 72px;
+  z-index: 2200;
+  pointer-events: auto;
+  border-radius: 50%;
+  background: rgba(10, 15, 25, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 242, 254, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.layout-classic .compass-widget {
+  background: rgba(250, 249, 246, 0.85);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 0 15px rgba(212, 175, 55, 0.1);
+}
+
+.compass-dial {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  transition: transform 0.1s linear;
+}
+
+.layout-classic .compass-dial svg *[stroke="#00f2fe"] { stroke: var(--gold-dark); }
+.layout-classic .compass-dial svg *[fill="#00f2fe"] { fill: var(--gold-dark); }
+.layout-classic .compass-dial svg stop[stop-color="#00f2fe"] { stop-color: var(--gold-dark); }
+.layout-classic .compass-dial svg stop[stop-color="rgba(0,242,254,0.5)"] { stop-color: rgba(212,175,55,0.5); }
+.layout-classic .compass-dial svg circle[stroke="rgba(0,242,254,0.15)"] { stroke: rgba(212,175,55,0.2); }
+.layout-classic .compass-dial svg line[stroke="rgba(255,255,255,0.4)"] { stroke: rgba(0,0,0,0.3); }
+.layout-classic .compass-dial svg line[stroke="rgba(255,255,255,0.2)"] { stroke: rgba(0,0,0,0.15); }
+.layout-classic .compass-dial svg polygon[fill="rgba(255,255,255,0.3)"] { fill: rgba(0,0,0,0.2); }
+.layout-classic .compass-dial svg circle[fill="rgba(8,14,24,0.9)"] { fill: rgba(255,255,255,0.9); }
+
+.compass-cardinal {
+  position: absolute;
+  top: 6px;
+  font-family: var(--tech-font);
+  font-size: 10px;
+  font-weight: 700;
+  color: #00f2fe;
+  text-shadow: 0 0 4px rgba(0, 242, 254, 0.5);
+}
+
+.layout-classic .compass-cardinal {
+  color: var(--gold-dark);
+  text-shadow: 0 0 4px rgba(212, 175, 55, 0.3);
+}
+
+.compass-degree-display {
+  position: absolute;
+  bottom: -24px;
+  font-family: var(--tech-font);
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(10, 15, 25, 0.8);
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+}
+
+.layout-classic .compass-degree-display {
+  color: #000;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+/* Minimap Widget */
+.minimap-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 240px;
+  border-radius: 12px;
+  background: rgba(10, 12, 16, 0.85);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 242, 254, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 2200;
+  pointer-events: auto;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-classic .minimap-widget {
+  background: rgba(250, 249, 246, 0.95);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), inset 0 0 20px rgba(212, 175, 55, 0.05);
+}
+
+.minimap-widget.collapsed {
+  width: 110px;
+}
+
+.minimap-header {
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  background: rgba(0, 242, 254, 0.05);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+}
+
+.layout-classic .minimap-header {
+  background: rgba(212, 175, 55, 0.05);
+  border-bottom-color: rgba(212, 175, 55, 0.2);
+  color: var(--gold-dark);
+}
+
+.minimap-label {
+  font-family: var(--tech-font);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.minimap-chevron {
+  transition: transform 0.3s ease;
+}
+
+.minimap-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.minimap-widget.collapsed .minimap-body {
+  padding: 0;
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.minimap-canvas {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.layout-classic .minimap-canvas {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.minimap-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.7;
+}
+
+.minimap-viewcone {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin-top: -30px;
+  margin-left: -30px;
+  background: conic-gradient(from 330deg, rgba(0, 242, 254, 0.4) 0deg, rgba(0, 242, 254, 0.4) 60deg, transparent 60deg);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: transform 0.1s linear;
+}
+
+.layout-classic .minimap-viewcone {
+  background: conic-gradient(from 330deg, rgba(212, 175, 55, 0.5) 0deg, rgba(212, 175, 55, 0.5) 60deg, transparent 60deg);
+}
+
+.minimap-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  margin-left: -3px;
+  background: #00f2fe;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #00f2fe;
+}
+
+.layout-classic .minimap-dot {
+  background: var(--gold-dark);
+  box-shadow: 0 0 8px var(--gold-dark);
+}
+
+.minimap-legend {
+  display: flex;
+  font-family: var(--ui-font);
+  font-size: 9px;
+  color: var(--text-secondary);
+}
+
+.layout-classic .minimap-legend { color: #666; }
+
+.minimap-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.minimap-legend-item .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.minimap-legend-item .dot.cyan { background: #00f2fe; }
+.layout-classic .minimap-legend-item .dot.cyan { background: var(--gold-dark); }
+
+/* Project Info Panel */
+.project-info-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+  width: 320px;
+  background: rgba(10, 12, 16, 0.9);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.15);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  z-index: 3000;
+  pointer-events: auto;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-classic .project-info-panel {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(212, 175, 55, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.project-info-panel.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%);
+}
+
+.info-panel-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.layout-classic .info-panel-header {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.info-panel-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.layout-classic .info-panel-close {
+  background: rgba(0, 0, 0, 0.05);
+  color: #000;
+}
+
+.info-panel-close:hover {
+  background: #ff4757;
+  color: #fff;
+}
+
+.info-panel-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-family: var(--tech-font);
+  font-size: 9px;
+  color: #00f2fe;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.layout-classic .info-label { color: var(--gold-dark); }
+
+.info-value {
+  font-family: var(--ui-font);
+  font-size: 13px;
+  color: #fff;
+}
+
+.layout-classic .info-value { color: #333; }

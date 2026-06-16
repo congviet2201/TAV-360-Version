@@ -37,69 +37,92 @@
   // OPTION A: CLASSIC LAYOUT TEMPLATES
   // ==========================================
 
+  // Toolbar HTML - used by BOTH layouts (icon-only, tooltip on hover)
+  const toolbarButtonsHTML = `
+        <!-- 1. Music On/Off -->
+        <div class="tool-button" data-action="music" id="btn-music">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <div class="tool-tooltip">Nhạc Nền</div>
+        </div>
+        <!-- 2. Show/Hide Images -->
+        <div class="tool-button" data-action="images" id="btn-images">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="tool-tooltip">Ảnh Toàn Cảnh</div>
+        </div>
+        <!-- 3. Show/Hide Hotspots -->
+        <div class="tool-button" data-action="hotspots" id="btn-hotspots">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="2.5" fill="currentColor"/>
+            <circle cx="12" cy="12" r="5.5" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
+            <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <div class="tool-tooltip">Điểm Điều Hướng</div>
+        </div>
+        <!-- 4. Share -->
+        <div class="tool-button" data-action="share" id="btn-share">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+            <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/>
+            <path d="M8.59 13.51L15.42 17.49M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <div class="tool-tooltip">Chia Sẻ</div>
+        </div>
+        <!-- 5. Call for Consultation -->
+        <div class="tool-button" data-action="call" id="btn-call">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.92 1.5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="tool-tooltip">Tư Vấn</div>
+        </div>
+        <!-- 6. Social Links (with sub-dropdown) -->
+        <div class="tool-button has-dropdown" data-action="social" id="btn-social">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="tool-tooltip">Mạng Xã Hội</div>
+          <div class="social-dropdown" id="social-dropdown">
+            <a href="https://www.facebook.com" target="_blank" class="social-link" data-social="facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              <span>Facebook</span>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="social-link" data-social="instagram">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12c0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+              <span>Instagram</span>
+            </a>
+            <a href="https://zalo.me" target="_blank" class="social-link" data-social="zalo">
+              <svg viewBox="0 0 40 40" fill="currentColor" width="16" height="16"><path d="M20 0C8.955 0 0 8.954 0 20c0 11.045 8.955 20 20 20s20-8.955 20-20C40 8.954 31.045 0 20 0zm9.09 28.182c-1.091 1.09-2.273 1.636-3.636 1.636-.727 0-1.454-.182-2.09-.455l-5.91 2.364.91-5.273c-1.636-1.454-2.637-3.545-2.637-5.818 0-4.364 3.546-7.909 7.91-7.909 4.363 0 7.909 3.545 7.909 7.909 0 2.909-1.546 5.454-4 6.909l1.544 .637z"/></svg>
+              <span>Zalo</span>
+            </a>
+          </div>
+        </div>
+        <!-- 7. Project Information -->
+        <div class="tool-button" data-action="info" id="btn-info">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 16v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="8" r="1" fill="currentColor"/>
+          </svg>
+          <div class="tool-tooltip">Thông Tin Dự Án</div>
+        </div>
+  `;
+
   // Right Tool Stack (Settings Panel) with gear integrated at the bottom
   const verticalToolStackClassicHTML = `
     <div class="vertical-tool-stack" id="right-tool-stack">
-      <!-- Sub-stack containing 5 biometric buttons -->
+      <!-- Sub-stack containing real toolbar tools -->
       <div class="tool-buttons-sub-stack" id="tool-sub-stack">
-        <!-- Button 1: Retinal Compass -->
-        <div class="tool-button" data-action="compass" id="btn-compass">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
-            <circle cx="18" cy="18" r="10" stroke="currentColor" stroke-width="1.5" />
-            <circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1" stroke-dasharray="8 4" />
-            <path d="M18 2V8M18 28V34M2 18H8M28 18H34" stroke="currentColor" stroke-width="1" opacity="0.7"/>
-            <circle cx="18" cy="18" r="2" fill="currentColor"/>
-          </svg>
-          <div class="tool-label">LA BÀN SINH TRẮC</div>
-        </div>
-
-        <!-- Button 2: Biometric Facade (Handprint + Building) -->
-        <div class="tool-button" data-action="facade" id="btn-facade">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 8H28V30H8V8Z" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-            <path d="M13 8V30M18 8V30M23 8V30M8 14H28M8 20H28M8 26H28" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
-            <path d="M15 15C15 14 16 12 18 12C20 12 21 14 21 15V22M13 18C13 16.5 14 15 15 15M23 18C23 16.5 22 15 21 15M11 20C11 19 12 18 13 18M25 20C25 19 24 18 23 18M18 26C14 26 12 23 12 21.5V18M18 26C22 26 24 23 24 21.5V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <div class="tool-label">MẶT ĐỨNG KIẾN TRÚC</div>
-        </div>
-
-        <!-- Button 3: Vault / Archway Eye -->
-        <div class="tool-button" data-action="security" id="btn-security">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 30V18C6 11.3726 11.3726 6 18 6C24.6274 6 30 11.3726 30 18V30" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
-            <path d="M10 30V18C10 13.5817 13.5817 10 18 10C22.4183 10 26 13.5817 26 18V30" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
-            <path d="M11 20C13.5 16.5 17.5 15 18 15C18.5 15 22.5 16.5 25 20C22.5 23.5 18.5 25 18 25C17.5 25 13.5 23.5 11 20Z" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="18" cy="20" r="3.5" stroke="currentColor" stroke-width="1"/>
-            <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
-          </svg>
-          <div class="tool-label">KIỂM SOÁT AN NINH</div>
-        </div>
-
-        <!-- Button 4: DNA Villa Structure -->
-        <div class="tool-button" data-action="analytics" id="btn-analytics">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 24L18 12L30 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M11 24H25M18 12V24" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-            <path d="M12 28C14 26 14 20 18 20C22 20 22 14 24 12" stroke="currentColor" stroke-width="1" stroke-dasharray="1 2"/>
-            <path d="M12 12C14 14 14 20 18 20C22 20 22 26 24 28" stroke="currentColor" stroke-width="1" stroke-dasharray="1 2"/>
-            <circle cx="15.5" cy="17" r="1.5" fill="currentColor" />
-            <circle cx="20.5" cy="23" r="1.5" fill="currentColor" />
-            <circle cx="18" cy="20" r="2" fill="currentColor" />
-          </svg>
-          <div class="tool-label">CẤU TRÚC THIẾT KẾ</div>
-        </div>
-
-        <!-- Button 5: Fingerprint Target -->
-        <div class="tool-button" data-action="target" id="btn-target">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="7" y="7" width="22" height="22" rx="11" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
-            <rect x="11" y="11" width="14" height="14" rx="7" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-            <path d="M18 14C19.5 14 20 15 20 16.5V20.5M16 16V20M14 18C14 17 15 15.5 18 15.5C21 15.5 22 17 22 18.5V22M18 24C16 24 13.5 23 13.5 20.5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M4 10V4H10M32 10V4H26M4 26V32H10M32 26V32H26" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <div class="tool-label">ĐO LƯỜNG HỆ THỐNG</div>
-        </div>
+        ${toolbarButtonsHTML}
       </div>
 
       <!-- Settings Toggle Button (Primary Trigger at the bottom of the stack) -->
@@ -238,67 +261,11 @@
   const verticalToolStackFuturisticHTML = `
     <div class="vertical-tool-stack" id="right-tool-stack">
       <div class="tool-stack-header">
-        <span>ĐO LƯỜNG</span>
+        <span>CÔNG CỤ</span>
       </div>
       <div class="tool-buttons-sub-stack" id="tool-sub-stack">
-        <!-- Button 1: Retinal Compass -->
-        <div class="tool-button" data-action="compass" id="btn-compass">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="18" r="14" stroke="currentColor" stroke-width="1" stroke-dasharray="2 3" opacity="0.6"/>
-            <circle cx="18" cy="18" r="10" stroke="currentColor" stroke-width="1.5" />
-            <circle cx="18" cy="18" r="6" stroke="currentColor" stroke-width="1" stroke-dasharray="8 4" />
-            <path d="M18 2V8M18 28V34M2 18H8M28 18H34" stroke="currentColor" stroke-width="1" opacity="0.7"/>
-            <circle cx="18" cy="18" r="2" fill="currentColor"/>
-          </svg>
-          <div class="tool-label">LA BÀN SINH TRẮC</div>
-        </div>
-
-        <!-- Button 2: Biometric Facade -->
-        <div class="tool-button" data-action="facade" id="btn-facade">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 8H28V30H8V8Z" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-            <path d="M13 8V30M18 8V30M23 8V30M8 14H28M8 20H28M8 26H28" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
-            <path d="M15 15C15 14 16 12 18 12C20 12 21 14 21 15V22M13 18C13 16.5 14 15 15 15M23 18C23 16.5 22 15 21 15M11 20C11 19 12 18 13 18M25 20C25 19 24 18 23 18M18 26C14 26 12 23 12 21.5V18M18 26C22 26 24 23 24 21.5V18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-          <div class="tool-label">MẶT ĐỨNG KIẾN TRÚC</div>
-        </div>
-
-        <!-- Button 3: Vault Eye -->
-        <div class="tool-button" data-action="security" id="btn-security">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 30V18C6 11.3726 11.3726 6 18 6C24.6274 6 30 11.3726 30 18V30" stroke="currentColor" stroke-width="1.2" opacity="0.5"/>
-            <path d="M10 30V18C10 13.5817 13.5817 10 18 10C22.4183 10 26 13.5817 26 18V30" stroke="currentColor" stroke-width="0.8" opacity="0.3"/>
-            <path d="M11 20C13.5 16.5 17.5 15 18 15C18.5 15 22.5 16.5 25 20C22.5 23.5 18.5 25 18 25C17.5 25 13.5 23.5 11 20Z" stroke="currentColor" stroke-width="1.5"/>
-            <circle cx="18" cy="20" r="3.5" stroke="currentColor" stroke-width="1"/>
-            <circle cx="18" cy="20" r="1.5" fill="currentColor"/>
-          </svg>
-          <div class="tool-label">KIỂM SOÁT AN NINH</div>
-        </div>
-
-        <!-- Button 4: DNA Structure -->
-        <div class="tool-button" data-action="analytics" id="btn-analytics">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 24L18 12L30 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M11 24H25M18 12V24" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-            <path d="M12 28C14 26 14 20 18 20C22 20 22 14 24 12" stroke="currentColor" stroke-width="1" stroke-dasharray="1 2"/>
-            <path d="M12 12C14 14 14 20 18 20C22 20 22 26 24 28" stroke="currentColor" stroke-width="1" stroke-dasharray="1 2"/>
-            <circle cx="15.5" cy="17" r="1.5" fill="currentColor" />
-            <circle cx="20.5" cy="23" r="1.5" fill="currentColor" />
-            <circle cx="18" cy="20" r="2" fill="currentColor" />
-          </svg>
-          <div class="tool-label">CẤU TRÚC THIẾT KẾ</div>
-        </div>
-
-        <!-- Button 5: Fingerprint Target -->
-        <div class="tool-button" data-action="target" id="btn-target">
-          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="7" y="7" width="22" height="22" rx="11" stroke="currentColor" stroke-width="1.2" opacity="0.6"/>
-            <rect x="11" y="11" width="14" height="14" rx="7" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-            <path d="M18 14C19.5 14 20 15 20 16.5V20.5M16 16V20M14 18C14 17 15 15.5 18 15.5C21 15.5 22 17 22 18.5V22M18 24C16 24 13.5 23 13.5 20.5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M4 10V4H10M32 10V4H26M4 26V32H10M32 26V32H26" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-          <div class="tool-label">ĐO LƯỜNG HỆ THỐNG</div>
-        </div>
+        ${toolbarButtonsHTML}
+        <!-- (end toolbar buttons) -->
       </div>
     </div>
   `;
@@ -419,6 +386,76 @@
               <div class="submenu-item" data-action="interior-rooftop">Sân Thượng</div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // ==========================================
+  // SHARED WIDGET TEMPLATES (both layouts)
+  // ==========================================
+
+  // Compass Widget - positioned bottom-left above layout switcher
+  const compassWidgetHTML = `
+    <div class="compass-widget" id="compass-widget">
+      <div class="compass-outer-ring"></div>
+      <div class="compass-dial" id="compass-dial">
+        <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <!-- Background circle -->
+          <circle cx="36" cy="36" r="34" stroke="rgba(0,242,254,0.15)" stroke-width="1.5"/>
+          <!-- Cardinal tick marks -->
+          <line x1="36" y1="3" x2="36" y2="10" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="36" y1="62" x2="36" y2="69" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="3" y1="36" x2="10" y2="36" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="62" y1="36" x2="69" y2="36" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Inter-cardinal ticks -->
+          <line x1="57.38" y1="7.09" x2="54.28" y2="12.46" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="64.91" y1="14.62" x2="59.54" y2="17.72" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="14.62" y1="7.09" x2="17.72" y2="12.46" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
+          <line x1="7.09" y1="14.62" x2="12.46" y2="17.72" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
+          <!-- North needle (cyan, pointing up) -->
+          <polygon points="36,6 39.5,36 36,32 32.5,36" fill="url(#compassNeedleGrad)"/>
+          <!-- South needle (white, pointing down) -->
+          <polygon points="36,66 39.5,36 36,40 32.5,36" fill="rgba(255,255,255,0.3)"/>
+          <!-- Center dot -->
+          <circle cx="36" cy="36" r="4" fill="rgba(8,14,24,0.9)" stroke="#00f2fe" stroke-width="1.5"/>
+          <circle cx="36" cy="36" r="1.5" fill="#00f2fe"/>
+          <defs>
+            <linearGradient id="compassNeedleGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#00f2fe"/>
+              <stop offset="100%" stop-color="rgba(0,242,254,0.5)"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="compass-cardinal n">N</div>
+      <div class="compass-degree-display" id="compass-degree">0°</div>
+    </div>
+  `;
+
+  // Mini Map Widget - positioned bottom-right
+  const minimapWidgetHTML = `
+    <div class="minimap-widget collapsed" id="minimap-widget">
+      <div class="minimap-header" id="minimap-toggle-btn">
+        <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+          <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span class="minimap-label">BẢN ĐỒ</span>
+        <svg class="minimap-chevron" viewBox="0 0 24 24" fill="none" width="12" height="12">
+          <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="minimap-body" id="minimap-body">
+        <div class="minimap-canvas" id="minimap-canvas">
+          <img src="pano_aerial.png" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
+          <!-- Current viewpoint cone indicator -->
+          <div class="minimap-viewcone" id="minimap-viewcone"></div>
+          <!-- Current position dot -->
+          <div class="minimap-dot" id="minimap-dot"></div>
+        </div>
+        <div class="minimap-legend">
+          <div class="minimap-legend-item"><span class="dot cyan"></span> Vị trí hiện tại</div>
         </div>
       </div>
     </div>
@@ -653,6 +690,21 @@
       setupFuturisticListeners();
     }
 
+    // Inject shared Compass widget (always above layout switcher pill, bottom-left)
+    if (!document.getElementById("compass-widget")) {
+      const compassDiv = document.createElement("div");
+      compassDiv.innerHTML = compassWidgetHTML;
+      document.body.appendChild(compassDiv.firstElementChild);
+    }
+
+    // Inject shared Minimap widget (bottom-right)
+    if (!document.getElementById("minimap-widget")) {
+      const mapDiv = document.createElement("div");
+      mapDiv.innerHTML = minimapWidgetHTML;
+      document.body.appendChild(mapDiv.firstElementChild);
+      setupMinimapListeners();
+    }
+
     // Restore selected active highlights
     restoreActiveStates();
   }
@@ -728,21 +780,21 @@
       });
     }
 
-    const toolButtons = document.querySelectorAll(".tool-button");
+    const toolButtons = document.querySelectorAll(".tool-button:not([style*='display:none'])");
     toolButtons.forEach(btn => {
       btn.addEventListener("click", function (e) {
+        if (this.classList.contains("has-dropdown")) {
+          e.stopPropagation();
+          const dropdown = this.querySelector(".social-dropdown");
+          if (dropdown) dropdown.classList.toggle("open");
+          return;
+        }
         e.stopPropagation();
-        const action = this.getAttribute("data-action");
-        const toolLabel = this.querySelector(".tool-label");
-        const labelText = toolLabel ? toolLabel.textContent : action.toUpperCase();
-        showNotification(`Kích hoạt đo lường: ${labelText}`);
-
-        this.style.transform = "scale(0.9)";
-        setTimeout(() => {
-          this.style.transform = "";
-        }, 150);
+        dispatchToolAction(this);
       });
     });
+
+    // Close social dropdown on outside click (delegated to document click in injectUI)
 
     navItems.forEach(item => {
       item.addEventListener("click", function (e) {
@@ -838,19 +890,17 @@
       });
     }
 
-    const toolButtons = document.querySelectorAll(".tool-button");
+    const toolButtons = document.querySelectorAll(".tool-button:not([style*='display:none'])");
     toolButtons.forEach(btn => {
       btn.addEventListener("click", function (e) {
+        if (this.classList.contains("has-dropdown")) {
+          e.stopPropagation();
+          const dropdown = this.querySelector(".social-dropdown");
+          if (dropdown) dropdown.classList.toggle("open");
+          return;
+        }
         e.stopPropagation();
-        const action = this.getAttribute("data-action");
-        const toolLabel = this.querySelector(".tool-label");
-        const labelText = toolLabel ? toolLabel.textContent : action.toUpperCase();
-        showNotification(`Kích hoạt đo lường: ${labelText}`);
-
-        this.style.transform = "scale(0.9)";
-        setTimeout(() => {
-          this.style.transform = "";
-        }, 150);
+        dispatchToolAction(this);
       });
     });
 
@@ -911,6 +961,178 @@
 
         handleSubmenuSelection(this);
       });
+    });
+  }
+
+  // ==========================================
+  // TOOLBAR ACTION DISPATCHER
+  // ==========================================
+
+  // Per-tool state
+  let isMusicMuted = false;
+  let isImagesHidden = false;
+  let isHotspotsHidden = false;
+
+  function dispatchToolAction(btn) {
+    const action = btn.getAttribute("data-action");
+    btn.style.transform = "scale(0.88)";
+    setTimeout(() => { btn.style.transform = ""; }, 150);
+
+    switch (action) {
+      case "music":
+        isMusicMuted = !isMusicMuted;
+        if (window.pano && typeof window.pano.setMute === "function") {
+          window.pano.setMute(isMusicMuted);
+        }
+        btn.classList.toggle("active-tool", isMusicMuted);
+        showNotification(isMusicMuted ? "Nhạc nền đã tắt" : "Nhạc nền đã bật");
+        break;
+
+      case "images":
+        isImagesHidden = !isImagesHidden;
+        if (window.pano && typeof window.pano.setTextureVisible === "function") {
+          window.pano.setTextureVisible(!isImagesHidden);
+        }
+        btn.classList.toggle("active-tool", isImagesHidden);
+        showNotification(isImagesHidden ? "Ảnh toàn cảnh đã ẩn" : "Ảnh toàn cảnh đã hiện");
+        break;
+
+      case "hotspots":
+        isHotspotsHidden = !isHotspotsHidden;
+        const hotspots = document.querySelectorAll(".hologram-marker-container, [class*='hotspot']");
+        hotspots.forEach(hs => {
+          hs.style.visibility = isHotspotsHidden ? "hidden" : "visible";
+          hs.style.opacity = isHotspotsHidden ? "0" : "";
+        });
+        btn.classList.toggle("active-tool", isHotspotsHidden);
+        showNotification(isHotspotsHidden ? "Điểm điều hướng đã ẩn" : "Điểm điều hướng đã hiện");
+        break;
+
+      case "share":
+        if (navigator.share) {
+          navigator.share({ title: "La Tiên Villa", text: "Khám phá dự án La Tiên Villa", url: window.location.href })
+            .catch(err => console.log("Share cancelled", err));
+        } else {
+          navigator.clipboard.writeText(window.location.href)
+            .then(() => showNotification("Link đã sao chép vào clipboard!"))
+            .catch(() => showNotification("Không thể chia sẻ. Vui lòng sao chép URL."));
+        }
+        break;
+
+      case "call":
+        window.open("tel:+84000000000", "_self");
+        showNotification("Đang kết nối tư vấn viên...");
+        break;
+
+      case "info":
+        showProjectInfoPanel();
+        break;
+
+      default:
+        showNotification(`Tính năng: ${action}`);
+        console.log(`Tool action: ${action}`);
+    }
+  }
+
+  // Project info panel
+  function showProjectInfoPanel() {
+    let panel = document.getElementById("project-info-panel");
+    if (panel) {
+      panel.classList.toggle("visible");
+      return;
+    }
+    panel = document.createElement("div");
+    panel.id = "project-info-panel";
+    panel.className = "project-info-panel";
+    panel.innerHTML = `
+      <div class="info-panel-header">
+        <div class="info-panel-title">
+          <div class="logo-script-top" style="font-size:14px;letter-spacing:2px;">LA TIÊN</div>
+          <div class="logo-script-sub" style="font-size:7px;letter-spacing:3px;">V I L L A</div>
+        </div>
+        <div class="info-panel-close" id="info-panel-close">✕</div>
+      </div>
+      <div class="info-panel-body">
+        <div class="info-row">
+          <span class="info-label">VỊ TRÍ</span>
+          <span class="info-value">Hồ Tràm, Bà Rịa - Vũng Tàu</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">LOẠI HÌNH</span>
+          <span class="info-value">Biệt thự nghỉ dưỡng ven biển</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">DIỆN TÍCH</span>
+          <span class="info-value">250 - 420 m² / căn</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">SỐ LƯỢNG</span>
+          <span class="info-value">99 căn biệt thự cao cấp</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">CHỦ ĐẦU TƯ</span>
+          <span class="info-value">La Tiên Investment Group</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">TIỆN ÍCH</span>
+          <span class="info-value">Clubhouse, Beach Bar, Spa, Marina</span>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(panel);
+    requestAnimationFrame(() => panel.classList.add("visible"));
+    document.getElementById("info-panel-close").addEventListener("click", (e) => {
+      e.stopPropagation();
+      panel.classList.remove("visible");
+    });
+  }
+
+  // ==========================================
+  // COMPASS & MINIMAP SYNC
+  // ==========================================
+
+  let compassAnimFrame = null;
+
+  function syncCompass() {
+    if (!window.pano) return;
+    try {
+      const pan = window.pano.getPan ? window.pano.getPan() : 0;
+      const dial = document.getElementById("compass-dial");
+      const degDisplay = document.getElementById("compass-degree");
+
+      if (dial) {
+        dial.style.transform = `rotate(${-pan}deg)`;
+      }
+      if (degDisplay) {
+        const normalizedDeg = ((pan % 360) + 360) % 360;
+        degDisplay.textContent = `${Math.round(normalizedDeg)}°`;
+      }
+
+      syncMinimap(pan);
+    } catch (e) {}
+    compassAnimFrame = requestAnimationFrame(syncCompass);
+  }
+
+  function syncMinimap(pan) {
+    const viewcone = document.getElementById("minimap-viewcone");
+    if (!viewcone) return;
+    const normalizedDeg = ((pan % 360) + 360) % 360;
+    viewcone.style.transform = `rotate(${normalizedDeg}deg)`;
+  }
+
+  function setupMinimapListeners() {
+    const toggleBtn = document.getElementById("minimap-toggle-btn");
+    const widget = document.getElementById("minimap-widget");
+    if (!toggleBtn || !widget) return;
+
+    toggleBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      widget.classList.toggle("collapsed");
+      const chevron = widget.querySelector(".minimap-chevron path");
+      const isCollapsed = widget.classList.contains("collapsed");
+      if (chevron) {
+        chevron.setAttribute("d", isCollapsed ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6");
+      }
     });
   }
 
@@ -995,6 +1217,12 @@
 
     // Close submenus/panels when clicking outside any interactive UI element
     document.addEventListener("click", function (e) {
+      // Close social dropdowns if click is outside the social button
+      if (!e.target.closest(".tool-button.has-dropdown")) {
+        const dropdowns = document.querySelectorAll(".social-dropdown.open");
+        dropdowns.forEach(d => d.classList.remove("open"));
+      }
+
       // Don't close if the click was on interactive UI
       if (e.target.closest(".modern-ui-overlay")) return;
 
@@ -1178,6 +1406,11 @@
       window.pano.addListener("configloaded", onNodeChange);
       window.pano.addListener("changenode", onNodeChange);
       onNodeChange();
+      
+      // Start compass/minimap synchronization loop
+      if (!compassAnimFrame) {
+        syncCompass();
+      }
     } else {
       setTimeout(initPanoHooks, 200);
     }
