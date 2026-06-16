@@ -24,11 +24,11 @@
     </svg>
   `;
 
-  // 1.1 Layout Switcher Widget HTML Template
+  // 1.1 Layout Switcher Widget HTML Template (Vietnamese labels)
   const layoutSwitcherHTML = `
     <div class="layout-switcher-pill" id="layout-switcher">
-      <div class="switcher-segment" id="opt-layout-classic" data-layout="classic">Classic Layout</div>
-      <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic">Futuristic Layout</div>
+      <div class="switcher-segment" id="opt-layout-classic" data-layout="classic">Cổ điển</div>
+      <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic">Tương lai</div>
       <div class="switcher-slider" id="switcher-slider"></div>
     </div>
   `;
@@ -36,7 +36,7 @@
   // ==========================================
   // OPTION A: CLASSIC LAYOUT TEMPLATES
   // ==========================================
-  
+
   // Right Tool Stack (Settings Panel) with gear integrated at the bottom
   const verticalToolStackClassicHTML = `
     <div class="vertical-tool-stack" id="right-tool-stack">
@@ -129,27 +129,25 @@
 
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item active" data-action="overview-general">Tổng quan Villa</div>
-            <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
-            <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
-            <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+            <div class="submenu-item active" data-action="overview-top">Nhìn Tổng Thể</div>
+            <div class="submenu-item" data-action="overview-bird">Góc Nhìn Flycam</div>
           </div>
         </div>
 
-        <!-- 2. VỊ TRÍ -->
-        <div class="nav-item" data-id="location" id="nav-location">
+        <!-- 2. TIỆN ÍCH -->
+        <div class="nav-item" data-id="amenities" id="nav-amenities">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Vị Trí</span>
+          <span>Tiện Ích</span>
 
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item" data-action="location-general">Vị trí địa lý</div>
-            <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
-            <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
-            <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+            <div class="submenu-item" data-action="amenity-1">Tiện Ích 1</div>
+            <div class="submenu-item" data-action="amenity-2">Tiện Ích 2</div>
+            <div class="submenu-item" data-action="amenity-3">Tiện Ích 3</div>
           </div>
         </div>
 
@@ -162,25 +160,25 @@
           <!-- MEGA MENU: Compact cards -->
           <div class="nav-submenu mega-menu">
             <!-- Card 1: Toàn cảnh dự án (Node 1) -->
-            <div class="mega-card active" data-pano-node="node1">
+            <div class="mega-card active" data-pano-node="node1" data-action="pano-node1">
               <img src="pano_aerial.png" alt="Toàn cảnh dự án" class="mega-card-img">
               <div class="mega-card-overlay"></div>
               <div class="mega-card-title">Toàn cảnh dự án</div>
             </div>
             <!-- Card 2: Biệt thự Đơn lập A (Node 2) -->
-            <div class="mega-card" data-pano-node="node2">
+            <div class="mega-card" data-pano-node="node2" data-action="pano-node2">
               <img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img">
               <div class="mega-card-overlay"></div>
               <div class="mega-card-title">Biệt thự Đơn lập A</div>
             </div>
             <!-- Card 3: Biệt thự Song lập B (Node 3) -->
-            <div class="mega-card" data-pano-node="node3">
+            <div class="mega-card" data-pano-node="node3" data-action="pano-node3">
               <img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img">
               <div class="mega-card-overlay"></div>
               <div class="mega-card-title">Biệt thự Song lập B</div>
             </div>
             <!-- Card 4: Biệt thự Liền kề C (Node 4) -->
-            <div class="mega-card" data-pano-node="node4">
+            <div class="mega-card" data-pano-node="node4" data-action="pano-node4">
               <img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img">
               <div class="mega-card-overlay"></div>
               <div class="mega-card-title">Biệt thự Liền kề C</div>
@@ -188,42 +186,34 @@
           </div>
         </div>
 
-        <!-- 4. TIỆN ÍCH -->
-        <div class="nav-item" data-id="amenities" id="nav-amenities">
+        <!-- 4. KIẾN TRÚC -->
+        <div class="nav-item" data-id="architecture" id="nav-architecture">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 17L12 22L22 17" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 12L12 17L22 12" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 21h18M3 10h18M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M10 21V14h4v7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
           </svg>
-          <span>Tiện Ích</span>
+          <span>Kiến Trúc</span>
 
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item" data-action="experience">Trải nghiệm</div>
-            <div class="submenu-item" data-action="masterplan">Tổng mặt bằng</div>
-            <div class="submenu-item" data-action="connections">Liên kết vùng</div>
-            <div class="submenu-item" data-action="intro">Giới thiệu</div>
-            <div class="submenu-item" data-action="aboutsite">Về website</div>
-            <div class="submenu-item" data-action="interiors">Nội thất</div>
+            <div class="submenu-item" data-action="architecture-1">Kiến Trúc 1</div>
+            <div class="submenu-item" data-action="architecture-2">Kiến Trúc 2</div>
+            <div class="submenu-item" data-action="architecture-3">Kiến Trúc 3</div>
           </div>
         </div>
 
-        <!-- 5. CỘNG ĐỒNG -->
-        <div class="nav-item" data-id="community" id="nav-community">
+        <!-- 5. NỘI THẤT -->
+        <div class="nav-item" data-id="interior" id="nav-interior">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M23 21V19C22.9993 18.1137 22.6944 17.2541 22.1361 16.5683C21.5777 15.8824 20.7998 15.4093 19.93 15.22" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M16 3.13C16.8699 3.31885 17.6478 3.79188 18.2062 4.47775C18.7645 5.16362 19.0694 6.02324 19.07 6.91C19.0694 7.79676 18.7645 8.65638 18.2062 9.34225C17.6478 10.0281 16.8699 10.5012 16 10.69" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20 9V7a2 2 0 00-2-2h-2M4 9V7a2 2 0 012-2h2M4 15v2a2 2 0 002 2h2M20 15v2a2 2 0 01-2 2h-2M9 9h6v6H9z" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <span>Cộng Đồng</span>
+          <span>Nội Thất</span>
 
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item" data-action="community-residents">Cộng đồng cư dân</div>
-            <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
-            <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
-            <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+            <div class="submenu-item" data-action="interior-bedroom">Phòng Ngủ</div>
+            <div class="submenu-item" data-action="interior-kitchen">Nhà Bếp</div>
+            <div class="submenu-item" data-action="interior-balcony">Ban Công</div>
+            <div class="submenu-item" data-action="interior-rooftop">Sân Thượng</div>
           </div>
         </div>
       </div>
@@ -341,27 +331,25 @@
 
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item active" data-action="overview-general">Tổng quan Villa</div>
-              <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
-              <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
-              <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+              <div class="submenu-item active" data-action="overview-top">Nhìn Tổng Thể</div>
+              <div class="submenu-item" data-action="overview-bird">Góc Nhìn Flycam</div>
             </div>
           </div>
 
-          <!-- 2. VỊ TRÍ -->
-          <div class="nav-item" data-id="location" id="nav-location">
+          <!-- 2. TIỆN ÍCH -->
+          <div class="nav-item" data-id="amenities" id="nav-amenities">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 5.02944 7.02944 1 12 1C16.9706 1 21 5.02944 21 10Z" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="12" cy="10" r="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 17L12 22L22 17" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M2 12L12 17L22 12" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>Vị Trí</span>
+            <span>Tiện Ích</span>
 
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-action="location-general">Vị trí địa lý</div>
-              <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
-              <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
-              <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+              <div class="submenu-item" data-action="amenity-1">Tiện Ích 1</div>
+              <div class="submenu-item" data-action="amenity-2">Tiện Ích 2</div>
+              <div class="submenu-item" data-action="amenity-3">Tiện Ích 3</div>
             </div>
           </div>
 
@@ -375,25 +363,25 @@
             <!-- MEGA MENU: Compact cards -->
             <div class="nav-submenu mega-menu">
               <!-- Card 1: Toàn cảnh dự án (Node 1) -->
-              <div class="mega-card active" data-pano-node="node1">
+              <div class="mega-card active" data-pano-node="node1" data-action="pano-node1">
                 <img src="pano_aerial.png" alt="Toàn cảnh dự án" class="mega-card-img">
                 <div class="mega-card-overlay"></div>
                 <div class="mega-card-title">Toàn cảnh dự án</div>
               </div>
               <!-- Card 2: Biệt thự Đơn lập A (Node 2) -->
-              <div class="mega-card" data-pano-node="node2">
+              <div class="mega-card" data-pano-node="node2" data-action="pano-node2">
                 <img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img">
                 <div class="mega-card-overlay"></div>
                 <div class="mega-card-title">Biệt thự Đơn lập A</div>
               </div>
               <!-- Card 3: Biệt thự Song lập B (Node 3) -->
-              <div class="mega-card" data-pano-node="node3">
+              <div class="mega-card" data-pano-node="node3" data-action="pano-node3">
                 <img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img">
                 <div class="mega-card-overlay"></div>
                 <div class="mega-card-title">Biệt thự Song lập B</div>
               </div>
               <!-- Card 4: Biệt thự Liền kề C (Node 4) -->
-              <div class="mega-card" data-pano-node="node4">
+              <div class="mega-card" data-pano-node="node4" data-action="pano-node4">
                 <img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img">
                 <div class="mega-card-overlay"></div>
                 <div class="mega-card-title">Biệt thự Liền kề C</div>
@@ -401,42 +389,34 @@
             </div>
           </div>
 
-          <!-- 4. TIỆN ÍCH -->
-          <div class="nav-item" data-id="amenities" id="nav-amenities">
+          <!-- 4. KIẾN TRÚC -->
+          <div class="nav-item" data-id="architecture" id="nav-architecture">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 17L12 22L22 17" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 12L12 17L22 12" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 21h18M3 10h18M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M10 21V14h4v7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
             </svg>
-            <span>Tiện Ích</span>
+            <span>Kiến Trúc</span>
 
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-action="experience">Trải nghiệm</div>
-              <div class="submenu-item" data-action="masterplan">Tổng mặt bằng</div>
-              <div class="submenu-item" data-action="connections">Liên kết vùng</div>
-              <div class="submenu-item" data-action="intro">Giới thiệu</div>
-              <div class="submenu-item" data-action="aboutsite">Về website</div>
-              <div class="submenu-item" data-action="interiors">Nội thất</div>
+              <div class="submenu-item" data-action="architecture-1">Kiến Trúc 1</div>
+              <div class="submenu-item" data-action="architecture-2">Kiến Trúc 2</div>
+              <div class="submenu-item" data-action="architecture-3">Kiến Trúc 3</div>
             </div>
           </div>
 
-          <!-- 5. CỘNG ĐỒNG -->
-          <div class="nav-item" data-id="community" id="nav-community">
+          <!-- 5. NỘI THẤT -->
+          <div class="nav-item" data-id="interior" id="nav-interior">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="9" cy="7" r="4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M23 21V19C22.9993 18.1137 22.6944 17.2541 22.1361 16.5683C21.5777 15.8824 20.7998 15.4093 19.93 15.22" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16 3.13C16.8699 3.31885 17.6478 3.79188 18.2062 4.47775C18.7645 5.16362 19.0694 6.02324 19.07 6.91C19.0694 7.79676 18.7645 8.65638 18.2062 9.34225C17.6478 10.0281 16.8699 10.5012 16 10.69" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 9V7a2 2 0 00-2-2h-2M4 9V7a2 2 0 012-2h2M4 15v2a2 2 0 002 2h2M20 15v2a2 2 0 01-2 2h-2M9 9h6v6H9z" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <span>Cộng Đồng</span>
+            <span>Nội Thất</span>
 
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-action="community-residents">Cộng đồng cư dân</div>
-              <div class="submenu-item" data-action="placeholder-apartment-a">Căn hộ A</div>
-              <div class="submenu-item" data-action="placeholder-apartment-b">Căn hộ B</div>
-              <div class="submenu-item" data-action="placeholder-apartment-c">Căn hộ C</div>
+              <div class="submenu-item" data-action="interior-bedroom">Phòng Ngủ</div>
+              <div class="submenu-item" data-action="interior-kitchen">Nhà Bếp</div>
+              <div class="submenu-item" data-action="interior-balcony">Ban Công</div>
+              <div class="submenu-item" data-action="interior-rooftop">Sân Thượng</div>
             </div>
           </div>
         </div>
@@ -447,7 +427,7 @@
   // ==========================================
   // SHARED STATE & DATA STACKS
   // ==========================================
-  
+
   const mapMarkers = [
     {
       id: "pin_villa_a1",
@@ -530,11 +510,19 @@
     }
   ];
 
+  // Safe localStorage helper (works on file:// protocol)
+  function lsGet(key, fallback) {
+    try { return localStorage.getItem(key) || fallback; } catch (e) { return fallback; }
+  }
+  function lsSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+  }
+
   // System states (stored & persisted in localStorage)
-  let layoutMode = localStorage.getItem("latien_layout_mode") || "futuristic";
-  let activeNavItemId = "overview";
-  let activeSubmenuAction = "overview-general";
-  let activePanoNode = "node1";
+  let layoutMode = lsGet("latien_layout_mode", "futuristic");
+  let activeNavItemId = lsGet("latien_active_nav", "overview");
+  let activeSubmenuAction = lsGet("latien_active_submenu", "overview-top");
+  let activePanoNode = lsGet("latien_active_node", "node1");
   let isSidebarExpanded = false; // state for collapsed sidebar in futuristic layout
 
   // Notification helper
@@ -545,7 +533,7 @@
       container = document.createElement("div");
       container.id = "ui-notification";
       container.style.cssText = `
-        position: absolute;
+        position: fixed;
         top: 24px;
         left: 50%;
         transform: translateX(-50%) translateY(-10px);
@@ -559,7 +547,7 @@
         letter-spacing: 1.5px;
         backdrop-filter: blur(12px);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 242, 254, 0.15);
-        z-index: 3000;
+        z-index: 9999;
         opacity: 0;
         transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         pointer-events: none;
@@ -578,7 +566,7 @@
       container.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 242, 254, 0.15)";
       container.textContent = `SYSTEM: ${text}`;
     }
-    
+
     container.style.opacity = "1";
     container.style.transform = "translateX(-50%) translateY(0)";
 
@@ -604,7 +592,7 @@
       const activeSeg = layoutMode === "classic" ? classicSeg : futuristicSeg;
       classicSeg.classList.toggle("active", layoutMode === "classic");
       futuristicSeg.classList.toggle("active", layoutMode === "futuristic");
-      
+
       slider.style.width = `${activeSeg.offsetWidth}px`;
       slider.style.left = `${activeSeg.offsetLeft}px`;
     });
@@ -683,12 +671,11 @@
       }
     });
 
-    // 2. Restore submenu active highlight
+    // 2. Restore submenu active highlight — use unique data-action only
     const subItems = document.querySelectorAll(".submenu-item, .mega-card");
     subItems.forEach(sub => {
       const action = sub.getAttribute("data-action");
-      const pNode = sub.getAttribute("data-pano-node");
-      if ((action && action === activeSubmenuAction) || (pNode && pNode === activePanoNode)) {
+      if (action && action === activeSubmenuAction) {
         sub.classList.add("active");
       } else {
         sub.classList.remove("active");
@@ -725,6 +712,7 @@
   }
 
   // Bind Listeners for OPTION A: CLASSIC
+  // NOTE: document-level "click" is only registered once globally (see injectUI)
   function setupClassicListeners() {
     const settingsToggle = document.getElementById("btn-settings-toggle");
     const rightToolStack = document.getElementById("right-tool-stack");
@@ -771,6 +759,7 @@
         navItems.forEach(n => n.classList.remove("active"));
         this.classList.add("active");
         activeNavItemId = this.getAttribute("data-id");
+        lsSet("latien_active_nav", activeNavItemId);
         updateActiveGlow(this);
       });
     });
@@ -784,7 +773,9 @@
         this.classList.add("active");
 
         activeSubmenuAction = this.getAttribute("data-action");
-        activePanoNode = this.getAttribute("data-pano-node");
+        activePanoNode = this.getAttribute("data-pano-node") || activePanoNode;
+        lsSet("latien_active_submenu", activeSubmenuAction);
+        lsSet("latien_active_node", activePanoNode);
 
         const parentNavItem = this.closest(".nav-item");
         if (parentNavItem) {
@@ -794,16 +785,10 @@
         handleSubmenuSelection(this);
       });
     });
-
-    document.addEventListener("click", function () {
-      navItems.forEach(n => n.classList.remove("is-open"));
-      if (rightToolStack) {
-        rightToolStack.classList.remove("expanded");
-      }
-    });
   }
 
   // Bind Listeners for OPTION B: FUTURISTIC
+  // NOTE: document-level "click" is only registered once globally (see injectUI)
   function setupFuturisticListeners() {
     const settingsToggle = document.getElementById("btn-settings-toggle");
     const rightToolStack = document.getElementById("right-tool-stack");
@@ -825,10 +810,12 @@
       // Sync visually to internal expanded states
       if (isSidebarExpanded) {
         sidebarContainer.classList.add("expanded");
-        sidebarToggle.querySelector("path").setAttribute("d", "M15 19l-7-7 7-7");
+        const pathEl = sidebarToggle.querySelector("path");
+        if (pathEl) pathEl.setAttribute("d", "M15 19l-7-7 7-7");
       } else {
         sidebarContainer.classList.remove("expanded");
-        sidebarToggle.querySelector("path").setAttribute("d", "M9 5l7 7-7 7");
+        const pathEl = sidebarToggle.querySelector("path");
+        if (pathEl) pathEl.setAttribute("d", "M9 5l7 7-7 7");
       }
 
       sidebarToggle.addEventListener("click", function (e) {
@@ -836,7 +823,8 @@
         sidebarContainer.classList.toggle("expanded");
         const isExpanded = sidebarContainer.classList.contains("expanded");
         isSidebarExpanded = isExpanded;
-        sidebarToggle.querySelector("path").setAttribute("d", isExpanded ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7");
+        const pathEl = sidebarToggle.querySelector("path");
+        if (pathEl) pathEl.setAttribute("d", isExpanded ? "M15 19l-7-7 7-7" : "M9 5l7 7-7 7");
         showNotification(isExpanded ? "Đã mở rộng thanh điều hướng" : "Đã thu gọn thanh điều hướng");
 
         if (!isExpanded) {
@@ -845,7 +833,7 @@
           sidebarContainer.classList.remove("mega-open");
         } else {
           const activeItem = document.querySelector(".nav-item.active");
-          updateActiveGlow(activeItem);
+          if (activeItem) updateActiveGlow(activeItem);
         }
       });
     }
@@ -874,9 +862,8 @@
         if (sidebarContainer && !sidebarContainer.classList.contains("expanded")) {
           sidebarContainer.classList.add("expanded");
           isSidebarExpanded = true;
-          if (sidebarToggle) {
-            sidebarToggle.querySelector("path").setAttribute("d", "M15 19l-7-7 7-7");
-          }
+          const pathEl = sidebarToggle ? sidebarToggle.querySelector("path") : null;
+          if (pathEl) pathEl.setAttribute("d", "M15 19l-7-7 7-7");
         }
 
         const isOpen = this.classList.contains("is-open");
@@ -887,14 +874,15 @@
         this.classList.toggle("is-open", !isOpen);
 
         const anyOpen = Array.from(navItems).some(n => n.classList.contains("is-open"));
-        sidebarContainer.classList.toggle("submenu-open", anyOpen);
+        if (sidebarContainer) sidebarContainer.classList.toggle("submenu-open", anyOpen);
 
         const isMegaOpen = Array.from(navItems).some(n => n.classList.contains("is-open") && n.classList.contains("center-logo-node"));
-        sidebarContainer.classList.toggle("mega-open", isMegaOpen);
+        if (sidebarContainer) sidebarContainer.classList.toggle("mega-open", isMegaOpen);
 
         navItems.forEach(n => n.classList.remove("active"));
         this.classList.add("active");
         activeNavItemId = this.getAttribute("data-id");
+        lsSet("latien_active_nav", activeNavItemId);
         updateActiveGlow(this);
       });
     });
@@ -908,7 +896,9 @@
         this.classList.add("active");
 
         activeSubmenuAction = this.getAttribute("data-action");
-        activePanoNode = this.getAttribute("data-pano-node");
+        activePanoNode = this.getAttribute("data-pano-node") || activePanoNode;
+        lsSet("latien_active_submenu", activeSubmenuAction);
+        lsSet("latien_active_node", activePanoNode);
 
         const parentNavItem = this.closest(".nav-item");
         if (parentNavItem) {
@@ -921,17 +911,6 @@
 
         handleSubmenuSelection(this);
       });
-    });
-
-    document.addEventListener("click", function () {
-      navItems.forEach(n => n.classList.remove("is-open"));
-      if (sidebarContainer) {
-        sidebarContainer.classList.remove("submenu-open");
-        sidebarContainer.classList.remove("mega-open");
-      }
-      if (rightToolStack) {
-        rightToolStack.classList.remove("expanded");
-      }
     });
   }
 
@@ -964,17 +943,20 @@
       const activeNav = document.querySelector(".nav-item.active");
       if (activeNav) {
         activeNavItemId = activeNav.getAttribute("data-id");
+        lsSet("latien_active_nav", activeNavItemId);
       }
       const activeSub = document.querySelector(".submenu-item.active, .mega-card.active");
       if (activeSub) {
-        activeSubmenuAction = activeSub.getAttribute("data-action");
-        activePanoNode = activeSub.getAttribute("data-pano-node");
+        activeSubmenuAction = activeSub.getAttribute("data-action") || activeSubmenuAction;
+        activePanoNode = activeSub.getAttribute("data-pano-node") || activePanoNode;
+        lsSet("latien_active_submenu", activeSubmenuAction);
+        lsSet("latien_active_node", activePanoNode);
       }
 
       // 3. Swap UI layout dynamically after 300ms fadeout
       setTimeout(() => {
         layoutMode = newLayout;
-        localStorage.setItem("latien_layout_mode", layoutMode);
+        lsSet("latien_layout_mode", layoutMode);
 
         // Update body layout class namespaces
         document.body.classList.remove("layout-classic", "layout-futuristic");
@@ -994,7 +976,7 @@
           uiWrapper.classList.remove("switching");
         }, 50);
 
-        showNotification(layoutMode === "classic" ? "Đã chuyển sang Giao diện Cổ điển" : "Switched to Futuristic Layout");
+        showNotification(layoutMode === "classic" ? "Đã chuyển sang Giao diện Cổ điển" : "Đã chuyển sang Giao diện Tương lai");
 
       }, 300);
     };
@@ -1007,17 +989,46 @@
     // 4. Initialize layout Switcher segments
     updateSwitcherUI();
 
-    // Prevent click inside submenus from propagating
+    // -------------------------------------------------------
+    // GLOBAL EVENT LISTENERS (registered ONCE, not per layout)
+    // -------------------------------------------------------
+
+    // Close submenus/panels when clicking outside any interactive UI element
+    document.addEventListener("click", function (e) {
+      // Don't close if the click was on interactive UI
+      if (e.target.closest(".modern-ui-overlay")) return;
+
+      const navItems = document.querySelectorAll(".nav-item");
+      navItems.forEach(n => n.classList.remove("is-open"));
+
+      const rightToolStack = document.getElementById("right-tool-stack");
+      if (rightToolStack) rightToolStack.classList.remove("expanded");
+
+      const sidebarContainer = document.getElementById("sidebar-container");
+      if (sidebarContainer) {
+        sidebarContainer.classList.remove("submenu-open");
+        sidebarContainer.classList.remove("mega-open");
+      }
+    });
+
+    // Also close on clicks INSIDE the overlay that don't hit nav items or submenus
     uiWrapper.addEventListener("click", function (e) {
-      if (e.target.closest(".nav-submenu") || e.target.closest(".layout-switcher-pill")) {
+      // Stop layout-switcher clicks from bubbling to document
+      if (e.target.closest(".layout-switcher-pill")) {
         e.stopPropagation();
+        return;
+      }
+      // Stop submenu clicks from bubbling and falsely triggering "close"
+      if (e.target.closest(".nav-submenu")) {
+        e.stopPropagation();
+        return;
       }
     });
 
     // Glow reposition on window resize
     window.addEventListener("resize", () => {
       const activeItem = document.querySelector(".nav-item.active");
-      updateActiveGlow(activeItem);
+      if (activeItem) updateActiveGlow(activeItem);
       updateSwitcherUI();
     });
   }
@@ -1025,7 +1036,7 @@
   // ==========================================
   // HOLOGRAPHIC HOTSPOTS MARKERS (Pano2VR Hooks)
   // ==========================================
-  
+
   function createHologramMarker(pin) {
     const container = document.createElement("div");
     container.className = `hologram-marker-container ${pin.colorClass}`;
@@ -1081,16 +1092,19 @@
     hitbox.addEventListener("click", function (e) {
       e.stopPropagation();
       console.log(`Marker clicked: ${pin.id} -> target ${pin.nodeTarget}`);
-      
-      const subItems = document.querySelectorAll(".submenu-item, .mega-card");
+
+      // Find the FIRST mega-card matching this node target and activate it
+      const megaCards = document.querySelectorAll(".mega-card");
       let found = false;
-      subItems.forEach(sub => {
-        if (sub.getAttribute("data-pano-node") === pin.nodeTarget) {
-          sub.click();
-          found = true;
+      megaCards.forEach(card => {
+        if (card.getAttribute("data-pano-node") === pin.nodeTarget) {
+          if (!found) {
+            found = true;
+            card.click();
+          }
         }
       });
-      
+
       if (!found && window.pano) {
         window.pano.openNext(`{${pin.nodeTarget}}`);
       }
@@ -1099,33 +1113,47 @@
     return container;
   }
 
-  function onNodeChange() {
-    if (!window.pano) return;
-    const currentNodeId = window.pano.qd();
-    console.log(`Current Pano Node: ${currentNodeId}`);
-    activePanoNode = currentNodeId;
+  // Sync active state with pano node, respecting current active parent category
+  function syncStateWithNode(nodeId) {
+    activePanoNode = nodeId;
+    lsSet("latien_active_node", nodeId);
 
-    // Synchronize active highlights across the menu templates dynamically
-    const subItems = document.querySelectorAll(".submenu-item, .mega-card");
-    subItems.forEach(sub => {
-      const pNode = sub.getAttribute("data-pano-node");
-      if (pNode === currentNodeId) {
-        const siblings = sub.parentElement.querySelectorAll(".submenu-item, .mega-card");
+    // Highlight mega-cards whose data-pano-node === nodeId
+    const megaCards = document.querySelectorAll(".mega-card");
+    megaCards.forEach(card => {
+      const pNode = card.getAttribute("data-pano-node");
+      if (pNode === nodeId) {
+        const siblings = card.parentElement.querySelectorAll(".mega-card");
         siblings.forEach(s => s.classList.remove("active"));
-        sub.classList.add("active");
+        card.classList.add("active");
 
-        const parentNav = sub.closest(".nav-item");
+        const action = card.getAttribute("data-action");
+        if (action) {
+          activeSubmenuAction = action;
+          lsSet("latien_active_submenu", action);
+        }
+
+        // Activate the parent nav item (latien-brand)
+        const parentNav = card.closest(".nav-item");
         if (parentNav) {
           const navItems = document.querySelectorAll(".nav-item");
           navItems.forEach(n => n.classList.remove("active"));
           parentNav.classList.add("active");
           activeNavItemId = parentNav.getAttribute("data-id");
-
-          // Reposition sliding glow
+          lsSet("latien_active_nav", activeNavItemId);
           updateActiveGlow(parentNav);
         }
       }
     });
+  }
+
+  function onNodeChange() {
+    if (!window.pano) return;
+    const currentNodeId = window.pano.qd();
+    if (!currentNodeId) return;
+    console.log(`Current Pano Node: ${currentNodeId}`);
+
+    syncStateWithNode(currentNodeId);
 
     // Clear old hotspots
     if (typeof window.pano.removeHotspots === 'function') {

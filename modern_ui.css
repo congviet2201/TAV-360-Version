@@ -1,6 +1,6 @@
 /* modern_ui.css - Combined Dual-Layout Stylesheet (Classic & Futuristic) */
 
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
 
 :root {
   /* Classic Layout Variables */
@@ -28,7 +28,7 @@
 
   /* Shared Variables */
   --tech-font: 'Share Tech Mono', monospace;
-  --ui-font: 'Outfit', sans-serif;
+  --ui-font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Outfit', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
 /* modern_ui.css - Premium Accessible UI with Compact Mega Menu & Localized High Contrast styling */
 
@@ -41,13 +41,36 @@
   font-family: var(--ui-font);
   color: #1a1a17;
   user-select: none;
+  /* pointer-events: none allows panorama canvas to receive mouse events by default.
+     Individual interactive elements below re-enable pointer-events explicitly. */
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* Enable pointer events on all visible interactive Classic UI controls */
+.layout-classic .bottom-nav-bar,
+.layout-classic .nav-submenu,
+.layout-classic .mega-card,
+.layout-classic .vertical-tool-stack,
+.layout-classic .settings-toggle-btn,
+.layout-classic .tool-button,
+.layout-classic .tool-buttons-sub-stack,
+.layout-classic .layout-switcher-pill {
   pointer-events: auto;
 }
 
 /* 1. Collapsible Vertical Tool Stack on the Right (Hover Expand) */
 .layout-classic .vertical-tool-stack {
   position: absolute;
-  top: 50%;
+  /* Positioned at 35% from top to stay clear of any Pano2VR compass/minimap elements
+     that typically appear at top-right and bottom-right corners */
+  top: 35%;
   right: 20px;
   transform: translateY(-50%);
   display: flex;
@@ -55,7 +78,7 @@
   align-items: center;
   z-index: 1000;
   pointer-events: auto;
-  padding: 16px 8px; /* Slightly adjusted padding */
+  padding: 16px 8px;
 }
 
 /* Settings Toggle Button - ACCESSIBLE MEDIUM SIZE & SOFT CORNERS */
@@ -437,8 +460,10 @@
   width: 78px; /* Constrained exactly to center logo width to prevent collision */
 }
 
-/* Reveal flyout on hover or active is-open class (Sticky Pinned Mode) */
-.nav-item:hover .nav-submenu,
+/* Reveal flyout on hover or active is-open class (Sticky Pinned Mode).
+   Scope hover activation strictly to .layout-classic .nav-item to prevent bleed
+   into the futuristic layout. */
+.layout-classic .nav-item:hover .nav-submenu,
 .layout-classic .nav-item.is-open .nav-submenu {
   opacity: 1;
   pointer-events: auto;
@@ -901,7 +926,9 @@
   font-family: var(--ui-font);
   color: var(--text-primary);
   user-select: none;
-  pointer-events: none; /* Let clicks pass through to panorama container by default */
+  /* pointer-events: none allows panorama canvas to receive mouse events by default.
+     Individual interactive elements below re-enable pointer-events explicitly. */
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
@@ -911,8 +938,15 @@
   z-index: 1000;
 }
 
-/* Enable pointer events on interactive UI controls */
-.layout-futuristic .modern-ui-overlay * {
+/* Enable pointer events ONLY on specific interactive Futuristic UI controls.
+   Do NOT use a wildcard (*) here - that would block panorama canvas dragging. */
+.layout-futuristic .settings-toggle-btn,
+.layout-futuristic .vertical-tool-stack.expanded,
+.layout-futuristic .sidebar-toggle-btn,
+.layout-futuristic .sidebar-content,
+.layout-futuristic .nav-submenu,
+.layout-futuristic .mega-card,
+.layout-futuristic .layout-switcher-pill {
   pointer-events: auto;
 }
 
