@@ -996,31 +996,25 @@
 /* 2. Vertical Tool Stack / Settings Panel on the Right side */
 .layout-futuristic .vertical-tool-stack {
   position: absolute;
-  top: 66px;
-  right: 16px;
-  width: 200px;
-  box-sizing: border-box;
-  background: var(--cyber-bg);
-  border: 1px solid var(--cyber-border);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  top: 45%;
+  right: 20px;
+  transform: translateY(-50%) translateX(50px) scale(0.95);
   display: flex;
   flex-direction: column;
+  align-items: center;
   z-index: 1000;
   opacity: 0;
-  transform: translateX(50px) scale(0.95);
   pointer-events: none;
   visibility: hidden;
   transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 16px 8px;
+  /* Removed the wide dark background panel to match Classic UX */
 }
 
 /* Expanded state from top-right settings trigger */
 .layout-futuristic .vertical-tool-stack.expanded {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateY(-50%) translateX(0) scale(1);
   pointer-events: auto;
   visibility: visible;
 }
@@ -1040,28 +1034,32 @@
 .layout-futuristic .tool-buttons-sub-stack {
   display: flex;
   flex-direction: column;
-  gap: 6px;
 }
 
-/* Redesigned tool button - Sleek Cybernetic List Item */
+/* Redesigned tool button - Sleek Cybernetic Compact Bubble */
 .layout-futuristic .tool-button {
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 5px 0;
   box-sizing: border-box;
-  padding: 8px 10px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  color: var(--text-secondary);
+  border-radius: 12px;
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--neon-cyan);
   cursor: pointer;
   position: relative;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.05);
 }
 
 .layout-futuristic .tool-button svg {
-  width: 16px;
-  height: 16px;
+  width: 21px;
+  height: 21px;
   flex-shrink: 0;
 }
 
@@ -1101,7 +1099,7 @@
   background: rgba(0, 242, 254, 0.07);
   border-color: rgba(0, 242, 254, 0.35);
   color: var(--text-primary);
-  transform: translateX(-4px);
+  transform: scale(1.05); /* Removed translateX(-4px) which caused a hover loop/flickering */
   box-shadow: 0 4px 12px rgba(0, 242, 254, 0.15);
 }
 
@@ -2357,3 +2355,474 @@
 }
 
 .layout-classic .info-value { color: #333; }
+
+/* =====================================================================
+   OPTION 3: NEO LAYOUT (APPLE VISION / MAC OS STYLE)
+   ===================================================================== */
+
+.layout-neo {
+  --neo-primary: #8B5CF6;
+  --neo-indigo: #4F46E5;
+  --neo-emerald: #10B981;
+  --neo-bg: rgba(15, 17, 23, 0.65);
+  --neo-glass: rgba(255, 255, 255, 0.05);
+  --neo-border: rgba(255, 255, 255, 0.1);
+  --neo-text: #F8FAFC;
+  --neo-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  font-family: var(--ui-font);
+}
+
+/* Base layout resets */
+.layout-neo .bottom-nav-container,
+.layout-neo .vertical-tool-stack,
+.layout-neo .settings-toggle-btn,
+.layout-neo .modern-ui-sidebar {
+  display: none !important;
+}
+
+/* Adjust switchers */
+.layout-neo .layout-switcher-pill {
+  background: var(--neo-bg);
+  border: 1px solid var(--neo-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+.layout-neo .switcher-segment {
+  color: rgba(248, 250, 252, 0.5);
+}
+.layout-neo .switcher-segment.active {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(139, 92, 246, 0.8);
+}
+.layout-neo .switcher-slider {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, var(--neo-indigo) 100%);
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.5);
+}
+.layout-neo .switcher-segment:not(.active):hover {
+  color: var(--neo-primary);
+}
+
+/* 1. TOP TITLE PANEL */
+.layout-neo .neo-top-panel {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--neo-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--neo-border);
+  padding: 14px 40px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: var(--neo-shadow);
+  pointer-events: auto;
+  animation: neoFadeDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.layout-neo .neo-title {
+  font-family: var(--tech-font);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--neo-text);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, #A78BFA, var(--neo-emerald));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.layout-neo .neo-subtitle {
+  font-size: 11px;
+  color: rgba(248, 250, 252, 0.7);
+  margin-top: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@keyframes neoFadeDown {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* 2. LEFT FLOATING NAV CARDS */
+.layout-neo .neo-left-nav {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+  pointer-events: none;
+}
+.layout-neo .neo-nav-card {
+  pointer-events: auto;
+  background: rgba(23, 25, 35, 0.7); /* #171923 */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.05);
+  color: #94A3B8; /* Inactive text */
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--neo-shadow);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+.layout-neo .neo-nav-card:hover {
+  background: rgba(139, 92, 246, 0.2); /* #8B5CF6 Secondary Accent */
+  border-color: #8B5CF6;
+  color: #F8FAFC;
+  transform: translateX(8px);
+}
+.layout-neo .neo-nav-card.active {
+  background: rgba(0, 217, 255, 0.15); /* #00D9FF Primary Accent */
+  border: 1px solid #00D9FF;
+  border-radius: 30px; /* Pill shape */
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3), inset 0 0 10px rgba(0, 217, 255, 0.1);
+  font-weight: 700;
+  transform: translateX(12px);
+  color: #F8FAFC; /* Active text */
+}
+
+/* Submenu Panel */
+.layout-neo .neo-submenu-panel {
+  position: absolute;
+  left: calc(100% + 24px);
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+  transform-origin: left center;
+  background: rgba(15, 17, 23, 0.75); /* #0F1117 Background */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--neo-shadow);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: max-content;
+}
+.layout-neo .neo-submenu-panel.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(-50%) scale(1);
+}
+.layout-neo .neo-submenu-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.layout-neo .neo-submenu-panel.mega-mode .neo-submenu-content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.layout-neo .submenu-item {
+  padding: 10px 16px;
+  color: #94A3B8;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(23, 25, 35, 0.5); /* #171923 Cards */
+  border-left: 2px solid transparent;
+}
+.layout-neo .submenu-item:hover {
+  background: rgba(139, 92, 246, 0.2);
+  color: #F8FAFC;
+  transform: translateX(4px);
+  border-left: 2px solid #8B5CF6;
+}
+.layout-neo .submenu-item.active {
+  background: rgba(0, 217, 255, 0.15);
+  color: #F8FAFC;
+  border-left: 2px solid #00D9FF;
+  font-weight: 700;
+}
+
+/* 4. MAC OS STYLE BOTTOM DOCK */
+.layout-neo .neo-bottom-dock-container {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+}
+.layout-neo .neo-dock {
+  pointer-events: auto;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 14px 20px;
+  background: var(--neo-bg);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid var(--neo-border);
+  border-radius: 30px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
+}
+.layout-neo .neo-dock-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.15);
+  margin: 0 8px;
+  align-self: center;
+}
+.layout-neo .neo-dock-item {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--neo-text);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* OS X spring easing */
+  transform-origin: bottom center;
+}
+.layout-neo .neo-dock-item svg {
+  width: 24px;
+  height: 24px;
+  transition: all 0.2s;
+}
+
+/* Stable Hover Effects (No Layout Shifting) */
+.layout-neo .neo-dock-item:hover {
+  background: rgba(0, 217, 255, 0.15);
+  border-color: #00D9FF;
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+.layout-neo .neo-dock-item:hover svg {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 8px rgba(0, 217, 255, 0.8));
+}
+
+/* Tooltip for Dock */
+.layout-neo .neo-tooltip {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  background: var(--neo-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--neo-border);
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.layout-neo .neo-dock-item:hover .neo-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Disabled tool visual indicator in dock */
+.layout-neo .neo-dock-item.active-tool {
+  color: #ff4d4f;
+  opacity: 0.5;
+}
+.layout-neo .neo-dock-item.active-tool svg {
+  stroke-dasharray: 2 4;
+}
+
+/* Move Layout Switcher to Bottom Left under Compass */
+.layout-neo .layout-switcher-pill {
+  top: auto;
+  bottom: 30px;
+  left: 30px;
+  transform: none;
+  z-index: 2000;
+}
+
+/* -------------------------------------
+   NEO MINIMAP & COMPASS REDESIGN 
+   ------------------------------------- */
+.layout-neo .compass-widget {
+  background: rgba(15, 17, 23, 0.4);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(139, 92, 246, 0.3); /* Purple accent */
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.15); /* Cyan glow */
+  transform: scale(0.85);
+  transform-origin: bottom left;
+  bottom: 80px !important; /* Raised to make room for layout switcher */
+  left: 30px;
+}
+.layout-neo .compass-outer-ring {
+  display: none; /* Hide old bulky ring */
+}
+.layout-neo .compass-cardinal.n {
+  color: #00D9FF;
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 217, 255, 0.8);
+}
+.layout-neo .compass-degree-display {
+  color: #F8FAFC;
+  background: rgba(23, 25, 35, 0.6);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.layout-neo .minimap-widget {
+  bottom: 30px !important;
+  right: 30px;
+  transform: scale(0.9);
+  transform-origin: bottom right;
+}
+.layout-neo .minimap-header {
+  background: rgba(15, 17, 23, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 30px; /* Pill shape */
+  padding: 8px 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  color: #F8FAFC;
+}
+.layout-neo .minimap-body {
+  background: rgba(15, 17, 23, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5), 0 10px 40px rgba(0, 217, 255, 0.15);
+  border-radius: 24px;
+  padding: 12px;
+}
+
+/* -------------------------------------
+   NEO HOTSPOTS REDESIGN 
+   ------------------------------------- */
+.layout-neo .hologram-marker-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Hide unneeded complicated elements */
+.layout-neo .hologram-marker-container .marker-stem,
+.layout-neo .hologram-marker-container .marker-data-projection,
+.layout-neo .hologram-marker-container .marker-ground-shadow,
+.layout-neo .hologram-marker-container .projection-wireframe {
+  display: none !important;
+}
+/* Style the dot as a diamond */
+.layout-neo .hologram-marker-container .marker-prism-head {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: #00D9FF;
+  border: 1px solid #fff;
+  box-shadow: 0 0 10px #00D9FF, 0 0 20px #00D9FF, inset 0 0 4px rgba(255,255,255,0.8);
+  clip-path: none;
+  animation: neoPulse 2s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+/* Hide the text inside the head since it's just a dot now */
+.layout-neo .hologram-marker-container .prism-content {
+  display: none;
+}
+/* Make the hitbox cover the whole 40x40 area */
+.layout-neo .hologram-marker-container .hologram-marker-hitbox {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  pointer-events: auto;
+}
+.layout-neo .hologram-marker-container:hover .marker-prism-head {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+  box-shadow: 0 0 15px #00D9FF, 0 0 30px #00D9FF;
+}
+@keyframes neoPulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(0, 217, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0); }
+}
+
+/* -------------------------------------
+   NEO MEGA CARD
+   ------------------------------------- */
+.layout-neo .mega-card {
+  width: 140px;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: var(--neo-shadow);
+  border: 1px solid var(--neo-border);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.layout-neo .mega-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+.layout-neo .mega-card-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+}
+.layout-neo .mega-card-title {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.layout-neo .mega-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--neo-primary);
+  box-shadow: 0 6px 15px rgba(139, 92, 246, 0.3);
+}
+.layout-neo .mega-card:hover .mega-card-img {
+  transform: scale(1.1);
+}
+.layout-neo .mega-card.active {
+  border-color: var(--neo-primary);
+  box-shadow: 0 0 0 2px var(--neo-primary), 0 0 15px rgba(139, 92, 246, 0.4);
+}
+
+

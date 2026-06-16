@@ -29,6 +29,7 @@
     <div class="layout-switcher-pill" id="layout-switcher">
       <div class="switcher-segment" id="opt-layout-classic" data-layout="classic">Cổ điển</div>
       <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic">Tương lai</div>
+      <div class="switcher-segment" id="opt-layout-neo" data-layout="neo">Neo</div>
       <div class="switcher-slider" id="switcher-slider"></div>
     </div>
   `;
@@ -257,12 +258,9 @@
     </div>
   `;
 
-  // Settings Panel on the Right (No gear at the bottom)
+  // Settings Panel on the Right
   const verticalToolStackFuturisticHTML = `
     <div class="vertical-tool-stack" id="right-tool-stack">
-      <div class="tool-stack-header">
-        <span>CÔNG CỤ</span>
-      </div>
       <div class="tool-buttons-sub-stack" id="tool-sub-stack">
         ${toolbarButtonsHTML}
         <!-- (end toolbar buttons) -->
@@ -392,6 +390,58 @@
   `;
 
   // ==========================================
+  // OPTION 3: NEO LAYOUT TEMPLATES
+  // ==========================================
+
+  const neoTopTitleHTML = `
+    <div class="neo-top-panel">
+      <div class="neo-title">La Tiên Villa</div>
+      <div class="neo-subtitle">Khám phá không gian sống đẳng cấp</div>
+    </div>
+  `;
+
+  // The Left Nav has floating cards for main categories
+  const neoLeftNavHTML = `
+    <div class="neo-left-nav" id="neo-left-nav">
+      <div class="neo-nav-card active" data-id="overview" id="nav-neo-overview">Tổng Quan</div>
+      <div class="neo-nav-card" data-id="amenities" id="nav-neo-amenities">Tiện Ích</div>
+      <div class="neo-nav-card center-logo-node" data-id="latien-brand" id="nav-neo-logo">Dự Án</div>
+      <div class="neo-nav-card" data-id="architecture" id="nav-neo-architecture">Kiến Trúc</div>
+      <div class="neo-nav-card" data-id="interior" id="nav-neo-interior">Nội Thất</div>
+      
+      <!-- Submenu Panel floats next to the active card -->
+      <div class="neo-submenu-panel" id="neo-submenu-panel">
+        <div class="neo-submenu-content" id="neo-submenu-content"></div>
+      </div>
+    </div>
+  `;
+
+  // Right quick panel has been removed from Neo layout to prevent duplication with the bottom dock
+  const neoRightQuickPanelHTML = ``;
+
+
+  // macOS style Bottom Dock
+  const neoBottomDockHTML = `
+    <div class="neo-bottom-dock-container">
+      <div class="neo-dock" id="neo-dock">
+        <!-- Dock Items -->
+        <div class="neo-dock-item" data-action="home"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Trang Chủ</div></div>
+        <div class="neo-dock-item" data-action="gallery"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Thư Viện Ảnh</div></div>
+        <div class="neo-dock-item" data-action="share"><svg viewBox="0 0 24 24" fill="none"><path d="M18 8A3 3 0 1018 2a3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6zM8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Chia Sẻ</div></div>
+        <div class="neo-dock-item" data-action="call"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Tư Vấn</div></div>
+        <div class="neo-dock-item" data-action="facebook"><svg viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Facebook</div></div>
+        <div class="neo-dock-item" data-action="instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><div class="neo-tooltip">Instagram</div></div>
+        <div class="neo-dock-item" data-action="zalo"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Zalo</div></div>
+        <div class="neo-dock-item" data-action="info"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Thông Tin Dự Án</div></div>
+        <div class="neo-dock-divider"></div>
+        <div class="neo-dock-item" data-action="music"><svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Nhạc Nền</div></div>
+        <div class="neo-dock-item" data-action="images"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hình Ảnh</div></div>
+        <div class="neo-dock-item" data-action="hotspots"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hotspots</div></div>
+      </div>
+    </div>
+  `;
+
+  // ==========================================
   // SHARED WIDGET TEMPLATES (both layouts)
   // ==========================================
 
@@ -402,36 +452,52 @@
       <div class="compass-dial" id="compass-dial">
         <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
           <!-- Background circle -->
-          <circle cx="36" cy="36" r="34" stroke="rgba(0,242,254,0.15)" stroke-width="1.5"/>
-          <!-- Cardinal tick marks -->
-          <line x1="36" y1="3" x2="36" y2="10" stroke="#00f2fe" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="36" y1="62" x2="36" y2="69" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="3" y1="36" x2="10" y2="36" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="62" y1="36" x2="69" y2="36" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-          <!-- Inter-cardinal ticks -->
-          <line x1="57.38" y1="7.09" x2="54.28" y2="12.46" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="64.91" y1="14.62" x2="59.54" y2="17.72" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="14.62" y1="7.09" x2="17.72" y2="12.46" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="7.09" y1="14.62" x2="12.46" y2="17.72" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-linecap="round"/>
-          <!-- North needle (cyan, pointing up) -->
-          <polygon points="36,6 39.5,36 36,32 32.5,36" fill="url(#compassNeedleGrad)"/>
-          <!-- South needle (white, pointing down) -->
-          <polygon points="36,66 39.5,36 36,40 32.5,36" fill="rgba(255,255,255,0.3)"/>
-          <!-- Center dot -->
-          <circle cx="36" cy="36" r="4" fill="rgba(8,14,24,0.9)" stroke="#00f2fe" stroke-width="1.5"/>
-          <circle cx="36" cy="36" r="1.5" fill="#00f2fe"/>
-          <defs>
-            <linearGradient id="compassNeedleGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#00f2fe"/>
-              <stop offset="100%" stop-color="rgba(0,242,254,0.5)"/>
-            </linearGradient>
-          </defs>
+          <circle cx="36" cy="36" r="30" fill="rgba(0,0,0,0.6)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+          <!-- Ticks -->
+          <g stroke="rgba(255,255,255,0.4)" stroke-width="1.5">
+            <line x1="36" y1="6" x2="36" y2="10" />
+            <line x1="36" y1="62" x2="36" y2="66" />
+            <line x1="6" y1="36" x2="10" y2="36" />
+            <line x1="62" y1="36" x2="66" y2="36" />
+          </g>
+          <!-- Custom Needle -->
+          <g>
+            <!-- North half -->
+            <polygon points="36,6 39.5,36 36,32 32.5,36" fill="url(#compassNeedleGrad)"/>
+            <!-- South half -->
+            <polygon points="36,66 39.5,36 36,40 32.5,36" fill="rgba(255,255,255,0.3)"/>
+            <defs>
+              <linearGradient id="compassNeedleGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#00f2fe" />
+                <stop offset="100%" stop-color="#4facfe" />
+              </linearGradient>
+            </defs>
+          </g>
         </svg>
       </div>
       <div class="compass-cardinal n">N</div>
       <div class="compass-degree-display" id="compass-degree">0°</div>
     </div>
   `;
+
+  // Neo Compass Widget
+  const neoCompassHTML = `
+    <div class="compass-widget neo-compass" id="compass-widget">
+      <div class="compass-dial" id="compass-dial">
+        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <circle cx="40" cy="40" r="38" fill="rgba(15, 17, 23, 0.4)" stroke="rgba(139, 92, 246, 0.4)" stroke-width="1"/>
+          <!-- Glow needle for Neo -->
+          <g>
+            <polygon points="40,10 43,40 40,36 37,40" fill="#00D9FF"/>
+            <polygon points="40,70 43,40 40,44 37,40" fill="rgba(248, 250, 252, 0.2)"/>
+          </g>
+        </svg>
+      </div>
+      <div class="compass-cardinal n">N</div>
+      <div class="compass-degree-display" id="compass-degree">0°</div>
+    </div>
+  `;
+
 
   // Mini Map Widget - positioned bottom-right
   const minimapWidgetHTML = `
@@ -622,13 +688,18 @@
   function updateSwitcherUI() {
     const classicSeg = document.getElementById("opt-layout-classic");
     const futuristicSeg = document.getElementById("opt-layout-futuristic");
+    const neoSeg = document.getElementById("opt-layout-neo");
     const slider = document.getElementById("switcher-slider");
-    if (!classicSeg || !futuristicSeg || !slider) return;
+    if (!classicSeg || !futuristicSeg || !neoSeg || !slider) return;
 
     requestAnimationFrame(() => {
-      const activeSeg = layoutMode === "classic" ? classicSeg : futuristicSeg;
+      let activeSeg = classicSeg;
+      if (layoutMode === "futuristic") activeSeg = futuristicSeg;
+      else if (layoutMode === "neo") activeSeg = neoSeg;
+      
       classicSeg.classList.toggle("active", layoutMode === "classic");
       futuristicSeg.classList.toggle("active", layoutMode === "futuristic");
+      neoSeg.classList.toggle("active", layoutMode === "neo");
 
       slider.style.width = `${activeSeg.offsetWidth}px`;
       slider.style.left = `${activeSeg.offsetLeft}px`;
@@ -681,28 +752,39 @@
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupClassicListeners();
-    } else {
+    } else if (layoutMode === "futuristic") {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = settingsToggleFuturisticHTML + verticalToolStackFuturisticHTML + sidebarNavFuturisticHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupFuturisticListeners();
+    } else if (layoutMode === "neo") {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = neoTopTitleHTML + neoLeftNavHTML + neoBottomDockHTML;
+      while (tempDiv.firstChild) {
+        uiWrapper.appendChild(tempDiv.firstChild);
+      }
+      setupNeoListeners();
     }
 
-    // Inject shared Compass widget (always above layout switcher pill, bottom-left)
-    if (!document.getElementById("compass-widget")) {
-      const compassDiv = document.createElement("div");
-      compassDiv.innerHTML = compassWidgetHTML;
-      document.body.appendChild(compassDiv.firstElementChild);
-    }
-
-    // Inject shared Minimap widget (bottom-right)
+    // Inject Minimap (shared HTML, styled differently in CSS)
     if (!document.getElementById("minimap-widget")) {
       const mapDiv = document.createElement("div");
       mapDiv.innerHTML = minimapWidgetHTML;
       document.body.appendChild(mapDiv.firstElementChild);
       setupMinimapListeners();
+    }
+
+    // Inject Compass
+    if (!document.getElementById("compass-widget")) {
+      const compassDiv = document.createElement("div");
+      if (layoutMode === "neo") {
+        compassDiv.innerHTML = neoCompassHTML;
+      } else {
+        compassDiv.innerHTML = compassWidgetHTML;
+      }
+      document.body.appendChild(compassDiv.firstElementChild);
     }
 
     // Restore selected active highlights
@@ -964,6 +1046,113 @@
     });
   }
 
+  function setupNeoListeners() {
+    // Top-level Nav cards
+    const navCards = document.querySelectorAll(".neo-nav-card");
+    const submenuContent = document.getElementById("neo-submenu-content");
+    const submenuPanel = document.getElementById("neo-submenu-panel");
+
+    const submenuData = {
+      "overview": `
+        <div class="submenu-item" data-action="pano-topview">Top View</div>
+        <div class="submenu-item" data-action="pano-birdview">Bird View</div>
+      `,
+      "amenities": `
+        <div class="submenu-item" data-action="amenity-pool">Hồ Bơi</div>
+        <div class="submenu-item" data-action="amenity-gym">Phòng Gym</div>
+        <div class="submenu-item" data-action="amenity-park">Công Viên</div>
+        <div class="submenu-item" data-action="amenity-spa">Spa & Massage</div>
+      `,
+      "architecture": `
+        <div class="submenu-item" data-action="architecture-1">Kiến Trúc 1</div>
+        <div class="submenu-item" data-action="architecture-2">Kiến Trúc 2</div>
+        <div class="submenu-item" data-action="architecture-3">Kiến Trúc 3</div>
+      `,
+      "interior": `
+        <div class="submenu-item" data-action="interior-bedroom">Phòng Ngủ</div>
+        <div class="submenu-item" data-action="interior-kitchen">Nhà Bếp</div>
+        <div class="submenu-item" data-action="interior-balcony">Ban Công</div>
+        <div class="submenu-item" data-action="interior-rooftop">Sân Thượng</div>
+      `,
+      "latien-brand": `
+        <div class="mega-card" data-pano-node="node1" data-action="pano-node1"><img src="pano_aerial.png" alt="Toàn cảnh dự án" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Toàn cảnh dự án</div></div>
+        <div class="mega-card" data-pano-node="node2" data-action="pano-node2"><img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Biệt thự Đơn lập A</div></div>
+        <div class="mega-card" data-pano-node="node3" data-action="pano-node3"><img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Biệt thự Song lập B</div></div>
+        <div class="mega-card" data-pano-node="node4" data-action="pano-node4"><img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Biệt thự Liền kề C</div></div>
+      `
+    };
+
+    function bindSubmenuItems() {
+      const subItems = submenuContent.querySelectorAll(".submenu-item, .mega-card");
+      subItems.forEach(item => {
+        item.addEventListener("click", function (e2) {
+          e2.stopPropagation();
+          subItems.forEach(s => s.classList.remove("active"));
+          this.classList.add("active");
+          
+          activeSubmenuAction = this.getAttribute("data-action");
+          activePanoNode = this.getAttribute("data-pano-node") || activePanoNode;
+          lsSet("latien_active_submenu", activeSubmenuAction);
+          lsSet("latien_active_node", activePanoNode);
+          
+          submenuPanel.classList.remove("open");
+          handleSubmenuSelection(this);
+        });
+      });
+    }
+
+    navCards.forEach(card => {
+      card.addEventListener("click", function (e) {
+        e.stopPropagation();
+        
+        // If clicking already active card, toggle submenu if it has one
+        const dataId = this.getAttribute("data-id");
+        if (this.classList.contains("active") && submenuData[dataId]) {
+           submenuPanel.classList.toggle("open");
+           return;
+        }
+
+        navCards.forEach(c => c.classList.remove("active"));
+        this.classList.add("active");
+        
+        activeNavItemId = dataId;
+        lsSet("latien_active_nav", activeNavItemId);
+
+        // Populate and open submenu if available
+        if (submenuData[dataId] && submenuContent) {
+          submenuContent.innerHTML = submenuData[dataId];
+          submenuPanel.classList.add("open");
+          
+          if (dataId === "latien-brand") submenuPanel.classList.add("mega-mode");
+          else submenuPanel.classList.remove("mega-mode");
+          
+          bindSubmenuItems();
+        } else {
+          submenuPanel.classList.remove("open");
+          handleSubmenuSelection(this);
+        }
+      });
+    });
+
+    // Initialize submenu content on load if a nav item is already active
+    if (activeNavItemId && submenuData[activeNavItemId] && submenuContent) {
+      submenuContent.innerHTML = submenuData[activeNavItemId];
+      if (activeNavItemId === "latien-brand") submenuPanel.classList.add("mega-mode");
+      else submenuPanel.classList.remove("mega-mode");
+      bindSubmenuItems();
+    }
+
+    // Bind Quick Panel actions & Bottom Dock actions
+    const allTools = document.querySelectorAll(".neo-quick-btn, .neo-dock-item");
+    allTools.forEach(btn => {
+      btn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        dispatchToolAction(this);
+      });
+    });
+  }
+
+
   // ==========================================
   // TOOLBAR ACTION DISPATCHER
   // ==========================================
@@ -1026,6 +1215,18 @@
 
       case "info":
         showProjectInfoPanel();
+        break;
+
+      case "facebook":
+        window.open("https://www.facebook.com", "_blank");
+        break;
+
+      case "instagram":
+        window.open("https://www.instagram.com", "_blank");
+        break;
+
+      case "zalo":
+        window.open("https://zalo.me", "_blank");
         break;
 
       default:
@@ -1145,7 +1346,7 @@
     document.body.appendChild(uiWrapper);
 
     // Sync top-level body classes
-    document.body.classList.remove("layout-classic", "layout-futuristic");
+    document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo");
     document.body.classList.add(`layout-${layoutMode}`);
 
     // 2. Inject components for active layout mode
@@ -1154,6 +1355,7 @@
     // 3. Setup Layout Switcher listeners
     const classicSeg = document.getElementById("opt-layout-classic");
     const futuristicSeg = document.getElementById("opt-layout-futuristic");
+    const neoSeg = document.getElementById("opt-layout-neo");
 
     const handleSwitch = (newLayout) => {
       if (layoutMode === newLayout) return;
@@ -1181,7 +1383,7 @@
         lsSet("latien_layout_mode", layoutMode);
 
         // Update body layout class namespaces
-        document.body.classList.remove("layout-classic", "layout-futuristic");
+        document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo");
         document.body.classList.add(`layout-${layoutMode}`);
 
         // Update container class namespaces
@@ -1198,14 +1400,18 @@
           uiWrapper.classList.remove("switching");
         }, 50);
 
-        showNotification(layoutMode === "classic" ? "Đã chuyển sang Giao diện Cổ điển" : "Đã chuyển sang Giao diện Tương lai");
+        let notifMsg = "Đã chuyển sang Giao diện Neo";
+        if (layoutMode === "classic") notifMsg = "Đã chuyển sang Giao diện Cổ điển";
+        else if (layoutMode === "futuristic") notifMsg = "Đã chuyển sang Giao diện Tương lai";
+        showNotification(notifMsg);
 
       }, 300);
     };
 
-    if (classicSeg && futuristicSeg) {
+    if (classicSeg && futuristicSeg && neoSeg) {
       classicSeg.addEventListener("click", () => handleSwitch("classic"));
       futuristicSeg.addEventListener("click", () => handleSwitch("futuristic"));
+      neoSeg.addEventListener("click", () => handleSwitch("neo"));
     }
 
     // 4. Initialize layout Switcher segments
@@ -1221,6 +1427,14 @@
       if (!e.target.closest(".tool-button.has-dropdown")) {
         const dropdowns = document.querySelectorAll(".social-dropdown.open");
         dropdowns.forEach(d => d.classList.remove("open"));
+      }
+
+      // Neo layout: close submenu panel
+      if (layoutMode === "neo") {
+        const submenuPanel = document.getElementById("neo-submenu-panel");
+        if (submenuPanel && !submenuPanel.contains(e.target) && !e.target.closest(".neo-nav-card")) {
+          submenuPanel.classList.remove("open");
+        }
       }
 
       // Don't close if the click was on interactive UI
