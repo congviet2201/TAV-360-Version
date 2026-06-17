@@ -593,242 +593,6 @@
 }
 
 
-/* 3. Holographic Map Markers (Pano2VR Hotspots) */
-.layout-classic .hologram-marker-container {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  cursor: pointer;
-}
-
-/* Capture hits only on the main marker head and stem */
-.layout-classic .hologram-marker-hitbox {
-  position: absolute;
-  width: 44px;
-  height: 70px;
-  left: 38px;
-  top: 10px;
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-/* Bioluminescent ground projection */
-.layout-classic .marker-ground-shadow {
-  position: absolute;
-  width: 50px;
-  height: 16px;
-  left: 35px;
-  bottom: 15px;
-  background: radial-gradient(ellipse, rgba(0, 242, 254, 0.6) 0%, rgba(0, 242, 254, 0.2) 50%, transparent 70%);
-  transform: rotateX(65deg);
-  filter: blur(2px);
-  animation: breathe-shadow 3s infinite ease-in-out;
-  pointer-events: none;
-}
-
-.layout-classic .hologram-marker-container.active .marker-ground-shadow {
-  background: radial-gradient(ellipse, rgba(255, 0, 127, 0.6) 0%, rgba(255, 0, 127, 0.2) 50%, transparent 70%);
-}
-
-/* Vertical glowing stem */
-.layout-classic .marker-stem {
-  position: absolute;
-  width: 1.5px;
-  height: 40px;
-  background: linear-gradient(to top, rgba(0, 242, 254, 0.2), rgba(0, 242, 254, 0.95));
-  left: 59px;
-  bottom: 23px;
-  pointer-events: none;
-}
-
-.layout-classic .hologram-marker-container.active .marker-stem {
-  background: linear-gradient(to top, rgba(255, 0, 127, 0.2), rgba(255, 0, 127, 0.95));
-}
-
-/* Translucent prism head */
-.layout-classic .marker-prism-head {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  left: 44px;
-  top: 15px;
-  background: rgba(10, 30, 45, 0.45);
-  border: 1px solid rgba(0, 242, 254, 0.6);
-  box-shadow: 
-    0 0 15px rgba(0, 242, 254, 0.45),
-    inset 0 0 8px rgba(0, 242, 254, 0.3);
-  transform: rotate(45deg);
-  border-radius: 6px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float-prism 4s infinite ease-in-out;
-  pointer-events: none;
-}
-
-.layout-classic .hologram-marker-container.active .marker-prism-head {
-  border-color: rgba(255, 0, 127, 0.7);
-  box-shadow: 
-    0 0 15px rgba(255, 0, 127, 0.45),
-    inset 0 0 8px rgba(255, 0, 127, 0.3);
-  background: rgba(45, 10, 30, 0.45);
-}
-
-/* Rotated back content to stay upright */
-.layout-classic .prism-content {
-  transform: rotate(-45deg);
-  font-family: var(--tech-font);
-  font-size: 11px;
-  font-weight: bold;
-  color: var(--cyan-glow);
-  text-shadow: 0 0 4px rgba(0, 242, 254, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.layout-classic .hologram-marker-container.active .prism-content {
-  color: var(--magenta-glow);
-  text-shadow: 0 0 4px rgba(255, 0, 127, 0.6);
-}
-
-/* Hover scales up prism */
-.layout-classic .hologram-marker-hitbox:hover ~ .marker-prism-head {
-  transform: rotate(45deg) scale(1.18);
-  border-color: #ffffff;
-  box-shadow: 
-    0 0 25px rgba(0, 242, 254, 0.7),
-    inset 0 0 12px rgba(0, 242, 254, 0.5);
-}
-
-.layout-classic .hologram-marker-container.active .hologram-marker-hitbox:hover ~ .marker-prism-head {
-  box-shadow: 
-    0 0 25px rgba(255, 0, 127, 0.7),
-    inset 0 0 12px rgba(255, 0, 127, 0.5);
-}
-
-/* Extended Holographic UI Data Projection (Glassmorphic data cube card) */
-.layout-classic .marker-data-projection {
-  position: absolute;
-  left: 95px;
-  top: -25px;
-  width: 210px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.3),
-    0 0 25px rgba(0, 242, 254, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3);
-  opacity: 0;
-  transform: scale(0.9) translateY(10px);
-  pointer-events: none;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 10;
-}
-
-/* Show data projection on marker hover */
-.layout-classic .hologram-marker-hitbox:hover ~ .marker-data-projection {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
-
-.layout-classic .projection-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-  padding-bottom: 6px;
-  margin-bottom: 8px;
-}
-
-.layout-classic .projection-title {
-  font-size: 10px;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: 1px;
-}
-
-.layout-classic .projection-tag {
-  font-family: var(--tech-font);
-  font-size: 9px;
-  color: var(--cyan-glow);
-  background: rgba(0, 242, 254, 0.15);
-  padding: 2px 6px;
-  border-radius: 4px;
-}
-
-.layout-classic .hologram-marker-container.active .projection-tag {
-  color: var(--magenta-glow);
-  background: rgba(255, 0, 127, 0.15);
-}
-
-.layout-classic .projection-body {
-  font-size: 9.5px;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-.layout-classic .projection-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.layout-classic .projection-label {
-  color: rgba(255,255,255,0.5);
-}
-
-.layout-classic .projection-value {
-  font-family: var(--tech-font);
-  font-weight: bold;
-}
-
-/* Floor Plan wireframe mock */
-.layout-classic .projection-wireframe {
-  height: 48px;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.layout-classic .projection-wireframe svg {
-  width: 80%;
-  height: 80%;
-}
-
-
-/* Animations */
-@keyframes prism-rotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes float-prism {
-  0% { transform: rotate(45deg) translateY(0); }
-  50% { transform: rotate(45deg) translateY(-5px); }
-  100% { transform: rotate(45deg) translateY(0); }
-}
-
-@keyframes breathe-shadow {
-  0% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
-  50% { transform: rotateX(65deg) scale(1.15); opacity: 0.8; }
-  100% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
-}
-
 /* Pulse animation for active node logo */
 @keyframes pulse-glow {
   0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
@@ -1520,232 +1284,6 @@
   text-shadow: 0 0 5px rgba(0, 242, 254, 0.4);
 }
 
-
-/* 5. Holographic Map Hotspot Markers (Pano2VR Hotspots) */
-.layout-futuristic .hologram-marker-container {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  cursor: pointer;
-}
-
-.layout-futuristic .hologram-marker-hitbox {
-  position: absolute;
-  width: 44px;
-  height: 70px;
-  left: 38px;
-  top: 10px;
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-/* Cybernetic Glowing shadow on ground */
-.layout-futuristic .marker-ground-shadow {
-  position: absolute;
-  width: 50px;
-  height: 16px;
-  left: 35px;
-  bottom: 15px;
-  background: radial-gradient(ellipse, rgba(0, 242, 254, 0.7) 0%, rgba(0, 242, 254, 0.2) 50%, transparent 70%);
-  transform: rotateX(65deg);
-  filter: blur(2px);
-  animation: breathe-shadow 3s infinite ease-in-out;
-  pointer-events: none;
-}
-
-.layout-futuristic .hologram-marker-container.active .marker-ground-shadow {
-  background: radial-gradient(ellipse, rgba(255, 0, 127, 0.7) 0%, rgba(255, 0, 127, 0.2) 50%, transparent 70%);
-}
-
-/* Vertical hologram ray */
-.layout-futuristic .marker-stem {
-  position: absolute;
-  width: 1.5px;
-  height: 40px;
-  background: linear-gradient(to top, rgba(0, 242, 254, 0.15), rgba(0, 242, 254, 0.95));
-  left: 59px;
-  bottom: 23px;
-  pointer-events: none;
-}
-
-.layout-futuristic .hologram-marker-container.active .marker-stem {
-  background: linear-gradient(to top, rgba(255, 0, 127, 0.15), rgba(255, 0, 127, 0.95));
-}
-
-/* Translucent floating crystal head */
-.layout-futuristic .marker-prism-head {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  left: 44px;
-  top: 15px;
-  background: rgba(8, 14, 24, 0.65);
-  border: 1px solid rgba(0, 242, 254, 0.6);
-  box-shadow: 0 0 15px rgba(0, 242, 254, 0.4), inset 0 0 8px rgba(0, 242, 254, 0.25);
-  transform: rotate(45deg);
-  border-radius: 6px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: float-prism 4s infinite ease-in-out;
-  pointer-events: none;
-}
-
-.layout-futuristic .hologram-marker-container.active .marker-prism-head {
-  border-color: rgba(255, 0, 127, 0.7);
-  box-shadow: 0 0 15px rgba(255, 0, 127, 0.4), inset 0 0 8px rgba(255, 0, 127, 0.25);
-  background: rgba(24, 8, 14, 0.65);
-}
-
-.layout-futuristic .prism-content {
-  transform: rotate(-45deg);
-  font-family: var(--tech-font);
-  font-size: 11px;
-  font-weight: bold;
-  color: var(--neon-cyan);
-  text-shadow: 0 0 4px rgba(0, 242, 254, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.layout-futuristic .hologram-marker-container.active .prism-content {
-  color: var(--neon-magenta);
-  text-shadow: 0 0 4px rgba(255, 0, 127, 0.6);
-}
-
-/* Hover zoom marker */
-.layout-futuristic .hologram-marker-hitbox:hover ~ .marker-prism-head {
-  transform: rotate(45deg) scale(1.15);
-  border-color: #ffffff;
-  box-shadow: 0 0 25px rgba(0, 242, 254, 0.75), inset 0 0 10px rgba(0, 242, 254, 0.4);
-}
-
-.layout-futuristic .hologram-marker-container.active .hologram-marker-hitbox:hover ~ .marker-prism-head {
-  box-shadow: 0 0 25px rgba(255, 0, 127, 0.75), inset 0 0 10px rgba(255, 0, 127, 0.4);
-}
-
-/* Glassmorphic projection data panel on hover */
-.layout-futuristic .marker-data-projection {
-  position: absolute;
-  left: 95px;
-  top: -25px;
-  width: 215px;
-  background: rgba(8, 14, 24, 0.85);
-  border: 1px solid rgba(0, 242, 254, 0.3);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 242, 254, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  opacity: 0;
-  transform: scale(0.9) translateY(10px);
-  pointer-events: none;
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 10;
-}
-
-.layout-futuristic .hologram-marker-hitbox:hover ~ .marker-data-projection {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
-
-.layout-futuristic .projection-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 6px;
-  margin-bottom: 8px;
-}
-
-.layout-futuristic .projection-title {
-  font-size: 10.5px;
-  font-weight: 600;
-  color: #ffffff;
-  letter-spacing: 1px;
-}
-
-.layout-futuristic .projection-tag {
-  font-family: var(--tech-font);
-  font-size: 9px;
-  color: var(--neon-cyan);
-  background: rgba(0, 242, 254, 0.12);
-  padding: 2px 6px;
-  border-radius: 4px;
-  letter-spacing: 0.5px;
-}
-
-.layout-futuristic .hologram-marker-container.active .projection-tag {
-  color: var(--neon-magenta);
-  background: rgba(255, 0, 127, 0.12);
-}
-
-.layout-futuristic .projection-body {
-  font-size: 9.5px;
-  color: var(--text-secondary);
-  line-height: 1.4;
-  margin-bottom: 8px;
-}
-
-.layout-futuristic .projection-row {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-}
-
-.layout-futuristic .projection-label {
-  color: var(--text-muted);
-}
-
-.layout-futuristic .projection-value {
-  font-family: var(--tech-font);
-  font-weight: bold;
-  color: var(--text-primary);
-}
-
-/* Projection interior wireframe sketch */
-.layout-futuristic .projection-wireframe {
-  height: 48px;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.layout-futuristic .projection-wireframe svg {
-  width: 80%;
-  height: 80%;
-}
-
-.projection-wireframe svg path,
-.projection-wireframe svg rect,
-.projection-wireframe svg circle,
-.layout-futuristic .projection-wireframe svg line {
-  stroke: var(--neon-cyan);
-  opacity: 0.85;
-}
-
-
-/* Keyframe Animations */
-@keyframes float-prism {
-  0% { transform: rotate(45deg) translateY(0); }
-  50% { transform: rotate(45deg) translateY(-5px); }
-  100% { transform: rotate(45deg) translateY(0); }
-}
-
-@keyframes breathe-shadow {
-  0% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
-  50% { transform: rotateX(65deg) scale(1.15); opacity: 0.85; }
-  100% { transform: rotateX(65deg) scale(1); opacity: 0.6; }
-}
 
 /* Media Queries for Tablets & Small Desktops */
 @media (max-width: 1024px) {
@@ -2718,56 +2256,7 @@
 /* -------------------------------------
    NEO HOTSPOTS REDESIGN 
    ------------------------------------- */
-.layout-neo .hologram-marker-container {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* Hide unneeded complicated elements */
-.layout-neo .hologram-marker-container .marker-stem,
-.layout-neo .hologram-marker-container .marker-data-projection,
-.layout-neo .hologram-marker-container .marker-ground-shadow,
-.layout-neo .hologram-marker-container .projection-wireframe {
-  display: none !important;
-}
-/* Style the dot as a diamond */
-.layout-neo .hologram-marker-container .marker-prism-head {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  background: #00D9FF;
-  border: 1px solid #fff;
-  box-shadow: 0 0 10px #00D9FF, 0 0 20px #00D9FF, inset 0 0 4px rgba(255,255,255,0.8);
-  clip-path: none;
-  animation: neoPulse 2s infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-}
-/* Hide the text inside the head since it's just a dot now */
-.layout-neo .hologram-marker-container .prism-content {
-  display: none;
-}
-/* Make the hitbox cover the whole 40x40 area */
-.layout-neo .hologram-marker-container .hologram-marker-hitbox {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  cursor: pointer;
-  z-index: 10;
-  pointer-events: auto;
-}
-.layout-neo .hologram-marker-container:hover .marker-prism-head {
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
-  box-shadow: 0 0 15px #00D9FF, 0 0 30px #00D9FF;
-}
+
 @keyframes neoPulse {
   0% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.4); }
   70% { box-shadow: 0 0 0 12px rgba(0, 217, 255, 0); }
@@ -2826,3 +2315,115 @@
 }
 
 
+
+/* =========================================================
+   GLOBAL HOLOGRAPHIC HOTSPOTS MARKERS (Pano2VR Hooks)
+   ========================================================= */
+
+/* Theme Variables for Hotspots */
+.layout-classic {
+  --hotspot-color: #D4AF37; /* Gold */
+  --hotspot-hover: #F2D06B;
+  --hotspot-bg: rgba(20, 15, 5, 0.75);
+}
+.layout-futuristic {
+  --hotspot-color: #00F2FE; /* Neon Cyan */
+  --hotspot-hover: #FF007F; /* Magenta */
+  --hotspot-bg: rgba(8, 14, 24, 0.85);
+}
+.layout-neo {
+  --hotspot-color: #00D9FF; /* Cyan */
+  --hotspot-hover: #8B5CF6; /* Purple */
+  --hotspot-bg: rgba(15, 17, 23, 0.85);
+}
+
+.hologram-marker-container {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Hitbox to capture clicks easily */
+.hotspot-hitbox {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+/* The Diamond Marker */
+.hotspot-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--hotspot-color);
+  border: 1px solid #fff;
+  border-radius: 2px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  box-shadow: 0 0 10px var(--hotspot-color), 0 0 20px var(--hotspot-color);
+  animation: hotspot-pulse 2s infinite ease-in-out;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+/* Tooltip Label */
+.hotspot-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  background: var(--hotspot-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--hotspot-color);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.05);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Hover Interactions */
+.hotspot-hitbox:hover ~ .hotspot-marker {
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+  background: var(--hotspot-hover);
+  box-shadow: 0 0 15px var(--hotspot-hover), 0 0 30px var(--hotspot-hover);
+  border-color: #fff;
+}
+
+.hotspot-hitbox:hover ~ .hotspot-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-50px);
+  border-color: var(--hotspot-hover);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.1);
+  color: var(--hotspot-hover);
+}
+
+@keyframes hotspot-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,255,255, 0.4); }
+  70% { box-shadow: 0 0 0 12px rgba(255,255,255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,255,255, 0); }
+}

@@ -1484,53 +1484,13 @@
     container.className = `hologram-marker-container ${pin.colorClass}`;
     container.id = `marker-${pin.id}`;
 
-    const wireframeSVG = pin.isAmenity ? `
-      <svg viewBox="0 0 100 40" fill="none" stroke="rgba(0, 242, 254, 0.6)" stroke-width="1">
-        <rect x="10" y="5" width="40" height="30" rx="2" />
-        <rect x="55" y="10" width="35" height="20" rx="10" />
-        <line x1="10" y1="20" x2="50" y2="20" />
-        <line x1="25" y1="5" x2="25" y2="35" />
-      </svg>
-    ` : `
-      <svg viewBox="0 0 100 40" fill="none" stroke="rgba(0, 242, 254, 0.6)" stroke-width="1">
-        <rect x="5" y="5" width="25" height="30" />
-        <rect x="30" y="5" width="40" height="30" />
-        <rect x="70" y="5" width="25" height="15" />
-        <rect x="70" y="20" width="25" height="15" />
-        <circle cx="17.5" cy="35" r="2" fill="#00f2fe" />
-        <circle cx="50" cy="35" r="2" fill="#00f2fe" />
-      </svg>
-    `;
-
     container.innerHTML = `
-      <div class="marker-ground-shadow"></div>
-      <div class="marker-stem"></div>
-      <div class="hologram-marker-hitbox" title="Click to view"></div>
-      <div class="marker-prism-head">
-        <div class="prism-content">${pin.label}</div>
-      </div>
-      <div class="marker-data-projection">
-        <div class="projection-header">
-          <div class="projection-title">${pin.title}</div>
-          <div class="projection-tag">${pin.status}</div>
-        </div>
-        <div class="projection-body">
-          <div class="projection-row">
-            <span class="projection-label">DIỆN TÍCH:</span>
-            <span class="projection-value">${pin.area}</span>
-          </div>
-          <div class="projection-row">
-            <span class="projection-label">HỆ THỐNG:</span>
-            <span class="projection-value">BIOMETRIC OK</span>
-          </div>
-        </div>
-        <div class="projection-wireframe">
-          ${wireframeSVG}
-        </div>
-      </div>
+      <div class="hotspot-hitbox"></div>
+      <div class="hotspot-marker"></div>
+      <div class="hotspot-label">${pin.title}</div>
     `;
 
-    const hitbox = container.querySelector(".hologram-marker-hitbox");
+    const hitbox = container.querySelector(".hotspot-hitbox");
     hitbox.addEventListener("click", function (e) {
       e.stopPropagation();
       console.log(`Marker clicked: ${pin.id} -> target ${pin.nodeTarget}`);
