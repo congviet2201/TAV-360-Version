@@ -151,7 +151,7 @@
           </div>
         </div>
         <!-- Tool Hotspots -->
-        <div class="vision-icon-wrapper active-tool" data-action="hotspots">
+        <div class="vision-icon-wrapper" data-action="hotspots">
           <div class="vision-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
           </div>
@@ -621,7 +621,7 @@
             </div>
           </div>
 
-          <div class="neo-dock-item active-tool" data-action="hotspots"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hotspots</div></div>
+          <div class="neo-dock-item" data-action="hotspots"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hotspots</div></div>
         </div>
       </div>
     </div>
