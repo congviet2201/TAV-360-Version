@@ -26,12 +26,17 @@
 
   // 1.1 Layout Switcher Widget HTML Template (Vietnamese labels)
   const layoutSwitcherHTML = `
-    <div class="layout-switcher-pill" id="layout-switcher">
-      <div class="switcher-segment" id="opt-layout-classic" data-layout="classic">Cổ điển</div>
-      <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic">Tương lai</div>
-      <div class="switcher-segment" id="opt-layout-neo" data-layout="neo">Neo</div>
-      <div class="switcher-segment" id="opt-layout-gradient" data-layout="gradient">Gradient</div>
-      <div class="switcher-slider" id="switcher-slider"></div>
+    <div class="layout-switcher-wrapper" id="layout-switcher-wrapper">
+      <div class="layout-switcher-trigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+      </div>
+      <div class="layout-switcher-pill" id="layout-switcher">
+        <div class="switcher-segment" id="opt-layout-classic" data-layout="classic">Cổ điển</div>
+        <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic">Tương lai</div>
+        <div class="switcher-segment" id="opt-layout-neo" data-layout="neo">Neo</div>
+        <div class="switcher-segment" id="opt-layout-gradient" data-layout="gradient">Gradient</div>
+        <div class="switcher-slider" id="switcher-slider"></div>
+      </div>
     </div>
   `;
 
@@ -54,112 +59,120 @@
     </div>
   `;
 
-  const gradientTopNavHTML = `
-    <div class="gradient-nav-container">
-      <!-- We use a horizontal layout for this -->
-      <div class="gradient-nav-item active" data-id="overview" data-target="node1">
-        <div class="nav-content">TỔNG QUAN</div>
-        <div class="gradient-submenu">
-          <div class="submenu-item active" data-action="overview-top" data-pano-node="node1">Top View</div>
-          <div class="submenu-item" data-action="overview-bird" data-pano-node="node2">Bird View</div>
+  const gradientRightNavHTML = `
+    <div class="gradient-dock-wrapper left collapsed" id="gradient-left-wrapper">
+      <div class="gradient-dock-trigger left" id="gradient-left-trigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+      <div class="vision-dock left-dock" id="vision-left-dock">
+      <div class="vision-icon-wrapper" data-id="overview">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="vision-submenu">
+          <div class="v-sub-item active" data-action="overview-top" data-pano-node="node1">Top View</div>
+          <div class="v-sub-item" data-action="overview-bird" data-pano-node="node2">Bird View</div>
         </div>
       </div>
-      <div class="gradient-nav-item" data-id="amenities">
-        <div class="nav-content">TIỆN ÍCH</div>
-        <div class="gradient-submenu">
-          <div class="submenu-item" data-pano-node="node1">Clubhouse</div>
-          <div class="submenu-item" data-pano-node="node1">Bến Du Thuyền</div>
-          <div class="submenu-item" data-pano-node="node2">Khu Thể Thao</div>
-          <div class="submenu-item" data-pano-node="node3">Công Viên</div>
+      <div class="vision-icon-wrapper" data-id="amenities">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 22h20L12 2z"/></svg>
+        </div>
+        <div class="vision-submenu">
+          <div class="v-sub-item" data-pano-node="node1">Clubhouse</div>
+          <div class="v-sub-item" data-pano-node="node1">Bến Du Thuyền</div>
+          <div class="v-sub-item" data-pano-node="node2">Khu Thể Thao</div>
+          <div class="v-sub-item" data-pano-node="node3">Công Viên</div>
         </div>
       </div>
-      <div class="gradient-nav-item" data-id="architecture">
-        <div class="nav-content">KIẾN TRÚC</div>
-        <div class="gradient-submenu">
-          <div class="submenu-item" data-pano-node="node3">Mặt Bằng</div>
-          <div class="submenu-item" data-pano-node="node4">Biệt Thự Song Lập</div>
-          <div class="submenu-item" data-pano-node="node5">Biệt Thự Đơn Lập</div>
+      <div class="vision-icon-wrapper" data-id="architecture">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        </div>
+        <div class="vision-submenu">
+          <div class="v-sub-item" data-pano-node="node3">Mặt Bằng</div>
+          <div class="v-sub-item" data-pano-node="node4">Biệt Thự Song Lập</div>
+          <div class="v-sub-item" data-pano-node="node5">Biệt Thự Đơn Lập</div>
         </div>
       </div>
-      <div class="gradient-nav-item" data-id="interior">
-        <div class="nav-content">NỘI THẤT</div>
-        <div class="gradient-submenu">
-          <div class="submenu-item" data-pano-node="node4">Phòng Khách</div>
-          <div class="submenu-item" data-pano-node="node5">Phòng Ngủ</div>
+      <div class="vision-icon-wrapper" data-id="interior">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+        </div>
+        <div class="vision-submenu">
+          <div class="v-sub-item" data-pano-node="node4">Phòng Khách</div>
+          <div class="v-sub-item" data-pano-node="node5">Phòng Ngủ</div>
         </div>
       </div>
-      <div class="gradient-nav-item" data-id="surrounding">
-        <div class="nav-content">KẾT NỐI</div>
-        <div class="gradient-submenu">
-          <div class="submenu-item" data-pano-node="node2">Giao Thông</div>
-          <div class="submenu-item" data-pano-node="node1">Tiện Ích Ngoại Khu</div>
+      <div class="vision-icon-wrapper" data-id="surrounding">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+        </div>
+        <div class="vision-submenu">
+          <div class="v-sub-item" data-pano-node="node2">Giao Thông</div>
+          <div class="v-sub-item" data-pano-node="node1">Tiện Ích Ngoại Khu</div>
+        </div>
         </div>
       </div>
     </div>
   `;
 
   
-  const gradientBottomDockHTML = `
-    <div class="gradient-dock-container">
-      <div class="gradient-dock-item" data-action="music">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/></svg>
-        <span class="dock-tooltip">Nhạc Nền</span>
+  const gradientLeftToolbarHTML = `
+    <div class="gradient-dock-wrapper right collapsed" id="gradient-right-wrapper">
+      <div class="gradient-dock-trigger right" id="gradient-right-trigger">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </div>
-      
-      <!-- Images Parent -->
-      <div class="gradient-dock-item has-dock-submenu" id="gradient-images-parent">
-        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2"/></svg>
-        <span class="dock-tooltip">Hình Ảnh</span>
-        <div class="dock-submenu dock-submenu-images">
-          <div class="dock-submenu-scrollable">
-            <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('{node1}')">
-              <img src="pano_aerial.png" alt="Toàn cảnh" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'">
+      <div class="vision-dock right-dock" id="vision-right-dock">
+      <div class="vision-icon-wrapper" data-action="music">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+      </div>
+      <div class="vision-icon-wrapper has-children">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <div class="vision-submenu">
+            <div class="v-pano-card" onclick="window.pano && window.pano.openNext('node1')">
+              <img src="pano_aerial.png" alt="Toàn cảnh">
               <span>Toàn cảnh</span>
             </div>
-            <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('{node2}')">
-              <img src="pano_detached.png" alt="Đơn lập" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'">
+            <div class="v-pano-card" onclick="window.pano && window.pano.openNext('node2')">
+              <img src="pano_detached.png" alt="Đơn lập">
               <span>Biệt thự Đơn lập</span>
             </div>
-            <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('{node3}')">
-              <img src="pano_semidetached.png" alt="Song lập" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'">
-              <span>Biệt thự Song lập</span>
-            </div>
-            <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('{node4}')">
-              <img src="pano_townhouse.png" alt="Liền kề" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'">
-              <span>Biệt thự Liền kề</span>
-            </div>
-          </div>
         </div>
       </div>
-
-      <div class="gradient-dock-item active-tool" data-action="hotspots">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9" r="2.5" fill="currentColor"/></svg>
-        <span class="dock-tooltip">Điểm Neo</span>
-      </div>
-      
-      <!-- Share Parent -->
-      <div class="gradient-dock-item has-dock-submenu" id="gradient-share-parent">
-        <svg viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke="currentColor" stroke-width="2"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke="currentColor" stroke-width="2"/></svg>
-        <span class="dock-tooltip">Chia Sẻ</span>
-        <div class="dock-submenu dock-submenu-share">
-          <a href="https://facebook.com" target="_blank" class="dock-share-btn facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook
-          </a>
-          <a href="https://instagram.com" target="_blank" class="dock-share-btn instagram">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12c0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-            Instagram
-          </a>
-          <a href="https://zalo.me" target="_blank" class="dock-share-btn zalo">
-            <svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 0C8.955 0 0 8.954 0 20c0 11.045 8.955 20 20 20s20-8.955 20-20C40 8.954 31.045 0 20 0zm9.09 28.182c-1.091 1.09-2.273 1.636-3.636 1.636-.727 0-1.454-.182-2.09-.455l-5.91 2.364.91-5.273c-1.636-1.454-2.637-3.545-2.637-5.818 0-4.364 3.546-7.909 7.91-7.909 4.363 0 7.909 3.545 7.909 7.909 0 2.909-1.546 5.454-4 6.909l1.544 .637z"/></svg>
-            Zalo
-          </a>
+      <div class="vision-icon-wrapper active-tool" data-action="hotspots">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
         </div>
       </div>
-
-      <div class="gradient-dock-item" data-action="call">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/></svg>
-        <span class="dock-tooltip">Tư Vấn</span>
+      <div class="vision-icon-wrapper has-children">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </div>
+        <div class="vision-submenu">
+          <a href="https://facebook.com" target="_blank" class="v-sub-item">Facebook</a>
+          <a href="https://zalo.me" target="_blank" class="v-sub-item">Zalo</a>
+        </div>
+      </div>
+      <div class="vision-icon-wrapper" data-action="call">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+      </div>
+      <div class="vision-icon-wrapper" data-action="info">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+      </div>
+      <div class="vision-icon-wrapper" data-action="fullscreen">
+        <div class="vision-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        </div>
+      </div>
       </div>
     </div>
   `;
@@ -398,7 +411,6 @@
     </div>
   `;
 
-  // Left Collapsible Sidebar Navigation HTML
   const sidebarNavFuturisticHTML = `
     <div class="sidebar-container" id="sidebar-container">
       <div class="sidebar-toggle-btn" id="btn-sidebar-toggle" title="Mở rộng menu">
@@ -524,24 +536,30 @@
   // ==========================================
 
   const neoTopTitleHTML = `
-    <div class="neo-top-panel">
-      <div class="neo-title">La Tiên Villa</div>
-      <div class="neo-subtitle">Khám phá không gian sống đẳng cấp</div>
+    <div class="layout-floating-logo">
+      <div class="logo-script-top">LA TIÊN</div>
+      <div class="logo-script-wave"></div>
+      <div class="logo-script-sub">V I L L A</div>
     </div>
   `;
 
   // The Left Nav has floating cards for main categories
   const neoLeftNavHTML = `
-    <div class="neo-left-nav" id="neo-left-nav">
-      <div class="neo-nav-card active" data-id="overview" id="nav-neo-overview">Tổng Quan</div>
-      <div class="neo-nav-card" data-id="amenities" id="nav-neo-amenities">Tiện Ích</div>
-      <div class="neo-nav-card center-logo-node" data-id="latien-brand" id="nav-neo-logo">Dự Án</div>
-      <div class="neo-nav-card" data-id="architecture" id="nav-neo-architecture">Kiến Trúc</div>
-      <div class="neo-nav-card" data-id="interior" id="nav-neo-interior">Nội Thất</div>
-      
-      <!-- Submenu Panel floats next to the active card -->
-      <div class="neo-submenu-panel" id="neo-submenu-panel">
-        <div class="neo-submenu-content" id="neo-submenu-content"></div>
+    <div class="neo-left-nav-wrapper collapsed" id="neo-left-nav-wrapper">
+      <div class="neo-nav-trigger" id="neo-left-trigger" title="Mở menu">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="neo-left-nav" id="neo-left-nav">
+        <div class="neo-nav-card active" data-id="overview" id="nav-neo-overview">Tổng Quan</div>
+        <div class="neo-nav-card" data-id="amenities" id="nav-neo-amenities">Tiện Ích</div>
+        <div class="neo-nav-card center-logo-node" data-id="latien-brand" id="nav-neo-logo">Dự Án</div>
+        <div class="neo-nav-card" data-id="architecture" id="nav-neo-architecture">Kiến Trúc</div>
+        <div class="neo-nav-card" data-id="interior" id="nav-neo-interior">Nội Thất</div>
+        
+        <!-- Submenu Panel floats next to the active card -->
+        <div class="neo-submenu-panel" id="neo-submenu-panel">
+          <div class="neo-submenu-content" id="neo-submenu-content"></div>
+        </div>
       </div>
     </div>
   `;
@@ -552,21 +570,48 @@
 
   // macOS style Bottom Dock
   const neoBottomDockHTML = `
-    <div class="neo-bottom-dock-container">
-      <div class="neo-dock" id="neo-dock">
-        <!-- Dock Items -->
-        <div class="neo-dock-item" data-action="home"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Trang Chủ</div></div>
-        <div class="neo-dock-item" data-action="gallery"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Thư Viện Ảnh</div></div>
-        <div class="neo-dock-item" data-action="share"><svg viewBox="0 0 24 24" fill="none"><path d="M18 8A3 3 0 1018 2a3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6zM8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Chia Sẻ</div></div>
-        <div class="neo-dock-item" data-action="call"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Tư Vấn</div></div>
-        <div class="neo-dock-item" data-action="facebook"><svg viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3V2z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Facebook</div></div>
-        <div class="neo-dock-item" data-action="instagram"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" stroke="currentColor" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><div class="neo-tooltip">Instagram</div></div>
-        <div class="neo-dock-item" data-action="zalo"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Zalo</div></div>
-        <div class="neo-dock-item" data-action="info"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Thông Tin Dự Án</div></div>
-        <div class="neo-dock-divider"></div>
-        <div class="neo-dock-item" data-action="music"><svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Nhạc Nền</div></div>
-        <div class="neo-dock-item" data-action="images"><svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hình Ảnh</div></div>
-        <div class="neo-dock-item" data-action="hotspots"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hotspots</div></div>
+    <div class="neo-dock-wrapper collapsed" id="neo-dock-wrapper">
+      <div class="neo-dock-trigger" id="neo-bottom-trigger" title="Mở công cụ">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="neo-bottom-dock-container" id="neo-bottom-dock">
+        <div class="neo-dock" id="neo-dock">
+          <div class="neo-dock-item" data-action="home"><svg viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="currentColor" stroke-width="2"/><polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Trang Chủ</div></div>
+          <div class="neo-dock-item" data-action="gallery"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="2"/><path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Thư Viện Ảnh</div></div>
+          
+          <!-- SUBMENU FOR SHARE -->
+          <div class="neo-dock-item has-children" id="neo-share-parent">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A3 3 0 1018 2a3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6zM8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2"/></svg>
+            <div class="neo-tooltip">Chia Sẻ</div>
+            <div class="neo-dock-submenu flex-col">
+              <a href="https://facebook.com" target="_blank" class="dock-share-btn facebook">Facebook</a>
+              <a href="https://zalo.me" target="_blank" class="dock-share-btn zalo">Zalo</a>
+            </div>
+          </div>
+          
+          <div class="neo-dock-item" data-action="call"><svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Tư Vấn</div></div>
+          <div class="neo-dock-item" data-action="info"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Thông Tin Dự Án</div></div>
+          <div class="neo-dock-divider"></div>
+          <div class="neo-dock-item" data-action="music"><svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Nhạc Nền</div></div>
+          
+          <!-- SUBMENU FOR IMAGES -->
+          <div class="neo-dock-item has-children" id="neo-images-parent">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+            <div class="neo-tooltip">Hình Ảnh</div>
+            <div class="neo-dock-submenu">
+              <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('node1')">
+                <img src="pano_aerial.png" alt="Toàn cảnh">
+                <span>Toàn cảnh</span>
+              </div>
+              <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('node2')">
+                <img src="pano_detached.png" alt="Đơn lập">
+                <span>Biệt thự Đơn lập</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="neo-dock-item active-tool" data-action="hotspots"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg><div class="neo-tooltip">Ẩn/Hiện Hotspots</div></div>
+        </div>
       </div>
     </div>
   `;
@@ -872,7 +917,13 @@
     // Remove old layout nodes (everything except switcher pill and gradient defs)
     const children = Array.from(uiWrapper.children);
     children.forEach(child => {
-      if (child.id !== "layout-switcher" && !child.innerHTML.includes("<defs>")) {
+      if (
+        child.id !== "layout-switcher-wrapper" && 
+        child.id !== "layout-switcher" && 
+        !child.innerHTML.includes("<defs>") &&
+        !child.classList.contains("global-modal-overlay") &&
+        child.id !== "social-share-menu"
+      ) {
         uiWrapper.removeChild(child);
       }
     });
@@ -901,7 +952,7 @@
       setupNeoListeners();
     } else if (layoutMode === "gradient") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = gradientTopTitleHTML + gradientQuickActionsHTML + gradientTopNavHTML + gradientBottomDockHTML;
+      tempDiv.innerHTML = gradientTopTitleHTML + gradientRightNavHTML + gradientLeftToolbarHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -1187,75 +1238,146 @@
   }
 
   function setupGradientListeners() {
-    // Quick Actions
-    const quickActions = document.querySelectorAll(".quick-action-btn");
-    quickActions.forEach(btn => {
-      btn.addEventListener("click", function() {
-        showNotification(`Action: ${this.getAttribute("data-action")}`);
+    // Left Wrapper Toggling
+    const leftWrapper = document.getElementById('gradient-left-wrapper');
+    const leftTrigger = document.getElementById('gradient-left-trigger');
+    if (leftWrapper && leftTrigger) {
+      leftWrapper.addEventListener('mouseenter', () => leftWrapper.classList.remove('collapsed'));
+      leftWrapper.addEventListener('mouseleave', () => {
+         if (!leftWrapper.classList.contains('pinned')) leftWrapper.classList.add('collapsed');
       });
-    });
-
-    // Top-left Navigation
-    const navItems = document.querySelectorAll(".gradient-nav-item");
-    navItems.forEach(item => {
-      item.addEventListener("click", function (e) {
-        if (e.target.closest(".submenu-item")) return;
-        
-        // Remove active from all items
-        navItems.forEach(n => n.classList.remove("active"));
-        this.classList.add("active");
-        
-        activeNavItemId = this.getAttribute("data-id");
-        lsSet("latien_active_nav", activeNavItemId);
-        
-        const targetNode = this.getAttribute("data-target");
-        if (targetNode && window.pano) {
-          window.pano.openNext(`{${targetNode}}`);
-          showNotification(`Navigating: ${this.querySelector('.nav-content').textContent.trim()}`);
-        }
+      leftTrigger.addEventListener('click', (e) => {
+         e.stopPropagation();
+         leftWrapper.classList.toggle('pinned');
+         if (leftWrapper.classList.contains('pinned')) {
+           leftWrapper.classList.remove('collapsed');
+         } else {
+           leftWrapper.classList.add('collapsed');
+         }
       });
-    });
+    }
 
-    // Submenu Items
-    const subItems = document.querySelectorAll(".gradient-submenu .submenu-item");
-    subItems.forEach(item => {
-      item.addEventListener("click", function (e) {
-        e.stopPropagation();
-        subItems.forEach(s => s.classList.remove("active"));
-        this.classList.add("active");
-        handleSubmenuSelection(this);
+    // Right Wrapper Toggling
+    const rightWrapper = document.getElementById('gradient-right-wrapper');
+    const rightTrigger = document.getElementById('gradient-right-trigger');
+    if (rightWrapper && rightTrigger) {
+      rightWrapper.addEventListener('mouseenter', () => rightWrapper.classList.remove('collapsed'));
+      rightWrapper.addEventListener('mouseleave', () => {
+         if (!rightWrapper.classList.contains('pinned')) rightWrapper.classList.add('collapsed');
       });
-    });
+      rightTrigger.addEventListener('click', (e) => {
+         e.stopPropagation();
+         rightWrapper.classList.toggle('pinned');
+         if (rightWrapper.classList.contains('pinned')) {
+           rightWrapper.classList.remove('collapsed');
+         } else {
+           rightWrapper.classList.add('collapsed');
+         }
+      });
+    }
 
-    // Dock Items
-    const dockItems = document.querySelectorAll(".gradient-dock-item");
-    dockItems.forEach(item => {
-      item.addEventListener("click", function (e) {
-        const action = this.getAttribute("data-action");
-        if (!action) return;
-
-        // Toggle active-tool class for toggleable tools (like music, hotspots)
-        if (["music", "hotspots"].includes(action)) {
-          this.classList.toggle("active-tool");
-        }
+    const iconWrappers = document.querySelectorAll('.layout-gradient .vision-icon-wrapper');
+    
+    iconWrappers.forEach(wrapper => {
+      // Hover logic
+      wrapper.addEventListener('mouseenter', () => {
+        if (!wrapper.classList.contains('pinned')) wrapper.classList.add('hover-open');
+      });
+      wrapper.addEventListener('mouseleave', () => {
+        wrapper.classList.remove('hover-open');
+      });
+      
+      // Click logic (for opening submenus or just clicking a tool)
+      wrapper.addEventListener('click', (e) => {
+        // If clicking inside a submenu, don't toggle the pinned state
+        if (e.target.closest('.vision-submenu')) return;
         
-        if (action === "hotspots") {
-          const markers = document.querySelectorAll(".hologram-marker-container");
-          const isActive = this.classList.contains("active-tool");
-          markers.forEach(m => m.style.display = isActive ? "flex" : "none");
-          showNotification(isActive ? "Bật hiển thị Điểm Neo" : "Tắt hiển thị Điểm Neo");
+        const hasSubmenu = wrapper.querySelector('.vision-submenu') !== null;
+        if (hasSubmenu) {
+            const isPinned = wrapper.classList.contains('pinned');
+            // Close all others
+            iconWrappers.forEach(n => n.classList.remove('pinned', 'hover-open'));
+            if (!isPinned) wrapper.classList.add('pinned');
         } else {
-          showNotification(`Công cụ: ${action}`);
+            // It's a simple tool, handle it via dispatchToolAction
+            iconWrappers.forEach(n => n.classList.remove('pinned', 'hover-open'));
+            if (typeof dispatchToolAction === "function" && wrapper.hasAttribute("data-action")) {
+              dispatchToolAction(wrapper);
+              e.stopPropagation(); // Prevent broken global handlers from interfering
+            }
         }
       });
+    });
+
+    // Click outside closes everything
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.layout-gradient .vision-icon-wrapper')) {
+        iconWrappers.forEach(n => n.classList.remove('pinned'));
+      }
     });
   }
 
   function setupNeoListeners() {
-    // Top-level Nav cards
-    const navCards = document.querySelectorAll(".neo-nav-card");
-    const submenuContent = document.getElementById("neo-submenu-content");
-    const submenuPanel = document.getElementById("neo-submenu-panel");
+    // Left Nav Wrapper Logic
+    const leftNavWrapper = document.getElementById('neo-left-nav-wrapper');
+    const leftNavTrigger = document.getElementById('neo-left-trigger');
+    if (leftNavWrapper && leftNavTrigger) {
+      leftNavWrapper.addEventListener('mouseenter', () => {
+        if (!leftNavWrapper.classList.contains('pinned')) leftNavWrapper.classList.remove('collapsed');
+      });
+      leftNavWrapper.addEventListener('mouseleave', () => {
+        if (!leftNavWrapper.classList.contains('pinned')) leftNavWrapper.classList.add('collapsed');
+      });
+      leftNavTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isPinned = leftNavWrapper.classList.contains('pinned');
+        if (isPinned) {
+          leftNavWrapper.classList.remove('pinned');
+          leftNavWrapper.classList.add('collapsed');
+        } else {
+          leftNavWrapper.classList.add('pinned');
+          leftNavWrapper.classList.remove('collapsed');
+        }
+      });
+    }
+
+    // Bottom Dock Wrapper Logic
+    const bottomDockWrapper = document.getElementById('neo-dock-wrapper');
+    const bottomDockTrigger = document.getElementById('neo-bottom-trigger');
+    if (bottomDockWrapper && bottomDockTrigger) {
+      bottomDockWrapper.addEventListener('mouseenter', () => {
+        if (!bottomDockWrapper.classList.contains('pinned')) bottomDockWrapper.classList.remove('collapsed');
+      });
+      bottomDockWrapper.addEventListener('mouseleave', () => {
+        if (!bottomDockWrapper.classList.contains('pinned')) bottomDockWrapper.classList.add('collapsed');
+      });
+      bottomDockTrigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isPinned = bottomDockWrapper.classList.contains('pinned');
+        if (isPinned) {
+          bottomDockWrapper.classList.remove('pinned');
+          bottomDockWrapper.classList.add('collapsed');
+        } else {
+          bottomDockWrapper.classList.add('pinned');
+          bottomDockWrapper.classList.remove('collapsed');
+        }
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      if (leftNavWrapper && !e.target.closest('.neo-left-nav-wrapper')) {
+        leftNavWrapper.classList.remove('pinned');
+        leftNavWrapper.classList.add('collapsed');
+      }
+      if (bottomDockWrapper && !e.target.closest('.neo-dock-wrapper')) {
+        bottomDockWrapper.classList.remove('pinned');
+        bottomDockWrapper.classList.add('collapsed');
+      }
+    });
+
+    const navCards = document.querySelectorAll(".layout-neo .neo-nav-card:not(.center-logo-node)");
+    const panel = document.getElementById("neo-submenu-panel");
+    const content = document.getElementById("neo-submenu-content");
 
     const submenuData = {
       "overview": `
@@ -1280,7 +1402,7 @@
         <div class="submenu-item" data-action="interior-rooftop">Sân Thượng</div>
       `,
       "latien-brand": `
-        <div class="mega-card" data-pano-node="node1" data-action="pano-node1"><img src="pano_aerial.png" alt="Toàn cảnh dự án" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Toàn cảnh dự án</div></div>
+        <div class="mega-card" data-pano-node="node1" data-action="pano-node1"><img src="pano_aerial.png" alt="Toàn cảnh" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Toàn cảnh dự án</div></div>
         <div class="mega-card" data-pano-node="node2" data-action="pano-node2"><img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Biệt thự Đơn lập A</div></div>
         <div class="mega-card" data-pano-node="node3" data-action="pano-node3"><img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Biệt thự Song lập B</div></div>
         <div class="mega-card" data-pano-node="node4" data-action="pano-node4"><img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img"><div class="mega-card-overlay"></div><div class="mega-card-title">Biệt thự Liền kề C</div></div>
@@ -1288,75 +1410,91 @@
     };
 
     function bindSubmenuItems() {
-      const subItems = submenuContent.querySelectorAll(".submenu-item, .mega-card");
+      if (!content) return;
+      const subItems = content.querySelectorAll(".submenu-item, .mega-card");
       subItems.forEach(item => {
         item.addEventListener("click", function (e2) {
           e2.stopPropagation();
           subItems.forEach(s => s.classList.remove("active"));
           this.classList.add("active");
-          
-          activeSubmenuAction = this.getAttribute("data-action");
-          activePanoNode = this.getAttribute("data-pano-node") || activePanoNode;
-          lsSet("latien_active_submenu", activeSubmenuAction);
-          lsSet("latien_active_node", activePanoNode);
-          
-          submenuPanel.classList.remove("open");
-          handleSubmenuSelection(this);
+          if (panel) panel.classList.remove("open");
+          if (typeof handleSubmenuSelection === "function") handleSubmenuSelection(this);
         });
       });
     }
 
     navCards.forEach(card => {
-      card.addEventListener("click", function (e) {
-        e.stopPropagation();
-        
-        // If clicking already active card, toggle submenu if it has one
-        const dataId = this.getAttribute("data-id");
-        if (this.classList.contains("active") && submenuData[dataId]) {
-           submenuPanel.classList.toggle("open");
-           return;
-        }
-
-        navCards.forEach(c => c.classList.remove("active"));
-        this.classList.add("active");
-        
-        activeNavItemId = dataId;
-        lsSet("latien_active_nav", activeNavItemId);
-
-        // Populate and open submenu if available
-        if (submenuData[dataId] && submenuContent) {
-          submenuContent.innerHTML = submenuData[dataId];
-          submenuPanel.classList.add("open");
-          
-          if (dataId === "latien-brand") submenuPanel.classList.add("mega-mode");
-          else submenuPanel.classList.remove("mega-mode");
-          
+      card.addEventListener("mouseenter", () => {
+        if (panel && card.classList.contains("pinned")) return;
+        const targetId = card.getAttribute("data-id");
+        if (targetId && submenuData[targetId] && content) {
+          content.innerHTML = submenuData[targetId];
+          panel.classList.add("open");
+          if (targetId === "latien-brand") panel.classList.add("mega-mode");
+          else panel.classList.remove("mega-mode");
           bindSubmenuItems();
+          navCards.forEach(c => { if (!c.classList.contains("pinned")) c.classList.remove("active"); });
+          if (!document.querySelector(".layout-neo .neo-nav-card.pinned")) card.classList.add("active");
+        }
+      });
+
+      card.addEventListener("mouseleave", () => {
+        if (!card.classList.contains("pinned") && !document.querySelector(".layout-neo .neo-nav-card.pinned")) {
+          if (panel) panel.classList.remove("open");
+          card.classList.remove("active");
+        }
+      });
+
+      card.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const isPinned = card.classList.contains("pinned");
+        navCards.forEach(c => { c.classList.remove("pinned", "active"); });
+        if (!isPinned) {
+          card.classList.add("pinned", "active");
+          if (panel) panel.classList.add("open");
         } else {
-          submenuPanel.classList.remove("open");
-          handleSubmenuSelection(this);
+          if (panel) panel.classList.remove("open");
         }
       });
     });
 
-    // Initialize submenu content on load if a nav item is already active
-    if (activeNavItemId && submenuData[activeNavItemId] && submenuContent) {
-      submenuContent.innerHTML = submenuData[activeNavItemId];
-      if (activeNavItemId === "latien-brand") submenuPanel.classList.add("mega-mode");
-      else submenuPanel.classList.remove("mega-mode");
-      bindSubmenuItems();
-    }
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest('.neo-left-nav-wrapper')) {
+        navCards.forEach(c => { c.classList.remove("pinned", "active"); });
+        if (panel) panel.classList.remove("open");
+      }
+    });
 
-    // Bind Quick Panel actions & Bottom Dock actions
     const allTools = document.querySelectorAll(".neo-quick-btn, .neo-dock-item");
     allTools.forEach(btn => {
-      btn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        dispatchToolAction(this);
-      });
+      if (btn.classList.contains("has-children")) {
+        btn.addEventListener("mouseenter", () => {
+          if (!btn.classList.contains("pinned")) btn.classList.add("hover-open");
+        });
+        btn.addEventListener("mouseleave", () => {
+          btn.classList.remove("hover-open");
+        });
+        btn.addEventListener("click", (e) => {
+          if (e.target.closest('.neo-dock-submenu')) return; // ignore clicks inside submenu
+          e.stopPropagation();
+          const isPinned = btn.classList.contains("pinned");
+          allTools.forEach(t => t.classList.remove("pinned", "hover-open"));
+          if (!isPinned) btn.classList.add("pinned");
+        });
+      } else {
+        btn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          if (typeof dispatchToolAction === "function") dispatchToolAction(this);
+        });
+      }
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".neo-dock-item")) {
+        allTools.forEach(t => t.classList.remove("pinned"));
+      }
     });
   }
-
 
   // ==========================================
   // TOOLBAR ACTION DISPATCHER
@@ -1432,6 +1570,18 @@
 
       case "zalo":
         window.open("https://zalo.me", "_blank");
+        break;
+
+      case "fullscreen":
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(err => {
+            console.error("Error attempting to enable full-screen mode:", err.message);
+          });
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
         break;
 
       default:
@@ -1664,7 +1814,7 @@
     // Also close on clicks INSIDE the overlay that don't hit nav items or submenus
     uiWrapper.addEventListener("click", function (e) {
       // Stop layout-switcher clicks from bubbling to document
-      if (e.target.closest(".layout-switcher-pill")) {
+      if (e.target.closest(".layout-switcher-wrapper")) {
         e.stopPropagation();
         return;
       }
@@ -1938,10 +2088,45 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 2. Project Info
     if (e.target.closest('[data-action="info"]')) {
+      const btn = e.target.closest('[data-action="info"]');
+      if (btn) {
+        btn.classList.add('active-tool');
+        setTimeout(() => btn.classList.remove('active-tool'), 300);
+      }
       const modal = document.getElementById('project-info-modal');
       if (modal) modal.classList.add('active');
       return;
     }
+
+    // Hotspots Toggle
+    if (e.target.closest('[data-action="hotspots"]')) {
+      const btn = e.target.closest('[data-action="hotspots"]');
+      btn.classList.toggle('active-tool');
+      const isVisible = btn.classList.contains('active-tool');
+      
+      // CSS approach
+      document.body.classList.toggle('hide-hotspots', !isVisible);
+      
+      // Pano2VR API approach
+      if (window.pano) {
+        if (typeof window.pano.setPointHotspotsVisible === 'function') {
+           window.pano.setPointHotspotsVisible(isVisible);
+        }
+      }
+      return;
+    }
+
+    // Music Toggle
+    if (e.target.closest('[data-action="music"]')) {
+      const btn = e.target.closest('[data-action="music"]');
+      btn.classList.toggle('active-tool');
+      const isPlaying = btn.classList.contains('active-tool');
+      if (window.pano && typeof window.pano.setVolume === 'function') {
+         window.pano.setVolume(isPlaying ? 1 : 0);
+      }
+      return;
+    }
+
 
     // 3. Image Gallery
     if (e.target.closest('[data-action="images"]')) {
@@ -2014,4 +2199,23 @@ document.addEventListener("DOMContentLoaded", function() {
       if (!wasOpen) gradientItem.classList.add('is-open');
     }
   });
-});
+})
+    // Left Toolbar Hover & Pin Logic
+    const toolbarTrigger = document.getElementById("gradient-toolbar-trigger");
+    const toolbarWrapper = document.getElementById("gradient-toolbar-wrapper");
+    if (toolbarTrigger && toolbarWrapper) {
+      // Clean up old classes
+      toolbarWrapper.classList.remove("collapsed");
+      
+      toolbarWrapper.addEventListener("mouseenter", () => {
+        toolbarWrapper.classList.add("hover-open");
+      });
+      toolbarWrapper.addEventListener("mouseleave", () => {
+        toolbarWrapper.classList.remove("hover-open");
+      });
+      toolbarTrigger.addEventListener("click", (e) => {
+        e.stopPropagation(); // prevent document click from firing immediately
+        toolbarWrapper.classList.toggle("pinned");
+      });
+    }
+    ;

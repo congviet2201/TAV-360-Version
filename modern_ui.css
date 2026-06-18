@@ -1375,20 +1375,66 @@
 /* ==========================================
    LAYOUT SWITCHER WIDGET STYLES
    ========================================== */
-.layout-switcher-pill {
+.layout-switcher-wrapper {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  z-index: 2200;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.layout-switcher-trigger {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.layout-switcher-trigger:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.layout-switcher-trigger svg {
+  width: 24px;
+  height: 24px;
+}
+
+.layout-switcher-pill {
+  position: absolute;
+  left: 100%;
+  margin-left: 10px;
   height: 36px;
   display: flex;
   align-items: center;
   padding: 3px;
   border-radius: 18px;
-  z-index: 2200;
-  pointer-events: auto;
   box-sizing: border-box;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transform-origin: left center;
+}
+
+.layout-switcher-wrapper:hover .layout-switcher-pill,
+.layout-switcher-wrapper.active .layout-switcher-pill {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
 }
 
 /* Adapt switcher theme dynamically based on body layout class */
@@ -1821,6 +1867,15 @@
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), 0 0 20px rgba(212, 175, 55, 0.15);
 }
 
+.layout-gradient .project-info-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-soft);
+  color: var(--text-main);
+}
+
 .project-info-panel.visible {
   opacity: 1;
   visibility: visible;
@@ -1837,6 +1892,21 @@
 
 .layout-classic .info-panel-header {
   border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+.layout-gradient .info-panel-header {
+  border-bottom-color: var(--border-glass);
+}
+
+.layout-gradient .logo-script-top {
+  background: var(--primary-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.layout-gradient .logo-script-sub {
+  color: var(--text-sec);
 }
 
 .info-panel-close {
@@ -1858,8 +1928,18 @@
   color: #000;
 }
 
+.layout-gradient .info-panel-close {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
 .info-panel-close:hover {
   background: #ff4757;
+  color: #fff;
+}
+
+.layout-gradient .info-panel-close:hover {
+  background: #FF5E62;
   color: #fff;
 }
 
@@ -1886,6 +1966,11 @@
 
 .layout-classic .info-label { color: var(--gold-dark); }
 
+.layout-gradient .info-label {
+  color: #FF5E62;
+  font-family: 'Inter', sans-serif;
+}
+
 .info-value {
   font-family: var(--ui-font);
   font-size: 13px;
@@ -1893,6 +1978,72 @@
 }
 
 .layout-classic .info-value { color: #333; }
+
+.layout-gradient .info-value {
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+}
+
+/* =====================================================================
+   FLOATING LOGO FOR NEO & FUTURISTIC
+   ===================================================================== */
+.layout-floating-logo {
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  z-index: 2000;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  animation: fadeIn 0.6s ease;
+}
+
+.layout-floating-logo .logo-script-wave {
+  width: 25px;
+  height: 2px;
+  margin: 2px 0;
+  border-radius: 2px;
+}
+
+/* Neo specific styling */
+.layout-neo .layout-floating-logo .logo-script-top {
+  font-family: var(--tech-font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--neo-primary);
+  letter-spacing: 2px;
+}
+.layout-neo .layout-floating-logo .logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 7px;
+  color: var(--neo-text);
+  letter-spacing: 3px;
+  opacity: 0.8;
+}
+.layout-neo .layout-floating-logo .logo-script-wave {
+  background: var(--neo-indigo);
+}
+
+/* Futuristic specific styling */
+.layout-futuristic .layout-floating-logo .logo-script-top {
+  font-family: var(--tech-font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+}
+.layout-futuristic .layout-floating-logo .logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 7px;
+  color: #fff;
+  letter-spacing: 3px;
+  opacity: 0.7;
+}
+.layout-futuristic .layout-floating-logo .logo-script-wave {
+  background: var(--neon-blue);
+}
 
 /* =====================================================================
    OPTION 3: NEO LAYOUT (APPLE VISION / MAC OS STYLE)
@@ -1984,6 +2135,8 @@
 
 /* 2. LEFT FLOATING NAV CARDS */
 .layout-neo .neo-left-nav {
+  z-index: 5 !important;
+  position: relative !important;
   position: absolute;
   left: 30px;
   top: 50%;
@@ -2093,6 +2246,8 @@
 
 /* 4. MAC OS STYLE BOTTOM DOCK */
 .layout-neo .neo-bottom-dock-container {
+  z-index: 5 !important;
+  position: relative !important;
   position: absolute;
   bottom: 30px;
   left: 50%;
@@ -2103,14 +2258,14 @@
 .layout-neo .neo-dock {
   pointer-events: auto;
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  padding: 14px 20px;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
   background: var(--neo-bg);
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
   border: 1px solid var(--neo-border);
-  border-radius: 30px;
+  border-radius: 24px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   transition: all 0.3s;
 }
@@ -2122,9 +2277,9 @@
   align-self: center;
 }
 .layout-neo .neo-dock-item {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.05);
   display: flex;
@@ -2133,16 +2288,9 @@
   color: var(--neo-text);
   cursor: pointer;
   position: relative;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); /* OS X spring easing */
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-origin: bottom center;
 }
-.layout-neo .neo-dock-item svg {
-  width: 24px;
-  height: 24px;
-  transition: all 0.2s;
-}
-
-/* Stable Hover Effects (No Layout Shifting) */
 .layout-neo .neo-dock-item:hover {
   background: rgba(0, 217, 255, 0.15);
   border-color: #00D9FF;
@@ -2156,6 +2304,7 @@
 
 /* Tooltip for Dock */
 .layout-neo .neo-tooltip {
+  z-index: 20 !important;
   position: absolute;
   bottom: calc(100% + 16px);
   background: var(--neo-bg);
@@ -2189,14 +2338,7 @@
   stroke-dasharray: 2 4;
 }
 
-/* Move Layout Switcher to Bottom Left under Compass */
-.layout-neo .layout-switcher-pill {
-  top: auto;
-  bottom: 30px;
-  left: 30px;
-  transform: none;
-  z-index: 2000;
-}
+
 
 /* -------------------------------------
    NEO MINIMAP & COMPASS REDESIGN 
@@ -2453,14 +2595,14 @@
 /* 1. Top Title Card */
 .layout-gradient .gradient-top-title-card {
   position: absolute;
-  top: 24px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 20px;
+  left: 20px;
+  transform: none;
   background: var(--bg-glass);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  padding: 12px 32px;
-  border-radius: 20px;
+  padding: 8px 20px;
+  border-radius: 12px;
   box-shadow: var(--shadow-soft);
   border: 1px solid var(--border-glass);
   text-align: center;
@@ -2468,19 +2610,19 @@
 }
 .layout-gradient .gradient-top-title-card .project-name {
   font-weight: 800;
-  font-size: 16px;
+  font-size: 13px;
   letter-spacing: 2px;
   background: var(--primary-grad);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .layout-gradient .gradient-top-title-card .project-subtitle {
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 600;
   color: var(--text-sec);
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 /* 2. Top Right Quick Actions */
@@ -2534,32 +2676,25 @@
   pointer-events: none; /* allow clicks to pass through gaps */
 }
 
+
 .layout-gradient .gradient-nav-item {
+  pointer-events: auto !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+  padding: 0 !important;
   position: relative;
-  background: var(--bg-glass);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  padding: 10px 20px;
-  border-radius: 16px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  pointer-events: auto;
-  border: 1px solid var(--border-glass);
-  box-shadow: var(--shadow-soft);
-  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  color: var(--text-sec);
+  transition: all 0.3s ease;
 }
 
-.layout-gradient .gradient-nav-item:hover,
-.layout-gradient .gradient-nav-item.active {
-  background: var(--bg-glass-hover);
-  color: var(--text-main);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  border-color: rgba(255, 255, 255, 0.9);
-}
+.layout-gradient .gradient-nav-item:hover { background: var(--bg-glass-hover); color: var(--text-main); transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: rgba(255, 255, 255, 0.9); }
 
 /* Gradient line indicator on active */
 .layout-gradient .gradient-nav-item::after {
@@ -2574,9 +2709,7 @@
   background: var(--primary-grad);
   transition: width 0.3s ease;
 }
-.layout-gradient .gradient-nav-item.active::after {
-  width: 50%;
-}
+
 
 /* Horizontal Submenu (Expandable Card) */
 .layout-gradient .gradient-submenu {
@@ -2609,15 +2742,31 @@
   pointer-events: auto;
 }
 
+
 .layout-gradient .gradient-submenu .submenu-item {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
   padding: 8px 16px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-sec);
-  border-radius: 8px;
-  transition: all 0.2s ease;
-  background: transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
+
+.layout-gradient .gradient-submenu .submenu-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05) translateY(0);
+}
+
 
 .layout-gradient .gradient-submenu .submenu-item:hover,
 .layout-gradient .gradient-submenu .submenu-item.active {
@@ -3167,4 +3316,1258 @@
 }
 .contact-section p {
   margin-bottom: 4px;
+}
+\n.layout-gradient .gradient-right-toolbar { position: fixed !important; right: 20px !important; top: 50% !important; transform: translateY(-50%) !important; display: flex !important; flex-direction: column !important; gap: 16px !important; z-index: 1000 !important; pointer-events: auto !important; height: auto !important; }\n
+\n.layout-gradient .glass-circle-node svg { width: 20px; height: 20px; transition: all 0.3s ease; }\n.layout-gradient .glass-circle-node:hover, .layout-gradient .glass-circle-node.hover-open, .layout-gradient .glass-circle-node.pinned, .layout-gradient .glass-circle-node.active-tool { background: rgba(0, 242, 254, 0.15); color: #00f2fe; border-color: rgba(0, 242, 254, 0.6); box-shadow: 0 0 20px rgba(0, 242, 254, 0.4); }\n.layout-gradient .glass-tooltip { position: absolute; right: 60px; top: 50%; transform: translateY(-50%) translateX(10px); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(255,255,255,0.05); }\n.layout-gradient .glass-circle-node:not(.has-children):hover .glass-tooltip { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0); }\n.layout-gradient .glass-submenu { position: absolute; right: 60px; top: 50%; transform: translateY(-50%) translateX(15px) scale(0.95); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: 12px; padding: 12px; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); pointer-events: none; }\n.layout-gradient .glass-circle-node.hover-open .glass-submenu, .layout-gradient .glass-circle-node.pinned .glass-submenu { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0) scale(1); pointer-events: auto; }\n.layout-gradient .glass-submenu .dock-share-btn { display: block; padding: 10px 16px; color: #fff; text-decoration: none; font-size: 14px; border-radius: 6px; transition: background 0.2s; text-align: center; margin-bottom: 8px; background: rgba(255,255,255,0.05); }\n.layout-gradient .glass-submenu .dock-share-btn:hover { background: rgba(0, 242, 254, 0.2); color: #00f2fe; }\n.layout-futuristic .sidebar-logo { display: none !important; }\n.layout-neo .neo-nav-card:hover, .layout-neo .neo-nav-card.active, .layout-neo .neo-nav-card.pinned { background: rgba(255, 255, 255, 0.08) !important; color: #00D9FF !important; border-left: 3px solid #00D9FF !important; border-radius: 4px; }\n
+
+/* =========================================
+   FIXES FOR GRADIENT OVERLAP
+   ========================================= */
+.layout-gradient .gradient-right-toolbar {
+  position: fixed !important;
+  right: 20px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  z-index: 1000 !important;
+  pointer-events: auto !important;
+  height: auto !important;
+}
+
+
+
+
+.layout-gradient .glass-circle-node svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.layout-gradient .glass-circle-node:hover,
+.layout-gradient .glass-circle-node.hover-open,
+.layout-gradient .glass-circle-node.pinned,
+.layout-gradient .glass-circle-node.active-tool {
+  background: rgba(0, 242, 254, 0.15);
+  color: #00f2fe;
+  border-color: rgba(0, 242, 254, 0.6);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+}
+
+.layout-gradient .glass-tooltip {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.layout-gradient .glass-circle-node:not(.has-children):hover .glass-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.layout-gradient .glass-submenu {
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%) translateX(15px) scale(0.95);
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
+.layout-gradient .glass-circle-node.hover-open .glass-submenu,
+.layout-gradient .glass-circle-node.pinned .glass-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+.layout-gradient .glass-submenu .dock-share-btn {
+  display: block;
+  padding: 10px 16px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  text-align: center;
+  margin-bottom: 8px;
+  background: rgba(255,255,255,0.05);
+}
+.layout-gradient .glass-submenu .dock-share-btn:hover {
+  background: rgba(0, 242, 254, 0.2);
+  color: #00f2fe;
+}
+
+
+/* =========================================
+   FIX FOR NEO ACTIVE/HOVER STATE
+   ========================================= */
+.layout-neo .neo-nav-card:hover,
+.layout-neo .neo-nav-card.active,
+.layout-neo .neo-nav-card.pinned {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #00D9FF !important;
+  border-left: 3px solid #00D9FF !important;
+  border-radius: 4px;
+}
+
+
+/* =========================================
+   NEO COLLAPSIBLE PANELS (Drawers)
+   ========================================= */
+
+/* Left Nav Wrapper */
+.layout-neo .neo-left-nav-wrapper {
+  position: absolute !important;
+  left: 24px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+
+/* Override existing absolute on neo-left-nav */
+.layout-neo .neo-left-nav {
+  position: relative !important;
+  left: 0 !important;
+  top: 0 !important;
+  transform: none !important;
+  margin-right: 16px !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.layout-neo .neo-left-nav-wrapper.collapsed .neo-left-nav {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateX(-40px) !important;
+  pointer-events: none !important;
+}
+
+.layout-neo .neo-nav-trigger {
+  z-index: 10 !important;
+  position: relative !important;
+  width: 44px !important;
+  height: 44px !important;
+  background: rgba(15, 17, 23, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(139, 92, 246, 0.4) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #00D9FF !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  pointer-events: auto !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+  margin: 0 !important;
+  margin-right: 16px !important;
+}
+
+.layout-neo .neo-nav-trigger:hover,
+.layout-neo .neo-left-nav-wrapper:not(.collapsed) .neo-nav-trigger {
+  background: rgba(0, 217, 255, 0.15) !important;
+  box-shadow: 2px 0 15px rgba(0, 217, 255, 0.4) !important;
+}
+
+.layout-neo .neo-nav-trigger svg {
+  width: 20px !important;
+  height: 20px !important;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.layout-neo .neo-left-nav-wrapper:not(.collapsed) .neo-nav-trigger svg {
+  transform: rotate(180deg) !important;
+}
+
+/* Bottom Dock Wrapper */
+.layout-neo .neo-dock-wrapper {
+  position: absolute !important;
+  bottom: 24px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  padding: 0 !important;
+}
+
+/* Override existing absolute on neo-bottom-dock-container */
+.layout-neo .neo-bottom-dock-container {
+  position: relative !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+  margin-bottom: 16px !important;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.layout-neo .neo-dock-wrapper.collapsed .neo-bottom-dock-container {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(40px) !important;
+  pointer-events: none !important;
+}
+
+.layout-neo .neo-dock-trigger {
+  z-index: 10 !important;
+  position: relative !important;
+  width: 44px !important;
+  height: 44px !important;
+  background: rgba(15, 17, 23, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(139, 92, 246, 0.4) !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #00D9FF !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  pointer-events: auto !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3) !important;
+  margin: 0 !important;
+  margin-right: 16px !important;
+  order: -1 !important; /* Place trigger to the right of the dock */
+}
+
+.layout-neo .neo-dock-trigger:hover,
+.layout-neo .neo-dock-wrapper:not(.collapsed) .neo-dock-trigger {
+  background: rgba(0, 217, 255, 0.15) !important;
+  box-shadow: 0 -2px 15px rgba(0, 217, 255, 0.4) !important;
+}
+
+.layout-neo .neo-dock-trigger svg {
+  width: 20px !important;
+  height: 20px !important;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.layout-neo .neo-dock-wrapper:not(.collapsed) .neo-dock-trigger svg {
+  transform: rotate(180deg) !important;
+}
+
+/* NEO DOCK SUBMENU */
+.layout-neo .neo-dock-item.has-children {
+  position: relative;
+  overflow: visible !important;
+}
+
+.layout-neo .neo-dock-submenu {
+  position: absolute;
+  bottom: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.95);
+  transform-origin: bottom center;
+  background: rgba(15, 17, 23, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 100;
+}
+
+.layout-neo .neo-dock-submenu.flex-col {
+  flex-direction: column;
+}
+
+.layout-neo .neo-dock-item.hover-open .neo-dock-submenu,
+.layout-neo .neo-dock-item.pinned .neo-dock-submenu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Hide tooltip if submenu is open */
+.layout-neo .neo-dock-item.hover-open .neo-tooltip,
+.layout-neo .neo-dock-item.pinned .neo-tooltip {
+  display: none !important;
+}
+
+/* Re-use dock-pano-card styling for Neo */
+.layout-neo .dock-pano-card {
+  width: 140px;
+  height: 90px;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+}
+.layout-neo .dock-pano-card:hover {
+  border-color: #00D9FF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 217, 255, 0.3);
+}
+.layout-neo .dock-pano-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.layout-neo .dock-pano-card:hover img {
+  transform: scale(1.1);
+}
+.layout-neo .dock-pano-card span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 6px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  color: #fff;
+  font-size: 11px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+}
+
+.layout-neo .dock-share-btn {
+  display: block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+.layout-neo .dock-share-btn.facebook { background: #1877F2; }
+.layout-neo .dock-share-btn.facebook:hover { background: #166FE5; }
+.layout-neo .dock-share-btn.zalo { background: #0068FF; }
+.layout-neo .dock-share-btn.zalo:hover { background: #005AE6; }
+
+
+/* Refine SVG Icon Sizes for a sleeker, thinner look */
+.layout-neo .neo-dock-item svg,
+.layout-neo .neo-nav-card svg,
+.layout-neo .neo-quick-btn svg,
+.layout-neo .neo-dock-trigger svg,
+.layout-neo .neo-nav-trigger svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke-width: 1.5px !important;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+/* Add a slight scale-up on hover for better interaction */
+.layout-neo .neo-dock-item:hover svg,
+.layout-neo .neo-nav-card:hover svg,
+.layout-neo .neo-dock-trigger:hover svg,
+.layout-neo .neo-nav-trigger:hover svg {
+  transform: scale(1.1) !important;
+}
+
+/* Hide Tooltips for Left Toolbar */
+.layout-gradient .gradient-left-toolbar .glass-tooltip {
+  display: none !important;
+}
+
+/* Gradient Left Toolbar */
+.layout-gradient .gradient-toolbar-wrapper {
+  position: absolute !important;
+  right: 10px !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+}
+
+
+
+
+
+
+
+
+.layout-gradient .gradient-left-toolbar {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  pointer-events: auto !important;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-radius: 0;
+  padding: 0;
+  box-shadow: none !important;
+}
+
+/* Give glass background to individual nodes instead */
+
+
+
+/* Cascading animation from right to left */
+
+
+
+
+/* Delay each item sequentially */
+.layout-gradient .glass-circle-node:nth-child(1) { transition-delay: 0.05s !important; }
+.layout-gradient .glass-circle-node:nth-child(2) { transition-delay: 0.10s !important; }
+.layout-gradient .glass-circle-node:nth-child(3) { transition-delay: 0.15s !important; }
+.layout-gradient .glass-circle-node:nth-child(4) { transition-delay: 0.20s !important; }
+.layout-gradient .glass-circle-node:nth-child(5) { transition-delay: 0.25s !important; }
+.layout-gradient .glass-circle-node:nth-child(6) { transition-delay: 0.30s !important; }
+.layout-gradient .glass-circle-node:nth-child(7) { transition-delay: 0.35s !important; }
+
+
+/* Remove old gradient-right-toolbar */
+.layout-gradient .gradient-right-toolbar {
+  display: none !important;
+}
+
+/* Gradient Right Navigation */
+.layout-gradient .gradient-nav-container {
+  position: absolute;
+  left: 20px !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+}
+
+/* Make nav items into Focal Points */
+
+.layout-gradient .gradient-nav-item {
+  pointer-events: auto !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+  padding: 0 !important;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.layout-gradient .gradient-nav-item:hover,
+.layout-gradient .gradient-nav-item.pinned {
+  background: var(--primary-grad) !important;
+  border: 2px solid rgba(255,255,255,0.8) !important;
+  box-shadow: 0 0 20px rgba(255, 107, 107, 0.6) !important;
+  transform: scale(1.3) !important;
+}
+
+/* Hide the old text inside focal point, but maybe keep it as a tooltip?
+   Actually, let's make .nav-content appear like a tooltip on hover */
+
+.layout-gradient .gradient-nav-item .nav-content {
+  position: absolute;
+  left: 32px;
+  right: auto;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+
+.layout-gradient .gradient-nav-item:hover .nav-content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Cascading Submenu */
+.layout-gradient .gradient-submenu {
+  position: absolute;
+  left: 40px !important; /* Open to the right of focal point */
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: auto !important;
+  flex-direction: column !important; /* Vertical submenu */
+  gap: 8px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  pointer-events: none;
+  opacity: 1 !important; /* Container always visible, children hide */
+  visibility: visible !important;
+}
+
+
+.layout-gradient .gradient-submenu .submenu-item {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-15px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.layout-gradient .gradient-submenu .submenu-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05) translateY(0);
+}
+
+
+.layout-gradient .gradient-nav-item:hover .gradient-submenu .submenu-item,
+.layout-gradient .gradient-nav-item.pinned .gradient-submenu .submenu-item {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* Sequential Transition Delays */
+.layout-gradient .gradient-submenu .submenu-item:nth-child(1) { transition-delay: 0.05s; }
+.layout-gradient .gradient-submenu .submenu-item:nth-child(2) { transition-delay: 0.10s; }
+.layout-gradient .gradient-submenu .submenu-item:nth-child(3) { transition-delay: 0.15s; }
+.layout-gradient .gradient-submenu .submenu-item:nth-child(4) { transition-delay: 0.20s; }
+.layout-gradient .gradient-submenu .submenu-item:nth-child(5) { transition-delay: 0.25s; }
+.layout-gradient .gradient-submenu .submenu-item:nth-child(6) { transition-delay: 0.30s; }
+
+/* Submenu items hover */
+.layout-gradient .gradient-submenu .submenu-item:hover {
+  background: rgba(255,255,255,0.15);
+  color: #FF6B6B;
+}
+
+/* When submenu opens, hide nav-content tooltip to prevent overlap */
+.layout-gradient .gradient-nav-item:hover .nav-content,
+
+
+/* Shrink glass-circle-node in gradient layout */
+
+
+.layout-gradient .glass-circle-node svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke-width: 1.5px !important;
+}
+
+
+
+/* Fresh Bright Glassmorphism for Gradient Layout */
+.layout-gradient .gradient-toolbar-trigger,
+.layout-gradient .glass-circle-node {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
+
+.layout-gradient .gradient-toolbar-trigger {
+  margin-left: 16px !important;
+  margin-right: 0 !important;
+  z-index: 10 !important;
+  order: 2 !important; /* Keep on the right */
+}
+
+/* Hover effects for buttons */
+.layout-gradient .gradient-toolbar-trigger:hover,
+.layout-gradient .glass-circle-node:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.9) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 10px 40px rgba(31, 38, 135, 0.2) !important;
+}
+
+/* Base state for toolbar icons (Hidden) */
+.layout-gradient .gradient-toolbar-wrapper .glass-circle-node {
+  transform: translateX(40px) scale(0.9) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Open state for toolbar icons (Visible) */
+.layout-gradient .gradient-toolbar-wrapper.hover-open .glass-circle-node,
+.layout-gradient .gradient-toolbar-wrapper.pinned .glass-circle-node {
+  transform: translateX(0) scale(1) !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Fix SVG sizing */
+.layout-gradient .gradient-toolbar-trigger svg,
+.layout-gradient .glass-circle-node svg {
+  width: 20px !important;
+  height: 20px !important;
+  stroke-width: 1.5px !important;
+}
+
+/* Active effect for trigger when pinned */
+.layout-gradient .gradient-toolbar-wrapper.pinned .gradient-toolbar-trigger {
+  background: rgba(255, 255, 255, 0.45) !important;
+  border-color: rgba(255, 255, 255, 1) !important;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5) !important;
+  color: #fff !important;
+  transform: scale(1.1) !important;
+}
+
+/* =========================================================
+   GRADIENT LAYOUT DEFINITIVE UI/UX OVERRIDES
+   ========================================================= */
+
+/* --- LEFT SIDE: NAVIGATION PANEL --- */
+.layout-gradient .gradient-nav-container {
+  position: absolute !important;
+  left: 20px !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 20px !important;
+  z-index: 90 !important;
+  pointer-events: none !important;
+}
+
+.layout-gradient .gradient-nav-item {
+  pointer-events: auto !important;
+  position: relative !important;
+  width: 18px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  border: 2px solid rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Base state for nav item text */
+.layout-gradient .gradient-nav-item .nav-content {
+  position: absolute !important;
+  left: 32px !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(-10px) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  padding: 6px 14px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all 0.3s ease !important;
+  pointer-events: none !important;
+}
+
+/* Hover over nav dot shows text */
+.layout-gradient .gradient-nav-item:hover .nav-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Submenu container (opens to the right of the nav text) */
+.layout-gradient .gradient-submenu {
+  position: absolute !important;
+  left: 150px !important; /* clear the nav-content */
+  top: 50% !important;
+  transform: translateY(-50%) translateX(-10px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 10px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  pointer-events: none !important; /* disable clicks until visible */
+}
+
+/* Show submenu when hovered or pinned */
+.layout-gradient .gradient-nav-item.hover-open .gradient-submenu,
+.layout-gradient .gradient-nav-item.pinned .gradient-submenu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+/* Keep nav text visible when submenu is open */
+.layout-gradient .gradient-nav-item.hover-open .nav-content,
+.layout-gradient .gradient-nav-item.pinned .nav-content {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+  background: var(--primary-grad) !important;
+  border-color: #fff !important;
+}
+
+/* Fix submenu items inside */
+.layout-gradient .gradient-submenu .submenu-item {
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  cursor: pointer !important;
+  font-size: 13px !important;
+  transition: all 0.2s !important;
+  border: 1px solid transparent !important;
+}
+.layout-gradient .gradient-submenu .submenu-item:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+
+/* --- RIGHT SIDE: TOOLBAR --- */
+.layout-gradient .gradient-toolbar-wrapper {
+  position: absolute !important;
+  right: 20px !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  display: flex !important;
+  flex-direction: row-reverse !important; /* Trigger on left, tools on right */
+  align-items: center !important;
+  gap: 16px !important;
+  z-index: 1000 !important;
+  pointer-events: none !important;
+}
+
+/* The trigger button (<) */
+.layout-gradient .gradient-toolbar-trigger {
+  pointer-events: auto !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  color: #fff !important;
+}
+.layout-gradient .gradient-toolbar-trigger svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+.layout-gradient .gradient-toolbar-wrapper.pinned .gradient-toolbar-trigger {
+  background: var(--primary-grad) !important;
+  border-color: #fff !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4) !important;
+}
+
+/* The vertical column of tools */
+.layout-gradient .gradient-left-toolbar {
+  pointer-events: auto !important;
+  display: flex !important;
+  flex-direction: column !important; /* ONE perfectly aligned vertical column */
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important; /* Equal spacing */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateX(20px) !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.layout-gradient .gradient-toolbar-wrapper.hover-open .gradient-left-toolbar,
+.layout-gradient .gradient-toolbar-wrapper.pinned .gradient-left-toolbar {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateX(0) !important;
+}
+
+/* Individual Toolbar Icons */
+.layout-gradient .glass-circle-node {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important; /* Circular glass icons */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(15px) !important;
+  -webkit-backdrop-filter: blur(15px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  position: relative !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  color: #fff !important;
+  box-sizing: border-box !important;
+}
+.layout-gradient .glass-circle-node:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: #fff !important;
+}
+.layout-gradient .glass-circle-node.active-tool {
+  background: var(--primary-grad) !important;
+  border-color: #fff !important;
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.5) !important;
+}
+.layout-gradient .glass-circle-node svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+/* Tooltips */
+.layout-gradient .glass-circle-node .glass-tooltip {
+  position: absolute !important;
+  right: calc(100% + 14px) !important; /* Left side of toolbar */
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(10px) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  padding: 6px 14px !important;
+  border-radius: 8px !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all 0.2s ease !important;
+  pointer-events: none !important;
+}
+.layout-gradient .glass-circle-node:hover .glass-tooltip {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Toolbar Submenus (like share/images) */
+.layout-gradient .glass-submenu {
+  position: absolute !important;
+  right: calc(100% + 14px) !important; /* Left side of toolbar */
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(10px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: blur(30px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  padding: 10px !important;
+  border-radius: 12px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: all 0.3s ease !important;
+  pointer-events: none !important;
+}
+.layout-gradient .glass-circle-node.hover-open .glass-submenu,
+.layout-gradient .glass-circle-node.pinned .glass-submenu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+  pointer-events: auto !important;
+}
+
+/* Hide tooltip if submenu is open so they don't overlap */
+.layout-gradient .glass-circle-node.hover-open .glass-tooltip,
+.layout-gradient .glass-circle-node.pinned .glass-tooltip {
+  display: none !important;
+}
+
+/* Ensure no text labels are shown inside tools except for tooltips */
+.layout-gradient .glass-circle-node span:not(.glass-tooltip) {
+  display: none !important;
+}
+
+/* Reset .neo-dock-item or .dock-pano-card inside gradient so they don't look weird */
+.layout-gradient .dock-pano-card {
+  width: 140px !important;
+  height: 80px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  cursor: pointer !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: all 0.2s !important;
+}
+.layout-gradient .dock-pano-card:hover {
+  border-color: #fff !important;
+}
+.layout-gradient .dock-pano-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.layout-gradient .dock-pano-card span {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  background: rgba(0,0,0,0.6) !important;
+  color: #fff !important;
+  font-size: 11px !important;
+  padding: 4px !important;
+  text-align: center !important;
+  display: block !important;
+}
+
+
+/* OPTION 4: GRADIENT LAYOUT (VISION UI REDESIGN) */
+
+/* Collapsible Gradient Docks */
+.layout-gradient .gradient-dock-wrapper {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.layout-gradient .gradient-dock-wrapper.left { left: 0; }
+.layout-gradient .gradient-dock-wrapper.right { right: 0; flex-direction: row-reverse; }
+
+.layout-gradient .gradient-dock-trigger {
+  width: 28px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  pointer-events: auto;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.layout-gradient .gradient-dock-trigger.left {
+  border-radius: 0 16px 16px 0;
+  border-left: none;
+}
+.layout-gradient .gradient-dock-trigger.right {
+  border-radius: 16px 0 0 16px;
+  border-right: none;
+}
+.layout-gradient .gradient-dock-trigger:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+.layout-gradient .gradient-dock-trigger svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.layout-gradient .gradient-dock-wrapper.left.collapsed .gradient-dock-trigger svg { transform: rotate(0deg); }
+.layout-gradient .gradient-dock-wrapper.left:not(.collapsed) .gradient-dock-trigger svg { transform: rotate(180deg); }
+.layout-gradient .gradient-dock-wrapper.right.collapsed .gradient-dock-trigger svg { transform: rotate(0deg); }
+.layout-gradient .gradient-dock-wrapper.right:not(.collapsed) .gradient-dock-trigger svg { transform: rotate(180deg); }
+
+/* The Docks (Left and Right) */
+.layout-gradient .vision-dock {
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 16px 8px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  pointer-events: auto !important;
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+.layout-gradient .vision-dock.left-dock {
+  margin-left: 12px;
+}
+
+.layout-gradient .vision-dock.right-dock {
+  margin-right: 12px;
+}
+
+.layout-gradient .gradient-dock-wrapper.left.collapsed .vision-dock {
+  transform: translateX(-30px) !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+.layout-gradient .gradient-dock-wrapper.right.collapsed .vision-dock {
+  transform: translateX(30px) !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+
+/* Individual Icon Wrapper */
+.layout-gradient .vision-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+/* The actual icon circle */
+.layout-gradient .vision-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  color: #fff;
+}
+
+.layout-gradient .vision-icon svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+/* Interactions: Hover */
+.layout-gradient .vision-icon-wrapper:hover .vision-icon {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Interactions: Active Tool (e.g., Music ON) */
+.layout-gradient .vision-icon-wrapper.active-tool .vision-icon,
+.layout-gradient .vision-icon-wrapper.pinned .vision-icon {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.layout-gradient .vision-icon-wrapper.active-tool .vision-icon svg,
+.layout-gradient .vision-icon-wrapper.pinned .vision-icon svg {
+  transform: scale(1.1);
+}
+
+/* Tooltips */
+.layout-gradient .vision-tooltip {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+}
+
+.layout-gradient .left-dock .vision-tooltip {
+  left: calc(100% + 16px);
+  transform-origin: left center;
+}
+
+.layout-gradient .right-dock .vision-tooltip {
+  right: calc(100% + 16px);
+  transform-origin: right center;
+}
+
+.layout-gradient .vision-icon-wrapper:hover .vision-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) scale(1);
+}
+
+/* Hide tooltip if a submenu is pinned open */
+.layout-gradient .vision-icon-wrapper.pinned .vision-tooltip {
+  display: none;
+}
+
+/* Submenus (The panels that slide out) */
+.layout-gradient .vision-submenu {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(0.95);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 12px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none; /* Ignore clicks while hidden */
+  min-width: 140px;
+}
+
+.layout-gradient .left-dock .vision-submenu {
+  left: calc(100% + 20px);
+  transform-origin: left center;
+}
+
+.layout-gradient .right-dock .vision-submenu {
+  right: calc(100% + 20px);
+  transform-origin: right center;
+}
+
+/* Show Submenu */
+.layout-gradient .vision-icon-wrapper.hover-open .vision-submenu,
+.layout-gradient .vision-icon-wrapper.pinned .vision-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) scale(1);
+  pointer-events: auto; /* Clickable now */
+}
+
+/* Submenu Items (Lists, Buttons) */
+.layout-gradient .v-sub-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-decoration: none;
+  display: block;
+}
+
+.layout-gradient .v-sub-item:hover,
+.layout-gradient .v-sub-item.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Submenu Pano Cards (Images) */
+.layout-gradient .v-pano-card {
+  width: 140px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: border-color 0.2s;
+}
+
+.layout-gradient .v-pano-card:hover {
+  border-color: #fff;
+}
+
+.layout-gradient .v-pano-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.layout-gradient .v-pano-card span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  color: #fff;
+  font-size: 11px;
+  padding: 4px;
+  text-align: center;
 }
