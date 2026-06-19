@@ -46,8 +46,10 @@
 
   const gradientTopTitleHTML = `
     <div class="gradient-top-title-card">
-      <div class="project-name">KHU ĐÔ THỊ MỚI LATIEN</div>
-      <div class="project-subtitle">Virtual Tour 360&deg;</div>
+      <div class="logo-text-col">
+        <div class="project-name">LA TIÊN</div>
+        <div class="project-subtitle">V I L L A</div>
+      </div>
     </div>
   `;
 
@@ -1261,7 +1263,7 @@
       rail.addEventListener('mouseleave', () => {
         hoverTimeout = setTimeout(() => {
           rail.classList.remove('hover-expanded');
-        }, 50); // Reduced from 300ms to 50ms for snappy collapse
+        }, 200); // Đủ thời gian để di chuột sang submenu
       });
       
       // Trigger pinning
@@ -1286,13 +1288,25 @@
       wrapper.addEventListener('mouseleave', () => {
         submenuTimeout = setTimeout(() => {
           wrapper.classList.remove('hover-open');
-        }, 50); // Reduced from 200ms to 50ms for snappy collapse
+        }, 200); // Đủ thời gian để di chuột sang submenu
       });
       
       // Click logic (for opening submenus or just clicking a tool)
       wrapper.addEventListener('click', (e) => {
-        // If clicking inside a submenu, don't toggle the pinned state
-        if (e.target.closest('.vision-submenu')) return;
+        // If clicking a v-sub-item inside submenu → handle navigation
+        const subItem = e.target.closest('.v-sub-item');
+        if (subItem) {
+          e.stopPropagation();
+          // Active state
+          const siblings = subItem.parentElement.querySelectorAll('.v-sub-item');
+          siblings.forEach(s => s.classList.remove('active'));
+          subItem.classList.add('active');
+          // Navigate
+          handleSubmenuSelection(subItem);
+          // Close rail submenu after selection
+          iconWrappers.forEach(n => n.classList.remove('pinned', 'hover-open'));
+          return;
+        }
         
         const hasSubmenu = wrapper.querySelector('.vision-submenu') !== null;
         if (hasSubmenu) {

@@ -1899,14 +1899,15 @@
 }
 
 .layout-gradient .logo-script-top {
-  background: var(--primary-grad);
+  background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #b89020 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 }
 
 .layout-gradient .logo-script-sub {
-  color: var(--text-sec);
+  color: #b89020;
+  letter-spacing: 2px;
 }
 
 .info-panel-close {
@@ -2577,14 +2578,17 @@
    ========================================================= */
 
 .layout-gradient {
-  --primary-grad: linear-gradient(135deg, #FF9966 0%, #FF5E62 100%);
-  --sec-grad: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%);
-  --acc-grad: linear-gradient(135deg, #FFD200 0%, #FF6A00 100%);
-  --bg-glass: rgba(255, 255, 255, 0.7);
-  --bg-glass-hover: rgba(255, 255, 255, 0.9);
+  --primary-grad: linear-gradient(135deg, #f3e5ab 0%, #d4af37 50%, #b89020 100%);
+  --sec-grad: linear-gradient(135deg, #d4af37 0%, #b89020 100%);
+  --acc-grad: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
+  --luxury-gold: #d4af37;
+  --luxury-gold-dark: #b89020;
+  --luxury-gold-light: #f3e5ab;
+  --bg-glass: rgba(255, 255, 255, 0.75);
+  --bg-glass-hover: rgba(255, 255, 255, 0.92);
   --text-main: #1E293B; /* Slate 800 */
   --text-sec: #64748B;  /* Slate 500 */
-  --border-glass: rgba(255, 255, 255, 0.6);
+  --border-glass: rgba(212, 175, 55, 0.35);
   --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
   --shadow-hover: 0 15px 50px rgba(0, 0, 0, 0.12);
   
@@ -2592,38 +2596,79 @@
   color: var(--text-main);
 }
 
-/* 1. Top Title Card */
+/* 1. Top Logo Pill (Compact) */
 .layout-gradient .gradient-top-title-card {
   position: absolute;
   top: 20px;
   left: 20px;
   transform: none;
-  background: var(--bg-glass);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
-  padding: 8px 20px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-soft);
-  border: 1px solid var(--border-glass);
-  text-align: center;
+  background: rgba(255, 252, 245, 0.82);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 6px 14px 6px 12px;
+  border-radius: 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08), 0 0 0 1px rgba(212, 175, 55, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
   z-index: 100;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.layout-gradient .gradient-top-title-card:hover {
+  background: rgba(255, 253, 248, 0.95);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.10), 0 0 0 1.5px rgba(212, 175, 55, 0.55);
+  transform: translateY(-1px);
+}
+/* Monogram badge */
+.layout-gradient .gradient-top-title-card::before {
+  content: 'L';
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d4af37 0%, #b89020 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(184, 144, 32, 0.35);
+  letter-spacing: 0;
 }
 .layout-gradient .gradient-top-title-card .project-name {
   font-weight: 800;
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 2px;
-  background: var(--primary-grad);
+  background: linear-gradient(135deg, #c8962a 0%, #b89020 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 .layout-gradient .gradient-top-title-card .project-subtitle {
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 600;
-  color: var(--text-sec);
-  letter-spacing: 1px;
+  color: #a08030;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  margin-top: 2px;
+  line-height: 1.2;
+  white-space: nowrap;
+  margin-top: 1px;
 }
+/* Text column: stack name + subtitle vertically */
+.layout-gradient .gradient-top-title-card .logo-text-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+
+
 
 /* 2. Top Right Quick Actions */
 .layout-gradient .gradient-quick-actions {
@@ -2819,15 +2864,15 @@
 .layout-gradient .gradient-dock-item:hover {
   transform: scale(1.35) translateY(-12px);
   background: #fff;
-  color: #FF5E62;
-  box-shadow: 0 15px 30px rgba(255, 94, 98, 0.2);
+  color: var(--luxury-gold-dark);
+  box-shadow: 0 15px 30px rgba(212, 175, 55, 0.25);
   z-index: 2;
 }
 
 .layout-gradient .gradient-dock-item.active-tool {
   background: var(--primary-grad);
-  color: #fff;
-  box-shadow: 0 10px 20px rgba(255, 94, 98, 0.3);
+  color: #1E293B;
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.35);
 }
 
 /* Tooltip */
@@ -2871,63 +2916,85 @@
   transform: translateX(-50%) scale(0.74) translateY(0); 
 }
 
-/* 5. Compass Redesign */
+/* 5. Compass Redesign — Luxury Gold */
 .layout-gradient .compass-widget {
-  background: var(--bg-glass);
+  background: rgba(255, 252, 245, 0.85);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  border: 1px solid var(--border-glass);
-  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 0 15px rgba(212, 175, 55, 0.1);
 }
 .layout-gradient .compass-widget .compass-ring {
-  border-color: rgba(255, 94, 98, 0.2);
+  border-color: rgba(212, 175, 55, 0.3);
 }
 .layout-gradient .compass-widget .compass-indicator {
   background: var(--primary-grad);
-  box-shadow: 0 0 15px rgba(255, 94, 98, 0.4);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
 }
+.layout-gradient .compass-dial svg *[stroke="#00f2fe"] { stroke: #b89020; }
+.layout-gradient .compass-dial svg *[fill="#00f2fe"] { fill: #b89020; }
+.layout-gradient .compass-dial svg stop[stop-color="#00f2fe"] { stop-color: #d4af37; }
+.layout-gradient .compass-dial svg stop[stop-color="rgba(0,242,254,0.5)"] { stop-color: rgba(212,175,55,0.5); }
+.layout-gradient .compass-dial svg circle[stroke="rgba(0,242,254,0.15)"] { stroke: rgba(212,175,55,0.2); }
+.layout-gradient .compass-dial svg line[stroke="rgba(255,255,255,0.4)"] { stroke: rgba(0,0,0,0.25); }
+.layout-gradient .compass-dial svg line[stroke="rgba(255,255,255,0.2)"] { stroke: rgba(0,0,0,0.15); }
+.layout-gradient .compass-cardinal { color: #b89020; text-shadow: 0 0 4px rgba(212, 175, 55, 0.4); }
+.layout-gradient .compass-degree-display { color: #1E293B; background: rgba(255, 252, 240, 0.92); border-color: rgba(212, 175, 55, 0.4); }
 
-/* 6. Minimap Redesign */
+/* 6. Minimap Redesign — Luxury Gold */
 .layout-gradient .minimap-widget {
-  background: var(--bg-glass);
+  background: rgba(255, 252, 245, 0.88);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
-  border: 1px solid var(--border-glass);
-  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12), inset 0 0 20px rgba(212, 175, 55, 0.06);
   bottom: 24px;
   right: 24px;
   border-radius: 20px;
 }
 .layout-gradient .minimap-header {
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  color: var(--text-main);
-  background: rgba(255,255,255,0.4);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  color: #b89020;
+  background: rgba(212, 175, 55, 0.06);
 }
+.layout-gradient .minimap-widget .minimap-dot {
+  background: #d4af37;
+  box-shadow: 0 0 8px #d4af37;
+}
+.layout-gradient .minimap-widget .minimap-viewcone {
+  background: conic-gradient(from 330deg, rgba(212, 175, 55, 0.45) 0deg, rgba(212, 175, 55, 0.45) 60deg, transparent 60deg);
+}
+.layout-gradient .minimap-widget .minimap-canvas {
+  border-color: rgba(212, 175, 55, 0.25);
+  background: #fffdf5;
+}
+.layout-gradient .minimap-widget .minimap-legend { color: #8a7440; }
+.layout-gradient .minimap-widget .minimap-legend-item .dot.cyan { background: #d4af37; }
 .layout-gradient .radar-sweep {
-  background: conic-gradient(from 0deg, rgba(255,94,98,0) 0%, rgba(255,94,98,0.2) 30%, rgba(255,94,98,0) 40%);
+  background: conic-gradient(from 0deg, rgba(212,175,55,0) 0%, rgba(212,175,55,0.2) 30%, rgba(212,175,55,0) 40%);
 }
 
-/* 7. Hotspots */
+/* 7. Hotspots — Luxury Gold */
 .layout-gradient {
-  --hotspot-color: #FF5E62; /* Red/Orange base */
-  --hotspot-hover: #5B86E5; /* Blue hover */
-  --hotspot-bg: rgba(255, 255, 255, 0.9);
+  --hotspot-color: #d4af37; /* Gold base */
+  --hotspot-hover: #b89020; /* Gold dark hover */
+  --hotspot-bg: rgba(255, 252, 245, 0.95);
 }
 .layout-gradient .hologram-marker-container .hotspot-label {
-  background: var(--bg-glass);
+  background: rgba(255, 252, 245, 0.88);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--text-main);
-  border: 1px solid rgba(255, 94, 98, 0.3);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
   font-weight: 700;
   border-radius: 20px;
   padding: 6px 14px;
 }
 .layout-gradient .hologram-marker-container:hover .hotspot-label {
-  border-color: var(--sec-grad);
+  border-color: rgba(212, 175, 55, 0.7);
   background: #fff;
-  color: #5B86E5;
+  color: #b89020;
 }
 
 
@@ -3318,7 +3385,7 @@
   margin-bottom: 4px;
 }
 \n.layout-gradient .gradient-right-toolbar { position: fixed !important; right: 20px !important; top: 50% !important; transform: translateY(-50%) !important; display: flex !important; flex-direction: column !important; gap: 16px !important; z-index: 1000 !important; pointer-events: auto !important; height: auto !important; }\n
-\n.layout-gradient .glass-circle-node svg { width: 20px; height: 20px; transition: all 0.3s ease; }\n.layout-gradient .glass-circle-node:hover, .layout-gradient .glass-circle-node.hover-open, .layout-gradient .glass-circle-node.pinned, .layout-gradient .glass-circle-node.active-tool { background: rgba(0, 242, 254, 0.15); color: #00f2fe; border-color: rgba(0, 242, 254, 0.6); box-shadow: 0 0 20px rgba(0, 242, 254, 0.4); }\n.layout-gradient .glass-tooltip { position: absolute; right: 60px; top: 50%; transform: translateY(-50%) translateX(10px); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #fff; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(255,255,255,0.05); }\n.layout-gradient .glass-circle-node:not(.has-children):hover .glass-tooltip { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0); }\n.layout-gradient .glass-submenu { position: absolute; right: 60px; top: 50%; transform: translateY(-50%) translateX(15px) scale(0.95); background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(0, 242, 254, 0.3); border-radius: 12px; padding: 12px; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3); pointer-events: none; }\n.layout-gradient .glass-circle-node.hover-open .glass-submenu, .layout-gradient .glass-circle-node.pinned .glass-submenu { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0) scale(1); pointer-events: auto; }\n.layout-gradient .glass-submenu .dock-share-btn { display: block; padding: 10px 16px; color: #fff; text-decoration: none; font-size: 14px; border-radius: 6px; transition: background 0.2s; text-align: center; margin-bottom: 8px; background: rgba(255,255,255,0.05); }\n.layout-gradient .glass-submenu .dock-share-btn:hover { background: rgba(0, 242, 254, 0.2); color: #00f2fe; }\n.layout-futuristic .sidebar-logo { display: none !important; }\n.layout-neo .neo-nav-card:hover, .layout-neo .neo-nav-card.active, .layout-neo .neo-nav-card.pinned { background: rgba(255, 255, 255, 0.08) !important; color: #00D9FF !important; border-left: 3px solid #00D9FF !important; border-radius: 4px; }\n
+\n.layout-gradient .glass-circle-node svg { width: 20px; height: 20px; transition: all 0.3s ease; }\n.layout-gradient .glass-circle-node:hover, .layout-gradient .glass-circle-node.hover-open, .layout-gradient .glass-circle-node.pinned, .layout-gradient .glass-circle-node.active-tool { background: rgba(212, 175, 55, 0.15); color: #b89020; border-color: rgba(212, 175, 55, 0.6); box-shadow: 0 0 20px rgba(212, 175, 55, 0.4); }\n.layout-gradient .glass-tooltip { position: absolute; right: 60px; top: 50%; transform: translateY(-50%) translateX(10px); background: rgba(255, 252, 245, 0.92); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500; color: #1E293B; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(212, 175, 55, 0.25); }\n.layout-gradient .glass-circle-node:not(.has-children):hover .glass-tooltip { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0); }\n.layout-gradient .glass-submenu { position: absolute; right: 60px; top: 50%; transform: translateY(-50%) translateX(15px) scale(0.95); background: rgba(255, 252, 245, 0.92); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.35); border-radius: 12px; padding: 12px; min-width: 200px; opacity: 0; visibility: hidden; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.12); pointer-events: none; }\n.layout-gradient .glass-circle-node.hover-open .glass-submenu, .layout-gradient .glass-circle-node.pinned .glass-submenu { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0) scale(1); pointer-events: auto; }\n.layout-gradient .glass-submenu .dock-share-btn { display: block; padding: 10px 16px; color: #1E293B; text-decoration: none; font-size: 14px; border-radius: 6px; transition: background 0.2s; text-align: center; margin-bottom: 8px; background: rgba(212, 175, 55, 0.07); }\n.layout-gradient .glass-submenu .dock-share-btn:hover { background: rgba(212, 175, 55, 0.2); color: #b89020; }\n.layout-futuristic .sidebar-logo { display: none !important; }\n.layout-neo .neo-nav-card:hover, .layout-neo .neo-nav-card.active, .layout-neo .neo-nav-card.pinned { background: rgba(255, 255, 255, 0.08) !important; color: #00D9FF !important; border-left: 3px solid #00D9FF !important; border-radius: 4px; }\n
 
 /* =========================================
    FIXES FOR GRADIENT OVERLAP
@@ -3349,10 +3416,10 @@
 .layout-gradient .glass-circle-node.hover-open,
 .layout-gradient .glass-circle-node.pinned,
 .layout-gradient .glass-circle-node.active-tool {
-  background: rgba(0, 242, 254, 0.15);
-  color: #00f2fe;
-  border-color: rgba(0, 242, 254, 0.6);
-  box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  background: rgba(212, 175, 55, 0.15);
+  color: #b89020;
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
 }
 
 .layout-gradient .glass-tooltip {
@@ -3386,16 +3453,16 @@
   right: 60px;
   top: 50%;
   transform: translateY(-50%) translateX(15px) scale(0.95);
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(255, 252, 245, 0.92);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 242, 254, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.35);
   border-radius: 12px;
   padding: 12px;
   min-width: 200px;
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
   pointer-events: none;
 }
 
@@ -3410,18 +3477,18 @@
 .layout-gradient .glass-submenu .dock-share-btn {
   display: block;
   padding: 10px 16px;
-  color: #fff;
+  color: #1E293B;
   text-decoration: none;
   font-size: 14px;
   border-radius: 6px;
   transition: background 0.2s;
   text-align: center;
   margin-bottom: 8px;
-  background: rgba(255,255,255,0.05);
+  background: rgba(212, 175, 55, 0.07);
 }
 .layout-gradient .glass-submenu .dock-share-btn:hover {
-  background: rgba(0, 242, 254, 0.2);
-  color: #00f2fe;
+  background: rgba(212, 175, 55, 0.2);
+  color: #b89020;
 }
 
 
@@ -4311,7 +4378,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  pointer-events: none;
+  pointer-events: auto;
   /* Perspective setup for 3D */
   perspective: 1000px;
 }
