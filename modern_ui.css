@@ -7937,20 +7937,20 @@ body.region-mode-active #container {
   top: 50%;
   left: 50%;
   width: max-content;
-  height: 30px;
-  padding: 0 16px;
+  height: 24px;
+  padding: 0 12px;
   box-sizing: border-box;
   background: var(--orbit-glass);
   border: 1px solid var(--orbit-glass-border);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 15px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(255,255,255,0.7);
   font-family: var(--orbit-font);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
@@ -7989,24 +7989,24 @@ body.region-mode-active #container {
 /* Submenu radial offsets defined via variables to preserve transform translation on hover scale */
 
 /* Bird View (arc expands up-left) */
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -70px; --sub-ty: -75px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -105px; --sub-ty: 0px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: -70px; --sub-ty: 75px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -42px; --sub-ty: -48px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -64px; --sub-ty: 0px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: -42px; --sub-ty: 48px; }
 
 /* Amenities (arc expands up-left to up-right) */
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -115px; --sub-ty: -40px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -55px; --sub-ty: -100px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 55px; --sub-ty: -100px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 115px; --sub-ty: -40px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -70px; --sub-ty: -25px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -32px; --sub-ty: -64px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 32px; --sub-ty: -64px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 70px; --sub-ty: -25px; }
 
 /* Architecture (arc expands up) */
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -85px; --sub-ty: -55px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 0px; --sub-ty: -105px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 85px; --sub-ty: -55px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -50px; --sub-ty: -35px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 0px; --sub-ty: -64px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 50px; --sub-ty: -35px; }
 
 /* Interior (arc expands up-right) */
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: 60px; --sub-ty: -85px; }
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 110px; --sub-ty: -20px; }
+.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: 40px; --sub-ty: -50px; }
+.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 64px; --sub-ty: -12px; }
 
 /* ---------------------------------------------------------
    ORBIT QUARTER-CIRCLE TOOLBAR
@@ -8062,10 +8062,10 @@ body.region-mode-active #container {
 
 .layout-orbit .orbit-tool-list {
   position: absolute;
-  top: 3px;
-  right: 3px;
-  width: 38px;
-  height: 38px;
+  top: 7px;
+  right: 7px;
+  width: 30px;
+  height: 30px;
   pointer-events: none;
 }
 
@@ -8077,8 +8077,8 @@ body.region-mode-active #container {
   position: absolute;
   top: 0;
   right: 0;
-  width: 38px;
-  height: 38px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: var(--orbit-glass);
   border: 1px solid var(--orbit-glass-border);
@@ -8097,8 +8097,8 @@ body.region-mode-active #container {
 }
 
 .layout-orbit .orbit-tool-item svg {
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
 }
 
 .layout-orbit .orbit-tool-item:hover {
@@ -8115,14 +8115,14 @@ body.region-mode-active #container {
   background: rgba(255, 154, 0, 0.08);
 }
 
-/* Staggered concentric arc layout for 7 buttons (radius 90px & 140px to be closer and prevent overlaps) */
-.layout-orbit .orbit-tool-item:nth-child(1) { --tx: -90px; --ty: 0px; transition-delay: 0s; }
-.layout-orbit .orbit-tool-item:nth-child(2) { --tx: -64px; --ty: 64px; transition-delay: 0.04s; }
-.layout-orbit .orbit-tool-item:nth-child(3) { --tx: 0px; --ty: 90px; transition-delay: 0.08s; }
-.layout-orbit .orbit-tool-item:nth-child(4) { --tx: -140px; --ty: 0px; transition-delay: 0.12s; }
-.layout-orbit .orbit-tool-item:nth-child(5) { --tx: -121px; --ty: 70px; transition-delay: 0.16s; }
-.layout-orbit .orbit-tool-item:nth-child(6) { --tx: -70px; --ty: 121px; transition-delay: 0.2s; }
-.layout-orbit .orbit-tool-item:nth-child(7) { --tx: 0px; --ty: 140px; transition-delay: 0.24s; }
+/* Single circular arc layout for 7 buttons (radius 120px and diameter 30px to prevent overlaps) */
+.layout-orbit .orbit-tool-item:nth-child(1) { --tx: -120px; --ty: 0px; transition-delay: 0s; }
+.layout-orbit .orbit-tool-item:nth-child(2) { --tx: -116px; --ty: 31px; transition-delay: 0.04s; }
+.layout-orbit .orbit-tool-item:nth-child(3) { --tx: -104px; --ty: 60px; transition-delay: 0.08s; }
+.layout-orbit .orbit-tool-item:nth-child(4) { --tx: -85px; --ty: 85px; transition-delay: 0.12s; }
+.layout-orbit .orbit-tool-item:nth-child(5) { --tx: -60px; --ty: 104px; transition-delay: 0.16s; }
+.layout-orbit .orbit-tool-item:nth-child(6) { --tx: -31px; --ty: 116px; transition-delay: 0.2s; }
+.layout-orbit .orbit-tool-item:nth-child(7) { --tx: 0px; --ty: 120px; transition-delay: 0.24s; }
 
 .layout-orbit .orbit-tool-container.open .orbit-tool-item {
   opacity: 1;
@@ -8133,7 +8133,7 @@ body.region-mode-active #container {
 /* Tool submenus (gallery, share) opening leftwards */
 .layout-orbit .orbit-tool-submenu {
   position: absolute;
-  right: calc(100% + 12px);
+  right: calc(100% + 10px);
   top: 50%;
   background: var(--orbit-glass);
   border: 1px solid var(--orbit-glass-border);
@@ -8158,8 +8158,8 @@ body.region-mode-active #container {
   position: absolute;
   top: 0;
   bottom: 0;
-  right: -15px;
-  width: 15px;
+  right: -13px;
+  width: 13px;
   background: transparent;
 }
 
