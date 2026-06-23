@@ -7989,20 +7989,20 @@ body.region-mode-active #container {
 /* Submenu radial offsets defined via variables to preserve transform translation on hover scale */
 
 /* Bird View (arc expands up-left) */
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -73px; --sub-ty: 35px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -65px; --sub-ty: 14px; }
 .layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -31px; --sub-ty: -33px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: 40px; --sub-ty: -71px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: 19px; --sub-ty: -65px; }
 
 /* Amenities (arc expands up-left to up-right) */
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -106px; --sub-ty: 27px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -48px; --sub-ty: -29px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 30px; --sub-ty: -48px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 107px; --sub-ty: -26px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -97px; --sub-ty: 14px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -46px; --sub-ty: -30px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 27px; --sub-ty: -48px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 88px; --sub-ty: -36px; }
 
 /* Architecture (arc expands up) */
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -80px; --sub-ty: -39px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -74px; --sub-ty: -41px; }
 .layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 11px; --sub-ty: -43px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 88px; --sub-ty: 3px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 84px; --sub-ty: -2px; }
 
 /* Interior (arc expands up-right) */
 .layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: -2px; --sub-ty: -57px; }
