@@ -7938,7 +7938,7 @@ body.region-mode-active #container {
   left: 50%;
   width: max-content;
   height: 24px;
-  padding: 0 12px;
+  padding: 0 8px;
   box-sizing: border-box;
   background: var(--orbit-glass);
   border: 1px solid var(--orbit-glass-border);
@@ -7950,7 +7950,7 @@ body.region-mode-active #container {
   justify-content: center;
   color: rgba(255,255,255,0.7);
   font-family: var(--orbit-font);
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 600;
   text-transform: uppercase;
   cursor: pointer;
@@ -7989,24 +7989,24 @@ body.region-mode-active #container {
 /* Submenu radial offsets defined via variables to preserve transform translation on hover scale */
 
 /* Bird View (arc expands up-left) */
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -68px; --sub-ty: 19px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -73px; --sub-ty: 35px; }
 .layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -31px; --sub-ty: -33px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: 25px; --sub-ty: -67px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: 40px; --sub-ty: -71px; }
 
 /* Amenities (arc expands up-left to up-right) */
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -92px; --sub-ty: 7px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -41px; --sub-ty: -32px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 22px; --sub-ty: -48px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 85px; --sub-ty: -37px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -106px; --sub-ty: 27px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -48px; --sub-ty: -29px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 30px; --sub-ty: -48px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 107px; --sub-ty: -26px; }
 
 /* Architecture (arc expands up) */
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -54px; --sub-ty: -46px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -80px; --sub-ty: -39px; }
 .layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 11px; --sub-ty: -43px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 68px; --sub-ty: -15px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 88px; --sub-ty: 3px; }
 
 /* Interior (arc expands up-right) */
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: 5px; --sub-ty: -53px; }
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 52px; --sub-ty: -9px; }
+.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: -2px; --sub-ty: -57px; }
+.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 56px; --sub-ty: -2px; }
 
 /* ---------------------------------------------------------
    ORBIT QUARTER-CIRCLE TOOLBAR
