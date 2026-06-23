@@ -7989,24 +7989,24 @@ body.region-mode-active #container {
 /* Submenu radial offsets defined via variables to preserve transform translation on hover scale */
 
 /* Bird View (arc expands up-left) */
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -42px; --sub-ty: -48px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -64px; --sub-ty: 0px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: -42px; --sub-ty: 48px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -58px; --sub-ty: 0px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -31px; --sub-ty: -33px; }
+.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: 5px; --sub-ty: -58px; }
 
 /* Amenities (arc expands up-left to up-right) */
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -70px; --sub-ty: -25px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -32px; --sub-ty: -64px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 32px; --sub-ty: -64px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 70px; --sub-ty: -25px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -55px; --sub-ty: -24px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -26px; --sub-ty: -39px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 5px; --sub-ty: -47px; }
+.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 38px; --sub-ty: -48px; }
 
 /* Architecture (arc expands up) */
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -50px; --sub-ty: -35px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 0px; --sub-ty: -64px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 50px; --sub-ty: -35px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -32px; --sub-ty: -48px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 11px; --sub-ty: -43px; }
+.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 51px; --sub-ty: -27px; }
 
 /* Interior (arc expands up-right) */
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: 40px; --sub-ty: -50px; }
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 64px; --sub-ty: -12px; }
+.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: 14px; --sub-ty: -47px; }
+.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 45px; --sub-ty: -18px; }
 
 /* ---------------------------------------------------------
    ORBIT QUARTER-CIRCLE TOOLBAR
