@@ -782,9 +782,11 @@
 
   const auroraLeftNavHTML = `
     <div class="aurora-nav-container collapsed" id="aurora-nav-container">
-      <div class="aurora-nav-logo">
-        <span class="aurora-logo-dot"></span>
-        <span class="aurora-logo-text">AURORA</span>
+      <div class="aurora-nav-pin-btn" id="aurora-nav-pin-btn" title="Ghim thanh điều hướng">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="17" x2="12" y2="22" />
+          <path d="M5 17h14v-1.76a2 2 0 0 0-.44-1.24l-2.78-3.5A2 2 0 0 1 15 9.26V5a3 3 0 0 0-6 0v4.26a2 2 0 0 1-.78 1.24l-2.78 3.5A2 2 0 0 0 5 15.24z" />
+        </svg>
       </div>
       <div class="aurora-nav-list" id="aurora-main-nav">
         <!-- 1. TOP VIEW (Electric Cyan) -->
@@ -2045,14 +2047,26 @@
   const monarchMinimapHTML = `
     <div class="minimap-widget monarch-minimap collapsed" id="minimap-widget">
       <div class="minimap-header" id="minimap-toggle-btn">
-        <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
-          <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.5"/>
-        </svg>
-        <span class="minimap-label">BLUEPRINT MAP</span>
-        <svg class="minimap-chevron" viewBox="0 0 24 24" fill="none" width="12" height="12">
-          <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <div class="minimap-header-title">
+          <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+            <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span class="minimap-label">BLUEPRINT MAP</span>
+        </div>
+        <div class="minimap-header-actions">
+          <button class="minimap-action-btn" id="minimap-resize-btn" title="Phóng to/Thu nhỏ bản đồ">
+            <svg viewBox="0 0 24 24" fill="none" width="12" height="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" class="expand-icon" />
+              <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7" class="shrink-icon" style="display:none;" />
+            </svg>
+          </button>
+          <button class="minimap-action-btn" id="minimap-chevron-btn" title="Thu nhỏ/Mở rộng bản đồ">
+            <svg class="minimap-chevron" viewBox="0 0 24 24" fill="none" width="12" height="12">
+              <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
       </div>
       <div class="minimap-body" id="minimap-body">
         <div class="minimap-canvas" id="minimap-canvas">
@@ -2128,14 +2142,26 @@
   const minimapWidgetHTML = `
     <div class="minimap-widget collapsed" id="minimap-widget">
       <div class="minimap-header" id="minimap-toggle-btn">
-        <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
-          <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.5"/>
-        </svg>
-        <span class="minimap-label">BẢN ĐỒ</span>
-        <svg class="minimap-chevron" viewBox="0 0 24 24" fill="none" width="12" height="12">
-          <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+        <div class="minimap-header-title">
+          <svg viewBox="0 0 24 24" fill="none" width="14" height="14">
+            <path d="M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M9 3v15M15 6v15" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+          <span class="minimap-label">BẢN ĐỒ</span>
+        </div>
+        <div class="minimap-header-actions">
+          <button class="minimap-action-btn" id="minimap-resize-btn" title="Phóng to/Thu nhỏ bản đồ">
+            <svg viewBox="0 0 24 24" fill="none" width="12" height="12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" class="expand-icon" />
+              <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7" class="shrink-icon" style="display:none;" />
+            </svg>
+          </button>
+          <button class="minimap-action-btn" id="minimap-chevron-btn" title="Thu nhỏ/Mở rộng bản đồ">
+            <svg class="minimap-chevron" viewBox="0 0 24 24" fill="none" width="12" height="12">
+              <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
       </div>
       <div class="minimap-body" id="minimap-body">
         <div class="minimap-canvas" id="minimap-canvas">
@@ -2497,6 +2523,8 @@
     }
     document.body.appendChild(mapDiv.firstElementChild);
     setupMinimapListeners();
+    populateMinimapMarkers();
+    updateMinimapPosition(activePanoNode);
     let minimapEl = document.getElementById("minimap-widget");
     if (minimapEl && (layoutMode === "orbit" || layoutMode === "prism" || layoutMode === "nexus" || layoutMode === "monarch")) {
       minimapEl.classList.remove("collapsed");
@@ -3069,6 +3097,7 @@
 
   function setupAuroraListeners() {
     const navContainer = document.getElementById("aurora-nav-container");
+    const navPinBtn = document.getElementById("aurora-nav-pin-btn");
     const navItems = document.querySelectorAll(".layout-aurora .aurora-nav-item");
     const submenuItems = document.querySelectorAll(".layout-aurora .aurora-submenu-item");
     
@@ -3078,14 +3107,16 @@
         navContainer.classList.add("expanded");
       });
       navContainer.addEventListener("mouseleave", () => {
-        navContainer.classList.add("collapsed");
-        navContainer.classList.remove("expanded");
-        
-        // Close all submenus on collapse
-        const submenus = navContainer.querySelectorAll(".aurora-submenu.open");
-        submenus.forEach(s => s.classList.remove("open"));
-        const chevrons = navContainer.querySelectorAll(".aurora-chevron.rotate");
-        chevrons.forEach(c => c.classList.remove("rotate"));
+        if (!navContainer.classList.contains("pinned")) {
+          navContainer.classList.add("collapsed");
+          navContainer.classList.remove("expanded");
+          
+          // Close all submenus on collapse
+          const submenus = navContainer.querySelectorAll(".aurora-submenu.open");
+          submenus.forEach(s => s.classList.remove("open"));
+          const chevrons = navContainer.querySelectorAll(".aurora-chevron.rotate");
+          chevrons.forEach(c => c.classList.remove("rotate"));
+        }
       });
       
       // Expand on click as well
@@ -3096,6 +3127,21 @@
           navContainer.classList.add("expanded");
         }
       });
+
+      // Pin/unpin click
+      if (navPinBtn) {
+        navPinBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const isPinned = navContainer.classList.contains("pinned");
+          navContainer.classList.toggle("pinned", !isPinned);
+          navPinBtn.classList.toggle("active", !isPinned);
+          if (!isPinned) {
+            showNotification("Đã ghim thanh điều hướng");
+          } else {
+            showNotification("Đã bỏ ghim thanh điều hướng");
+          }
+        });
+      }
     }
     
     // Bind main nav item clicks
@@ -3970,20 +4016,141 @@
     viewcone.style.transform = `rotate(${normalizedDeg}deg)`;
   }
 
+  const node2dPositions = {
+    "node1": { x: 50, y: 50 },
+    "node2": { x: 42.5, y: 36 },
+    "node3": { x: 55.5, y: 38 },
+    "node4": { x: 66, y: 47 }
+  };
+
+  const node2dCoordinates = {
+    "pin_villa_a1": { x: 40, y: 34, color: "#a855f7" }, // Purple
+    "pin_villa_a2": { x: 45, y: 38, color: "#a855f7" }, // Purple
+    "pin_villa_b1": { x: 58, y: 35, color: "#ec4899" }, // Pink
+    "pin_villa_b2": { x: 53, y: 41, color: "#ec4899" }, // Pink
+    "pin_villa_c1": { x: 66, y: 47, color: "#10b981" }, // Emerald
+    "pin_clubhouse": { x: 32, y: 52, color: "#06b6d4" }, // Cyan
+    "pin_beach_bar": { x: 23, y: 65, color: "#f97316" }  // Orange
+  };
+
+  function updateMinimapPosition(nodeId) {
+    const dot = document.getElementById("minimap-dot");
+    const viewcone = document.getElementById("minimap-viewcone");
+    if (!dot || !viewcone) return;
+    
+    const pos = node2dPositions[nodeId] || { x: 50, y: 50 };
+    dot.style.left = pos.x + "%";
+    dot.style.top = pos.y + "%";
+    viewcone.style.left = pos.x + "%";
+    viewcone.style.top = pos.y + "%";
+  }
+
+  function populateMinimapMarkers() {
+    const canvas = document.getElementById("minimap-canvas");
+    if (!canvas) return;
+    
+    const existing = canvas.querySelectorAll(".minimap-marker");
+    existing.forEach(el => el.remove());
+    
+    mapMarkers.forEach(pin => {
+      const coords = node2dCoordinates[pin.id];
+      if (!coords) return;
+      
+      const marker = document.createElement("div");
+      marker.className = "minimap-marker";
+      marker.style.left = coords.x + "%";
+      marker.style.top = coords.y + "%";
+      marker.style.setProperty("--marker-color", coords.color);
+      marker.setAttribute("data-id", pin.id);
+      marker.setAttribute("data-node-target", pin.nodeTarget);
+      
+      marker.innerHTML = `
+        <span class="marker-pulse-ring"></span>
+        <div class="minimap-marker-tooltip">${pin.title}</div>
+      `;
+      
+      marker.addEventListener("click", function(e) {
+        e.stopPropagation();
+        
+        // Open the pano node
+        if (window.pano) {
+          window.pano.openNext(`{${pin.nodeTarget}}`);
+        }
+        
+        // Highlight active card
+        const megaCards = document.querySelectorAll(".mega-card");
+        megaCards.forEach(card => {
+          if (card.getAttribute("data-pano-node") === pin.nodeTarget) {
+            card.click();
+          }
+        });
+      });
+      
+      canvas.appendChild(marker);
+    });
+  }
+
+  function updateResizeIcons(isMaximised) {
+    const resizeBtn = document.getElementById("minimap-resize-btn");
+    if (!resizeBtn) return;
+    const expandIcon = resizeBtn.querySelector(".expand-icon");
+    const shrinkIcon = resizeBtn.querySelector(".shrink-icon");
+    if (expandIcon && shrinkIcon) {
+      expandIcon.style.display = isMaximised ? "none" : "block";
+      shrinkIcon.style.display = isMaximised ? "block" : "none";
+    }
+  }
+
   function setupMinimapListeners() {
     const toggleBtn = document.getElementById("minimap-toggle-btn");
+    const resizeBtn = document.getElementById("minimap-resize-btn");
     const widget = document.getElementById("minimap-widget");
-    if (!toggleBtn || !widget) return;
+    const canvas = document.getElementById("minimap-canvas");
+    if (!widget) return;
 
-    toggleBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      widget.classList.toggle("collapsed");
-      const chevron = widget.querySelector(".minimap-chevron path");
-      const isCollapsed = widget.classList.contains("collapsed");
-      if (chevron) {
-        chevron.setAttribute("d", isCollapsed ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6");
-      }
-    });
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        
+        // If it is in maximised state, minimize it back to small map first
+        if (widget.classList.contains("maximap")) {
+          widget.classList.remove("maximap");
+          updateResizeIcons(false);
+          return;
+        }
+        
+        widget.classList.toggle("collapsed");
+        const chevron = widget.querySelector(".minimap-chevron path");
+        const isCollapsed = widget.classList.contains("collapsed");
+        if (chevron) {
+          chevron.setAttribute("d", isCollapsed ? "M18 15l-6-6-6 6" : "M6 9l6 6 6-6");
+        }
+      });
+    }
+
+    if (resizeBtn) {
+      resizeBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        if (widget.classList.contains("collapsed")) {
+          // If collapsed, expand it to small map first
+          widget.classList.remove("collapsed");
+          const chevron = widget.querySelector(".minimap-chevron path");
+          if (chevron) chevron.setAttribute("d", "M6 9l6 6 6-6");
+        }
+        
+        const isMax = widget.classList.toggle("maximap");
+        updateResizeIcons(isMax);
+      });
+    }
+
+    if (canvas) {
+      canvas.addEventListener("click", function (e) {
+        if (!widget.classList.contains("collapsed") && !widget.classList.contains("maximap")) {
+          widget.classList.add("maximap");
+          updateResizeIcons(true);
+        }
+      });
+    }
   }
 
   // ==========================================
@@ -4175,13 +4342,6 @@
       regionDiv.id = "region-page";
       regionDiv.className = "custom-overlay-page";
       regionDiv.innerHTML = `
-        <button class="back-to-360-btn" id="region-back-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="19" y1="12" x2="5" y2="12"></line>
-            <polyline points="12 19 5 12 12 5"></polyline>
-          </svg>
-          <span>Quay lại 360</span>
-        </button>
         <div class="region-sidebar">
           <div class="sidebar-header">
             <h3>LIÊN KẾT VÙNG</h3>
@@ -4212,6 +4372,13 @@
               <span class="icon">🛣️</span> Đường quốc lộ
             </li>
           </ul>
+          <button class="back-to-360-btn" id="region-back-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Quay lại 360</span>
+          </button>
         </div>
         <div class="region-map-container">
           <div class="region-map-wrapper">
@@ -4492,6 +4659,7 @@
     console.log(`Current Pano Node: ${currentNodeId}`);
 
     syncStateWithNode(currentNodeId);
+    updateMinimapPosition(currentNodeId);
 
     // Clear old hotspots
     if (typeof window.pano.removeHotspots === 'function') {
