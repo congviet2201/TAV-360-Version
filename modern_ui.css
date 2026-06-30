@@ -2096,18 +2096,7 @@
   box-shadow: 0 0 10px rgba(246, 193, 119, 0.3) !important;
 }
 
-.layout-orbit .minimap-action-btn {
-  background: rgba(0, 217, 255, 0.06) !important;
-  border-color: rgba(0, 217, 255, 0.15) !important;
-  color: var(--orbit-cyan) !important;
-}
 
-.layout-orbit .minimap-action-btn:hover {
-  background: rgba(0, 217, 255, 0.18) !important;
-  border-color: rgba(0, 217, 255, 0.45) !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3) !important;
-}
 
 body.layout-prism .minimap-action-btn {
   background: rgba(124, 58, 237, 0.08) !important;
@@ -2149,15 +2138,7 @@ body.layout-monarch .minimap-action-btn:hover, body.layout-regal .minimap-action
   box-shadow: 0 0 10px rgba(200, 169, 107, 0.3) !important;
 }
 
-/* Orbit Maximap Header Override */
-.layout-orbit .minimap-widget.maximap .minimap-header {
-  display: flex !important;
-}
 
-.layout-orbit .minimap-widget.maximap {
-  border-radius: 12px !important;
-  height: auto !important;
-}
 
 /* Project Info Panel */
 .project-info-panel {
@@ -7926,20 +7907,21 @@ body.region-mode-active #container {
 /* 1. Reset pill container */
 .layout-switcher-pill {
   height: 32px !important;
-  padding: 4px 8px !important;
+  padding: 7px 12px !important;
   border-radius: 16px !important;
   display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
 }
 
 /* 2. Style segments as fixed size color circles */
 .switcher-segment {
   position: relative !important;
-  width: 14px !important;
-  height: 14px !important;
-  min-width: 14px !important;
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
   border-radius: 50% !important;
   cursor: pointer !important;
   padding: 0 !important;
@@ -7949,47 +7931,64 @@ body.region-mode-active #container {
   color: transparent !important;
   text-indent: -9999px !important;
   box-sizing: border-box !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease, border-color 0.25s !important;
   transform: scale(1) !important;
 }
 
 .switcher-segment:hover {
-  transform: scale(1.3) !important;
+  transform: scale(1.25) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 /* Specific color dots for each layout option */
 #opt-layout-classic {
   background: #d4af37 !important;
-  box-shadow: 0 0 6px rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6) !important;
 }
 #opt-layout-futuristic {
   background: #00f2fe !important;
-  box-shadow: 0 0 6px rgba(0, 242, 254, 0.4) !important;
+  box-shadow: 0 0 8px rgba(0, 242, 254, 0.6) !important;
 }
 #opt-layout-neo {
   background: #ffffff !important;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.4) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
 }
 #opt-layout-gradient {
   background: linear-gradient(135deg, #a18cd1, #fbc2eb) !important;
-  box-shadow: 0 0 6px rgba(161, 140, 209, 0.4) !important;
+  box-shadow: 0 0 8px rgba(161, 140, 209, 0.6) !important;
 }
 #opt-layout-aurora {
   background: linear-gradient(135deg, #00D9FF, #EC4899) !important;
-  box-shadow: 0 0 8px rgba(0, 217, 255, 0.4) !important;
+  box-shadow: 0 0 8px rgba(0, 217, 255, 0.6) !important;
 }
 #opt-layout-horizon {
   background: linear-gradient(135deg, #F6C177, #8ED8FF) !important;
-  box-shadow: 0 0 8px rgba(246, 193, 119, 0.4) !important;
+  box-shadow: 0 0 8px rgba(246, 193, 119, 0.6) !important;
+}
+#opt-layout-prism {
+  background: linear-gradient(135deg, #FF5E62, #FFD97D, #6be585, #4D96FF) !important;
+  box-shadow: 0 0 8px rgba(255, 94, 98, 0.6) !important;
+}
+#opt-layout-nexus {
+  background: linear-gradient(135deg, #38BDF8, #818CF8, #C084FC) !important;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6) !important;
+}
+#opt-layout-monarch {
+  background: linear-gradient(135deg, #C8A96B, #8A6F3E) !important;
+  box-shadow: 0 0 8px rgba(200, 169, 107, 0.6) !important;
+}
+#opt-layout-regal {
+  background: linear-gradient(135deg, #E21B52, #800020) !important;
+  box-shadow: 0 0 8px rgba(226, 27, 82, 0.6) !important;
 }
 
 /* 3. Style the slider as an active outer glowing ring wrapping the dot */
 .switcher-slider {
   position: absolute !important;
-  top: 4px !important;
-  bottom: 4px !important;
+  top: 7px !important;
+  bottom: 7px !important;
   border-radius: 50% !important;
   z-index: 1 !important;
   background: transparent !important;
@@ -7997,915 +7996,54 @@ body.region-mode-active #container {
   border-style: solid !important;
   box-sizing: border-box !important;
   pointer-events: none !important;
-  transform: scale(1.5) !important; /* expands the 14px size to 21px, wrapping the active dot perfectly */
+  transform: scale(1.4) !important; /* expands the 18px size to 25px, wrapping the active dot perfectly */
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 /* Specific ring colors for the slider depending on layout theme */
 .layout-classic .switcher-slider {
   border-color: #d4af37 !important;
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6) !important;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.8) !important;
 }
 .layout-futuristic .switcher-slider {
   border-color: #00f2fe !important;
-  box-shadow: 0 0 8px rgba(0, 242, 254, 0.6) !important;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.8) !important;
 }
 .layout-neo .switcher-slider {
   border-color: #1e293b !important;
-  box-shadow: 0 0 6px rgba(30, 41, 59, 0.2) !important;
+  box-shadow: 0 0 8px rgba(30, 41, 59, 0.3) !important;
 }
 .layout-gradient .switcher-slider {
   border-color: #c084fc !important;
-  box-shadow: 0 0 8px rgba(192, 132, 252, 0.6) !important;
+  box-shadow: 0 0 10px rgba(192, 132, 252, 0.8) !important;
 }
 .layout-aurora .switcher-slider {
   border-color: #EC4899 !important;
-  box-shadow: 0 0 10px rgba(236, 72, 153, 0.6) !important;
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.8) !important;
 }
 .layout-horizon .switcher-slider {
-  border-color: var(--horizon-gold) !important;
-  box-shadow: 0 0 10px rgba(246, 193, 119, 0.6) !important;
+  border-color: var(--horizon-gold, #F6C177) !important;
+  box-shadow: 0 0 12px rgba(246, 193, 119, 0.8) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s !important;
+  overflow: hidden !important;
+}
+.layout-prism .switcher-slider {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.8) !important;
+}
+.layout-nexus .switcher-slider {
+  border-color: #818CF8 !important;
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.8) !important;
+}
+.layout-monarch .switcher-slider {
+  border-color: #C8A96B !important;
+  box-shadow: 0 0 12px rgba(200, 169, 107, 0.8) !important;
+}
+.layout-regal .switcher-slider {
+  border-color: #E21B52 !important;
+  box-shadow: 0 0 12px rgba(226, 27, 82, 0.8) !important;
 }
-
-/* =========================================================
-   OPTION 7: ORBIT LAYOUT SPECIFIC VARIABLES & OVERRIDES
-   ========================================================= */
-:root {
-  /* Orbit Colors */
-  --orbit-cyan: #FF2A7A; /* Cyber Neon Rose */
-  --orbit-orange: #00F0FF; /* Electric Aqua */
-  --orbit-white: #FFFFFF;
-  --orbit-blue: #0E0B16;
-  --orbit-glass: rgba(14, 11, 22, 0.85); /* Deep space glass */
-  --orbit-glass-border: rgba(255, 42, 122, 0.25); /* Glowing rose border */
-  --orbit-font: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
-
-  /* Glowing shadows variables */
-  --orbit-cyan-glow-10: rgba(255, 42, 122, 0.1);
-  --orbit-cyan-glow-20: rgba(255, 42, 122, 0.2);
-  --orbit-cyan-glow-30: rgba(255, 42, 122, 0.3);
-  --orbit-cyan-glow-50: rgba(255, 42, 122, 0.5);
-}
-
-.orbit-nav-container,
-.orbit-tool-container {
-  display: none !important;
-}
-
-/* Hide other layout elements when Orbit layout is active */
-.layout-orbit .bottom-nav-container,
-.layout-orbit .vertical-tool-stack,
-.layout-orbit .settings-toggle-btn,
-.layout-orbit .modern-ui-sidebar,
-.layout-orbit .v-rail-container,
-.layout-orbit #sidebar-container,
-.layout-orbit .aurora-nav-container,
-.layout-orbit .aurora-tool-panel,
-.layout-orbit .horizon-nav-container,
-.layout-orbit .horizon-tool-panel {
-  display: none !important;
-}
-
-/* Show Orbit layout components */
-.layout-orbit .orbit-nav-container {
-  display: block !important;
-}
-.layout-orbit .orbit-tool-container {
-  display: block !important;
-}
-
-/* ---------------------------------------------------------
-   ORBIT SWITCHER PILL & SLIDER
-   --------------------------------------------------------- */
-.layout-orbit .layout-switcher-pill {
-  background: var(--orbit-glass) !important;
-  border: 1px solid var(--orbit-glass-border) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-}
-
-#opt-layout-orbit {
-  background: linear-gradient(135deg, var(--orbit-cyan), var(--orbit-orange)) !important;
-  box-shadow: 0 0 8px var(--orbit-cyan-glow-50) !important;
-}
-
-.layout-orbit .switcher-slider {
-  border-color: var(--orbit-cyan) !important;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.6) !important;
-}
-
-/* ---------------------------------------------------------
-   ORBIT SEMI-CIRCULAR NAVIGATION
-   --------------------------------------------------------- */
-.layout-orbit .orbit-nav-container {
-  position: absolute;
-  bottom: 35px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 500px;
-  height: 250px;
-  z-index: 2000;
-  pointer-events: none;
-}
-
-/* Jarvis-style center core */
-.layout-orbit .orbit-nav-hub {
-  position: absolute;
-  bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  background: var(--orbit-glass);
-  border: 1.5px solid var(--orbit-glass-border);
-  box-shadow: 0 0 20px var(--orbit-cyan-glow-20);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: radarPulse 3s infinite ease-in-out;
-  pointer-events: auto;
-}
-
-@keyframes radarPulse {
-  0% { box-shadow: 0 0 10px var(--orbit-cyan-glow-20), inset 0 0 10px var(--orbit-cyan-glow-10); }
-  50% { box-shadow: 0 0 25px var(--orbit-cyan-glow-50), inset 0 0 15px var(--orbit-cyan-glow-30); }
-  100% { box-shadow: 0 0 10px var(--orbit-cyan-glow-20), inset 0 0 10px var(--orbit-cyan-glow-10); }
-}
-
-.layout-orbit .orbit-nav-dock {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  pointer-events: none;
-}
-
-/* Nav items positioning on 110px radius semi-circle (compacted) */
-.layout-orbit .orbit-nav-item-wrapper {
-  position: absolute;
-  bottom: -40px; /* origin is center of hub */
-  left: 50%;
-  width: 38px;
-  height: 38px;
-  margin-left: -19px; /* center it horizontally */
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(0, 0) scale(0.5);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 1999;
-}
-
-.layout-orbit .orbit-nav-container.open .orbit-nav-item-wrapper {
-  pointer-events: auto;
-  opacity: 1;
-  visibility: visible;
-  transform: translate(var(--tx), var(--ty)) scale(1);
-}
-
-.layout-orbit .orbit-nav-item-wrapper:nth-child(1) { --tx: -105px; --ty: -34px; transition-delay: 0s; }
-.layout-orbit .orbit-nav-item-wrapper:nth-child(2) { --tx: -75px; --ty: -80px; transition-delay: 0.04s; }
-.layout-orbit .orbit-nav-item-wrapper:nth-child(3) { --tx: -27px; --ty: -107px; transition-delay: 0.08s; }
-.layout-orbit .orbit-nav-item-wrapper:nth-child(4) { --tx: 27px; --ty: -107px; transition-delay: 0.12s; }
-.layout-orbit .orbit-nav-item-wrapper:nth-child(5) { --tx: 75px; --ty: -80px; transition-delay: 0.16s; }
-.layout-orbit .orbit-nav-item-wrapper:nth-child(6) { --tx: 105px; --ty: -34px; transition-delay: 0.20s; }
-
-/* Nav items visual styles */
-.layout-orbit .orbit-nav-item {
-  width: 100%;
-  height: 100%;
-  background: var(--orbit-glass);
-  border: 1px solid var(--orbit-glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
-  user-select: none;
-  position: relative;
-}
-
-.layout-orbit .orbit-nav-item svg {
-  width: 16px;
-  height: 16px;
-  color: rgba(255,255,255,0.7);
-  transition: color 0.3s ease;
-}
-
-.layout-orbit .orbit-nav-label {
-  position: absolute;
-  bottom: 46px; /* float above the 38px button */
-  left: 50%;
-  transform: translateX(-50%) scale(0.8);
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  background: var(--orbit-glass);
-  border: 1px solid var(--orbit-glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  padding: 4px 8px;
-  border-radius: 6px;
-  color: #fff;
-  font-family: var(--orbit-font);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  white-space: nowrap;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-
-.layout-orbit .orbit-nav-item:hover,
-.layout-orbit .orbit-nav-item-wrapper:hover .orbit-nav-item {
-  border-color: var(--orbit-cyan);
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
-}
-.layout-orbit .orbit-nav-item:hover svg,
-.layout-orbit .orbit-nav-item-wrapper:hover .orbit-nav-item svg {
-  color: #fff;
-}
-.layout-orbit .orbit-nav-item:hover .orbit-nav-label,
-.layout-orbit .orbit-nav-item-wrapper:hover .orbit-nav-item .orbit-nav-label {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) scale(1);
-}
-
-/* Active Nav Item */
-.layout-orbit .orbit-nav-item.active {
-  background: rgba(0, 217, 255, 0.15);
-  border-color: var(--orbit-cyan);
-  box-shadow: 0 0 15px rgba(0, 217, 255, 0.5), inset 0 0 10px rgba(0, 217, 255, 0.2);
-}
-.layout-orbit .orbit-nav-item.active svg {
-  color: var(--orbit-cyan);
-}
-
-/* ---------------------------------------------------------
-   ORBIT RADIAL SUBMENUS
-   --------------------------------------------------------- */
-.layout-orbit .orbit-submenu {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 10;
-  pointer-events: none;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.layout-orbit .orbit-submenu.open {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-.layout-orbit .orbit-submenu-item {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: max-content;
-  height: 24px;
-  padding: 0 8px;
-  box-sizing: border-box;
-  background: var(--orbit-glass);
-  border: 1px solid var(--orbit-glass-border);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255,255,255,0.7);
-  font-family: var(--orbit-font);
-  font-size: 7.5px;
-  font-weight: 600;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-  transform: translate(-50%, -50%) translate(0, 0) scale(0.5); /* collapse to parent center */
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s ease, border-color 0.3s ease;
-  white-space: nowrap;
-  pointer-events: auto;
-}
-
-.layout-orbit .orbit-submenu.open .orbit-submenu-item {
-  transform: translate(-50%, -50%) translate(var(--sub-tx, 0px), var(--sub-ty, 0px)) scale(1);
-}
-
-.layout-orbit .orbit-submenu.open .orbit-submenu-item:hover {
-  border-color: var(--orbit-cyan);
-  color: #fff;
-  transform: translate(-50%, -50%) translate(var(--sub-tx, 0px), var(--sub-ty, 0px)) scale(1.1) !important;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
-}
-
-.layout-orbit .orbit-submenu-item.active {
-  background: rgba(255, 154, 0, 0.15);
-  border-color: var(--orbit-orange);
-  color: var(--orbit-orange);
-  text-shadow: 0 0 5px rgba(255, 154, 0, 0.5);
-}
-
-/* Hide tooltip label when submenu is open to prevent UI clashing */
-.layout-orbit .orbit-nav-item-wrapper:has(.orbit-submenu.open) .orbit-nav-label {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  display: none !important;
-}
-
-/* Submenu radial offsets defined via variables to preserve transform translation on hover scale */
-
-/* Bird View (arc expands up-left) */
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(1) { --sub-tx: -65px; --sub-ty: 14px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(2) { --sub-tx: -31px; --sub-ty: -33px; }
-.layout-orbit [data-id="birdview"] .orbit-submenu-item:nth-child(3) { --sub-tx: 19px; --sub-ty: -65px; }
-
-/* Amenities (arc expands up-left to up-right) */
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(1) { --sub-tx: -97px; --sub-ty: 14px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(2) { --sub-tx: -46px; --sub-ty: -30px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(3) { --sub-tx: 27px; --sub-ty: -48px; }
-.layout-orbit [data-id="amenities"] .orbit-submenu-item:nth-child(4) { --sub-tx: 88px; --sub-ty: -36px; }
-
-/* Architecture (arc expands up) */
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(1) { --sub-tx: -74px; --sub-ty: -41px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(2) { --sub-tx: 11px; --sub-ty: -43px; }
-.layout-orbit [data-id="architecture"] .orbit-submenu-item:nth-child(3) { --sub-tx: 84px; --sub-ty: -2px; }
-
-/* Interior (arc expands up-right) */
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(1) { --sub-tx: -2px; --sub-ty: -57px; }
-.layout-orbit [data-id="interior"] .orbit-submenu-item:nth-child(2) { --sub-tx: 56px; --sub-ty: -2px; }
-
-/* ---------------------------------------------------------
-   ORBIT QUARTER-CIRCLE TOOLBAR
-   --------------------------------------------------------- */
-.layout-orbit .orbit-tool-container {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 44px;
-  height: 44px;
-  z-index: 2000;
-  pointer-events: auto;
-}
-
-.layout-orbit .orbit-tool-trigger {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: var(--orbit-glass);
-  border: 1.5px solid var(--orbit-glass-border);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  color: var(--orbit-cyan);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 10px rgba(0, 217, 255, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 2001;
-}
-
-.layout-orbit .orbit-tool-trigger:hover {
-  transform: scale(1.05);
-  color: #fff;
-  border-color: var(--orbit-cyan);
-  box-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
-}
-
-.layout-orbit .orbit-trigger-ring {
-  position: absolute;
-  top: -4px; left: -4px; right: -4px; bottom: -4px;
-  border-radius: 50%;
-  border: 1px dashed rgba(0, 217, 255, 0.3);
-  animation: orbitRotate 10s infinite linear;
-}
-
-@keyframes orbitRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.layout-orbit .orbit-tool-list {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 32px;
-  height: 32px;
-  pointer-events: none;
-}
-
-.layout-orbit .orbit-tool-container.open .orbit-tool-list {
-  pointer-events: auto;
-}
-
-.layout-orbit .orbit-tool-item {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background: var(--orbit-glass);
-  border: 1px solid var(--orbit-glass-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: rgba(255,255,255,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transform: translate(0, 0) scale(0.5);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  z-index: 1999;
-}
-
-.layout-orbit .orbit-tool-item svg {
-  width: 14px;
-  height: 14px;
-}
-
-.layout-orbit .orbit-tool-item:hover {
-  color: #fff;
-  border-color: var(--orbit-cyan);
-  transform: translate(var(--tx), var(--ty)) scale(1.1) !important;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.4);
-}
-
-.layout-orbit .orbit-tool-item.active-tool {
-  color: var(--orbit-orange);
-  border-color: var(--orbit-orange);
-  box-shadow: 0 0 12px rgba(255, 154, 0, 0.4);
-  background: rgba(255, 154, 0, 0.08);
-}
-
-/* Staggered concentric arc layout for 7 buttons (radius 70px & 115px to be closer and prevent overlaps) */
-.layout-orbit .orbit-tool-item:nth-child(1) { --tx: -70px; --ty: 0px; transition-delay: 0s; }
-.layout-orbit .orbit-tool-item:nth-child(2) { --tx: -49px; --ty: 49px; transition-delay: 0.04s; }
-.layout-orbit .orbit-tool-item:nth-child(3) { --tx: 0px; --ty: 70px; transition-delay: 0.08s; }
-.layout-orbit .orbit-tool-item:nth-child(4) { --tx: -115px; --ty: 0px; transition-delay: 0.12s; }
-.layout-orbit .orbit-tool-item:nth-child(5) { --tx: -100px; --ty: 58px; transition-delay: 0.16s; }
-.layout-orbit .orbit-tool-item:nth-child(6) { --tx: -58px; --ty: 100px; transition-delay: 0.2s; }
-.layout-orbit .orbit-tool-item:nth-child(7) { --tx: 0px; --ty: 115px; transition-delay: 0.24s; }
-
-.layout-orbit .orbit-tool-container.open .orbit-tool-item {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(var(--tx), var(--ty)) scale(1);
-}
-
-/* Tool submenus (gallery, share) opening leftwards */
-.layout-orbit .orbit-tool-submenu {
-  position: absolute;
-  right: calc(100% + 11px);
-  top: 50%;
-  background: var(--orbit-glass);
-  border: 1px solid var(--orbit-glass-border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 217, 255, 0.05);
-  padding: 8px;
-  display: flex;
-  gap: 8px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-50%) translateY(10px) scale(0.95);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  z-index: 2100;
-}
-
-/* Hover bridge pseudo-element for left-opening submenu */
-.layout-orbit .orbit-tool-submenu::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -14px;
-  width: 14px;
-  background: transparent;
-}
-
-.layout-orbit .orbit-tool-submenu.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(-50%) translateY(0) scale(1);
-  pointer-events: auto;
-}
-
-.layout-orbit .orbit-tool-submenu.flex-col {
-  flex-direction: column;
-  min-width: 100px;
-}
-
-/* Pano Cards inside toolbar */
-.layout-orbit .orbit-pano-card {
-  width: 100px;
-  height: 65px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  border: 1px solid rgba(0, 217, 255, 0.1);
-  transition: all 0.3s ease;
-}
-
-.layout-orbit .orbit-pano-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.layout-orbit .orbit-pano-card span {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  background: rgba(8, 16, 24, 0.85);
-  color: #fff;
-  font-family: var(--orbit-font);
-  font-size: 8px;
-  text-align: center;
-  padding: 4px 2px;
-  white-space: nowrap;
-}
-
-.layout-orbit .orbit-pano-card:hover {
-  border-color: var(--orbit-cyan);
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
-}
-
-.layout-orbit .orbit-pano-card:hover img {
-  transform: scale(1.1);
-}
-
-/* Share links */
-.layout-orbit .orbit-share-btn {
-  padding: 6px 12px;
-  font-family: var(--orbit-font);
-  font-size: 11px;
-  font-weight: 500;
-  text-align: center;
-  text-decoration: none;
-  border-radius: 6px;
-  color: rgba(255,255,255,0.7);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(0, 217, 255, 0.1);
-  transition: all 0.25s ease;
-}
-
-.layout-orbit .orbit-share-btn:hover {
-  color: #fff;
-  border-color: var(--orbit-cyan);
-  background: rgba(0, 217, 255, 0.1);
-  transform: translateY(-1px);
-}
-
-/* ---------------------------------------------------------
-   ORBIT COMPASS OVERRIDES (Radar Screen)
-   --------------------------------------------------------- */
-.layout-orbit .orbit-compass {
-  bottom: 90px !important;
-  left: 24px !important;
-  width: 76px !important;
-  height: 76px !important;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  overflow: visible !important;
-}
-
-.layout-orbit .orbit-radar-rings {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-radius: 50%;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.layout-orbit .radar-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1.5px solid rgba(0, 217, 255, 0.1);
-  box-sizing: border-box;
-}
-.layout-orbit .radar-ring.outer {
-  top: 0; left: 0; right: 0; bottom: 0;
-  border-style: dashed;
-  animation: orbitRotate 12s infinite linear;
-}
-.layout-orbit .radar-ring.middle {
-  top: 10px; left: 10px; right: 10px; bottom: 10px;
-  border-style: solid;
-}
-.layout-orbit .radar-ring.inner {
-  top: 22px; left: 22px; right: 22px; bottom: 22px;
-  border-style: dotted;
-  animation: orbitRotateRev 8s infinite linear;
-}
-
-@keyframes orbitRotateRev {
-  from { transform: rotate(360deg); }
-  to { transform: rotate(0deg); }
-}
-
-.layout-orbit .radar-sweep {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 50%;
-  height: 50%;
-  background: conic-gradient(from 0deg, rgba(0, 217, 255, 0.15) 0deg, rgba(0, 217, 255, 0) 90deg);
-  transform-origin: top left;
-  animation: orbitRotate 3s infinite linear;
-}
-
-.layout-orbit .orbit-compass .compass-dial {
-  width: 100% !important;
-  height: 100% !important;
-  position: relative;
-  z-index: 2;
-}
-
-.layout-orbit .orbit-compass .compass-cardinal.n {
-  color: var(--orbit-orange) !important;
-  font-family: var(--orbit-font) !important;
-  font-weight: 800 !important;
-  font-size: 11px !important;
-  top: 6px !important;
-  text-shadow: 0 0 6px rgba(255, 154, 0, 0.6) !important;
-}
-
-.layout-orbit .orbit-compass .compass-degree-display {
-  position: absolute;
-  bottom: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--orbit-cyan);
-  font-family: var(--orbit-font);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-/* ---------------------------------------------------------
-   ORBIT MINIMAP OVERRIDES
-   --------------------------------------------------------- */
-.layout-orbit .minimap-widget {
-  background: var(--orbit-glass) !important;
-  border: 1px solid var(--orbit-glass-border) !important;
-  border-radius: 50% !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  width: 130px !important;
-  height: 130px !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  transition: all 0.35s ease !important;
-  overflow: hidden;
-}
-
-.layout-orbit .minimap-widget.collapsed {
-  width: 130px !important;
-  height: 130px !important;
-}
-
-.layout-orbit .minimap-widget.collapsed .minimap-body {
-  height: 100% !important;
-  opacity: 1 !important;
-  padding: 0 !important;
-  overflow: visible !important;
-}
-
-.layout-orbit .minimap-widget:hover {
-  border-color: var(--orbit-cyan) !important;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 217, 255, 0.2) !important;
-}
-
-.layout-orbit .minimap-header {
-  display: none !important;
-}
-
-.layout-orbit .minimap-body {
-  border-radius: 50% !important;
-  height: 100% !important;
-  padding: 0 !important;
-  position: relative;
-}
-
-.layout-orbit .minimap-canvas {
-  border-radius: 50% !important;
-  border: 1px solid rgba(0, 217, 255, 0.1) !important;
-  margin: 6px !important;
-  width: calc(100% - 12px) !important;
-  height: calc(100% - 12px) !important;
-  background: rgba(8, 16, 24, 0.5) !important;
-  position: relative;
-  overflow: hidden;
-}
-
-.layout-orbit .minimap-canvas::after {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 50%;
-  height: 50%;
-  background: conic-gradient(from 0deg, rgba(0, 217, 255, 0.12) 0deg, rgba(0, 217, 255, 0) 90deg);
-  transform-origin: top left;
-  animation: orbitRotate 4s infinite linear;
-  pointer-events: none;
-}
-
-.layout-orbit .minimap-dot {
-  background: var(--orbit-orange) !important;
-  box-shadow: 0 0 10px var(--orbit-orange), 0 0 20px var(--orbit-orange) !important;
-  animation: activeRadarBlip 1.5s infinite ease-in-out;
-}
-
-@keyframes activeRadarBlip {
-  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-  50% { transform: translate(-50%, -50%) scale(1.4); opacity: 1; }
-  100% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
-}
-
-.layout-orbit .minimap-viewcone {
-  border-left-color: rgba(0, 217, 255, 0.15) !important;
-  border-right-color: rgba(0, 217, 255, 0.15) !important;
-}
-
-.layout-orbit .minimap-legend {
-  display: none !important;
-}
-
-/* ---------------------------------------------------------
-   ORBIT HOTSPOTS OVERRIDES (Concentric Projection Rings)
-   --------------------------------------------------------- */
-.layout-orbit .pin-dot {
-  background: rgba(8, 16, 24, 0.9) !important;
-  border: 1.5px solid var(--orbit-cyan) !important;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.3) !important;
-  color: #fff !important;
-  transition: all 0.3s ease !important;
-}
-
-.layout-orbit .pin-pulse {
-  background: rgba(0, 217, 255, 0.2) !important;
-  border: 1px solid var(--orbit-cyan) !important;
-}
-
-.layout-orbit .map-pin:hover .pin-dot {
-  border-color: var(--orbit-orange) !important;
-  box-shadow: 0 0 15px rgba(255, 154, 0, 0.5) !important;
-  transform: scale(1.1) !important;
-}
-.layout-orbit .map-pin:hover .pin-pulse {
-  background: rgba(255, 154, 0, 0.25) !important;
-  border-color: var(--orbit-orange) !important;
-}
-
-.layout-orbit .map-pin.active .pin-dot {
-  border-color: var(--orbit-orange) !important;
-  box-shadow: 0 0 20px var(--orbit-orange) !important;
-  animation: orbitActivePulse 1.5s infinite ease-in-out !important;
-}
-
-@keyframes orbitActivePulse {
-  0% { box-shadow: 0 0 0 0 rgba(255, 154, 0, 0.6), 0 0 0 4px rgba(255, 154, 0, 0.3); }
-  100% { box-shadow: 0 0 0 4px rgba(255, 154, 0, 0), 0 0 0 8px rgba(255, 154, 0, 0); }
-}
-
-.layout-orbit .pin-label {
-  background: var(--orbit-glass) !important;
-  border: 1px solid var(--orbit-glass-border) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  color: #fff !important;
-  font-family: var(--orbit-font) !important;
-  font-weight: 500 !important;
-  font-size: 11px !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 8px rgba(0, 217, 255, 0.1) !important;
-}
-
-/* ---------------------------------------------------------
-   ORBIT CUSTOM OVERLAYS (Back to 360, Interior, Region Page)
-   --------------------------------------------------------- */
-.layout-orbit .back-to-360-btn {
-  background: var(--orbit-glass) !important;
-  border: 1px solid var(--orbit-glass-border) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  color: #fff !important;
-  font-family: var(--orbit-font) !important;
-  font-weight: 600 !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
-  border-radius: 12px !important;
-  transition: all 0.3s ease !important;
-}
-
-.layout-orbit .back-to-360-btn svg {
-  color: var(--orbit-cyan) !important;
-  transition: transform 0.3s ease !important;
-}
-
-.layout-orbit .back-to-360-btn:hover {
-  border-color: var(--orbit-orange) !important;
-  box-shadow: 0 8px 24px rgba(255, 154, 0, 0.25) !important;
-  color: var(--orbit-orange) !important;
-}
-
-.layout-orbit .back-to-360-btn:hover svg {
-  transform: translateX(-3px) !important;
-  color: var(--orbit-orange) !important;
-}
-
-/* Interior switcher */
-.layout-orbit .interior-switcher-container {
-  background: var(--orbit-glass) !important;
-  border: 1px solid var(--orbit-glass-border) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-radius: 14px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
-  padding: 4px !important;
-}
-
-.layout-orbit .interior-switch-btn {
-  color: rgba(255, 255, 255, 0.6) !important;
-  font-family: var(--orbit-font) !important;
-  font-weight: 600 !important;
-  border-radius: 10px !important;
-  transition: all 0.3s ease !important;
-}
-
-.layout-orbit .interior-switch-btn:hover {
-  color: #fff !important;
-  background: rgba(255, 255, 255, 0.05) !important;
-}
-
-.layout-orbit .interior-switch-btn.active {
-  background: var(--orbit-cyan) !important;
-  border-color: transparent !important;
-  color: var(--orbit-blue) !important;
-  font-weight: 700 !important;
-  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.4) !important;
-}
-
-/* Region sidebar */
-.layout-orbit .region-sidebar {
-  background: rgba(8, 16, 24, 0.95) !important;
-  backdrop-filter: blur(30px) !important;
-  -webkit-backdrop-filter: blur(30px) !important;
-  border-right: 1px solid rgba(0, 217, 255, 0.2) !important;
-  box-shadow: 5px 0 25px rgba(0,0,0,0.5) !important;
-}
-
-.layout-orbit .region-sidebar .sidebar-header h3 {
-  color: #fff !important;
-  font-family: var(--orbit-font) !important;
-  font-weight: 800 !important;
-  letter-spacing: 1px !important;
-  background: linear-gradient(135deg, var(--orbit-cyan), var(--orbit-orange));
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-}
-
-.layout-orbit .region-menu-item {
-  background: rgba(255, 255, 255, 0.02) !important;
-  border: 1px solid rgba(0, 217, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.6) !important;
-  font-family: var(--orbit-font) !important;
-  font-weight: 600 !important;
-  border-radius: 12px !important;
-  transition: all 0.3s ease !important;
-}
-
-.layout-orbit .region-menu-item:hover {
-  background: rgba(0, 217, 255, 0.05) !important;
-  border-color: var(--orbit-cyan) !important;
-  color: #fff !important;
-  box-shadow: 0 0 10px rgba(0, 217, 255, 0.15) !important;
-}
-
-.layout-orbit .region-menu-item.active {
-  background: linear-gradient(135deg, var(--orbit-cyan) 0%, var(--orbit-orange) 100%) !important;
-  border-color: transparent !important;
-  color: var(--orbit-blue) !important;
-  font-weight: 700 !important;
-  box-shadow: 0 5px 15px rgba(0, 217, 255, 0.3) !important;
-}
-
 
 
 /* ====================================================
@@ -10862,10 +10000,10 @@ body.layout-monarch .minimap-canvas, body.layout-regal .minimap-canvas {
   background: #000000 !important;
 }
 
-/* Filter to turn aerial image into golden CAD blueprint */
+/* Keep map image natural and clear */
 body.layout-monarch .minimap-img, body.layout-regal .minimap-img {
-  filter: invert(1) brightness(0.35) contrast(1.6) sepia(1) hue-rotate(5deg) saturate(1.8) !important;
-  opacity: 0.6 !important;
+  filter: none !important;
+  opacity: 1 !important;
 }
 
 body.layout-monarch .minimap-dot, body.layout-regal .minimap-dot {
@@ -10892,13 +10030,16 @@ body.layout-monarch .hologram-marker-container, body.layout-regal .hologram-mark
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  pointer-events: auto !important;
 }
 
 body.layout-monarch .hologram-marker-container .hotspot-hitbox, body.layout-regal .hologram-marker-container .hotspot-hitbox {
   position: absolute;
   width: 48px;
   height: 48px;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
   border-radius: 50%;
   cursor: pointer;
   pointer-events: auto;
@@ -10909,11 +10050,13 @@ body.layout-monarch .hologram-marker-container .hotspot-marker, body.layout-rega
   width: 12px;
   height: 12px;
   background: var(--monarch-gold) !important;
-  transform: rotate(45deg);
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) rotate(45deg) !important;
   border: 1.5px solid #FFFFFF !important;
   box-shadow: 0 0 10px rgba(200, 169, 107, 0.6), inset 0 0 3px rgba(255,255,255,0.7);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  position: relative;
   animation: none !important;
 }
 
@@ -10931,7 +10074,8 @@ body.layout-monarch .hologram-marker-container .hotspot-marker::before, body.lay
 
 body.layout-monarch .hologram-marker-container .hotspot-label, body.layout-regal .hologram-marker-container .hotspot-label {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(50% + 16px) !important;
+  left: 50% !important;
   background: rgba(13, 13, 13, 0.95) !important;
   color: var(--monarch-champagne) !important;
   border: 1px solid rgba(200, 169, 107, 0.5) !important;
@@ -10943,7 +10087,7 @@ body.layout-monarch .hologram-marker-container .hotspot-label, body.layout-regal
   text-transform: uppercase;
   white-space: nowrap;
   opacity: 0;
-  transform: translateY(5px);
+  transform: translateX(-50%) translateY(5px) !important;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   box-shadow: 0 5px 15px rgba(0,0,0,0.6) !important;
@@ -10952,11 +10096,11 @@ body.layout-monarch .hologram-marker-container .hotspot-label, body.layout-regal
 
 body.layout-monarch .hologram-marker-container:hover .hotspot-label, body.layout-regal .hologram-marker-container:hover .hotspot-label {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(-50%) translateY(0) !important;
 }
 
 body.layout-monarch .hologram-marker-container:hover .hotspot-marker, body.layout-regal .hologram-marker-container:hover .hotspot-marker {
-  transform: rotate(45deg) scale(1.2);
+  transform: translate(-50%, -50%) rotate(45deg) scale(1.2) !important;
   border-color: var(--monarch-champagne) !important;
   box-shadow: 0 0 15px rgba(228, 197, 144, 0.8), inset 0 0 5px rgba(255,255,255,1);
 }
@@ -10975,12 +10119,12 @@ body.layout-monarch .hologram-marker-container.active .hotspot-marker, body.layo
 body.layout-monarch.interior-mode-active #interior-page, body.layout-regal.interior-mode-active #interior-page {
   display: block;
   pointer-events: none;
-  background: radial-gradient(circle at center, rgba(13, 13, 13, 0.1) 0%, rgba(13, 13, 13, 0.9) 100%) !important;
+  background: transparent !important;
   animation: monarchCrossfade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes monarchCrossfade {
-  from { opacity: 0; background-color: #0D0D0D; }
+  from { opacity: 0; }
   to { opacity: 1; }
 }
 

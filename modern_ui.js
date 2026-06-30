@@ -38,7 +38,6 @@
         <div class="switcher-segment" id="opt-layout-gradient" data-layout="gradient" title="Giao diện Gradient">Gradient</div>
         <div class="switcher-segment" id="opt-layout-aurora" data-layout="aurora" title="Giao diện Aurora">Aurora</div>
         <div class="switcher-segment" id="opt-layout-horizon" data-layout="horizon" title="Giao diện Horizon">Horizon</div>
-        <div class="switcher-segment" id="opt-layout-orbit" data-layout="orbit" title="Giao diện Orbit">Orbit</div>
         <div class="switcher-segment" id="opt-layout-prism" data-layout="prism" title="Giao diện Prism">Prism</div>
         <div class="switcher-segment" id="opt-layout-nexus" data-layout="nexus" title="Giao diện Nexus">Nexus</div>
         <div class="switcher-segment" id="opt-layout-monarch" data-layout="monarch" title="Giao diện Monarch">Monarch</div>
@@ -1220,208 +1219,7 @@
     </div>
   `;
 
-  // OPTION 7: ORBIT LAYOUT TEMPLATES
-  const orbitNavHTML = `
-    <div class="orbit-nav-container" id="orbit-nav-container">
-      <div class="orbit-nav-hub">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="9" stroke="rgba(0, 217, 255, 0.4)"/>
-          <circle cx="12" cy="12" r="6" stroke="rgba(0, 217, 255, 0.6)" stroke-dasharray="2 2"/>
-          <circle cx="12" cy="12" r="3" fill="#00D9FF"/>
-        </svg>
-      </div>
-      <div class="orbit-nav-dock">
-        <div class="orbit-nav-item-wrapper" data-id="topview">
-          <div class="orbit-nav-item" data-id="topview" data-pano-node="node1" data-action="overview-top" title="Top View">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="orbit-nav-label">Top View</span>
-          </div>
-        </div>
 
-        <div class="orbit-nav-item-wrapper has-submenu" data-id="birdview">
-          <div class="orbit-nav-item" data-id="birdview" title="Bird View">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="orbit-nav-label">Bird View</span>
-          </div>
-          <div class="orbit-submenu">
-            <div class="orbit-submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird 1</div>
-            <div class="orbit-submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird 2</div>
-            <div class="orbit-submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird 3</div>
-          </div>
-        </div>
-
-        <div class="orbit-nav-item-wrapper has-submenu" data-id="amenities">
-          <div class="orbit-nav-item" data-id="amenities" data-action="amenity-pool" title="Amenities">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="orbit-nav-label">Amenities</span>
-          </div>
-          <div class="orbit-submenu">
-            <div class="orbit-submenu-item" data-action="amenity-pool">Hồ Bơi</div>
-            <div class="orbit-submenu-item" data-action="amenity-gym">Phòng Gym</div>
-            <div class="orbit-submenu-item" data-action="amenity-park">Công Viên</div>
-            <div class="orbit-submenu-item" data-action="amenity-spa">Spa</div>
-          </div>
-        </div>
-
-        <div class="orbit-nav-item-wrapper has-submenu" data-id="architecture">
-          <div class="orbit-nav-item" data-id="architecture" data-action="architecture-1" title="Architecture">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="orbit-nav-label">Architecture</span>
-          </div>
-          <div class="orbit-submenu">
-            <div class="orbit-submenu-item" data-action="architecture-1">Kiến Trúc 1</div>
-            <div class="orbit-submenu-item" data-action="architecture-2">Kiến Trúc 2</div>
-            <div class="orbit-submenu-item" data-action="architecture-3">Kiến Trúc 3</div>
-          </div>
-        </div>
-
-        <div class="orbit-nav-item-wrapper has-submenu" data-id="interior">
-          <div class="orbit-nav-item" data-id="interior" title="Interior">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="orbit-nav-label">Interior</span>
-          </div>
-          <div class="orbit-submenu">
-            <div class="orbit-submenu-item" data-action="interior-1">Interior 1</div>
-            <div class="orbit-submenu-item" data-action="interior-2">Interior 2</div>
-          </div>
-        </div>
-
-        <div class="orbit-nav-item-wrapper" data-id="surrounding">
-          <div class="orbit-nav-item" data-id="surrounding" data-action="region-page" title="Liên kết vùng">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-              <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="orbit-nav-label">Liên kết vùng</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-
-  const orbitRightToolHTML = `
-    <div class="orbit-tool-container" id="orbit-tool-container">
-      <div class="orbit-tool-trigger" id="orbit-tool-trigger" title="Hệ thống điều khiển">
-        <div class="orbit-trigger-ring"></div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-          <circle cx="12" cy="12" r="10" />
-          <circle cx="12" cy="12" r="4" stroke-dasharray="2 2" />
-          <line x1="12" y1="2" x2="12" y2="4" />
-          <line x1="12" y1="20" x2="12" y2="22" />
-          <line x1="2" y1="12" x2="4" y2="12" />
-          <line x1="20" y1="12" x2="22" y2="12" />
-        </svg>
-      </div>
-      <div class="orbit-tool-list" id="orbit-tool-list">
-        <div class="orbit-tool-item" data-action="info" title="Thông Tin Dự Án">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" />
-            <line x1="12" y1="16" x2="12" y2="12" />
-            <line x1="12" y1="8" x2="12.01" y2="8" />
-          </svg>
-        </div>
-
-        <div class="orbit-tool-item" data-action="music" title="Nhạc Nền">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 18V5l12-2v13" />
-            <circle cx="6" cy="18" r="3" />
-            <circle cx="18" cy="16" r="3" />
-          </svg>
-        </div>
-
-        <div class="orbit-tool-item has-submenu" id="orbit-tool-images" title="Hình Ảnh">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="3" y="3" width="18" height="18" rx="2" />
-            <circle cx="8.5" cy="8.5" r="1.5" />
-            <polyline points="21 15 16 10 5 21" />
-          </svg>
-          <div class="orbit-tool-submenu">
-            <div class="orbit-pano-card" onclick="window.pano && window.pano.openNext('node1')">
-              <img src="pano_aerial.png" alt="Toàn cảnh">
-              <span>Toàn cảnh</span>
-            </div>
-            <div class="orbit-pano-card" onclick="window.pano && window.pano.openNext('node2')">
-              <img src="pano_detached.png" alt="Đơn lập">
-              <span>Biệt thự Đơn lập</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="orbit-tool-item" data-action="hotspots" title="Ẩn/Hiện Hotspots">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10" stroke-dasharray="3 3" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-        </div>
-
-        <div class="orbit-tool-item has-submenu" id="orbit-tool-share" title="Chia Sẻ">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-            <polyline points="16 6 12 2 8 6" />
-            <line x1="12" y1="2" x2="12" y2="15" />
-          </svg>
-          <div class="orbit-tool-submenu flex-col">
-            <a href="https://facebook.com" target="_blank" class="orbit-share-btn facebook">Facebook</a>
-            <a href="https://zalo.me" target="_blank" class="orbit-share-btn zalo">Zalo</a>
-          </div>
-        </div>
-
-        <div class="orbit-tool-item" data-action="call" title="Tư Vấn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-          </svg>
-        </div>
-
-
-        <div class="orbit-tool-item" data-action="fullscreen" title="Toàn Màn Hình">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-          </svg>
-        </div>
-      </div>
-    </div>
-  `;
-
-  const orbitCompassHTML = `
-    <div class="compass-widget orbit-compass" id="compass-widget">
-      <div class="orbit-radar-rings">
-        <div class="radar-ring outer"></div>
-        <div class="radar-ring middle"></div>
-        <div class="radar-ring inner"></div>
-        <div class="radar-sweep"></div>
-      </div>
-      <div class="compass-dial" id="compass-dial">
-        <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <circle cx="40" cy="40" r="38" stroke="rgba(0, 217, 255, 0.2)" stroke-width="1" />
-          <line x1="40" y1="2" x2="40" y2="78" stroke="rgba(0, 217, 255, 0.15)" stroke-width="1" stroke-dasharray="2 2" />
-          <line x1="2" y1="40" x2="78" y2="40" stroke="rgba(0, 217, 255, 0.15)" stroke-width="1" stroke-dasharray="2 2" />
-          <polygon points="40,10 43,24 37,24" fill="#FF9A00" />
-          <circle cx="40" cy="40" r="3" fill="#FFFFFF" />
-        </svg>
-      </div>
-      <div class="compass-cardinal n">N</div>
-      <div class="compass-degree-display" id="compass-degree">0°</div>
-    </div>
-  `;
 
   // OPTION 8: PRISM LAYOUT TEMPLATES
   const prismNavHTML = `
@@ -1998,7 +1796,6 @@
         <div class="monarch-selector-item monarch-hover-sweep" data-layout="gradient">04</div>
         <div class="monarch-selector-item monarch-hover-sweep" data-layout="aurora">05</div>
         <div class="monarch-selector-item monarch-hover-sweep" data-layout="horizon">06</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="orbit">07</div>
         <div class="monarch-selector-item monarch-hover-sweep" data-layout="prism">08</div>
         <div class="monarch-selector-item monarch-hover-sweep" data-layout="nexus">09</div>
         <div class="monarch-selector-item monarch-hover-sweep" data-layout="monarch">10</div>
@@ -2138,6 +1935,8 @@
       <div class="compass-degree-display" id="compass-degree">0°</div>
     </div>
   `;
+
+
 
 
   // Mini Map Widget - positioned bottom-right
@@ -2326,11 +2125,6 @@
       container.style.borderColor = "rgba(246, 193, 119, 0.4)";
       container.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(246, 193, 119, 0.3)";
       container.textContent = `HORIZON: ${text}`;
-    } else if (layoutMode === "orbit") {
-      container.style.color = "#00D9FF";
-      container.style.borderColor = "rgba(0, 217, 255, 0.4)";
-      container.style.boxShadow = "0 4px 15px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 217, 255, 0.3)";
-      container.textContent = `ORBIT HUD: ${text}`;
     } else {
       container.style.color = "#00f2fe";
       container.style.borderColor = "rgba(0, 242, 254, 0.3)";
@@ -2359,13 +2153,12 @@
     const gradientSeg = document.getElementById("opt-layout-gradient");
     const auroraSeg = document.getElementById("opt-layout-aurora");
     const horizonSeg = document.getElementById("opt-layout-horizon");
-    const orbitSeg = document.getElementById("opt-layout-orbit");
     const prismSeg = document.getElementById("opt-layout-prism");
     const nexusSeg = document.getElementById("opt-layout-nexus");
     const monarchSeg = document.getElementById("opt-layout-monarch");
     const regalSeg = document.getElementById("opt-layout-regal");
     const slider = document.getElementById("switcher-slider");
-    if (!classicSeg || !futuristicSeg || !neoSeg || !gradientSeg || !auroraSeg || !horizonSeg || !orbitSeg || !prismSeg || !nexusSeg || !slider) return;
+    if (!classicSeg || !futuristicSeg || !neoSeg || !gradientSeg || !auroraSeg || !horizonSeg || !prismSeg || !nexusSeg || !slider) return;
 
 
     requestAnimationFrame(() => {
@@ -2375,7 +2168,6 @@
       else if (layoutMode === "gradient") activeSeg = gradientSeg;
       else if (layoutMode === "aurora") activeSeg = auroraSeg;
       else if (layoutMode === "horizon") activeSeg = horizonSeg;
-      else if (layoutMode === "orbit") activeSeg = orbitSeg;
       else if (layoutMode === "prism" && prismSeg) activeSeg = prismSeg;
       else if (layoutMode === "nexus" && nexusSeg) activeSeg = nexusSeg;
       else if (layoutMode === "monarch" && monarchSeg) activeSeg = monarchSeg;
@@ -2387,7 +2179,6 @@
       gradientSeg.classList.toggle("active", layoutMode === "gradient");
       auroraSeg.classList.toggle("active", layoutMode === "aurora");
       horizonSeg.classList.toggle("active", layoutMode === "horizon");
-      orbitSeg.classList.toggle("active", layoutMode === "orbit");
       if (prismSeg) prismSeg.classList.toggle("active", layoutMode === "prism");
       if (nexusSeg) nexusSeg.classList.toggle("active", layoutMode === "nexus");
       if (monarchSeg) monarchSeg.classList.toggle("active", layoutMode === "monarch");
@@ -2485,13 +2276,6 @@
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupHorizonListeners();
-    } else if (layoutMode === "orbit") {
-      const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = orbitNavHTML + orbitRightToolHTML;
-      while (tempDiv.firstChild) {
-        uiWrapper.appendChild(tempDiv.firstChild);
-      }
-      setupOrbitListeners();
     } else if (layoutMode === "prism") {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = prismNavHTML + prismRightToolHTML;
@@ -2531,7 +2315,7 @@
     populateMinimapMarkers();
     updateMinimapPosition(activePanoNode);
     let minimapEl = document.getElementById("minimap-widget");
-    if (minimapEl && (layoutMode === "orbit" || layoutMode === "prism" || layoutMode === "nexus" || layoutMode === "monarch" || layoutMode === "regal")) {
+    if (minimapEl && (layoutMode === "prism" || layoutMode === "nexus" || layoutMode === "monarch" || layoutMode === "regal")) {
       minimapEl.classList.remove("collapsed");
     }
 
@@ -2547,8 +2331,6 @@
       compassDiv.innerHTML = auroraCompassHTML;
     } else if (layoutMode === "horizon") {
       compassDiv.innerHTML = horizonCompassHTML;
-    } else if (layoutMode === "orbit") {
-      compassDiv.innerHTML = orbitCompassHTML;
     } else if (layoutMode === "prism") {
       compassDiv.innerHTML = prismCompassHTML;
     } else if (layoutMode === "nexus") {
@@ -2567,7 +2349,7 @@
   // Restore navigation and submenu highlight states on rebuild
   function restoreActiveStates() {
     // 1. Restore main nav highlights
-    const navItems = document.querySelectorAll(".nav-item, .aurora-nav-item, .horizon-nav-item, .orbit-nav-item, .prism-nav-item, .nexus-nav-item, .monarch-nav-item");
+    const navItems = document.querySelectorAll(".nav-item, .aurora-nav-item, .horizon-nav-item, .prism-nav-item, .nexus-nav-item, .monarch-nav-item");
     let activeNavItem = null;
     navItems.forEach(item => {
       if (item.getAttribute("data-id") === activeNavItemId) {
@@ -2579,7 +2361,7 @@
     });
 
     // 2. Restore submenu active highlight — use unique data-action only
-    const subItems = document.querySelectorAll(".submenu-item, .mega-card, .aurora-submenu-item, .horizon-submenu-item, .orbit-submenu-item, .prism-submenu-item, .nexus-submenu-item, .monarch-popover-item");
+    const subItems = document.querySelectorAll(".submenu-item, .mega-card, .aurora-submenu-item, .horizon-submenu-item, .prism-submenu-item, .nexus-submenu-item, .monarch-popover-item");
     subItems.forEach(sub => {
       const action = sub.getAttribute("data-action");
       if (action && action === activeSubmenuAction) {
@@ -3406,200 +3188,7 @@
     });
   }
 
-  function setupOrbitListeners() {
-    const navItems = document.querySelectorAll(".layout-orbit .orbit-nav-item");
-    const submenuItems = document.querySelectorAll(".layout-orbit .orbit-submenu-item");
-    const toolContainer = document.getElementById("orbit-tool-container");
-    const toolTrigger = document.getElementById("orbit-tool-trigger");
-    const toolItems = document.querySelectorAll(".layout-orbit .orbit-tool-item");
 
-    const navHub = document.querySelector(".layout-orbit .orbit-nav-hub");
-    const navContainer = document.getElementById("orbit-nav-container");
-    const itemWrappers = document.querySelectorAll(".layout-orbit .orbit-nav-item-wrapper");
-
-    let navCloseTimeout = null;
-
-    const keepNavOpen = () => {
-      if (navCloseTimeout) {
-        clearTimeout(navCloseTimeout);
-        navCloseTimeout = null;
-      }
-      if (navContainer) {
-        navContainer.classList.add("open");
-      }
-    };
-
-    const delayNavClose = () => {
-      if (navCloseTimeout) clearTimeout(navCloseTimeout);
-      navCloseTimeout = setTimeout(() => {
-        if (navContainer && !navContainer.classList.contains("pinned")) {
-          navContainer.classList.remove("open");
-        }
-      }, 500);
-    };
-
-    if (navHub && navContainer) {
-      navHub.addEventListener("click", function(e) {
-        e.stopPropagation();
-        const isPinned = navContainer.classList.contains("pinned");
-        if (isPinned) {
-          navContainer.classList.remove("pinned");
-          navContainer.classList.remove("open");
-        } else {
-          navContainer.classList.add("pinned");
-          navContainer.classList.add("open");
-        }
-      });
-      navHub.addEventListener("mouseenter", keepNavOpen);
-      navHub.addEventListener("mouseleave", delayNavClose);
-    }
-
-    itemWrappers.forEach(wrapper => {
-      wrapper.addEventListener("mouseenter", keepNavOpen);
-      wrapper.addEventListener("mouseleave", delayNavClose);
-    });
-
-    // 1. Navigation items click/toggle submenus
-    navItems.forEach(item => {
-      item.addEventListener("click", function(e) {
-        e.stopPropagation();
-
-        const parentWrapper = this.closest(".orbit-nav-item-wrapper");
-        const hasChildren = parentWrapper && parentWrapper.classList.contains("has-submenu");
-
-        if (hasChildren) {
-          const submenu = parentWrapper.querySelector(".orbit-submenu");
-          if (submenu) {
-            const isOpen = submenu.classList.contains("open");
-            // Close other submenus first
-            const openSubmenus = document.querySelectorAll(".layout-orbit .orbit-submenu.open");
-            openSubmenus.forEach(s => { if (s !== submenu) s.classList.remove("open"); });
-            submenu.classList.toggle("open", !isOpen);
-          }
-          return;
-        }
-
-        // No children: navigate
-        navItems.forEach(n => n.classList.remove("active"));
-        submenuItems.forEach(s => s.classList.remove("active"));
-        this.classList.add("active");
-
-        activeNavItemId = parentWrapper.getAttribute("data-id");
-        lsSet("latien_active_nav", activeNavItemId);
-
-        routeNavigation(this);
-      });
-    });
-
-    // Submenu item clicks
-    submenuItems.forEach(sub => {
-      sub.addEventListener("click", function(e) {
-        e.stopPropagation();
-
-        submenuItems.forEach(s => s.classList.remove("active"));
-        this.classList.add("active");
-
-        const parentWrapper = this.closest(".orbit-nav-item-wrapper");
-        if (parentWrapper) {
-          const parentItem = parentWrapper.querySelector(".orbit-nav-item");
-          if (parentItem) {
-            navItems.forEach(n => n.classList.remove("active"));
-            parentItem.classList.add("active");
-          }
-          activeNavItemId = parentWrapper.getAttribute("data-id");
-          lsSet("latien_active_nav", activeNavItemId);
-          
-          const submenu = parentWrapper.querySelector(".orbit-submenu");
-          if (submenu) submenu.classList.remove("open");
-        }
-
-        activeSubmenuAction = this.getAttribute("data-action");
-        activePanoNode = this.getAttribute("data-pano-node") || activePanoNode;
-        lsSet("latien_active_submenu", activeSubmenuAction);
-        lsSet("latien_active_node", activePanoNode);
-
-        routeNavigation(this);
-      });
-    });
-
-    // 2. Toolbar logic (Iron Man HUD style)
-    if (toolTrigger && toolContainer) {
-      toolTrigger.addEventListener("click", function(e) {
-        e.stopPropagation();
-        toolContainer.classList.toggle("open");
-      });
-      toolTrigger.addEventListener("mouseenter", function() {
-        toolContainer.classList.add("open");
-      });
-    }
-
-    toolItems.forEach(btn => {
-      const hasSub = btn.classList.contains("has-submenu");
-      if (hasSub) {
-        btn.addEventListener("mouseenter", () => {
-          const submenu = btn.querySelector(".orbit-tool-submenu");
-          if (submenu) submenu.classList.add("open");
-        });
-        btn.addEventListener("mouseleave", () => {
-          const submenu = btn.querySelector(".orbit-tool-submenu");
-          if (submenu && !submenu.classList.contains("pinned")) {
-            submenu.classList.remove("open");
-          }
-        });
-        
-        btn.addEventListener("click", function(e) {
-          if (e.target.closest('.orbit-tool-submenu')) return;
-          e.stopPropagation();
-          const submenu = this.querySelector(".orbit-tool-submenu");
-          if (submenu) {
-            const isPinned = submenu.classList.contains("pinned");
-            // Close other tool submenus
-            const allToolSubs = document.querySelectorAll(".layout-orbit .orbit-tool-submenu");
-            allToolSubs.forEach(s => {
-              if (s !== submenu) {
-                s.classList.remove("pinned");
-                s.classList.remove("open");
-              }
-            });
-
-            if (isPinned) {
-              submenu.classList.remove("pinned");
-              submenu.classList.remove("open");
-            } else {
-              submenu.classList.add("pinned");
-              submenu.classList.add("open");
-            }
-          }
-        });
-      } else {
-        btn.addEventListener("click", function(e) {
-          e.stopPropagation();
-          dispatchToolAction(btn);
-        });
-      }
-    });
-
-    // Close on click outside
-    document.addEventListener("click", () => {
-      const openNavSubs = document.querySelectorAll(".layout-orbit .orbit-submenu.open");
-      openNavSubs.forEach(s => s.classList.remove("open"));
-
-      const openToolSubs = document.querySelectorAll(".layout-orbit .orbit-tool-submenu.open");
-      openToolSubs.forEach(s => {
-        s.classList.remove("open");
-        s.classList.remove("pinned");
-      });
-
-      if (toolContainer && !toolContainer.matches(":hover")) {
-        toolContainer.classList.remove("open");
-      }
-
-      if (navContainer) {
-        navContainer.classList.remove("open");
-        navContainer.classList.remove("pinned");
-      }
-    });
-  }
 
   // ==========================================
   // PRISM LAYOUT LISTENERS
@@ -4060,7 +3649,9 @@
     const canvas = document.getElementById("minimap-canvas");
     if (!canvas) return;
     
-    const existing = canvas.querySelectorAll(".minimap-marker");
+    const targetContainer = document.getElementById("minimap-zoom-wrapper") || canvas;
+    
+    const existing = targetContainer.querySelectorAll(".minimap-marker");
     existing.forEach(el => el.remove());
     
     mapMarkers.forEach(pin => {
@@ -4097,7 +3688,7 @@
         });
       });
       
-      canvas.appendChild(marker);
+      targetContainer.appendChild(marker);
     });
   }
 
@@ -4161,6 +3752,35 @@
           updateResizeIcons(true);
         }
       });
+
+      // Mouse wheel zoom centered on cursor
+      const zoomWrapper = document.getElementById("minimap-zoom-wrapper");
+      if (zoomWrapper) {
+        let currentZoom = 1.0;
+        const maxZoom = 3.5;
+        const minZoom = 1.0;
+        const step = 0.15;
+
+        canvas.addEventListener("wheel", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (widget.classList.contains("collapsed")) return;
+
+          if (e.deltaY < 0) {
+            currentZoom = Math.min(maxZoom, currentZoom + step);
+          } else {
+            currentZoom = Math.max(minZoom, currentZoom - step);
+          }
+
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = ((e.clientX - rect.left) / rect.width) * 100;
+          const mouseY = ((e.clientY - rect.top) / rect.height) * 100;
+
+          zoomWrapper.style.transformOrigin = `${mouseX}% ${mouseY}%`;
+          zoomWrapper.style.transform = `scale(${currentZoom})`;
+        }, { passive: false });
+      }
     }
   }
 
@@ -4322,7 +3942,7 @@
     document.body.appendChild(uiWrapper);
 
     // Sync top-level body classes
-    document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-orbit", "layout-prism", "layout-nexus", "layout-monarch");
+    document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-prism", "layout-nexus", "layout-monarch");
     document.body.classList.add(`layout-${layoutMode}`);
 
 
@@ -4448,12 +4068,12 @@
       uiWrapper.classList.add("switching");
 
       // 2. Record current active selections
-      const activeNav = document.querySelector(".nav-item.active, .aurora-nav-item.active, .horizon-nav-item.active, .orbit-nav-item.active, .prism-nav-item.active, .nexus-nav-item.active, .monarch-nav-item.active, .regal-nav-item.active");
+      const activeNav = document.querySelector(".nav-item.active, .aurora-nav-item.active, .horizon-nav-item.active, .prism-nav-item.active, .nexus-nav-item.active, .monarch-nav-item.active, .regal-nav-item.active");
       if (activeNav) {
         activeNavItemId = activeNav.getAttribute("data-id");
         lsSet("latien_active_nav", activeNavItemId);
       }
-      const activeSub = document.querySelector(".submenu-item.active, .mega-card.active, .aurora-submenu-item.active, .horizon-submenu-item.active, .orbit-submenu-item.active, .prism-submenu-item.active, .nexus-submenu-item.active, .monarch-popover-item.active, .regal-submenu-item.active");
+      const activeSub = document.querySelector(".submenu-item.active, .mega-card.active, .aurora-submenu-item.active, .horizon-submenu-item.active, .prism-submenu-item.active, .nexus-submenu-item.active, .monarch-popover-item.active, .regal-submenu-item.active");
       if (activeSub) {
         activeSubmenuAction = activeSub.getAttribute("data-action") || activeSubmenuAction;
         activePanoNode = activeSub.getAttribute("data-pano-node") || activePanoNode;
@@ -4467,7 +4087,7 @@
         lsSet("latien_layout_mode", layoutMode);
 
         // Update body layout class namespaces
-        document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-orbit", "layout-prism", "layout-nexus", "layout-monarch", "layout-regal");
+        document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-prism", "layout-nexus", "layout-monarch", "layout-regal");
         document.body.classList.add(`layout-${layoutMode}`);
 
         // Update container class namespaces
@@ -4490,7 +4110,6 @@
         else if (layoutMode === "gradient") notifMsg = "Đã chuyển sang Giao diện Gradient";
         else if (layoutMode === "aurora") notifMsg = "Đã chuyển sang Giao diện Aurora";
         else if (layoutMode === "horizon") notifMsg = "Đã chuyển sang Giao diện Horizon";
-        else if (layoutMode === "orbit") notifMsg = "Đã chuyển sang Giao diện Orbit";
         else if (layoutMode === "prism") notifMsg = "Đã chuyển sang Giao diện Prism";
         else if (layoutMode === "nexus") notifMsg = "Đã chuyển sang Giao diện Nexus";
         else if (layoutMode === "monarch") notifMsg = "Đã chuyển sang Giao diện Monarch";
@@ -4510,7 +4129,6 @@
     const gradientSeg = document.getElementById("opt-layout-gradient");
     const auroraSeg = document.getElementById("opt-layout-aurora");
     const horizonSeg = document.getElementById("opt-layout-horizon");
-    const orbitSeg = document.getElementById("opt-layout-orbit");
     const prismSeg = document.getElementById("opt-layout-prism");
     const nexusSeg = document.getElementById("opt-layout-nexus");
     const monarchSeg = document.getElementById("opt-layout-monarch");
@@ -4522,7 +4140,6 @@
     if (gradientSeg) gradientSeg.addEventListener("click", () => handleSwitch("gradient"));
     if (auroraSeg) auroraSeg.addEventListener("click", () => handleSwitch("aurora"));
     if (horizonSeg) horizonSeg.addEventListener("click", () => handleSwitch("horizon"));
-    if (orbitSeg) orbitSeg.addEventListener("click", () => handleSwitch("orbit"));
     if (prismSeg) prismSeg.addEventListener("click", () => handleSwitch("prism"));
     if (nexusSeg) nexusSeg.addEventListener("click", () => handleSwitch("nexus"));
     if (monarchSeg) monarchSeg.addEventListener("click", () => handleSwitch("monarch"));
@@ -4607,8 +4224,7 @@
       <div class="hotspot-label">${pin.title}</div>
     `;
 
-    const hitbox = container.querySelector(".hotspot-hitbox");
-    hitbox.addEventListener("click", function (e) {
+    container.addEventListener("click", function (e) {
       e.stopPropagation();
       console.log(`Marker clicked: ${pin.id} -> target ${pin.nodeTarget}`);
 
