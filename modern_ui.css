@@ -2122,14 +2122,14 @@ body.layout-nexus .minimap-action-btn:hover {
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
 }
 
-body.layout-monarch .minimap-action-btn, body.layout-regal .minimap-action-btn {
+body.layout-regal .minimap-action-btn {
   background: rgba(200, 169, 107, 0.08) !important;
   border-color: rgba(200, 169, 107, 0.25) !important;
   color: var(--monarch-champagne) !important;
   border-radius: 0 !important;
 }
 
-body.layout-monarch .minimap-action-btn:hover, body.layout-regal .minimap-action-btn:hover {
+body.layout-regal .minimap-action-btn:hover {
   background: rgba(200, 169, 107, 0.22) !important;
   border-color: var(--monarch-champagne) !important;
   color: #ffffff !important;
@@ -9576,7 +9576,7 @@ body.layout-nexus .modal-header h2 {
    ========================================================= */
 
 /* Typography & Root variables override for Monarch */
-.layout-monarch, .layout-regal {
+.layout-regal {
   --monarch-bg: #0D0D0D;
   --monarch-secondary: #151515;
   --monarch-gold: #C8A96B;
@@ -9587,13 +9587,13 @@ body.layout-nexus .modal-header h2 {
   --monarch-font-b: 'DM Sans', 'Inter', sans-serif;
 }
 
-body.layout-monarch, body.layout-regal {
+body.layout-regal {
   background-color: var(--monarch-bg) !important;
   font-family: var(--monarch-font-b) !important;
 }
 
 /* Hide default layout switcher wrapper when Monarch is active */
-body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher-wrapper {
+body.layout-regal #layout-switcher-wrapper {
   display: none !important;
 }
 
@@ -9633,7 +9633,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
 /* -------------------------------------------------------
    BOTTOM NAVIGATION DOCK
    ------------------------------------------------------- */
-.layout-monarch .monarch-nav-container, .layout-regal .monarch-nav-container {
+.layout-regal .monarch-nav-container {
   position: fixed;
   bottom: 15px;
   left: 50%;
@@ -9643,7 +9643,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   overflow: visible !important;
 }
 
-.layout-monarch .monarch-nav-dock, .layout-regal .monarch-nav-dock {
+.layout-regal .monarch-nav-dock {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9658,7 +9658,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   overflow: visible !important;
 }
 
-.layout-monarch .monarch-nav-item, .layout-regal .monarch-nav-item {
+.layout-regal .monarch-nav-item {
   position: relative;
   display: flex;
   align-items: center;
@@ -9666,7 +9666,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   overflow: visible !important;
 }
 
-.layout-monarch .monarch-nav-btn, .layout-regal .monarch-nav-btn {
+.layout-regal .monarch-nav-btn {
   color: rgba(255, 255, 255, 0.7);
   cursor: pointer;
   padding: 6px 12px;
@@ -9682,12 +9682,12 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   border: 1px solid transparent;
 }
 
-.layout-monarch .monarch-nav-btn:hover, .layout-regal .monarch-nav-btn:hover {
+.layout-regal .monarch-nav-btn:hover {
   color: var(--monarch-champagne);
   background: rgba(200, 169, 107, 0.08);
 }
 
-.layout-monarch .monarch-nav-item.active .monarch-nav-btn, .layout-regal .monarch-nav-item.active .monarch-nav-btn {
+.layout-regal .monarch-nav-item.active .monarch-nav-btn {
   color: var(--monarch-champagne);
   border: 1px solid rgba(200, 169, 107, 0.6);
   background: rgba(21, 21, 21, 0.9);
@@ -9695,7 +9695,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
 }
 
 /* Popover details */
-.layout-monarch .monarch-popover, .layout-regal .monarch-popover {
+.layout-regal .monarch-popover {
   position: absolute;
   bottom: calc(100% + 20px);
   left: 50%;
@@ -9715,15 +9715,15 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   pointer-events: auto;
 }
 
-.layout-monarch .monarch-nav-item:hover .monarch-popover, .layout-regal .monarch-nav-item:hover .monarch-popover,
-.layout-monarch .monarch-popover.open, .layout-regal .monarch-popover.open {
+.layout-regal .monarch-nav-item:hover .monarch-popover,
+.layout-regal .monarch-popover.open {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
 }
 
 /* Triangle indicator with gold border */
-.layout-monarch .monarch-popover::after, .layout-regal .monarch-popover::after {
+.layout-regal .monarch-popover::after {
   content: '';
   position: absolute;
   top: 100%;
@@ -9734,7 +9734,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   border-color: rgba(13, 13, 13, 0.95) transparent transparent transparent;
 }
 
-.layout-monarch .monarch-popover::before, .layout-regal .monarch-popover::before {
+.layout-regal .monarch-popover::before {
   content: '';
   position: absolute;
   top: 100%;
@@ -9746,7 +9746,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   z-index: -1;
 }
 
-.layout-monarch .monarch-popover-title, .layout-regal .monarch-popover-title {
+.layout-regal .monarch-popover-title {
   font-family: var(--monarch-font-h);
   font-size: 11px;
   font-weight: 700;
@@ -9759,7 +9759,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   text-transform: uppercase;
 }
 
-.layout-monarch .monarch-popover-item, .layout-regal .monarch-popover-item {
+.layout-regal .monarch-popover-item {
   color: rgba(255, 255, 255, 0.75);
   font-family: var(--monarch-font-b);
   font-size: 12px;
@@ -9771,12 +9771,12 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   text-align: center;
 }
 
-.layout-monarch .monarch-popover-item:hover, .layout-regal .monarch-popover-item:hover {
+.layout-regal .monarch-popover-item:hover {
   color: var(--monarch-champagne);
   background: rgba(200, 169, 107, 0.1);
 }
 
-.layout-monarch .monarch-popover-item.active, .layout-regal .monarch-popover-item.active {
+.layout-regal .monarch-popover-item.active {
   color: var(--monarch-champagne);
   font-weight: 700;
   background: rgba(200, 169, 107, 0.15);
@@ -9786,7 +9786,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
 /* -------------------------------------------------------
    TOP LEFT COMMAND PANEL
    ------------------------------------------------------- */
-.layout-monarch .monarch-command-panel, .layout-regal .monarch-command-panel {
+.layout-regal .monarch-command-panel {
   position: fixed;
   top: 160px;
   right: 15px;
@@ -9795,7 +9795,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   pointer-events: auto;
 }
 
-.layout-monarch .monarch-command-list, .layout-regal .monarch-command-list {
+.layout-regal .monarch-command-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -9808,7 +9808,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
-.layout-monarch .monarch-command-item, .layout-regal .monarch-command-item {
+.layout-regal .monarch-command-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -9822,7 +9822,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   overflow: visible;
 }
 
-.layout-monarch .monarch-command-icon, .layout-regal .monarch-command-icon {
+.layout-regal .monarch-command-icon {
   width: 18px;
   height: 18px;
   display: flex;
@@ -9830,13 +9830,13 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   justify-content: center;
 }
 
-.layout-monarch .monarch-command-icon svg, .layout-regal .monarch-command-icon svg {
+.layout-regal .monarch-command-icon svg {
   width: 100%;
   height: 100%;
   transition: transform 0.3s ease;
 }
 
-.layout-monarch .monarch-command-label, .layout-regal .monarch-command-label {
+.layout-regal .monarch-command-label {
   width: 0;
   opacity: 0;
   visibility: hidden;
@@ -9852,12 +9852,12 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
 }
 
 /* Hover triggers expansion and label reveal */
-.layout-monarch .monarch-command-item:hover, .layout-regal .monarch-command-item:hover {
+.layout-regal .monarch-command-item:hover {
   color: var(--monarch-champagne);
   background: rgba(200, 169, 107, 0.08);
 }
 
-.layout-monarch .monarch-command-item:hover .monarch-command-label, .layout-regal .monarch-command-item:hover .monarch-command-label {
+.layout-regal .monarch-command-item:hover .monarch-command-label {
   width: 110px;
   opacity: 1;
   visibility: visible;
@@ -9866,8 +9866,8 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   transform: translateX(0);
 }
 
-.layout-monarch .monarch-command-item.active-tool, .layout-regal .monarch-command-item.active-tool,
-.layout-monarch .monarch-command-item.pinned, .layout-regal .monarch-command-item.pinned {
+.layout-regal .monarch-command-item.active-tool,
+.layout-regal .monarch-command-item.pinned {
   color: var(--monarch-gold) !important;
   border-right: 2px solid var(--monarch-accent) !important;
   border-left: none !important;
@@ -9875,8 +9875,8 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   box-shadow: inset 0 0 10px rgba(228, 197, 144, 0.15) !important;
 }
 
-.layout-monarch .monarch-command-item.active-tool .monarch-command-icon svg, .layout-regal .monarch-command-item.active-tool .monarch-command-icon svg,
-.layout-monarch .monarch-command-item.pinned .monarch-command-icon svg, .layout-regal .monarch-command-item.pinned .monarch-command-icon svg {
+.layout-regal .monarch-command-item.active-tool .monarch-command-icon svg,
+.layout-regal .monarch-command-item.pinned .monarch-command-icon svg {
   stroke: var(--monarch-accent) !important;
   filter: drop-shadow(0 0 4px var(--monarch-accent)) !important;
   transform: scale(1.05);
@@ -9885,7 +9885,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
 /* -------------------------------------------------------
    TOP RIGHT LAYOUT SELECTOR
    ------------------------------------------------------- */
-.layout-monarch .monarch-layout-selector, .layout-regal .monarch-layout-selector {
+.layout-regal .monarch-layout-selector {
   position: fixed;
   top: 15px;
   right: 15px;
@@ -9901,7 +9901,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   min-width: 140px;
 }
 
-.layout-monarch .monarch-selector-header, .layout-regal .monarch-selector-header {
+.layout-regal .monarch-selector-header {
   font-family: var(--monarch-font-h);
   font-size: 11px;
   font-weight: 700;
@@ -9913,13 +9913,13 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   text-align: center;
 }
 
-.layout-monarch .monarch-selector-grid, .layout-regal .monarch-selector-grid {
+.layout-regal .monarch-selector-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 6px;
 }
 
-.layout-monarch .monarch-selector-item, .layout-regal .monarch-selector-item {
+.layout-regal .monarch-selector-item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9934,13 +9934,13 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
   transition: all 0.3s ease;
 }
 
-.layout-monarch .monarch-selector-item:hover, .layout-regal .monarch-selector-item:hover {
+.layout-regal .monarch-selector-item:hover {
   color: var(--monarch-champagne);
   background: rgba(200, 169, 107, 0.1);
   border-color: rgba(228, 197, 144, 0.25);
 }
 
-.layout-monarch .monarch-selector-item.active, .layout-regal .monarch-selector-item.active {
+.layout-regal .monarch-selector-item.active {
   color: var(--monarch-champagne);
   border-color: var(--monarch-gold);
   background: rgba(21, 21, 21, 0.95);
@@ -9951,7 +9951,7 @@ body.layout-monarch #layout-switcher-wrapper, body.layout-regal #layout-switcher
 /* -------------------------------------------------------
    COMPASS
    ------------------------------------------------------- */
-body.layout-monarch .compass-widget, body.layout-regal .compass-widget {
+body.layout-regal .compass-widget {
   bottom: 15px;
   left: 15px;
   width: 76px;
@@ -9961,12 +9961,12 @@ body.layout-monarch .compass-widget, body.layout-regal .compass-widget {
   box-shadow: none !important;
 }
 
-body.layout-monarch .compass-dial, body.layout-regal .compass-dial {
+body.layout-regal .compass-dial {
   width: 100% !important;
   height: 100% !important;
 }
 
-body.layout-monarch .compass-cardinal, body.layout-regal .compass-cardinal {
+body.layout-regal .compass-cardinal {
   font-family: var(--monarch-font-h) !important;
   color: var(--monarch-champagne) !important;
   font-weight: 700 !important;
@@ -9974,14 +9974,14 @@ body.layout-monarch .compass-cardinal, body.layout-regal .compass-cardinal {
   top: 6px !important;
 }
 
-body.layout-monarch .compass-degree-display, body.layout-regal .compass-degree-display {
+body.layout-regal .compass-degree-display {
   display: none !important;
 }
 
 /* -------------------------------------------------------
    MINIMAP
    ------------------------------------------------------- */
-body.layout-monarch .minimap-widget, body.layout-regal .minimap-widget {
+body.layout-regal .minimap-widget {
   bottom: 15px;
   right: 15px;
   width: 260px; /* Wide design */
@@ -9994,11 +9994,11 @@ body.layout-monarch .minimap-widget, body.layout-regal .minimap-widget {
   overflow: hidden;
 }
 
-body.layout-monarch .minimap-widget.collapsed, body.layout-regal .minimap-widget.collapsed {
+body.layout-regal .minimap-widget.collapsed {
   width: 190px !important;
 }
 
-body.layout-monarch .minimap-header, body.layout-regal .minimap-header {
+body.layout-regal .minimap-header {
   background: rgba(13, 13, 13, 0.9) !important;
   border-bottom: 1px solid rgba(200, 169, 107, 0.25) !important;
   color: var(--monarch-champagne) !important;
@@ -10009,43 +10009,43 @@ body.layout-monarch .minimap-header, body.layout-regal .minimap-header {
   padding: 10px 14px !important;
 }
 
-body.layout-monarch .minimap-body, body.layout-regal .minimap-body {
+body.layout-regal .minimap-body {
   padding: 8px !important;
   background: transparent !important;
 }
 
-body.layout-monarch .minimap-canvas, body.layout-regal .minimap-canvas {
+body.layout-regal .minimap-canvas {
   height: 120px !important;
   border: 1px solid rgba(200, 169, 107, 0.15) !important;
   background: #000000 !important;
 }
 
 /* Keep map image natural and clear */
-body.layout-monarch .minimap-img, body.layout-regal .minimap-img {
+body.layout-regal .minimap-img {
   filter: none !important;
   opacity: 1 !important;
 }
 
-body.layout-monarch .minimap-dot, body.layout-regal .minimap-dot {
+body.layout-regal .minimap-dot {
   background: var(--monarch-champagne) !important;
   border: 1.5px solid var(--monarch-gold) !important;
   box-shadow: 0 0 10px var(--monarch-gold) !important;
 }
 
-body.layout-monarch .minimap-viewcone, body.layout-regal .minimap-viewcone {
+body.layout-regal .minimap-viewcone {
   border-left: 2px dashed rgba(228, 197, 144, 0.45) !important;
   border-right: 2px dashed rgba(228, 197, 144, 0.45) !important;
   background: radial-gradient(circle at top, rgba(228, 197, 144, 0.12) 0%, transparent 65%) !important;
 }
 
-body.layout-monarch .minimap-legend, body.layout-regal .minimap-legend {
+body.layout-regal .minimap-legend {
   display: none !important; /* Keep it minimal */
 }
 
 /* -------------------------------------------------------
    HOTSPOT JEWEL MARKER DESIGN
    ------------------------------------------------------- */
-body.layout-monarch .hologram-marker-container, body.layout-regal .hologram-marker-container {
+body.layout-regal .hologram-marker-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10053,7 +10053,7 @@ body.layout-monarch .hologram-marker-container, body.layout-regal .hologram-mark
   pointer-events: auto !important;
 }
 
-body.layout-monarch .hologram-marker-container .hotspot-hitbox, body.layout-regal .hologram-marker-container .hotspot-hitbox {
+body.layout-regal .hologram-marker-container .hotspot-hitbox {
   position: absolute;
   width: 48px;
   height: 48px;
@@ -10066,7 +10066,7 @@ body.layout-monarch .hologram-marker-container .hotspot-hitbox, body.layout-rega
   z-index: 10;
 }
 
-body.layout-monarch .hologram-marker-container .hotspot-marker, body.layout-regal .hologram-marker-container .hotspot-marker {
+body.layout-regal .hologram-marker-container .hotspot-marker {
   width: 12px;
   height: 12px;
   background: var(--monarch-gold) !important;
@@ -10081,7 +10081,7 @@ body.layout-monarch .hologram-marker-container .hotspot-marker, body.layout-rega
 }
 
 /* Reflection inside crystal */
-body.layout-monarch .hologram-marker-container .hotspot-marker::before, body.layout-regal .hologram-marker-container .hotspot-marker::before {
+body.layout-regal .hologram-marker-container .hotspot-marker::before {
   content: '';
   position: absolute;
   top: 0;
@@ -10092,7 +10092,7 @@ body.layout-monarch .hologram-marker-container .hotspot-marker::before, body.lay
   pointer-events: none;
 }
 
-body.layout-monarch .hologram-marker-container .hotspot-label, body.layout-regal .hologram-marker-container .hotspot-label {
+body.layout-regal .hologram-marker-container .hotspot-label {
   position: absolute;
   top: calc(50% + 16px) !important;
   left: 50% !important;
@@ -10114,18 +10114,18 @@ body.layout-monarch .hologram-marker-container .hotspot-label, body.layout-regal
   border-radius: 0 !important;
 }
 
-body.layout-monarch .hologram-marker-container:hover .hotspot-label, body.layout-regal .hologram-marker-container:hover .hotspot-label {
+body.layout-regal .hologram-marker-container:hover .hotspot-label {
   opacity: 1;
   transform: translateX(-50%) translateY(0) !important;
 }
 
-body.layout-monarch .hologram-marker-container:hover .hotspot-marker, body.layout-regal .hologram-marker-container:hover .hotspot-marker {
+body.layout-regal .hologram-marker-container:hover .hotspot-marker {
   transform: translate(-50%, -50%) rotate(45deg) scale(1.2) !important;
   border-color: var(--monarch-champagne) !important;
   box-shadow: 0 0 15px rgba(228, 197, 144, 0.8), inset 0 0 5px rgba(255,255,255,1);
 }
 
-body.layout-monarch .hologram-marker-container.active .hotspot-marker, body.layout-regal .hologram-marker-container.active .hotspot-marker {
+body.layout-regal .hologram-marker-container.active .hotspot-marker {
   background: var(--monarch-champagne) !important;
   border: 1.5px solid var(--monarch-accent) !important;
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.95), inset 0 0 6px rgba(255,255,255,1) !important;
@@ -10136,7 +10136,7 @@ body.layout-monarch .hologram-marker-container.active .hotspot-marker, body.layo
    ------------------------------------------------------- */
 
 /* Interior Page Overlay */
-body.layout-monarch.interior-mode-active #interior-page, body.layout-regal.interior-mode-active #interior-page {
+body.layout-regal.interior-mode-active #interior-page {
   display: block;
   pointer-events: none;
   background: transparent !important;
@@ -10148,7 +10148,7 @@ body.layout-monarch.interior-mode-active #interior-page, body.layout-regal.inter
   to { opacity: 1; }
 }
 
-.layout-monarch #interior-page .interior-switcher-container, .layout-regal #interior-page .interior-switcher-container {
+.layout-regal #interior-page .interior-switcher-container {
   background: rgba(21, 21, 21, 0.8);
   border: 1px solid rgba(200, 169, 107, 0.45);
   border-radius: 0;
@@ -10157,7 +10157,7 @@ body.layout-monarch.interior-mode-active #interior-page, body.layout-regal.inter
   box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7);
 }
 
-.layout-monarch #interior-page .interior-switch-btn, .layout-regal #interior-page .interior-switch-btn {
+.layout-regal #interior-page .interior-switch-btn {
   font-family: var(--monarch-font-h);
   font-size: 14px;
   font-weight: 500;
@@ -10170,11 +10170,11 @@ body.layout-monarch.interior-mode-active #interior-page, body.layout-regal.inter
   padding: 6px 12px;
 }
 
-.layout-monarch #interior-page .interior-switch-btn:hover, .layout-regal #interior-page .interior-switch-btn:hover {
+.layout-regal #interior-page .interior-switch-btn:hover {
   color: var(--monarch-champagne);
 }
 
-.layout-monarch #interior-page .interior-switch-btn.active, .layout-regal #interior-page .interior-switch-btn.active {
+.layout-regal #interior-page .interior-switch-btn.active {
   background: transparent;
   color: var(--monarch-gold);
   border-bottom: 2px solid var(--monarch-gold);
@@ -10183,11 +10183,11 @@ body.layout-monarch.interior-mode-active #interior-page, body.layout-regal.inter
 }
 
 /* Region Page Overlay */
-body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mode-active #region-page {
+body.layout-regal.region-mode-active #region-page {
   background: var(--monarch-bg) !important;
 }
 
-.layout-monarch #region-page .region-sidebar, .layout-regal #region-page .region-sidebar {
+.layout-regal #region-page .region-sidebar {
   background: var(--monarch-secondary) !important;
   border-right: 1px solid rgba(200, 169, 107, 0.3) !important;
   font-family: var(--monarch-font-b) !important;
@@ -10195,7 +10195,7 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
   box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5) !important;
 }
 
-.layout-monarch #region-page .region-sidebar h3, .layout-regal #region-page .region-sidebar h3 {
+.layout-regal #region-page .region-sidebar h3 {
   font-family: var(--monarch-font-h) !important;
   color: var(--monarch-gold) !important;
   font-size: 22px !important;
@@ -10207,7 +10207,7 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
   text-align: center;
 }
 
-.layout-monarch #region-page .region-menu-item, .layout-regal #region-page .region-menu-item {
+.layout-regal #region-page .region-menu-item {
   color: rgba(255, 255, 255, 0.65) !important;
   border-left: 2px solid transparent !important;
   font-size: 13px !important;
@@ -10217,28 +10217,28 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
   border-radius: 0 !important;
 }
 
-.layout-monarch #region-page .region-menu-item:hover, .layout-regal #region-page .region-menu-item:hover {
+.layout-regal #region-page .region-menu-item:hover {
   background: rgba(200, 169, 107, 0.05) !important;
   color: var(--monarch-champagne) !important;
 }
 
-.layout-monarch #region-page .region-menu-item.active, .layout-regal #region-page .region-menu-item.active {
+.layout-regal #region-page .region-menu-item.active {
   background: rgba(200, 169, 107, 0.1) !important;
   color: var(--monarch-gold) !important;
   border-left: 2px solid var(--monarch-gold) !important;
 }
 
-.layout-monarch #region-page .region-map-container, .layout-regal #region-page .region-map-container {
+.layout-regal #region-page .region-map-container {
   background: var(--monarch-bg) !important;
 }
 
-.layout-monarch #region-page .region-map-wrapper, .layout-regal #region-page .region-map-wrapper {
+.layout-regal #region-page .region-map-wrapper {
   border: 1px solid rgba(200, 169, 107, 0.3) !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
   border-radius: 0 !important;
 }
 
-.layout-monarch #region-page .map-pin .pin-dot, .layout-regal #region-page .map-pin .pin-dot {
+.layout-regal #region-page .map-pin .pin-dot {
   background: var(--monarch-secondary) !important;
   border: 1.5px solid var(--monarch-gold) !important;
   box-shadow: 0 0 10px rgba(200, 169, 107, 0.4) !important;
@@ -10246,23 +10246,23 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
   border-radius: 0 !important;
 }
 
-.layout-monarch #region-page .map-pin .pin-pulse, .layout-regal #region-page .map-pin .pin-pulse {
+.layout-regal #region-page .map-pin .pin-pulse {
   background: rgba(200, 169, 107, 0.15) !important;
   border-radius: 0 !important;
 }
 
-.layout-monarch #region-page .map-pin.active .pin-dot, .layout-regal #region-page .map-pin.active .pin-dot {
+.layout-regal #region-page .map-pin.active .pin-dot {
   background: var(--monarch-gold) !important;
   border-color: var(--monarch-champagne) !important;
   color: var(--monarch-secondary) !important;
   box-shadow: 0 0 20px rgba(228, 197, 144, 0.8) !important;
 }
 
-.layout-monarch #region-page .map-pin.active .pin-pulse, .layout-regal #region-page .map-pin.active .pin-pulse {
+.layout-regal #region-page .map-pin.active .pin-pulse {
   background: rgba(228, 197, 144, 0.3) !important;
 }
 
-.layout-monarch #region-page .pin-label, .layout-regal #region-page .pin-label {
+.layout-regal #region-page .pin-label {
   background: var(--monarch-secondary) !important;
   border: 1px solid rgba(200, 169, 107, 0.3) !important;
   color: #FFFFFF !important;
@@ -10274,7 +10274,7 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
 }
 
 /* Common Back button override */
-.layout-monarch .back-to-360-btn, .layout-regal .back-to-360-btn {
+.layout-regal .back-to-360-btn {
   font-family: var(--monarch-font-h) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
@@ -10287,7 +10287,7 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
   padding: 12px 24px !important;
 }
 
-.layout-monarch .back-to-360-btn:hover, .layout-regal .back-to-360-btn:hover {
+.layout-regal .back-to-360-btn:hover {
   background: var(--monarch-gold) !important;
   color: var(--monarch-bg) !important;
   border-color: var(--monarch-champagne) !important;
@@ -10297,79 +10297,79 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
    RESPONSIVENESS AND COLLAPSES
    ------------------------------------------------------- */
 @media (max-width: 991px) {
-  .layout-monarch .monarch-nav-dock, .layout-regal .monarch-nav-dock {
+  .layout-regal .monarch-nav-dock {
     gap: 8px;
     padding: 6px 16px;
   }
   
-  .layout-monarch .monarch-nav-item, .layout-regal .monarch-nav-item {
+  .layout-regal .monarch-nav-item {
     font-size: 13px;
     padding: 8px 12px;
   }
   
-  .layout-monarch .monarch-command-panel, .layout-regal .monarch-command-panel {
+  .layout-regal .monarch-command-panel {
     top: 145px;
     right: 10px;
     left: auto;
   }
   
-  .layout-monarch .monarch-layout-selector, .layout-regal .monarch-layout-selector {
+  .layout-regal .monarch-layout-selector {
     top: 10px;
     right: 10px;
   }
 }
 
 @media (max-width: 768px) {
-  .layout-monarch .monarch-nav-container, .layout-regal .monarch-nav-container {
+  .layout-regal .monarch-nav-container {
     bottom: 10px;
     width: 90%;
   }
 
-  .layout-monarch .monarch-nav-dock, .layout-regal .monarch-nav-dock {
+  .layout-regal .monarch-nav-dock {
     width: 100%;
     justify-content: space-around;
     padding: 6px 8px;
     border-radius: 0;
   }
   
-  .layout-monarch .monarch-nav-item, .layout-regal .monarch-nav-item {
+  .layout-regal .monarch-nav-item {
     font-size: 11px;
     padding: 6px 8px;
     letter-spacing: 0.5px;
   }
 
-  .layout-monarch .monarch-popover, .layout-regal .monarch-popover {
+  .layout-regal .monarch-popover {
     min-width: 140px;
     bottom: calc(100% + 15px);
   }
   
-  body.layout-monarch .minimap-widget, body.layout-regal .minimap-widget {
+  body.layout-regal .minimap-widget {
     bottom: 70px;
     right: 10px;
     width: 200px !important;
   }
 
-  body.layout-monarch .minimap-canvas, body.layout-regal .minimap-canvas {
+  body.layout-regal .minimap-canvas {
     height: 90px !important;
   }
 
-  body.layout-monarch .compass-widget, body.layout-regal .compass-widget {
+  body.layout-regal .compass-widget {
     bottom: 70px;
     left: 10px;
     width: 50px !important;
     height: 50px !important;
   }
   
-  .layout-monarch #region-page .region-sidebar, .layout-regal #region-page .region-sidebar {
+  .layout-regal #region-page .region-sidebar {
     width: 220px !important;
     padding-top: 40px !important;
   }
   
-  .layout-monarch #region-page .region-sidebar h3, .layout-regal #region-page .region-sidebar h3 {
+  .layout-regal #region-page .region-sidebar h3 {
     font-size: 16px !important;
   }
   
-  .layout-monarch #region-page .region-menu-item, .layout-regal #region-page .region-menu-item {
+  .layout-regal #region-page .region-menu-item {
     font-size: 11px !important;
     padding: 10px 12px !important;
   }
@@ -10377,68 +10377,68 @@ body.layout-monarch.region-mode-active #region-page, body.layout-regal.region-mo
 
 @media (max-width: 576px) {
   /* Prevent overlap of widgets with nav on mobile */
-  .layout-monarch .monarch-command-panel, .layout-regal .monarch-command-panel {
+  .layout-regal .monarch-command-panel {
     right: 10px;
     top: 140px;
     left: auto;
   }
   
-  .layout-monarch .monarch-layout-selector, .layout-regal .monarch-layout-selector {
+  .layout-regal .monarch-layout-selector {
     right: 10px;
     top: 10px;
     min-width: 110px;
     padding: 8px 10px;
   }
   
-  .layout-monarch .monarch-selector-grid, .layout-regal .monarch-selector-grid {
+  .layout-regal .monarch-selector-grid {
     grid-template-columns: repeat(5, 1fr);
   }
   
-  .layout-monarch .monarch-selector-item, .layout-regal .monarch-selector-item {
+  .layout-regal .monarch-selector-item {
     width: 18px;
     height: 18px;
     font-size: 9px;
   }
 
-  .layout-monarch .monarch-nav-dock, .layout-regal .monarch-nav-dock {
+  .layout-regal .monarch-nav-dock {
     flex-wrap: wrap;
     gap: 4px;
     border-radius: 0;
   }
 
-  .layout-monarch .monarch-nav-item, .layout-regal .monarch-nav-item {
+  .layout-regal .monarch-nav-item {
     padding: 4px 6px;
     font-size: 10px;
   }
   
-  body.layout-monarch .minimap-widget, body.layout-regal .minimap-widget,
-  body.layout-monarch .compass-widget, body.layout-regal .compass-widget {
+  body.layout-regal .minimap-widget,
+  body.layout-regal .compass-widget {
     display: none !important; /* Hide on small mobile to maximize view space */
   }
 }
 
 /* Layout #10 Modals, Social Share, and Scrollbar overrides to match square theme */
-body.layout-monarch .global-modal-content, body.layout-regal .global-modal-content {
+body.layout-regal .global-modal-content {
   border-radius: 0 !important;
   border-color: rgba(200, 169, 107, 0.4) !important;
   background: rgba(13, 13, 13, 0.95) !important;
 }
-body.layout-monarch .gallery-card, body.layout-regal .gallery-card {
+body.layout-regal .gallery-card {
   border-radius: 0 !important;
   border-color: rgba(200, 169, 107, 0.25) !important;
 }
-body.layout-monarch .social-share-menu, body.layout-regal .social-share-menu {
+body.layout-regal .social-share-menu {
   border-radius: 0 !important;
   border-color: rgba(200, 169, 107, 0.4) !important;
   background: rgba(13, 13, 13, 0.95) !important;
 }
-body.layout-monarch .social-btn, body.layout-regal .social-btn {
+body.layout-regal .social-btn {
   border-radius: 0 !important;
 }
-body.layout-monarch .gallery-grid::-webkit-scrollbar-thumb, body.layout-regal .gallery-grid::-webkit-scrollbar-thumb {
+body.layout-regal .gallery-grid::-webkit-scrollbar-thumb {
   border-radius: 0 !important;
 }
-body.layout-monarch .scrollable-modal-body::-webkit-scrollbar-thumb, body.layout-regal .scrollable-modal-body::-webkit-scrollbar-thumb {
+body.layout-regal .scrollable-modal-body::-webkit-scrollbar-thumb {
   border-radius: 0 !important;
 }
 
@@ -10565,3 +10565,477 @@ body.layout-regal .scrollable-modal-body::-webkit-scrollbar-thumb {
   border-radius: 50% !important;
 }
 
+
+/* =========================================================
+   GIAO DIỆN MONARCH (LAYOUT #10) - LUXURY REDESIGN
+   ========================================================= */
+
+.layout-monarch {
+  --monarch-bg: #0B0C10;
+  --monarch-secondary: #171A22;
+  --monarch-gold: #D6B36A;
+  --monarch-champagne: #F4EFE6;
+  --monarch-accent: #2EC4A6;
+  --monarch-white: #FFFFFF;
+  --monarch-muted: #C7CDD6;
+  --monarch-bronze: #8D6E63;
+  --monarch-font-h: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --monarch-font-b: 'General Sans', 'Neue Haas Grotesk', 'Inter', sans-serif;
+  --monarch-glass: rgba(23, 26, 34, 0.6);
+  --monarch-border: rgba(214, 179, 106, 0.2);
+  --monarch-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+body.layout-monarch {
+  background-color: var(--monarch-bg) !important;
+  font-family: var(--monarch-font-b) !important;
+}
+
+body.layout-monarch #layout-switcher-wrapper {
+  display: none !important;
+}
+
+/* -------------------------------------------------------
+   NAVIGATION - LUXURY CHIPS (Capsules)
+   ------------------------------------------------------- */
+.layout-monarch .monarch-nav-container {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.layout-monarch .monarch-nav-dock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.layout-monarch .monarch-nav-item {
+  position: relative;
+}
+
+.layout-monarch .monarch-nav-btn {
+  display: flex;
+  align-items: center;
+  padding: 6px 16px;
+  background: var(--monarch-glass);
+  border: 1px solid var(--monarch-border);
+  border-radius: 9999px;
+  color: var(--monarch-muted);
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--monarch-shadow);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layout-monarch .monarch-nav-btn:hover {
+  border-color: rgba(214, 179, 106, 0.5);
+  color: var(--monarch-champagne);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 1px rgba(214, 179, 106, 0.3);
+  transform: translateY(-2px);
+}
+
+.layout-monarch .monarch-nav-item.active .monarch-nav-btn {
+  background: rgba(214, 179, 106, 0.1);
+  border-color: var(--monarch-gold);
+  color: var(--monarch-gold);
+  box-shadow: 0 8px 32px rgba(214, 179, 106, 0.15);
+}
+
+.layout-monarch .monarch-nav-label {
+  font-family: var(--monarch-font-h);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* POPOVER MENU (SUBMENU) */
+.layout-monarch .monarch-popover {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(11, 12, 16, 0.85);
+  border: 1px solid var(--monarch-border);
+  border-radius: 16px;
+  min-width: 200px;
+  padding: 12px 8px;
+  opacity: 0;
+  visibility: hidden;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.layout-monarch .monarch-nav-item:hover .monarch-popover,
+.layout-monarch .monarch-popover.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.layout-monarch .monarch-popover-title {
+  font-family: var(--monarch-font-b);
+  font-size: 10px;
+  color: var(--monarch-gold);
+  letter-spacing: 0.15em;
+  padding: 0 12px 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(214, 179, 106, 0.15);
+}
+
+.layout-monarch .monarch-popover-item {
+  padding: 10px 14px;
+  color: var(--monarch-muted);
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 220ms ease;
+  margin-bottom: 2px;
+}
+
+.layout-monarch .monarch-popover-item:hover {
+  background: rgba(214, 179, 106, 0.08);
+  color: var(--monarch-white);
+  padding-left: 20px;
+}
+
+.layout-monarch .monarch-popover-item.active {
+  color: var(--monarch-gold);
+  font-weight: 500;
+  background: rgba(214, 179, 106, 0.12);
+}
+
+/* -------------------------------------------------------
+   RIGHT TOOLBAR - FLOATING CAPSULES
+   ------------------------------------------------------- */
+.layout-monarch .monarch-command-panel {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.layout-monarch .monarch-command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+  align-items: center;
+}
+
+.layout-monarch .monarch-command-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--monarch-glass);
+  border: 1px solid var(--monarch-border);
+  border-radius: 22px;
+  cursor: pointer;
+  position: relative;
+  overflow: visible; /* Required for absolute tooltip */
+  color: var(--monarch-muted);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--monarch-shadow);
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.layout-monarch .monarch-command-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.layout-monarch .monarch-command-icon svg {
+  width: 100%;
+  height: 100%;
+  stroke: currentColor;
+  transition: transform 240ms ease;
+}
+
+/* Floating Tooltip Label */
+.layout-monarch .monarch-command-label {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background: rgba(17, 19, 26, 0.95);
+  border: 1px solid var(--monarch-border);
+  border-radius: 9999px;
+  padding: 6px 16px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--monarch-muted);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 10;
+}
+
+.layout-monarch .monarch-command-item:hover {
+  border-color: rgba(214, 179, 106, 0.6);
+  color: var(--monarch-champagne);
+  box-shadow: 0 8px 25px rgba(214, 179, 106, 0.2);
+  transform: scale(1.02);
+}
+
+.layout-monarch .monarch-command-item:hover .monarch-command-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.layout-monarch .monarch-command-item.active-tool,
+.layout-monarch .monarch-command-item.pinned {
+  background: rgba(214, 179, 106, 0.15);
+  border-color: var(--monarch-gold);
+  color: var(--monarch-gold);
+  box-shadow: 0 0 20px rgba(214, 179, 106, 0.3);
+}
+
+/* -------------------------------------------------------
+   HOTSPOTS - LUXURY CRYSTAL MARKER
+   ------------------------------------------------------- */
+body.layout-monarch .hologram-marker-container .hotspot-hitbox {
+  width: 48px;
+  height: 48px;
+}
+
+body.layout-monarch .hologram-marker-container .hotspot-marker {
+  width: 14px;
+  height: 14px;
+  background: var(--monarch-secondary);
+  border: 2px solid var(--monarch-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(214, 179, 106, 0.5);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.layout-monarch .hologram-marker-container .hotspot-marker::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background: rgba(214, 179, 106, 0.15);
+  border-radius: 50%;
+  animation: pulse-monarch 2.5s infinite ease-out;
+  pointer-events: none;
+}
+
+@keyframes pulse-monarch {
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+body.layout-monarch .hologram-marker-container .hotspot-label {
+  background: var(--monarch-secondary);
+  border: 1px solid var(--monarch-border);
+  color: var(--monarch-white);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-family: var(--monarch-font-b);
+  font-size: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+body.layout-monarch .hologram-marker-container:hover .hotspot-marker {
+  transform: scale(1.2);
+  border-color: var(--monarch-champagne);
+  box-shadow: 0 0 20px rgba(214, 179, 106, 0.8);
+}
+
+body.layout-monarch .hologram-marker-container.active .hotspot-marker {
+  border-color: var(--monarch-accent);
+  box-shadow: 0 0 25px rgba(46, 196, 166, 0.6);
+}
+
+/* -------------------------------------------------------
+   MINI MAP - SCULPTED FLOATING PANEL
+   ------------------------------------------------------- */
+body.layout-monarch .minimap-widget {
+  background: rgba(11, 12, 16, 0.9);
+  border: 1px solid var(--monarch-border);
+  border-radius: 20px 40px 20px 20px; /* Asymmetric */
+  box-shadow: 0 24px 60px rgba(0,0,0,0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+body.layout-monarch .minimap-header {
+  border-bottom: 1px solid rgba(214, 179, 106, 0.15);
+  font-family: var(--monarch-font-h);
+  color: var(--monarch-gold);
+}
+
+body.layout-monarch .minimap-action-btn {
+  background: rgba(214, 179, 106, 0.1);
+  color: var(--monarch-gold);
+  border-radius: 50%;
+}
+
+body.layout-monarch .minimap-action-btn:hover {
+  background: rgba(214, 179, 106, 0.25);
+  color: var(--monarch-champagne);
+}
+
+body.layout-monarch .minimap-dot {
+  background: var(--monarch-secondary);
+  border: 2px solid var(--monarch-gold);
+  box-shadow: 0 0 10px rgba(214, 179, 106, 0.5);
+}
+
+/* -------------------------------------------------------
+   MODALS & REGION PAGE OVERRIDES
+   ------------------------------------------------------- */
+body.layout-monarch .global-modal-content {
+  background: rgba(17, 19, 26, 0.98) !important;
+  border: 1px solid var(--monarch-border) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 40px rgba(214, 179, 106, 0.05) !important;
+}
+
+body.layout-monarch .modal-header h2 {
+  font-family: var(--monarch-font-h) !important;
+  color: var(--monarch-gold) !important;
+  -webkit-text-fill-color: unset !important;
+  background: none !important;
+  background-clip: unset !important;
+}
+
+body.layout-monarch .region-sidebar {
+  background: rgba(11, 12, 16, 0.96) !important;
+  border-right: 1px solid var(--monarch-border) !important;
+}
+
+body.layout-monarch .region-menu-item.active {
+  background: rgba(214, 179, 106, 0.12) !important;
+  border-color: rgba(214, 179, 106, 0.45) !important;
+  color: var(--monarch-gold) !important;
+}
+
+/* Compass Tweaks to match Luxury Watch */
+body.layout-monarch .compass-degree-display {
+  color: var(--monarch-gold);
+  font-family: var(--monarch-font-b);
+  font-weight: 500;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+/* -------------------------------------------------------
+   MONARCH LAYOUT SELECTOR (TOP RIGHT)
+   ------------------------------------------------------- */
+.layout-monarch .monarch-layout-selector {
+  position: absolute;
+  top: 30px;
+  right: 24px;
+  z-index: 2000;
+  background: var(--monarch-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--monarch-border);
+  padding: 8px 12px;
+  border-radius: 9999px;
+  box-shadow: var(--monarch-shadow);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+}
+
+.layout-monarch .monarch-selector-header {
+  display: none;
+}
+
+.layout-monarch .monarch-selector-grid {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.layout-monarch .monarch-selector-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--monarch-muted);
+  font-family: var(--monarch-font-b);
+  font-size: 11px;
+  font-weight: 500;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layout-monarch .monarch-selector-item:hover {
+  color: var(--monarch-champagne);
+  border-color: rgba(214, 179, 106, 0.4);
+  transform: translateY(-2px);
+}
+
+.layout-monarch .monarch-selector-item.active {
+  color: var(--monarch-bg);
+  background: var(--monarch-gold);
+  border-color: var(--monarch-gold);
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(214, 179, 106, 0.3);
+}
+
+/* -------------------------------------------------------
+   COMPASS POSITIONING (BOTTOM LEFT)
+   ------------------------------------------------------- */
+.layout-monarch .compass-widget {
+  bottom: 24px;
+  left: 24px;
+  width: 76px;
+  height: 76px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.layout-monarch .compass-dial {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.layout-monarch .compass-cardinal {
+  font-family: var(--monarch-font-h) !important;
+  color: var(--monarch-champagne) !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  top: 6px !important;
+}
+
+.layout-monarch .compass-degree-display {
+  display: none !important;
+}
