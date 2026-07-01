@@ -321,6 +321,12 @@
               <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Top View</span>
+          <!-- Submenu -->
+          <div class="nav-submenu">
+              <div class="submenu-item" data-pano-node="pin_top">Top View Day</div>
+              <div class="submenu-item" data-pano-node="pin_topnight">Top View Night</div>
+          </div>
+
             
           </div>
 
@@ -440,6 +446,14 @@
             <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Nội Thất</span>
+          <!-- Submenu -->
+          <div class="nav-submenu">
+              <div class="submenu-item" data-pano-node="pin_living">TAV Living 1</div>
+              <div class="submenu-item" data-pano-node="pin_living2">TAV Living 2</div>
+              <div class="submenu-item" data-pano-node="pinwc">TAV WC</div>
+              <div class="submenu-item" data-pano-node="pintangthong">TAV Thông Tầng</div>
+          </div>
+
           
         </div>
 
@@ -502,6 +516,12 @@
               <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Top View</span>
+          <!-- Submenu -->
+          <div class="nav-submenu">
+              <div class="submenu-item" data-pano-node="pin_top">Top View Day</div>
+              <div class="submenu-item" data-pano-node="pin_topnight">Top View Night</div>
+          </div>
+
             
           </div>
 
@@ -622,6 +642,14 @@
               <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Nội thất</span>
+          <!-- Submenu -->
+          <div class="nav-submenu">
+              <div class="submenu-item" data-pano-node="pin_living">TAV Living 1</div>
+              <div class="submenu-item" data-pano-node="pin_living2">TAV Living 2</div>
+              <div class="submenu-item" data-pano-node="pinwc">TAV WC</div>
+              <div class="submenu-item" data-pano-node="pintangthong">TAV Thông Tầng</div>
+          </div>
+
             
           </div>
 
@@ -4090,26 +4118,6 @@ document.addEventListener('click', (e) => {
     const action = element.getAttribute("data-action");
     const panoNode = element.getAttribute("data-pano-node");
 
-
-    // Custom generic gallery pages for Classic Layout
-    if (document.body.classList.contains("layout-classic")) {
-      if (id === "topview") {
-        openClassicSidebarPage("classic-topview-page", "Top View", [
-          { title: "Top View Day", node: "pin_top" },
-          { title: "Top View Night", node: "pin_topnight" }
-        ]);
-        return;
-      }
-      if (id === "interior") {
-        openClassicSidebarPage("classic-interior-page", "Interior", [
-          { title: "TAV Living 1", node: "pin_living" },
-          { title: "TAV Living 2", node: "pin_living2" },
-          { title: "TAV WC", node: "pinwc" },
-          { title: "TAV Thong Tang", node: "pintangthong" }
-        ]);
-        return;
-      }
-    }
 
     // 1. Check if it's Region Page
     if (id === "surrounding" || action === "region-page" || element.id === "nav-surrounding" || element.id === "nav-neo-logo") {
