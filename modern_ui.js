@@ -1,4 +1,4 @@
-/* modern_ui.js - Combined Dual-Layout switcher (Classic Bottom Nav & Futuristic Left Sidebar) */
+﻿﻿/* modern_ui.js - Combined Dual-Layout switcher (Classic Bottom Nav & Futuristic Left Sidebar) */
 
 (function () {
   console.log("Modern UI Script: Initializing dual-layout switching system...");
@@ -69,7 +69,7 @@
       <div class="v-rail-content" id="vision-left-dock">
         <!-- Logo inside Menu -->
         <div class="gradient-menu-logo">
-          <div class="project-name">LA TIÊN</div>
+          <div class="project-name">TAV</div>
           <div class="project-subtitle">V I L L A</div>
         </div>
         <!-- Top View -->
@@ -314,14 +314,15 @@
         <div class="active-nav-glow" id="nav-glow"></div>
 
         <!-- 1. TOP VIEW -->
-        <div class="nav-item" data-id="topview" id="nav-topview" data-pano-node="node1" data-action="overview-top">
-          <svg viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-            <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span>Top View</span>
-        </div>
+        <div class="nav-item" data-id="topview" id="nav-topview">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
+              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Top View</span>
+            
+          </div>
 
         <!-- 2. BIRD VIEW -->
         <div class="nav-item" data-id="birdview" id="nav-birdview">
@@ -331,10 +332,10 @@
           <span>Bird View</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-            <div class="submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-            <div class="submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
-          </div>
+              <div class="submenu-item" data-pano-node="pin_birdview">Bird View 1</div>
+              <div class="submenu-item" data-pano-node="pin_top">Bird View 2</div>
+              <div class="submenu-item" data-pano-node="pin_topnight">Bird View 3</div>
+            </div>
         </div>
 
         <!-- 3. TIỆN ÍCH -->
@@ -347,44 +348,70 @@
           <span>Tiện Ích</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item" data-action="amenity-1">Tiện Ích 1</div>
-            <div class="submenu-item" data-action="amenity-2">Tiện Ích 2</div>
-            <div class="submenu-item" data-action="amenity-3">Tiện Ích 3</div>
-          </div>
+              <div class="submenu-item" data-pano-node="pin_park">TAV Park</div>
+              <div class="submenu-item" data-pano-node="pin_park2">TAV Park 2</div>
+              <div class="submenu-item" data-pano-node="pin_street">TAV Street</div>
+            </div>
         </div>
 
-        <!-- 4. LA TIÊN VILLA (Center logo-node with compact Mega Menu) -->
+        <!-- 4. TAV VILLA (Center logo-node with compact Mega Menu) -->
         <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
-          <div class="logo-script-top">LA TIÊN</div>
+          <div class="logo-script-top">TAV</div>
           <div class="logo-script-wave"></div>
           <div class="logo-script-sub">V I L L A</div>
 
           <!-- MEGA MENU: Compact cards -->
           <div class="nav-submenu mega-menu">
-            <!-- Card 1: Top View dự án (Node 1) -->
-            <div class="mega-card" data-pano-node="node1" data-action="pano-node1">
-              <img src="pano_aerial.png" alt="Top View dự án" class="mega-card-img">
-              <div class="mega-card-overlay"></div>
-              <div class="mega-card-title">Top View dự án</div>
-            </div>
-            <!-- Card 2: Biệt thự Đơn lập A (Node 2) -->
-            <div class="mega-card" data-pano-node="node2" data-action="pano-node2">
-              <img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img">
-              <div class="mega-card-overlay"></div>
-              <div class="mega-card-title">Biệt thự Đơn lập A</div>
-            </div>
-            <!-- Card 3: Biệt thự Song lập B (Node 3) -->
-            <div class="mega-card" data-pano-node="node3" data-action="pano-node3">
-              <img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img">
-              <div class="mega-card-overlay"></div>
-              <div class="mega-card-title">Biệt thự Song lập B</div>
-            </div>
-            <!-- Card 4: Biệt thự Liền kề C (Node 4) -->
-            <div class="mega-card" data-pano-node="node4" data-action="pano-node4">
-              <img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img">
-              <div class="mega-card-overlay"></div>
-              <div class="mega-card-title">Biệt thự Liền kề C</div>
-            </div>
+
+              <!-- Card 1 -->
+              <div class="mega-card" data-pano-node="nodegallarey1" data-action="pano-nodegallarey1">
+                <img src="tiles/nodegallarey1/thumb.jpg" alt="Gallarey 1" class="mega-card-img" onerror="this.src='pano_aerial.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 1</div>
+              </div>
+              <!-- Card 2 -->
+              <div class="mega-card" data-pano-node="nodegallarey2" data-action="pano-nodegallarey2">
+                <img src="tiles/nodegallarey2/thumb.jpg" alt="Gallarey 2" class="mega-card-img" onerror="this.src='pano_detached.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 2</div>
+              </div>
+              <!-- Card 3 -->
+              <div class="mega-card" data-pano-node="nodegallarey3" data-action="pano-nodegallarey3">
+                <img src="tiles/nodegallarey3/thumb.jpg" alt="Gallarey 3" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 3</div>
+              </div>
+              <!-- Card 4 -->
+              <div class="mega-card" data-pano-node="nodegallarey4" data-action="pano-nodegallarey4">
+                <img src="tiles/nodegallarey4/thumb.jpg" alt="Gallarey 4" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 4</div>
+              </div>
+              <!-- Card 5 -->
+              <div class="mega-card" data-pano-node="nodegallarey5" data-action="pano-nodegallarey5">
+                <img src="tiles/nodegallarey5/thumb.jpg" alt="Gallarey 5" class="mega-card-img" onerror="this.src='pano_aerial.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 5</div>
+              </div>
+              <!-- Card 6 -->
+              <div class="mega-card" data-pano-node="nodegallarey6" data-action="pano-nodegallarey6">
+                <img src="tiles/nodegallarey6/thumb.jpg" alt="Gallarey 6" class="mega-card-img" onerror="this.src='pano_detached.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 6</div>
+              </div>
+              <!-- Card 7 -->
+              <div class="mega-card" data-pano-node="nodegallarey7" data-action="pano-nodegallarey7">
+                <img src="tiles/nodegallarey7/thumb.jpg" alt="Gallarey 7" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 7</div>
+              </div>
+              <!-- Card 8 -->
+              <div class="mega-card" data-pano-node="nodegallarey8" data-action="pano-nodegallarey8">
+                <img src="tiles/nodegallarey8/thumb.jpg" alt="Gallarey 8" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 8</div>
+              </div>
+
           </div>
         </div>
 
@@ -413,11 +440,7 @@
             <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <span>Nội Thất</span>
-          <!-- Submenu -->
-          <div class="nav-submenu">
-            <div class="submenu-item" data-action="interior-1">Nội thất 1</div>
-            <div class="submenu-item" data-action="interior-2">Nội thất 2</div>
-          </div>
+          
         </div>
 
         <!-- 7. LIÊN KẾT VÙNG (Liên kết vùng) -->
@@ -463,7 +486,7 @@
       </div>
       <div class="sidebar-content">
         <div class="sidebar-logo" id="sidebar-logo">
-          <div class="logo-script-top">LA TIÊN</div>
+          <div class="logo-script-top">TAV</div>
           <div class="logo-script-wave"></div>
           <div class="logo-script-sub">V I L L A</div>
         </div>
@@ -472,13 +495,14 @@
           <div class="active-nav-glow" id="nav-glow"></div>
 
           <!-- 1. TOP VIEW -->
-          <div class="nav-item" data-id="topview" id="nav-topview" data-pano-node="node1" data-action="overview-top">
+          <div class="nav-item" data-id="topview" id="nav-topview">
             <svg viewBox="0 0 24 24" fill="none">
               <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
               <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
               <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Top View</span>
+            
           </div>
 
           <!-- 2. BIRD VIEW -->
@@ -489,9 +513,9 @@
             <span>Bird View</span>
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-              <div class="submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-              <div class="submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
+              <div class="submenu-item" data-pano-node="pin_birdview">Bird View 1</div>
+              <div class="submenu-item" data-pano-node="pin_top">Bird View 2</div>
+              <div class="submenu-item" data-pano-node="pin_topnight">Bird View 3</div>
             </div>
           </div>
 
@@ -505,45 +529,71 @@
             <span>Tiện ích</span>
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-action="amenity-1">Tiện ích 1</div>
-              <div class="submenu-item" data-action="amenity-2">Tiện ích 2</div>
-              <div class="submenu-item" data-action="amenity-3">Tiện ích 3</div>
+              <div class="submenu-item" data-pano-node="pin_park">TAV Park</div>
+              <div class="submenu-item" data-pano-node="pin_park2">TAV Park 2</div>
+              <div class="submenu-item" data-pano-node="pin_street">TAV Street</div>
             </div>
           </div>
 
-          <!-- 4. LA TIÊN VILLA (Center script-node) -->
+          <!-- 4. TAV VILLA (Center script-node) -->
           <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
             <svg viewBox="0 0 24 24" fill="none">
               <path d="M3 21h18M3 10h18M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M10 21V14h4v7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
             </svg>
-            <span>La Tiên Villa</span>
+            <span>TAV Villa</span>
 
             <!-- MEGA MENU: Compact cards -->
             <div class="nav-submenu mega-menu">
-              <!-- Card 1: Top View dự án (Node 1) -->
-              <div class="mega-card active" data-pano-node="node1" data-action="pano-node1">
-                <img src="pano_aerial.png" alt="Top View dự án" class="mega-card-img">
+
+              <!-- Card 1 -->
+              <div class="mega-card" data-pano-node="nodegallarey1" data-action="pano-nodegallarey1">
+                <img src="tiles/nodegallarey1/thumb.jpg" alt="Gallarey 1" class="mega-card-img" onerror="this.src='pano_aerial.png'">
                 <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Top View dự án</div>
+                <div class="mega-card-title">Gallarey 1</div>
               </div>
-              <!-- Card 2: Biệt thự Đơn lập A (Node 2) -->
-              <div class="mega-card" data-pano-node="node2" data-action="pano-node2">
-                <img src="pano_detached.png" alt="Biệt thự Đơn lập A" class="mega-card-img">
+              <!-- Card 2 -->
+              <div class="mega-card" data-pano-node="nodegallarey2" data-action="pano-nodegallarey2">
+                <img src="tiles/nodegallarey2/thumb.jpg" alt="Gallarey 2" class="mega-card-img" onerror="this.src='pano_detached.png'">
                 <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Biệt thự Đơn lập A</div>
+                <div class="mega-card-title">Gallarey 2</div>
               </div>
-              <!-- Card 3: Biệt thự Song lập B (Node 3) -->
-              <div class="mega-card" data-pano-node="node3" data-action="pano-node3">
-                <img src="pano_semidetached.png" alt="Biệt thự Song lập B" class="mega-card-img">
+              <!-- Card 3 -->
+              <div class="mega-card" data-pano-node="nodegallarey3" data-action="pano-nodegallarey3">
+                <img src="tiles/nodegallarey3/thumb.jpg" alt="Gallarey 3" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
                 <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Biệt thự Song lập B</div>
+                <div class="mega-card-title">Gallarey 3</div>
               </div>
-              <!-- Card 4: Biệt thự Liền kề C (Node 4) -->
-              <div class="mega-card" data-pano-node="node4" data-action="pano-node4">
-                <img src="pano_townhouse.png" alt="Biệt thự Liền kề C" class="mega-card-img">
+              <!-- Card 4 -->
+              <div class="mega-card" data-pano-node="nodegallarey4" data-action="pano-nodegallarey4">
+                <img src="tiles/nodegallarey4/thumb.jpg" alt="Gallarey 4" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
                 <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Biệt thự Liền kề C</div>
+                <div class="mega-card-title">Gallarey 4</div>
               </div>
+              <!-- Card 5 -->
+              <div class="mega-card" data-pano-node="nodegallarey5" data-action="pano-nodegallarey5">
+                <img src="tiles/nodegallarey5/thumb.jpg" alt="Gallarey 5" class="mega-card-img" onerror="this.src='pano_aerial.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 5</div>
+              </div>
+              <!-- Card 6 -->
+              <div class="mega-card" data-pano-node="nodegallarey6" data-action="pano-nodegallarey6">
+                <img src="tiles/nodegallarey6/thumb.jpg" alt="Gallarey 6" class="mega-card-img" onerror="this.src='pano_detached.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 6</div>
+              </div>
+              <!-- Card 7 -->
+              <div class="mega-card" data-pano-node="nodegallarey7" data-action="pano-nodegallarey7">
+                <img src="tiles/nodegallarey7/thumb.jpg" alt="Gallarey 7" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 7</div>
+              </div>
+              <!-- Card 8 -->
+              <div class="mega-card" data-pano-node="nodegallarey8" data-action="pano-nodegallarey8">
+                <img src="tiles/nodegallarey8/thumb.jpg" alt="Gallarey 8" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
+                <div class="mega-card-overlay"></div>
+                <div class="mega-card-title">Gallarey 8</div>
+              </div>
+
             </div>
           </div>
 
@@ -572,11 +622,7 @@
               <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span>Nội thất</span>
-            <!-- Submenu -->
-            <div class="nav-submenu">
-              <div class="submenu-item" data-action="interior-1">Nội thất 1</div>
-              <div class="submenu-item" data-action="interior-2">Nội thất 2</div>
-            </div>
+            
           </div>
 
           <!-- 7. LIÊN KẾT VÙNG (Liên kết vùng) -->
@@ -597,7 +643,7 @@
 
   const neoTopTitleHTML = `
     <div class="layout-floating-logo">
-      <div class="logo-script-top">LA TIÊN</div>
+      <div class="logo-script-top">TAV</div>
       <div class="logo-script-wave"></div>
       <div class="logo-script-sub">V I L L A</div>
     </div>
@@ -2454,7 +2500,7 @@
         // Route parent navigation if no submenu, or if it is interior or surrounding
         const hasSubmenu = this.querySelector(".nav-submenu") !== null;
         const id = this.getAttribute("data-id");
-        if (!hasSubmenu || id === "interior" || id === "surrounding") {
+        if (!hasSubmenu || id === "surrounding") {
           routeNavigation(this);
         }
       });
@@ -2602,7 +2648,7 @@
         // Route parent navigation if no submenu, or if it is interior or surrounding
         const hasSubmenu = this.querySelector(".nav-submenu") !== null;
         const id = this.getAttribute("data-id");
-        if (!hasSubmenu || id === "interior" || id === "surrounding") {
+        if (!hasSubmenu || id === "surrounding") {
           routeNavigation(this);
         }
       });
@@ -2715,7 +2761,18 @@
     });
 
     // Click outside closes everything
-    document.addEventListener('click', (e) => {
+    
+// Global function so iframes can tell parent to navigate
+window.openPanoramaFromIframe = function(nodeId) {
+  if (window.pano) {
+    window.pano.openNext('{' + nodeId + '}');
+  }
+  // Close the gallery modal
+  document.body.classList.remove("topview-page-active");
+  document.body.classList.remove("interior-page-active");
+};
+
+document.addEventListener('click', (e) => {
       if (!e.target.closest('.layout-gradient .vision-icon-wrapper')) {
         iconWrappers.forEach(n => n.classList.remove('pinned'));
       }
@@ -2820,7 +2877,7 @@
         // Direct navigation if no submenu, or if it is interior or surrounding
         const hasSubmenu = group && group.querySelector(".neo-submenu-tree") !== null;
         const id = card.getAttribute("data-id");
-        if (!hasSubmenu || id === "interior" || id === "surrounding") {
+        if (!hasSubmenu || id === "surrounding") {
           routeNavigation(card);
         }
       });
@@ -3534,7 +3591,7 @@
 
       case "share":
         if (navigator.share) {
-          navigator.share({ title: "La Tiên Villa", text: "Khám phá dự án La Tiên Villa", url: window.location.href })
+          navigator.share({ title: "TAV Villa", text: "Khám phá dự án TAV Villa", url: window.location.href })
             .catch(err => console.log("Share cancelled", err));
         } else {
           navigator.clipboard.writeText(window.location.href)
@@ -3595,7 +3652,7 @@
     panel.innerHTML = `
       <div class="info-panel-header">
         <div class="info-panel-title">
-          <div class="logo-script-top" style="font-size:14px;letter-spacing:2px;">LA TIÊN</div>
+          <div class="logo-script-top" style="font-size:14px;letter-spacing:2px;">TAV</div>
           <div class="logo-script-sub" style="font-size:7px;letter-spacing:3px;">V I L L A</div>
         </div>
         <div class="info-panel-close" id="info-panel-close">✕</div>
@@ -3619,7 +3676,7 @@
         </div>
         <div class="info-row">
           <span class="info-label">CHỦ ĐẦU TƯ</span>
-          <span class="info-value">La Tiên Investment Group</span>
+          <span class="info-value">TAV Investment Group</span>
         </div>
         <div class="info-row">
           <span class="info-label">TIỆN ÍCH</span>
@@ -3876,7 +3933,85 @@
     showNotification("Đã quay lại 360");
   }
 
-  function openRegionPage() {
+
+  // Reusable Sidebar Menu Framework (Matching Region Page)
+    function openClassicSidebarPage(pageId, title, itemsData) {
+      if (window.pano && typeof window.pano.getCurrentNode === "function") {
+        const cur = window.pano.getCurrentNode();
+        if (cur) previousPanoNode = cur;
+      } else {
+        previousPanoNode = activePanoNode || "node1";
+      }
+  
+      let pageDiv = document.getElementById(pageId);
+      if (!pageDiv) {
+        pageDiv = document.createElement("div");
+        pageDiv.id = pageId;
+        pageDiv.className = "custom-overlay-page";
+        
+        let listHTML = itemsData.map(item => `
+          <li class="region-menu-item sidebar-pano-item" data-pano-node="${item.node}">
+             ${item.title}
+          </li>
+        `).join("");
+  
+        pageDiv.innerHTML = `
+          <div style="display: flex; flex-direction: row; width: 100%; height: 100%;">
+            <div class="region-sidebar">
+              <div class="sidebar-header">
+                <h3>${title.toUpperCase()}</h3>
+              </div>
+              <ul class="region-menu-list">
+                ${listHTML}
+              </ul>
+            </div>
+            <!-- Empty transparent container so clicks pass through to Pano2VR -->
+            <div class="region-map-container" style="background: transparent !important; flex: 1; pointer-events: none; border: none; box-shadow: none;">
+            </div>
+          </div>
+        `;
+        document.body.appendChild(pageDiv);
+  
+        // Add click listeners to items
+        const items = pageDiv.querySelectorAll(".sidebar-pano-item");
+        items.forEach(item => {
+          item.addEventListener("click", function(e) {
+            e.stopPropagation();
+            // Highlight active
+            items.forEach(li => li.classList.remove("active"));
+            this.classList.add("active");
+
+            const targetNode = this.getAttribute("data-pano-node");
+            if (window.pano) {
+              window.pano.openNext('{' + targetNode + '}');
+            }
+            closeClassicSidebarPage(pageId);
+          });
+        });
+      }
+  
+      // Show page
+      document.body.classList.add(pageId + "-active");
+      
+      // Update active state based on current panorama if possible
+      if (window.pano && typeof window.pano.getCurrentNode === "function") {
+         const current = window.pano.getCurrentNode();
+         const items = pageDiv.querySelectorAll(".sidebar-pano-item");
+         items.forEach(li => {
+            if (li.getAttribute("data-pano-node") === current) {
+                li.classList.add("active");
+            } else {
+                li.classList.remove("active");
+            }
+         });
+      }
+    }
+  
+    function closeClassicSidebarPage(pageId) {
+      document.body.classList.remove(pageId + "-active");
+    }
+    
+    function openRegionPage() {
     if (window.pano && typeof window.pano.getCurrentNode === "function") {
       const cur = window.pano.getCurrentNode();
       if (cur) {
@@ -3954,6 +4089,27 @@
     const id = element.getAttribute("data-id");
     const action = element.getAttribute("data-action");
     const panoNode = element.getAttribute("data-pano-node");
+
+
+    // Custom generic gallery pages for Classic Layout
+    if (document.body.classList.contains("layout-classic")) {
+      if (id === "topview") {
+        openClassicSidebarPage("classic-topview-page", "Top View", [
+          { title: "Top View Day", node: "pin_top" },
+          { title: "Top View Night", node: "pin_topnight" }
+        ]);
+        return;
+      }
+      if (id === "interior") {
+        openClassicSidebarPage("classic-interior-page", "Interior", [
+          { title: "TAV Living 1", node: "pin_living" },
+          { title: "TAV Living 2", node: "pin_living2" },
+          { title: "TAV WC", node: "pinwc" },
+          { title: "TAV Thong Tang", node: "pintangthong" }
+        ]);
+        return;
+      }
+    }
 
     // 1. Check if it's Region Page
     if (id === "surrounding" || action === "region-page" || element.id === "nav-surrounding" || element.id === "nav-neo-logo") {
@@ -4401,13 +4557,13 @@ const globalModalsHTML = `
   <div class="global-modal-overlay" id="project-info-modal">
     <div class="global-modal-content project-info-expanded">
       <div class="modal-header">
-        <h2>Thông Tin Dự Án La Tiên</h2>
+        <h2>Thông Tin Dự Án TAV</h2>
         <div class="modal-close-btn" onclick="document.getElementById('project-info-modal').classList.remove('active')">&times;</div>
       </div>
       <div class="modal-body scrollable-modal-body">
         <section>
           <h3>Tổng Quan</h3>
-          <p>Khu đô thị mới La Tiên mang đến chuẩn mực sống hoàn toàn mới với không gian xanh mát và hệ sinh thái tiện ích đẳng cấp quốc tế. Tọa lạc tại vị trí chiến lược, dự án là viên ngọc quý giữa lòng thành phố.</p>
+          <p>Khu đô thị mới TAV mang đến chuẩn mực sống hoàn toàn mới với không gian xanh mát và hệ sinh thái tiện ích đẳng cấp quốc tế. Tọa lạc tại vị trí chiến lược, dự án là viên ngọc quý giữa lòng thành phố.</p>
         </section>
         <section>
           <h3>Tiện Ích Nội Khu</h3>
