@@ -1,4 +1,4 @@
-﻿﻿/* modern_ui.js - Combined Dual-Layout switcher (Classic Bottom Nav & Futuristic Left Sidebar) */
+/* modern_ui.js - Combined Dual-Layout switcher (Classic Bottom Nav & Futuristic Left Sidebar) */
 
 (function () {
   console.log("Modern UI Script: Initializing dual-layout switching system...");
@@ -26,10 +26,71 @@
   `;
 
   // 1.1 Layout Switcher Widget HTML Template (Vietnamese labels)
+  
+// ==========================================
+// MASTER CONTENT CONFIGURATION
+// ==========================================
+const PROJECT_CONTENT = {
+  projectTitle: { top: "TAV", sub: "V I L L A" },
+  navItems: {
+    topview: {
+      label: "Top View",
+      submenu: [
+        { node: "pin_top", label: "Top View Day" },
+        { node: "pin_topnight", label: "Top View Night" }
+      ]
+    },
+    birdview: {
+      label: "Bird View",
+      submenu: [
+        { node: "pin_birdview", label: "Bird View 1" },
+        { node: "pin_top", label: "Bird View 2" },
+        { node: "pin_topnight", label: "Bird View 3" }
+      ]
+    },
+    amenities: {
+      label: "Tiện ích",
+      submenu: [
+        { node: "pin_park", label: "TAV Park" },
+        { node: "pin_park2", label: "TAV Park 2" },
+        { node: "pin_street", label: "TAV Street" }
+      ]
+    },
+    architecture: {
+      label: "Kiến Trúc",
+      submenu: [
+        { action: "architecture-1", label: "Kiến Trúc 1" },
+        { action: "architecture-2", label: "Kiến Trúc 2" },
+        { action: "architecture-3", label: "Kiến Trúc 3" }
+      ]
+    },
+    interior: {
+      label: "Nội Thất",
+      submenu: [
+        { node: "pin_living", label: "TAV Living 1" },
+        { node: "pin_living2", label: "TAV Living 2" },
+        { node: "pinwc", label: "TAV WC" },
+        { node: "pintangthong", label: "TAV Thông Tầng" }
+      ]
+    },
+    surrounding: {
+      label: "Liên kết vùng",
+      action: "region-page"
+    }
+  }
+};
+
+function generateSubmenuHTML(items, itemClass) {
+  return items.map(item => {
+    const attr = item.node ? `data-pano-node="${item.node}"` : `data-action="${item.action}"`;
+    return `<div class="${itemClass}" ${attr}>${item.label}</div>`;
+  }).join('');
+}
+
   const layoutSwitcherHTML = `
     <div class="layout-switcher-wrapper" id="layout-switcher-wrapper">
-      <div class="layout-switcher-trigger">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+      <div class="layout-switcher-trigger" style="width: auto; padding: 0 15px; border-radius: 20px; font-weight: 600; font-size: 14px; white-space: nowrap; font-family: 'Inter', sans-serif; letter-spacing: 0.5px; background: var(--primary-color, rgba(0,0,0,0.5)); border: 1px solid rgba(255,255,255,0.2);">
+        TAV Version
       </div>
       <div class="layout-switcher-pill" id="layout-switcher">
         <div class="switcher-segment" id="opt-layout-classic" data-layout="classic" title="Giao diện Cổ điển">Cổ điển</div>
@@ -51,7 +112,13 @@
   // OPTION 4: GRADIENT LAYOUT TEMPLATES
   // ==========================================
 
-  const gradientTopTitleHTML = ``;
+  const gradientTopTitleHTML = `
+    <div class="layout-floating-logo gradient-floating-logo" style="position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; pointer-events: none;">
+      <div class="logo-script-top" style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 2px 10px rgba(255,255,255,0.5);">${PROJECT_CONTENT.projectTitle.top}</div>
+      <div class="logo-script-wave" style="width: 40px; height: 2px; background: linear-gradient(90deg, #FF6B6B, #4ECDC4); margin: 5px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+      <div class="logo-script-sub" style="font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.8); text-transform: uppercase;">${PROJECT_CONTENT.projectTitle.sub}</div>
+    </div>
+`;
 
   const gradientQuickActionsHTML = `
     <div class="gradient-quick-actions">
@@ -61,127 +128,109 @@
     </div>
   `;
 
-  const gradientRightNavHTML = `
-    <div class="v-rail-container left-rail" id="gradient-left-rail">
+  const gradientRightNavHTML = `<div class="v-rail-container left-rail" id="gradient-left-rail">
       <div class="v-rail-trigger" id="gradient-left-trigger" title="Mở menu">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </div>
       <div class="v-rail-content" id="vision-left-dock">
         <!-- Logo inside Menu -->
         <div class="gradient-menu-logo">
-          <div class="project-name">TAV</div>
-          <div class="project-subtitle">V I L L A</div>
+          <div class="project-name">${PROJECT_CONTENT.projectTitle.top}</div>
+          <div class="project-subtitle">${PROJECT_CONTENT.projectTitle.sub}</div>
         </div>
         <!-- Top View -->
-        <div class="vision-icon-wrapper" data-id="topview" data-pano-node="node1" data-action="overview-top">
+        <div class="vision-icon-wrapper" data-id="topview">
           <div class="vision-icon" title="Top View">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
           </div>
-          <span>Top View</span>
-        </div>
+          <span>${PROJECT_CONTENT.navItems.topview.label}</span>
+        <div class="vision-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'v-sub-item')}
+            </div></div>
         <!-- Bird View -->
         <div class="vision-icon-wrapper" data-id="birdview">
           <div class="vision-icon" title="Bird View">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6"></path></svg>
           </div>
-          <span>Bird View</span>
+          <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
           <div class="vision-submenu">
-            <div class="v-sub-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-            <div class="v-sub-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-            <div class="v-sub-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'v-sub-item')}
+            </div>
         </div>
         <!-- Navigation Amenities -->
         <div class="vision-icon-wrapper" data-id="amenities">
           <div class="vision-icon" title="Tiện ích">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 12l10 5 10-5"></path><path d="M2 17l10 5 10-5"></path></svg>
           </div>
-          <span>Tiện ích</span>
+          <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
           <div class="vision-submenu">
-            <div class="v-sub-item" data-pano-node="node1">Clubhouse</div>
-            <div class="v-sub-item" data-pano-node="node1">Bến Du Thuyền</div>
-            <div class="v-sub-item" data-pano-node="node2">Khu Thể Thao</div>
-            <div class="v-sub-item" data-pano-node="node3">Công Viên</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'v-sub-item')}
+            </div>
         </div>
         <!-- Navigation Architecture -->
         <div class="vision-icon-wrapper" data-id="architecture">
           <div class="vision-icon" title="Kiến trúc">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V8l9-6 9 6v13"/><path d="M9 21v-6h6v6"/><path d="M14 3v-1h3v4"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V8l9-6 9 6v13"></path><path d="M9 21v-6h6v6"></path><path d="M14 3v-1h3v4"></path></svg>
           </div>
-          <span>Kiến trúc</span>
+          <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
           <div class="vision-submenu">
-            <div class="v-sub-item" data-pano-node="node3">Mặt Bằng</div>
-            <div class="v-sub-item" data-pano-node="node4">Biệt Thự Song Lập</div>
-            <div class="v-sub-item" data-pano-node="node5">Biệt Thự Đơn Lập</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'v-sub-item')}
+            </div>
         </div>
         <!-- Navigation Interior -->
         <div class="vision-icon-wrapper" data-id="interior">
           <div class="vision-icon" title="Nội thất">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 8h4M7 11h6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 8h4M7 11h6"></path></svg>
           </div>
-          <span>Nội thất</span>
+          <span>${PROJECT_CONTENT.navItems.interior.label}</span>
           <div class="vision-submenu">
-            <div class="v-sub-item" data-action="interior-1">Nội thất 1</div>
-            <div class="v-sub-item" data-action="interior-2">Nội thất 2</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'v-sub-item')}
+            </div>
         </div>
         <!-- Navigation Surrounding (Liên kết vùng) -->
         <div class="vision-icon-wrapper" data-id="surrounding" data-action="region-page">
           <div class="vision-icon" title="Liên kết vùng">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path></svg>
           </div>
-          <span>Liên kết vùng</span>
+          <span>${PROJECT_CONTENT.navItems.surrounding.label}</span>
         </div>
       </div>
     </div>
   `;
 
-  const gradientLeftToolbarHTML = `
-    <div class="v-rail-container right-rail" id="gradient-right-rail">
+  const gradientLeftToolbarHTML = `<div class="v-rail-container right-rail" id="gradient-right-rail">
       <div class="v-rail-trigger" id="gradient-right-trigger">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
       </div>
       <div class="v-rail-content" id="vision-right-dock">
         <!-- Tool Info -->
         <div class="vision-icon-wrapper" data-action="info">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           </div>
         </div>
         <!-- Tool Music -->
         <div class="vision-icon-wrapper" data-action="music">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
           </div>
         </div>
         <!-- Tool Images -->
-        <div class="vision-icon-wrapper has-children">
+        <div class="vision-icon-wrapper" data-action="images">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          </div>
-          <div class="vision-submenu">
-              <div class="v-pano-card" onclick="window.pano && window.pano.openNext('node1')">
-                <img src="pano_aerial.png" alt="Top View">
-                <span>Top View</span>
-              </div>
-              <div class="v-pano-card" onclick="window.pano && window.pano.openNext('node2')">
-                <img src="pano_detached.png" alt="Đơn lập">
-                <span>Biệt thự Đơn lập</span>
-              </div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
           </div>
         </div>
         <!-- Tool Hotspots -->
         <div class="vision-icon-wrapper" data-action="hotspots">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
           </div>
         </div>
         <!-- Tool Share -->
         <div class="vision-icon-wrapper has-children">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
           </div>
           <div class="vision-submenu">
             <a href="https://facebook.com" target="_blank" class="v-sub-item">Facebook</a>
@@ -191,13 +240,13 @@
         <!-- Tool Call -->
         <div class="vision-icon-wrapper" data-action="call">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"></path></svg>
           </div>
         </div>
         <!-- Tool Fullscreen -->
         <div class="vision-icon-wrapper" data-action="fullscreen">
           <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
           </div>
         </div>
       </div>
@@ -307,8 +356,7 @@
   `;
 
   // Classic Bottom Navigation Bar HTML
-  const bottomNavClassicHTML = `
-    <div class="bottom-nav-container">
+  const bottomNavClassicHTML = `<div class="bottom-nav-container">
       <div class="bottom-nav-bar" id="bottom-main-nav">
         <!-- Active Back Glow element -->
         <div class="active-nav-glow" id="nav-glow"></div>
@@ -316,16 +364,15 @@
         <!-- 1. TOP VIEW -->
         <div class="nav-item" data-id="topview" id="nav-topview">
             <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
-            <span>Top View</span>
+            <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_top">Top View Day</div>
-              <div class="submenu-item" data-pano-node="pin_topnight">Top View Night</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'submenu-item')}
+            </div>
 
             
           </div>
@@ -333,126 +380,65 @@
         <!-- 2. BIRD VIEW -->
         <div class="nav-item" data-id="birdview" id="nav-birdview">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"/>
+            <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"></path>
           </svg>
-          <span>Bird View</span>
+          <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_birdview">Bird View 1</div>
-              <div class="submenu-item" data-pano-node="pin_top">Bird View 2</div>
-              <div class="submenu-item" data-pano-node="pin_topnight">Bird View 3</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'submenu-item')}
             </div>
         </div>
 
         <!-- 3. TIỆN ÍCH -->
         <div class="nav-item" data-id="amenities" id="nav-amenities">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <span>Tiện Ích</span>
+          <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_park">TAV Park</div>
-              <div class="submenu-item" data-pano-node="pin_park2">TAV Park 2</div>
-              <div class="submenu-item" data-pano-node="pin_street">TAV Street</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'submenu-item')}
             </div>
         </div>
 
         <!-- 4. TAV VILLA (Center logo-node with compact Mega Menu) -->
         <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
-          <div class="logo-script-top">TAV</div>
+          <div class="logo-script-top">${PROJECT_CONTENT.projectTitle.top}</div>
           <div class="logo-script-wave"></div>
-          <div class="logo-script-sub">V I L L A</div>
+          <div class="logo-script-sub">${PROJECT_CONTENT.projectTitle.sub}</div>
 
-          <!-- MEGA MENU: Compact cards -->
-          <div class="nav-submenu mega-menu">
 
-              <!-- Card 1 -->
-              <div class="mega-card" data-pano-node="nodegallarey1" data-action="pano-nodegallarey1">
-                <img src="tiles/nodegallarey1/thumb.jpg" alt="Gallarey 1" class="mega-card-img" onerror="this.src='pano_aerial.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 1</div>
-              </div>
-              <!-- Card 2 -->
-              <div class="mega-card" data-pano-node="nodegallarey2" data-action="pano-nodegallarey2">
-                <img src="tiles/nodegallarey2/thumb.jpg" alt="Gallarey 2" class="mega-card-img" onerror="this.src='pano_detached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 2</div>
-              </div>
-              <!-- Card 3 -->
-              <div class="mega-card" data-pano-node="nodegallarey3" data-action="pano-nodegallarey3">
-                <img src="tiles/nodegallarey3/thumb.jpg" alt="Gallarey 3" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 3</div>
-              </div>
-              <!-- Card 4 -->
-              <div class="mega-card" data-pano-node="nodegallarey4" data-action="pano-nodegallarey4">
-                <img src="tiles/nodegallarey4/thumb.jpg" alt="Gallarey 4" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 4</div>
-              </div>
-              <!-- Card 5 -->
-              <div class="mega-card" data-pano-node="nodegallarey5" data-action="pano-nodegallarey5">
-                <img src="tiles/nodegallarey5/thumb.jpg" alt="Gallarey 5" class="mega-card-img" onerror="this.src='pano_aerial.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 5</div>
-              </div>
-              <!-- Card 6 -->
-              <div class="mega-card" data-pano-node="nodegallarey6" data-action="pano-nodegallarey6">
-                <img src="tiles/nodegallarey6/thumb.jpg" alt="Gallarey 6" class="mega-card-img" onerror="this.src='pano_detached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 6</div>
-              </div>
-              <!-- Card 7 -->
-              <div class="mega-card" data-pano-node="nodegallarey7" data-action="pano-nodegallarey7">
-                <img src="tiles/nodegallarey7/thumb.jpg" alt="Gallarey 7" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 7</div>
-              </div>
-              <!-- Card 8 -->
-              <div class="mega-card" data-pano-node="nodegallarey8" data-action="pano-nodegallarey8">
-                <img src="tiles/nodegallarey8/thumb.jpg" alt="Gallarey 8" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 8</div>
-              </div>
-
-          </div>
         </div>
 
         <!-- 5. KIẾN TRÚC -->
         <div class="nav-item" data-id="architecture" id="nav-architecture">
           <svg viewBox="0 0 24 24" fill="none">
-            <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-            <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-            <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+            <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+            <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
           </svg>
-          <span>Kiến Trúc</span>
+          <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-            <div class="submenu-item" data-action="architecture-1">Kiến Trúc 1</div>
-            <div class="submenu-item" data-action="architecture-2">Kiến Trúc 2</div>
-            <div class="submenu-item" data-action="architecture-3">Kiến Trúc 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'submenu-item')}
+            </div>
         </div>
 
         <!-- 6. NỘI THẤT (Interior) -->
         <div class="nav-item" data-id="interior" id="nav-interior">
           <svg viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <span>Nội Thất</span>
+          <span>${PROJECT_CONTENT.navItems.interior.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_living">TAV Living 1</div>
-              <div class="submenu-item" data-pano-node="pin_living2">TAV Living 2</div>
-              <div class="submenu-item" data-pano-node="pinwc">TAV WC</div>
-              <div class="submenu-item" data-pano-node="pintangthong">TAV Thông Tầng</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'submenu-item')}
+            </div>
 
           
         </div>
@@ -460,9 +446,9 @@
         <!-- 7. LIÊN KẾT VÙNG (Liên kết vùng) -->
         <div class="nav-item" data-id="surrounding" id="nav-surrounding" data-action="region-page">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path>
           </svg>
-          <span>Liên kết vùng</span>
+          <span>${PROJECT_CONTENT.navItems.surrounding.label}</span>
         </div>
       </div>
     </div>
@@ -491,36 +477,36 @@
 
   const verticalToolStackFuturisticHTML = "";
 
-  const sidebarNavFuturisticHTML = `
-    <div class="sidebar-container" id="sidebar-container">
+  const sidebarNavFuturisticHTML = `<div class="sidebar-container" id="sidebar-container">
       <div class="sidebar-toggle-btn" id="btn-sidebar-toggle" title="Mở rộng menu">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
         </svg>
       </div>
       <div class="sidebar-content">
-        <div class="sidebar-logo" id="sidebar-logo">
-          <div class="logo-script-top">TAV</div>
-          <div class="logo-script-wave"></div>
-          <div class="logo-script-sub">V I L L A</div>
-        </div>
-        <div class="sidebar-nav-list" id="sidebar-main-nav">
+                <div class="sidebar-nav-list" id="sidebar-main-nav">
           <!-- Active Back Glow element -->
           <div class="active-nav-glow" id="nav-glow"></div>
+          <!-- TAV VILLA Logo Button -->
+          <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; padding: 10px 0; background: transparent; border: none; box-shadow: none;">
+            <div class="logo-script-top">${PROJECT_CONTENT.projectTitle.top}</div>
+            <div class="logo-script-wave"></div>
+            <div class="logo-script-sub">${PROJECT_CONTENT.projectTitle.sub}</div>
+          </div>
+
 
           <!-- 1. TOP VIEW -->
           <div class="nav-item" data-id="topview" id="nav-topview">
             <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
-            <span>Top View</span>
+            <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_top">Top View Day</div>
-              <div class="submenu-item" data-pano-node="pin_topnight">Top View Night</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'submenu-item')}
+            </div>
 
             
           </div>
@@ -528,127 +514,54 @@
           <!-- 2. BIRD VIEW -->
           <div class="nav-item" data-id="birdview" id="nav-birdview">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"></path>
             </svg>
-            <span>Bird View</span>
+            <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_birdview">Bird View 1</div>
-              <div class="submenu-item" data-pano-node="pin_top">Bird View 2</div>
-              <div class="submenu-item" data-pano-node="pin_topnight">Bird View 3</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'submenu-item')}
             </div>
           </div>
 
           <!-- 3. TIỆN ÍCH -->
           <div class="nav-item" data-id="amenities" id="nav-amenities">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-            <span>Tiện ích</span>
+            <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_park">TAV Park</div>
-              <div class="submenu-item" data-pano-node="pin_park2">TAV Park 2</div>
-              <div class="submenu-item" data-pano-node="pin_street">TAV Street</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'submenu-item')}
             </div>
-          </div>
-
-          <!-- 4. TAV VILLA (Center script-node) -->
-          <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M3 21h18M3 10h18M5 10V6a2 2 0 012-2h10a2 2 0 012 2v4M10 21V14h4v7" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-            </svg>
-            <span>TAV Villa</span>
-
-            <!-- MEGA MENU: Compact cards -->
-            <div class="nav-submenu mega-menu">
-
-              <!-- Card 1 -->
-              <div class="mega-card" data-pano-node="nodegallarey1" data-action="pano-nodegallarey1">
-                <img src="tiles/nodegallarey1/thumb.jpg" alt="Gallarey 1" class="mega-card-img" onerror="this.src='pano_aerial.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 1</div>
-              </div>
-              <!-- Card 2 -->
-              <div class="mega-card" data-pano-node="nodegallarey2" data-action="pano-nodegallarey2">
-                <img src="tiles/nodegallarey2/thumb.jpg" alt="Gallarey 2" class="mega-card-img" onerror="this.src='pano_detached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 2</div>
-              </div>
-              <!-- Card 3 -->
-              <div class="mega-card" data-pano-node="nodegallarey3" data-action="pano-nodegallarey3">
-                <img src="tiles/nodegallarey3/thumb.jpg" alt="Gallarey 3" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 3</div>
-              </div>
-              <!-- Card 4 -->
-              <div class="mega-card" data-pano-node="nodegallarey4" data-action="pano-nodegallarey4">
-                <img src="tiles/nodegallarey4/thumb.jpg" alt="Gallarey 4" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 4</div>
-              </div>
-              <!-- Card 5 -->
-              <div class="mega-card" data-pano-node="nodegallarey5" data-action="pano-nodegallarey5">
-                <img src="tiles/nodegallarey5/thumb.jpg" alt="Gallarey 5" class="mega-card-img" onerror="this.src='pano_aerial.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 5</div>
-              </div>
-              <!-- Card 6 -->
-              <div class="mega-card" data-pano-node="nodegallarey6" data-action="pano-nodegallarey6">
-                <img src="tiles/nodegallarey6/thumb.jpg" alt="Gallarey 6" class="mega-card-img" onerror="this.src='pano_detached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 6</div>
-              </div>
-              <!-- Card 7 -->
-              <div class="mega-card" data-pano-node="nodegallarey7" data-action="pano-nodegallarey7">
-                <img src="tiles/nodegallarey7/thumb.jpg" alt="Gallarey 7" class="mega-card-img" onerror="this.src='pano_semidetached.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 7</div>
-              </div>
-              <!-- Card 8 -->
-              <div class="mega-card" data-pano-node="nodegallarey8" data-action="pano-nodegallarey8">
-                <img src="tiles/nodegallarey8/thumb.jpg" alt="Gallarey 8" class="mega-card-img" onerror="this.src='pano_townhouse.png'">
-                <div class="mega-card-overlay"></div>
-                <div class="mega-card-title">Gallarey 8</div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- 5. KIẾN TRÚC -->
+          </div><!-- 5. KIẾN TRÚC -->
           <div class="nav-item" data-id="architecture" id="nav-architecture">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-              <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-              <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+              <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+              <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+              <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
             </svg>
-            <span>Kiến trúc</span>
+            <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
             <!-- Submenu -->
             <div class="nav-submenu">
-              <div class="submenu-item" data-action="architecture-1">Kiến trúc 1</div>
-              <div class="submenu-item" data-action="architecture-2">Kiến trúc 2</div>
-              <div class="submenu-item" data-action="architecture-3">Kiến trúc 3</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'submenu-item')}
             </div>
           </div>
 
           <!-- 6. NỘI THẤT (Interior) -->
           <div class="nav-item" data-id="interior" id="nav-interior">
             <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-            <span>Nội thất</span>
+            <span>${PROJECT_CONTENT.navItems.interior.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
-              <div class="submenu-item" data-pano-node="pin_living">TAV Living 1</div>
-              <div class="submenu-item" data-pano-node="pin_living2">TAV Living 2</div>
-              <div class="submenu-item" data-pano-node="pinwc">TAV WC</div>
-              <div class="submenu-item" data-pano-node="pintangthong">TAV Thông Tầng</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'submenu-item')}
+            </div>
 
             
           </div>
@@ -656,9 +569,9 @@
           <!-- 7. LIÊN KẾT VÙNG (Liên kết vùng) -->
           <div class="nav-item" data-id="surrounding" id="nav-surrounding" data-action="region-page">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path>
             </svg>
-            <span>Liên kết vùng</span>
+            <span>${PROJECT_CONTENT.navItems.surrounding.label}</span>
           </div>
         </div>
       </div>
@@ -678,161 +591,131 @@
   `;
 
   // The Unified Control Panel containing both Navigation and Toolbar
-  const neoLeftNavHTML = `
-    <div class="neo-unified-container collapsed" id="neo-unified-container">
+  const neoLeftNavHTML = `<div class="neo-unified-container collapsed" id="neo-unified-container">
       <!-- Unified three-dot button (...) -->
       <div class="neo-unified-trigger" id="neo-unified-trigger" title="Mở menu">
         <svg viewBox="0 0 24 24" fill="none">
-          <circle cx="6" cy="12" r="2" fill="currentColor"/>
-          <circle cx="12" cy="12" r="2" fill="currentColor"/>
-          <circle cx="18" cy="12" r="2" fill="currentColor"/>
+          <circle cx="6" cy="12" r="2" fill="currentColor"></circle>
+          <circle cx="12" cy="12" r="2" fill="currentColor"></circle>
+          <circle cx="18" cy="12" r="2" fill="currentColor"></circle>
         </svg>
       </div>
-      
       <!-- Navigation Panel: RIGHT -> LEFT -->
       <div class="neo-nav-panel" id="neo-nav-panel">
         <!-- Top View Group -->
         <div class="neo-nav-item-group" data-id="topview">
-          <div class="neo-nav-card" data-id="topview" id="nav-neo-topview" data-pano-node="node1" data-action="overview-top">
+          <div class="neo-nav-card" data-id="topview" id="nav-neo-topview">
             <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
-              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
-            <span>Top View</span>
+            <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
-        </div>
-
+        <div class="neo-submenu-tree">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'submenu-item')}
+            </div></div>
         <!-- Bird View Group -->
         <div class="neo-nav-item-group" data-id="birdview">
           <div class="neo-nav-card" data-id="birdview" id="nav-neo-birdview">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"></path>
             </svg>
-            <span>Bird View</span>
+            <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
           </div>
           <div class="neo-submenu-tree">
-            <div class="submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-            <div class="submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-            <div class="submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'submenu-item')}
+            </div>
         </div>
-
         <!-- Amenities Group -->
         <div class="neo-nav-item-group" data-id="amenities">
           <div class="neo-nav-card" data-id="amenities" id="nav-neo-amenities">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M12 2L2 7l10 5 10-5-10-5z" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-            <span>Tiện ích</span>
+            <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
           </div>
           <div class="neo-submenu-tree">
-            <div class="submenu-item" data-action="amenity-pool">Hồ Bơi</div>
-            <div class="submenu-item" data-action="amenity-gym">Phòng Gym</div>
-            <div class="submenu-item" data-action="amenity-park">Công Viên</div>
-            <div class="submenu-item" data-action="amenity-spa">Spa & Massage</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'submenu-item')}
+            </div>
         </div>
-
         <!-- Architecture Group -->
         <div class="neo-nav-item-group" data-id="architecture">
           <div class="neo-nav-card" data-id="architecture" id="nav-neo-architecture">
             <svg viewBox="0 0 24 24" fill="none">
-              <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-              <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
-              <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"/>
+              <path d="M3 21V8l9-6 9 6v13" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+              <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
+              <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
             </svg>
-            <span>Kiến trúc</span>
+            <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
           </div>
           <div class="neo-submenu-tree">
-            <div class="submenu-item" data-action="architecture-1">Kiến trúc 1</div>
-            <div class="submenu-item" data-action="architecture-2">Kiến trúc 2</div>
-            <div class="submenu-item" data-action="architecture-3">Kiến trúc 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'submenu-item')}
+            </div>
         </div>
-
         <!-- Interior Group -->
         <div class="neo-nav-item-group" data-id="interior">
           <div class="neo-nav-card" data-id="interior" id="nav-neo-interior">
             <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
+              <path d="M8 21h8" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"></path>
             </svg>
-            <span>Nội thất</span>
+            <span>${PROJECT_CONTENT.navItems.interior.label}</span>
           </div>
           <div class="neo-submenu-tree">
-            <div class="submenu-item" data-action="interior-1">Nội thất 1</div>
-            <div class="submenu-item" data-action="interior-2">Nội thất 2</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'submenu-item')}
+            </div>
         </div>
-
         <!-- Liên kết vùng Group -->
         <div class="neo-nav-item-group" data-id="surrounding">
           <div class="neo-nav-card" data-id="surrounding" id="nav-neo-logo" data-action="region-page">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path>
             </svg>
-            <span>Liên kết vùng</span>
+            <span>${PROJECT_CONTENT.navItems.surrounding.label}</span>
           </div>
         </div>
       </div>
-
       <!-- Toolbar: TOP -> BOTTOM -->
       <div class="neo-toolbar" id="neo-toolbar">
         <!-- Project Information (First as requested) -->
         <div class="neo-dock-item" data-action="info">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2"></path></svg>
           <div class="neo-tooltip">Thông Tin Dự Án</div>
         </div>
-
         <!-- Music -->
         <div class="neo-dock-item" data-action="music">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2"/><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/><circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 18V5l12-2v13" stroke="currentColor" stroke-width="2"></path><circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"></circle><circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"></circle></svg>
           <div class="neo-tooltip">Nhạc Nền</div>
         </div>
-        
         <!-- Images -->
-        <div class="neo-dock-item has-children" id="neo-images-parent">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+        <div class="neo-dock-item" data-action="images">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2"></path><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"></circle></svg>
           <div class="neo-tooltip">Hình Ảnh</div>
-          <div class="neo-dock-submenu">
-            <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('node1')">
-              <img src="pano_aerial.png" alt="Top View">
-              <span>Top View</span>
-            </div>
-            <div class="dock-pano-card" onclick="window.pano && window.pano.openNext('node2')">
-              <img src="pano_detached.png" alt="Đơn lập">
-              <span>Biệt thự Đơn lập</span>
-            </div>
-          </div>
         </div>
-
         <!-- Hotspots -->
         <div class="neo-dock-item" data-action="hotspots">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"></circle><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"></circle></svg>
           <div class="neo-tooltip">Ẩn/Hiện Hotspots</div>
         </div>
-
         <!-- Share -->
         <div class="neo-dock-item has-children" id="neo-share-parent">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A3 3 0 1018 2a3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6zM8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A3 3 0 1018 2a3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6zM8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2"></path></svg>
           <div class="neo-tooltip">Chia Sẻ</div>
           <div class="neo-dock-submenu flex-col">
             <a href="https://facebook.com" target="_blank" class="dock-share-btn facebook">Facebook</a>
             <a href="https://zalo.me" target="_blank" class="dock-share-btn zalo">Zalo</a>
           </div>
         </div>
-
         <!-- Call -->
         <div class="neo-dock-item" data-action="call">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"/></svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2"></path></svg>
           <div class="neo-tooltip">Tư Vấn</div>
         </div>
-
         <!-- Fullscreen -->
         <div class="neo-dock-item" data-action="fullscreen">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -854,97 +737,110 @@
   // OPTION 5: AURORA LAYOUT TEMPLATES
   // ==========================================
 
-  const auroraLeftNavHTML = `
-    <div class="aurora-nav-container collapsed" id="aurora-nav-container">
+  const auroraLeftNavHTML = `<div class="aurora-nav-container collapsed" id="aurora-nav-container">
       <div class="aurora-nav-pin-btn" id="aurora-nav-pin-btn" title="Ghim thanh điều hướng">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="17" x2="12" y2="22" />
-          <path d="M5 17h14v-1.76a2 2 0 0 0-.44-1.24l-2.78-3.5A2 2 0 0 1 15 9.26V5a3 3 0 0 0-6 0v4.26a2 2 0 0 1-.78 1.24l-2.78 3.5A2 2 0 0 0 5 15.24z" />
+          <line x1="12" y1="17" x2="12" y2="22"></line>
+          <path d="M5 17h14v-1.76a2 2 0 0 0-.44-1.24l-2.78-3.5A2 2 0 0 1 15 9.26V5a3 3 0 0 0-6 0v4.26a2 2 0 0 1-.78 1.24l-2.78 3.5A2 2 0 0 0 5 15.24z"></path>
         </svg>
       </div>
       <div class="aurora-nav-list" id="aurora-main-nav">
+        
+
         <!-- 1. TOP VIEW (Electric Cyan) -->
-        <div class="aurora-nav-item-wrapper" data-id="topview">
-          <div class="aurora-nav-item" data-id="topview" data-pano-node="node1" data-action="overview-top" style="--accent-color: var(--aurora-cyan);">
+        <div class="aurora-nav-item-wrapper has-children" data-id="topview">
+          <div class="aurora-nav-item" data-id="topview" style="--accent-color: var(--aurora-cyan);">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                <polyline points="2 17 12 22 22 17" />
-                <polyline points="2 12 12 17 22 12" />
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
               </svg>
             </div>
-            <span class="aurora-nav-label">Top View</span>
+            <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
+            <svg class="aurora-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </div>
-        </div>
+        <div class="aurora-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'aurora-submenu-item')}
+            </div></div>
 
         <!-- 2. BIRD VIEW (Purple) -->
         <div class="aurora-nav-item-wrapper has-children" data-id="birdview">
           <div class="aurora-nav-item" data-id="birdview" style="--accent-color: var(--aurora-purple);">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 2L11 13" />
-                <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                <path d="M22 2L11 13"></path>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
               </svg>
             </div>
-            <span class="aurora-nav-label">Bird View</span>
+            <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.birdview.label}</span>
             <svg class="aurora-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9" />
+              <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </div>
           <div class="aurora-submenu">
-            <div class="aurora-submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-            <div class="aurora-submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-            <div class="aurora-submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'aurora-submenu-item')}
+            </div>
         </div>
 
         <!-- 3. AMENITIES (Emerald) -->
-        <div class="aurora-nav-item-wrapper" data-id="amenities">
-          <div class="aurora-nav-item" data-id="amenities" data-action="amenity-pool" style="--accent-color: var(--aurora-emerald);">
+        <div class="aurora-nav-item-wrapper has-children" data-id="amenities">
+          <div class="aurora-nav-item" data-id="amenities" style="--accent-color: var(--aurora-emerald);">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2zM9 22v-2" />
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 3.5 1 9.8a7 7 0 0 1-9 8.2zM9 22v-2"></path>
               </svg>
             </div>
-            <span class="aurora-nav-label">Tiện ích</span>
+            <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.amenities.label}</span>
+            <svg class="aurora-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </div>
-        </div>
+        <div class="aurora-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'aurora-submenu-item')}
+            </div></div>
 
         <!-- 4. ARCHITECTURE (Orange) -->
-        <div class="aurora-nav-item-wrapper" data-id="architecture">
-          <div class="aurora-nav-item" data-id="architecture" data-action="architecture-1" style="--accent-color: var(--aurora-orange);">
+        <div class="aurora-nav-item-wrapper has-children" data-id="architecture">
+          <div class="aurora-nav-item" data-id="architecture" style="--accent-color: var(--aurora-orange);">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <line x1="9" y1="3" x2="9" y2="21" />
-                <line x1="15" y1="3" x2="15" y2="21" />
-                <line x1="3" y1="9" x2="21" y2="9" />
-                <line x1="3" y1="15" x2="21" y2="15" />
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+                <line x1="15" y1="3" x2="15" y2="21"></line>
+                <line x1="3" y1="9" x2="21" y2="9"></line>
+                <line x1="3" y1="15" x2="21" y2="15"></line>
               </svg>
             </div>
-            <span class="aurora-nav-label">Kiến trúc</span>
+            <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.architecture.label}</span>
+            <svg class="aurora-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
           </div>
-        </div>
+        <div class="aurora-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'aurora-submenu-item')}
+            </div></div>
 
         <!-- 5. INTERIOR (Pink) -->
         <div class="aurora-nav-item-wrapper has-children" data-id="interior">
           <div class="aurora-nav-item" data-id="interior" style="--accent-color: var(--aurora-pink);">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M19 10V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v5m14 0a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2m14 0H5" />
-                <line x1="6" y1="18" x2="6" y2="21" />
-                <line x1="18" y1="18" x2="18" y2="21" />
+                <path d="M19 10V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v5m14 0a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2m14 0H5"></path>
+                <line x1="6" y1="18" x2="6" y2="21"></line>
+                <line x1="18" y1="18" x2="18" y2="21"></line>
               </svg>
             </div>
-            <span class="aurora-nav-label">Nội thất</span>
+            <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.interior.label}</span>
             <svg class="aurora-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9" />
+              <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </div>
           <div class="aurora-submenu">
-            <div class="aurora-submenu-item" data-action="interior-1">Nội thất 1</div>
-            <div class="aurora-submenu-item" data-action="interior-2">Nội thất 2</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'aurora-submenu-item')}
+            </div>
         </div>
 
         <!-- 6. LIÊN KẾT VÙNG (Electric Cyan) -->
@@ -952,92 +848,76 @@
           <div class="aurora-nav-item" data-id="surrounding" data-action="region-page" style="--accent-color: var(--aurora-cyan);">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
               </svg>
             </div>
-            <span class="aurora-nav-label">Liên kết vùng</span>
+            <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.surrounding.label}</span>
           </div>
         </div>
       </div>
     </div>
   `;
 
-  const auroraRightToolHTML = `
-    <div class="aurora-tool-panel collapsed" id="aurora-tool-panel">
+  const auroraRightToolHTML = `<div class="aurora-tool-panel collapsed" id="aurora-tool-panel">
       <!-- Pin trigger -->
       <div class="aurora-tool-pin-btn" id="aurora-tool-pin-btn" title="Ghim bảng công cụ">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="17" x2="12" y2="22" />
-          <path d="M5 17h14v-1.76a2 2 0 0 0-.44-1.24l-2.78-3.5A2 2 0 0 1 15 9.26V5a3 3 0 0 0-6 0v4.26a2 2 0 0 1-.78 1.24l-2.78 3.5A2 2 0 0 0 5 15.24z" />
+          <line x1="12" y1="17" x2="12" y2="22"></line>
+          <path d="M5 17h14v-1.76a2 2 0 0 0-.44-1.24l-2.78-3.5A2 2 0 0 1 15 9.26V5a3 3 0 0 0-6 0v4.26a2 2 0 0 1-.78 1.24l-2.78 3.5A2 2 0 0 0 5 15.24z"></path>
         </svg>
       </div>
-
       <div class="aurora-tool-list">
         <!-- Project Information (Purple) -->
         <div class="aurora-tool-item" data-action="info" title="Thông Tin Dự Án" style="--accent-color: var(--aurora-purple);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="16" x2="12" y2="12" />
-              <line x1="12" y1="8" x2="12.01" y2="8" />
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
             </svg>
           </div>
           <span class="aurora-tool-label">Thông Tin</span>
         </div>
-
         <!-- Music (Pink) -->
         <div class="aurora-tool-item" data-action="music" title="Nhạc Nền" style="--accent-color: var(--aurora-pink);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M9 18V5l12-2v13" />
-              <circle cx="6" cy="18" r="3" />
-              <circle cx="18" cy="16" r="3" />
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
             </svg>
           </div>
           <span class="aurora-tool-label">Nhạc Nền</span>
         </div>
-
         <!-- Images (Purple) -->
-        <div class="aurora-tool-item has-submenu" id="aurora-tool-images" title="Hình Ảnh" style="--accent-color: var(--aurora-purple);">
+        <div class="aurora-tool-item" id="aurora-tool-images" title="Hình Ảnh" style="--accent-color: var(--aurora-purple);" data-action="images">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <circle cx="8.5" cy="8.5" r="1.5" />
-              <polyline points="21 15 16 10 5 21" />
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
             </svg>
           </div>
           <span class="aurora-tool-label">Hình Ảnh</span>
-          <div class="aurora-tool-submenu">
-            <div class="aurora-pano-card" onclick="window.pano && window.pano.openNext('node1')">
-              <img src="pano_aerial.png" alt="Top View">
-              <span>Top View</span>
-            </div>
-            <div class="aurora-pano-card" onclick="window.pano && window.pano.openNext('node2')">
-              <img src="pano_detached.png" alt="Đơn lập">
-              <span>Biệt thự Đơn lập</span>
-            </div>
-          </div>
         </div>
-
         <!-- Hotspots (Emerald) -->
         <div class="aurora-tool-item" data-action="hotspots" title="Ẩn/Hiện Hotspots" style="--accent-color: var(--aurora-emerald);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10" stroke-dasharray="4 4" />
-              <circle cx="12" cy="12" r="3" />
+              <circle cx="12" cy="12" r="10" stroke-dasharray="4 4"></circle>
+              <circle cx="12" cy="12" r="3"></circle>
             </svg>
           </div>
           <span class="aurora-tool-label">Hotspots</span>
         </div>
-
         <!-- Share (Orange) -->
         <div class="aurora-tool-item has-submenu" id="aurora-tool-share" title="Chia Sẻ" style="--accent-color: var(--aurora-orange);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-              <polyline points="16 6 12 2 8 6" />
-              <line x1="12" y1="2" x2="12" y2="15" />
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+              <polyline points="16 6 12 2 8 6"></polyline>
+              <line x1="12" y1="2" x2="12" y2="15"></line>
             </svg>
           </div>
           <span class="aurora-tool-label">Chia Sẻ</span>
@@ -1046,23 +926,20 @@
             <a href="https://zalo.me" target="_blank" class="aurora-share-btn zalo">Zalo</a>
           </div>
         </div>
-
         <!-- Call (Electric Cyan) -->
         <div class="aurora-tool-item" data-action="call" title="Tư Vấn" style="--accent-color: var(--aurora-cyan);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
           </div>
           <span class="aurora-tool-label">Tư Vấn</span>
         </div>
-
-
         <!-- Fullscreen (Electric Cyan) -->
         <div class="aurora-tool-item" data-action="fullscreen" title="Toàn Màn Hình" style="--accent-color: var(--aurora-cyan);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
             </svg>
           </div>
           <span class="aurora-tool-label">Toàn Màn Hình</span>
@@ -1118,146 +995,121 @@
   // OPTION 6: HORIZON LAYOUT TEMPLATES
   // ==========================================
 
-  const horizonBottomDockHTML = `
-    <div class="horizon-nav-container" id="horizon-nav-container">
+  const horizonBottomDockHTML = `<div class="horizon-nav-container" id="horizon-nav-container">
       <div class="horizon-dock">
         <!-- 1. TOP VIEW -->
-        <div class="horizon-nav-item-wrapper" data-id="topview">
-          <div class="horizon-nav-item" data-id="topview" data-pano-node="node1" data-action="overview-top">
-            <span class="horizon-nav-label">Top View</span>
+        <div class="horizon-nav-item-wrapper has-submenu" data-id="topview">
+          <div class="horizon-nav-item" data-id="topview">
+            <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
-        </div>
+        <div class="horizon-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'horizon-submenu-item')}
+            </div></div>
 
         <!-- 2. BIRD VIEW -->
         <div class="horizon-nav-item-wrapper has-submenu" data-id="birdview">
           <div class="horizon-nav-item" data-id="birdview">
-            <span class="horizon-nav-label">Bird View</span>
+            <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.birdview.label}</span>
           </div>
           <div class="horizon-submenu">
-            <div class="horizon-submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-            <div class="horizon-submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-            <div class="horizon-submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'horizon-submenu-item')}
+            </div>
         </div>
 
         <!-- 3. AMENITIES -->
         <div class="horizon-nav-item-wrapper has-submenu" data-id="amenities">
-          <div class="horizon-nav-item" data-id="amenities" data-action="amenity-pool">
-            <span class="horizon-nav-label">Tiện ích</span>
+          <div class="horizon-nav-item" data-id="amenities">
+            <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.amenities.label}</span>
           </div>
           <div class="horizon-submenu">
-            <div class="horizon-submenu-item" data-action="amenity-pool">Hồ Bơi</div>
-            <div class="horizon-submenu-item" data-action="amenity-gym">Phòng Gym</div>
-            <div class="horizon-submenu-item" data-action="amenity-park">Công Viên</div>
-            <div class="horizon-submenu-item" data-action="amenity-spa">Spa & Massage</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'horizon-submenu-item')}
+            </div>
         </div>
 
         <!-- 4. ARCHITECTURE -->
         <div class="horizon-nav-item-wrapper has-submenu" data-id="architecture">
-          <div class="horizon-nav-item" data-id="architecture" data-action="architecture-1">
-            <span class="horizon-nav-label">Kiến trúc</span>
+          <div class="horizon-nav-item" data-id="architecture">
+            <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.architecture.label}</span>
           </div>
           <div class="horizon-submenu">
-            <div class="horizon-submenu-item" data-action="architecture-1">Kiến trúc 1</div>
-            <div class="horizon-submenu-item" data-action="architecture-2">Kiến trúc 2</div>
-            <div class="horizon-submenu-item" data-action="architecture-3">Kiến trúc 3</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'horizon-submenu-item')}
+            </div>
         </div>
 
         <!-- 5. INTERIOR -->
         <div class="horizon-nav-item-wrapper has-submenu" data-id="interior">
           <div class="horizon-nav-item" data-id="interior">
-            <span class="horizon-nav-label">Nội thất</span>
+            <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.interior.label}</span>
           </div>
           <div class="horizon-submenu">
-            <div class="horizon-submenu-item" data-action="interior-1">Nội thất 1</div>
-            <div class="horizon-submenu-item" data-action="interior-2">Nội thất 2</div>
-          </div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'horizon-submenu-item')}
+            </div>
         </div>
 
         <!-- 6. LIÊN KẾT VÙNG -->
         <div class="horizon-nav-item-wrapper" data-id="surrounding">
           <div class="horizon-nav-item" data-id="surrounding" data-action="region-page">
-            <span class="horizon-nav-label">Liên kết vùng</span>
+            <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.surrounding.label}</span>
           </div>
         </div>
       </div>
     </div>
   `;
 
-  const horizonRightToolHTML = `
-    <div class="horizon-tool-panel" id="horizon-tool-panel">
+  const horizonRightToolHTML = `<div class="horizon-tool-panel" id="horizon-tool-panel">
       <!-- Project Information -->
       <div class="horizon-tool-item" data-action="info" title="Thông Tin Dự Án">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <line x1="12" y1="16" x2="12" y2="12" />
-          <line x1="12" y1="8" x2="12.01" y2="8" />
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
         </svg>
       </div>
-
       <!-- Music -->
       <div class="horizon-tool-item" data-action="music" title="Nhạc Nền">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 18V5l12-2v13" />
-          <circle cx="6" cy="18" r="3" />
-          <circle cx="18" cy="16" r="3" />
+          <path d="M9 18V5l12-2v13"></path>
+          <circle cx="6" cy="18" r="3"></circle>
+          <circle cx="18" cy="16" r="3"></circle>
         </svg>
       </div>
-
       <!-- Images -->
-      <div class="horizon-tool-item has-submenu" id="horizon-tool-images" title="Hình Ảnh">
+      <div class="horizon-tool-item" id="horizon-tool-images" title="Hình Ảnh" data-action="images">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <circle cx="8.5" cy="8.5" r="1.5" />
-          <polyline points="21 15 16 10 5 21" />
+          <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+          <circle cx="8.5" cy="8.5" r="1.5"></circle>
+          <polyline points="21 15 16 10 5 21"></polyline>
         </svg>
-        <div class="horizon-tool-submenu">
-          <div class="horizon-pano-card" onclick="window.pano && window.pano.openNext('node1')">
-            <img src="pano_aerial.png" alt="Top View">
-            <span>Top View</span>
-          </div>
-          <div class="horizon-pano-card" onclick="window.pano && window.pano.openNext('node2')">
-            <img src="pano_detached.png" alt="Đơn lập">
-            <span>Biệt thự Đơn lập</span>
-          </div>
-        </div>
       </div>
-
       <!-- Hotspots -->
       <div class="horizon-tool-item" data-action="hotspots" title="Ẩn/Hiện Hotspots">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10" stroke-dasharray="3 3" />
-          <circle cx="12" cy="12" r="3" />
+          <circle cx="12" cy="12" r="10" stroke-dasharray="3 3"></circle>
+          <circle cx="12" cy="12" r="3"></circle>
         </svg>
       </div>
-
       <!-- Share -->
       <div class="horizon-tool-item has-submenu" id="horizon-tool-share" title="Chia Sẻ">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-          <polyline points="16 6 12 2 8 6" />
-          <line x1="12" y1="2" x2="12" y2="15" />
+          <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+          <polyline points="16 6 12 2 8 6"></polyline>
+          <line x1="12" y1="2" x2="12" y2="15"></line>
         </svg>
         <div class="horizon-tool-submenu flex-col">
           <a href="https://facebook.com" target="_blank" class="horizon-share-btn facebook">Facebook</a>
           <a href="https://zalo.me" target="_blank" class="horizon-share-btn zalo">Zalo</a>
         </div>
       </div>
-
       <!-- Call -->
       <div class="horizon-tool-item" data-action="call" title="Tư Vấn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
         </svg>
       </div>
-
-
       <!-- Fullscreen -->
       <div class="horizon-tool-item" data-action="fullscreen" title="Toàn Màn Hình">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
         </svg>
       </div>
     </div>
@@ -1296,72 +1148,81 @@
 
 
   // OPTION 8: PRISM LAYOUT TEMPLATES
-  const prismNavHTML = `
-    <div class="prism-nav-container" id="prism-nav-container">
+  const prismNavHTML = `<div class="prism-nav-container" id="prism-nav-container">
       <div class="prism-nav-wrapper">
         <div class="prism-nav-list">
+          <!-- BRAND LOGO -->
+          <div class="prism-nav-item" data-id="latien-brand" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; pointer-events: none; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; background: transparent;">
+            <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.5);">${PROJECT_CONTENT.projectTitle.top}</div>
+            <div style="width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #fff, transparent); margin: 5px 0;"></div>
+            <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 4px; color: rgba(255,255,255,0.5); text-transform: uppercase;">${PROJECT_CONTENT.projectTitle.sub}</div>
+          </div>
+
 
           <!-- Item 1: Top View -->
-          <div class="prism-nav-item" data-id="topview" data-pano-node="node1" data-action="overview-top">
+          <div class="prism-nav-item has-submenu" data-id="topview">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                <circle cx="12" cy="12" r="3" />
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
               </svg>
             </div>
-            <span class="prism-nav-label">Top View</span>
-          </div>
+            <span class="prism-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
+          <div class="prism-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'prism-submenu-item')}
+            </div></div>
 
           <!-- Item 2: Bird View (has submenu) -->
           <div class="prism-nav-item has-submenu" data-id="birdview">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                <path d="M12 22V12" /><path d="m12 12 8.7-5" /><path d="m12 12-8.7-5" />
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <path d="M12 22V12"></path><path d="m12 12 8.7-5"></path><path d="m12 12-8.7-5"></path>
               </svg>
             </div>
-            <span class="prism-nav-label">Bird View</span>
+            <span class="prism-nav-label">${PROJECT_CONTENT.navItems.birdview.label}</span>
             <div class="prism-submenu">
-              <div class="prism-submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-              <div class="prism-submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-              <div class="prism-submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'prism-submenu-item')}
             </div>
           </div>
 
           <!-- Item 3: Amenities -->
-          <div class="prism-nav-item" data-id="amenities" data-action="amenity-pool">
+          <div class="prism-nav-item has-submenu" data-id="amenities">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.912 5.886H3.88l5.03 3.656L7.002 18.43 12 14.772l4.998 3.656-1.908-5.888 5.03-3.656h-6.208L12 3Z" />
+                <path d="m12 3-1.912 5.886H3.88l5.03 3.656L7.002 18.43 12 14.772l4.998 3.656-1.908-5.888 5.03-3.656h-6.208L12 3Z"></path>
               </svg>
             </div>
-            <span class="prism-nav-label">Tiện ích</span>
-          </div>
+            <span class="prism-nav-label">${PROJECT_CONTENT.navItems.amenities.label}</span>
+          <div class="prism-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'prism-submenu-item')}
+            </div></div>
 
           <!-- Item 4: Architecture -->
-          <div class="prism-nav-item" data-id="architecture" data-action="architecture-1">
+          <div class="prism-nav-item has-submenu" data-id="architecture">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
-                <path d="m8 10 3 3 5-5" />
+                <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+                <path d="m8 10 3 3 5-5"></path>
               </svg>
             </div>
-            <span class="prism-nav-label">Kiến trúc</span>
-          </div>
+            <span class="prism-nav-label">${PROJECT_CONTENT.navItems.architecture.label}</span>
+          <div class="prism-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'prism-submenu-item')}
+            </div></div>
 
           <!-- Item 5: Interior (has submenu) -->
           <div class="prism-nav-item has-submenu" data-id="interior">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M9 3v18" /><path d="M15 3v18" />
-                <path d="M3 9h18" /><path d="M3 15h18" />
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <path d="M9 3v18"></path><path d="M15 3v18"></path>
+                <path d="M3 9h18"></path><path d="M3 15h18"></path>
               </svg>
             </div>
-            <span class="prism-nav-label">Nội thất</span>
+            <span class="prism-nav-label">${PROJECT_CONTENT.navItems.interior.label}</span>
             <div class="prism-submenu">
-              <div class="prism-submenu-item" data-action="interior-1">Nội thất 1</div>
-              <div class="prism-submenu-item" data-action="interior-2">Nội thất 2</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'prism-submenu-item')}
             </div>
           </div>
 
@@ -1369,11 +1230,11 @@
           <div class="prism-nav-item" data-id="surrounding" data-action="region-page">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z" />
-                <circle cx="12" cy="10" r="3" />
+                <path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
               </svg>
             </div>
-            <span class="prism-nav-label">Liên Kết Vùng</span>
+            <span class="prism-nav-label">${PROJECT_CONTENT.navItems.surrounding.label}</span>
           </div>
 
         </div>
@@ -1494,82 +1355,84 @@
   `;
 
   // OPTION 9: NEXUS LAYOUT TEMPLATES
-  const nexusNavHTML = `
-    <div class="nexus-nav-container" id="nexus-nav-container">
+  const nexusNavHTML = `<div class="nexus-nav-container" id="nexus-nav-container">
       <div class="nexus-nav-wrapper">
         <div class="nexus-nav-list">
 
           <!-- Item 1: Top View -->
-          <div class="nexus-nav-item" data-id="topview" data-pano-node="node1" data-action="overview-top">
+          <div class="nexus-nav-item" data-id="topview">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0Z" />
+                <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+                <path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0Z"></path>
               </svg>
             </div>
-            <span class="nexus-nav-label">Top View</span>
+            <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
             <span class="nexus-active-line"></span>
-          </div>
+          <div class="nexus-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'nexus-submenu-item')}
+            </div></div>
 
           <!-- Item 2: Bird View -->
           <div class="nexus-nav-item has-submenu" data-id="birdview">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-                <line x1="12" y1="22.08" x2="12" y2="12" />
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
               </svg>
             </div>
-            <span class="nexus-nav-label">Bird View</span>
+            <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.birdview.label}</span>
             <span class="nexus-active-line"></span>
             <div class="nexus-submenu">
-              <div class="nexus-submenu-item" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-              <div class="nexus-submenu-item" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-              <div class="nexus-submenu-item" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'nexus-submenu-item')}
             </div>
           </div>
 
           <!-- Item 3: Amenities -->
-          <div class="nexus-nav-item" data-id="amenities" data-action="amenity-pool">
+          <div class="nexus-nav-item" data-id="amenities">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="m12 3-1.912 5.886H3.88l5.03 3.656L7.002 18.43 12 14.772l4.998 3.656-1.908-5.888 5.03-3.656h-6.208L12 3Z" />
+                <path d="m12 3-1.912 5.886H3.88l5.03 3.656L7.002 18.43 12 14.772l4.998 3.656-1.908-5.888 5.03-3.656h-6.208L12 3Z"></path>
               </svg>
             </div>
-            <span class="nexus-nav-label">Tiện ích</span>
+            <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.amenities.label}</span>
             <span class="nexus-active-line"></span>
-          </div>
+          <div class="nexus-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'nexus-submenu-item')}
+            </div></div>
 
           <!-- Item 4: Architecture -->
-          <div class="nexus-nav-item" data-id="architecture" data-action="architecture-1">
+          <div class="nexus-nav-item" data-id="architecture">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M9 3v18" />
-                <path d="m15 9-6 6" />
-                <path d="M15 15h3" />
-                <path d="M15 9h3" />
+                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                <path d="M9 3v18"></path>
+                <path d="m15 9-6 6"></path>
+                <path d="M15 15h3"></path>
+                <path d="M15 9h3"></path>
               </svg>
             </div>
-            <span class="nexus-nav-label">Kiến trúc</span>
+            <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.architecture.label}</span>
             <span class="nexus-active-line"></span>
-          </div>
+          <div class="nexus-submenu">
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'nexus-submenu-item')}
+            </div></div>
 
           <!-- Item 5: Interior -->
           <div class="nexus-nav-item has-submenu" data-id="interior">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 18v3h16v-3" />
-                <path d="M4 10v4h16v-4" />
-                <path d="M8 10V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v5" />
-                <path d="M12 10V3" />
+                <path d="M4 18v3h16v-3"></path>
+                <path d="M4 10v4h16v-4"></path>
+                <path d="M8 10V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v5"></path>
+                <path d="M12 10V3"></path>
               </svg>
             </div>
-            <span class="nexus-nav-label">Nội thất</span>
+            <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.interior.label}</span>
             <span class="nexus-active-line"></span>
             <div class="nexus-submenu">
-              <div class="nexus-submenu-item" data-action="interior-1">Nội thất 1</div>
-              <div class="nexus-submenu-item" data-action="interior-2">Nội thất 2</div>
+              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'nexus-submenu-item')}
             </div>
           </div>
 
@@ -1577,12 +1440,12 @@
           <div class="nexus-nav-item" data-id="surrounding" data-action="region-page">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 20 3 17V4l6 3 6-3 6 3v13z" />
-                <path d="M9 7v13" />
-                <path d="M15 4v13" />
+                <path d="M9 20 3 17V4l6 3 6-3 6 3v13z"></path>
+                <path d="M9 7v13"></path>
+                <path d="M15 4v13"></path>
               </svg>
             </div>
-            <span class="nexus-nav-label">Liên Kết Vùng</span>
+            <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.surrounding.label}</span>
             <span class="nexus-active-line"></span>
           </div>
 
@@ -1709,68 +1572,36 @@
   // ==========================================
   // OPTION 10: MONARCH LAYOUT TEMPLATES
   // ==========================================
-  const monarchNavHTML = `
-    <div class="monarch-nav-container" id="monarch-nav-container">
+  const monarchNavHTML = `<div class="monarch-nav-container" id="monarch-nav-container">
       <div class="monarch-nav-wrapper">
         <div class="monarch-nav-dock">
-          <div class="monarch-nav-item" data-id="topview" data-pano-node="node1" data-action="overview-top">
+          ${['topview', 'birdview', 'amenities', 'architecture', 'interior'].map(id => {
+            const item = PROJECT_CONTENT.navItems[id];
+            if (item.submenu) {
+                return `
+          <div class="monarch-nav-item has-popover" data-id="${id}">
             <div class="monarch-nav-btn monarch-hover-sweep">
-              <span class="monarch-nav-label">Top View</span>
-            </div>
-          </div>
-          
-          <div class="monarch-nav-item has-popover" data-id="birdview">
-            <div class="monarch-nav-btn monarch-hover-sweep">
-              <span class="monarch-nav-label">Bird View</span>
+              <span class="monarch-nav-label">${item.label}</span>
             </div>
             <div class="monarch-popover">
-              <div class="monarch-popover-title">BIRD VIEW</div>
+              <div class="monarch-popover-title">${item.label.toUpperCase()}</div>
               <div class="monarch-popover-items">
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="overview-bird1" data-pano-node="node2">Bird View 1</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="overview-bird2" data-pano-node="node3">Bird View 2</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="overview-bird3" data-pano-node="node4">Bird View 3</div>
+                ${generateSubmenuHTML(item.submenu, 'monarch-popover-item monarch-hover-sweep')}
               </div>
             </div>
-          </div>
-          
-          <div class="monarch-nav-item has-popover" data-id="amenities">
+          </div>`;
+            } else {
+                return `
+          <div class="monarch-nav-item" data-id="${id}">
             <div class="monarch-nav-btn monarch-hover-sweep">
-              <span class="monarch-nav-label">Tiện ích</span>
+              <span class="monarch-nav-label">${item.label}</span>
             </div>
-            <div class="monarch-popover">
-              <div class="monarch-popover-title">TIỆN ÍCH</div>
-              <div class="monarch-popover-items">
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="amenity-clubhouse" data-pano-node="node1">Clubhouse</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="amenity-marina" data-pano-node="node1">Bến Du Thuyền</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="amenity-sport" data-pano-node="node2">Khu Thể Thao</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="amenity-park" data-pano-node="node3">Central Park</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="monarch-nav-item has-popover" data-id="architecture">
-            <div class="monarch-nav-btn monarch-hover-sweep">
-              <span class="monarch-nav-label">Kiến trúc</span>
-            </div>
-            <div class="monarch-popover">
-              <div class="monarch-popover-title">KIẾN TRÚC</div>
-              <div class="monarch-popover-items">
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="arch-layout" data-pano-node="node3">Mặt Bằng Tổng Thể</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="arch-semi" data-pano-node="node4">Biệt Thự Song Lập</div>
-                <div class="monarch-popover-item monarch-hover-sweep" data-action="arch-detached" data-pano-node="node5">Biệt Thự Đơn Lập</div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="monarch-nav-item" data-id="interior" data-action="interior-1">
-            <div class="monarch-nav-btn monarch-hover-sweep">
-              <span class="monarch-nav-label">Nội thất</span>
-            </div>
-          </div>
-          
+          </div>`;
+            }
+          }).join('')}
           <div class="monarch-nav-item" data-id="surrounding" data-action="region-page">
             <div class="monarch-nav-btn monarch-hover-sweep">
-              <span class="monarch-nav-label">Liên kết vùng</span>
+              <span class="monarch-nav-label">${PROJECT_CONTENT.navItems.surrounding.label}</span>
             </div>
           </div>
         </div>
@@ -1943,7 +1774,7 @@
       </div>
       <div class="minimap-body" id="minimap-body">
         <div class="minimap-canvas" id="minimap-canvas">
-          <img src="pano_aerial.png" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
+          <img src="image/thumbnails/PIN TOP.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
           <!-- Current viewpoint cone indicator -->
           <div class="minimap-viewcone" id="minimap-viewcone"></div>
           <!-- Current position dot -->
@@ -2040,7 +1871,7 @@
       </div>
       <div class="minimap-body" id="minimap-body">
         <div class="minimap-canvas" id="minimap-canvas">
-          <img src="pano_aerial.png" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
+          <img src="image/thumbnails/PIN TOP.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
           <!-- Current viewpoint cone indicator -->
           <div class="minimap-viewcone" id="minimap-viewcone"></div>
           <!-- Current position dot -->
@@ -2289,6 +2120,15 @@
   }
 
   // Inject structural templates and initialize event listeners for layout
+
+    const globalFloatingLogoHTML = `
+      <div class="layout-floating-logo global-floating-logo" style="position: absolute; top: 20px; left: 20px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-start; pointer-events: none;">
+        <div class="logo-script-top" style="font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">${PROJECT_CONTENT.projectTitle.top}</div>
+        <div class="logo-script-wave" style="width: 40px; height: 2px; background: #fff; margin: 5px 0; box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+        <div class="logo-script-sub" style="font-family: 'Montserrat', sans-serif; font-size: 11px; letter-spacing: 4px; color: rgba(255,255,255,0.8); text-transform: uppercase; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">${PROJECT_CONTENT.projectTitle.sub}</div>
+      </div>
+    `;
+
   function injectLayoutComponents(handleSwitch) {
     const uiWrapper = document.querySelector(".modern-ui-overlay");
     if (!uiWrapper) return;
@@ -2345,7 +2185,7 @@
       setupAuroraListeners();
     } else if (layoutMode === "horizon") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = horizonBottomDockHTML + horizonRightToolHTML;
+      tempDiv.innerHTML = globalFloatingLogoHTML + horizonBottomDockHTML + horizonRightToolHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -2359,14 +2199,14 @@
       setupPrismListeners();
     } else if (layoutMode === "nexus") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = nexusNavHTML + nexusRightToolHTML;
+      tempDiv.innerHTML = globalFloatingLogoHTML + nexusNavHTML + nexusRightToolHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupNexusListeners();
     } else if (layoutMode === "monarch" || layoutMode === "regal") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML;
+      tempDiv.innerHTML = globalFloatingLogoHTML + monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -2779,7 +2619,7 @@
             // It has no submenu, or it is interior (where clicking parent triggers Interior page)
             iconWrappers.forEach(n => n.classList.remove('pinned', 'hover-open'));
             const action = wrapper.getAttribute("data-action");
-            if (action && ["music", "hotspots", "info", "fullscreen", "call"].includes(action)) {
+            if (action && ["music", "hotspots", "info", "fullscreen", "call", "images", "share", "facebook", "instagram", "zalo"].includes(action)) {
               dispatchToolAction(wrapper);
             } else {
               routeNavigation(wrapper);
@@ -3042,19 +2882,6 @@ document.addEventListener('click', (e) => {
             submenu.classList.toggle("open", !isOpen);
             if (chevron) chevron.classList.toggle("rotate", !isOpen);
           }
-          
-          // Allow navigation for interior
-          const id = this.getAttribute("data-id");
-          if (id === "interior") {
-            navItems.forEach(n => n.classList.remove("active"));
-            submenuItems.forEach(s => s.classList.remove("active"));
-            this.classList.add("active");
-            
-            activeNavItemId = id;
-            lsSet("latien_active_nav", activeNavItemId);
-            
-            routeNavigation(this);
-          }
           return;
         }
         
@@ -3181,19 +3008,6 @@ document.addEventListener('click', (e) => {
             openSubmenus.forEach(s => { if (s !== submenu) s.classList.remove("open"); });
             submenu.classList.toggle("open", !isOpen);
           }
-          
-          // Allow navigation for interior
-          const id = this.getAttribute("data-id");
-          if (id === "interior") {
-            navItems.forEach(n => n.classList.remove("active"));
-            submenuItems.forEach(s => s.classList.remove("active"));
-            this.classList.add("active");
-            
-            activeNavItemId = id;
-            lsSet("latien_active_nav", activeNavItemId);
-            
-            routeNavigation(this);
-          }
           return;
         }
 
@@ -3317,19 +3131,6 @@ document.addEventListener('click', (e) => {
           const wasOpen = this.classList.contains("open");
           navItems.forEach(n => n.classList.remove("open"));
           if (!wasOpen) this.classList.add("open");
-          
-          // Allow navigation for interior
-          const id = this.getAttribute("data-id");
-          if (id === "interior") {
-            navItems.forEach(n => n.classList.remove("active"));
-            submenuItems.forEach(s => s.classList.remove("active"));
-            this.classList.add("active");
-            
-            activeNavItemId = id;
-            lsSet("latien_active_nav", activeNavItemId);
-            
-            routeNavigation(this);
-          }
           return;
         }
         navItems.forEach(n => n.classList.remove("active", "open"));
@@ -3400,19 +3201,6 @@ document.addEventListener('click', (e) => {
           const wasOpen = this.classList.contains("open");
           navItems.forEach(n => n.classList.remove("open"));
           if (!wasOpen) this.classList.add("open");
-          
-          // Allow navigation for interior
-          const id = this.getAttribute("data-id");
-          if (id === "interior") {
-            navItems.forEach(n => n.classList.remove("active"));
-            submenuItems.forEach(s => s.classList.remove("active"));
-            this.classList.add("active");
-            
-            activeNavItemId = id;
-            lsSet("latien_active_nav", activeNavItemId);
-            
-            routeNavigation(this);
-          }
           return;
         }
         navItems.forEach(n => n.classList.remove("active", "open"));
@@ -3598,12 +3386,7 @@ document.addEventListener('click', (e) => {
         break;
 
       case "images":
-        isImagesHidden = !isImagesHidden;
-        if (window.pano && typeof window.pano.setTextureVisible === "function") {
-          window.pano.setTextureVisible(!isImagesHidden);
-        }
-        btn.classList.toggle("active-tool", isImagesHidden);
-        showNotification(isImagesHidden ? "Hình ảnh đã ẩn" : "Hình ảnh đã hiện");
+        openGlobalPanoramaGallery();
         break;
 
       case "hotspots":
@@ -4811,3 +4594,249 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
     ;
+
+
+// ==========================================
+// GLOBAL PANORAMA GALLERY MODAL
+// ==========================================
+const globalPanoramasList = [
+  { id: 'nodegallarey1', title: 'Gallarey 1', thumb: 'tiles/nodegallarey1/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_aerial.png' },
+  { id: 'nodegallarey2', title: 'Gallarey 2', thumb: 'tiles/nodegallarey2/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_detached.png' },
+  { id: 'nodegallarey3', title: 'Gallarey 3', thumb: 'tiles/nodegallarey3/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_semidetached.png' },
+  { id: 'nodegallarey4', title: 'Gallarey 4', thumb: 'tiles/nodegallarey4/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_townhouse.png' },
+  { id: 'nodegallarey5', title: 'Gallarey 5', thumb: 'tiles/nodegallarey5/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_aerial.png' },
+  { id: 'nodegallarey6', title: 'Gallarey 6', thumb: 'tiles/nodegallarey6/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_detached.png' },
+  { id: 'nodegallarey7', title: 'Gallarey 7', thumb: 'tiles/nodegallarey7/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_semidetached.png' },
+  { id: 'nodegallarey8', title: 'Gallarey 8', thumb: 'tiles/nodegallarey8/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_townhouse.png' }
+];
+
+let gpgCurrentIndex = 0;
+let gpgAutoSlideInterval = null;
+let gpgInactivityTimeout = null;
+
+function initGlobalPanoramaGallery() {
+  if (document.getElementById('global-pano-gallery')) return;
+  
+  const overlay = document.createElement('div');
+  overlay.id = 'global-pano-gallery';
+  overlay.className = 'global-pano-gallery-overlay';
+  
+  let slidesHTML = '';
+  let thumbsHTML = '';
+  
+  globalPanoramasList.forEach((pano, index) => {
+    slidesHTML += `
+      <div class="gpg-slide" data-index="${index}">
+        <img src="${pano.thumb}" onerror="this.src='${pano.fallback}'" alt="${pano.title}">
+        <div class="gpg-slide-overlay">
+          <div class="gpg-slide-title">${pano.title}</div>
+        </div>
+      </div>
+    `;
+    thumbsHTML += `
+      <div class="gpg-thumb" data-index="${index}">
+        <img src="${pano.thumb}" onerror="this.src='${pano.fallback}'" alt="${pano.title}">
+      </div>
+    `;
+  });
+
+  overlay.innerHTML = `
+    <div class="gpg-close-btn" id="gpg-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 6L6 18M6 6l12 12"></path>
+      </svg>
+    </div>
+    
+    <div class="gpg-main-view" id="gpg-main-view">
+      <div class="gpg-slide-container" id="gpg-slide-container">
+        ${slidesHTML}
+      </div>
+      <div class="gpg-nav-btn gpg-prev" id="gpg-prev">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M15 18l-6-6 6-6"></path>
+        </svg>
+      </div>
+      <div class="gpg-nav-btn gpg-next" id="gpg-next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"></path>
+        </svg>
+      </div>
+    </div>
+    
+    <div class="gpg-thumbnails-wrapper">
+      <div class="gpg-thumbnails" id="gpg-thumbnails">
+        ${thumbsHTML}
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(overlay);
+  
+  // Event Listeners
+  document.getElementById('gpg-close').addEventListener('click', closeGlobalPanoramaGallery);
+  
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeGlobalPanoramaGallery();
+  });
+  
+  document.getElementById('gpg-prev').addEventListener('click', () => {
+    navigateGlobalGallery(-1);
+    resetGpgInactivity();
+  });
+  
+  document.getElementById('gpg-next').addEventListener('click', () => {
+    navigateGlobalGallery(1);
+    resetGpgInactivity();
+  });
+  
+  const thumbs = overlay.querySelectorAll('.gpg-thumb');
+  thumbs.forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      goToGlobalGallerySlide(parseInt(thumb.getAttribute('data-index')));
+      resetGpgInactivity();
+    });
+  });
+  
+  const slides = overlay.querySelectorAll('.gpg-slide');
+  slides.forEach(slide => {
+    slide.addEventListener('click', () => {
+      const idx = parseInt(slide.getAttribute('data-index'));
+      const panoId = globalPanoramasList[idx].id;
+      if (window.pano && typeof window.pano.openNext === 'function') {
+        window.pano.openNext('{' + panoId + '}');
+      }
+      closeGlobalPanoramaGallery();
+    });
+  });
+  
+  // Swipe & Drag support
+  const mainView = document.getElementById('gpg-main-view');
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+  
+  const touchStart = (e) => {
+    startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    isDragging = true;
+    resetGpgInactivity();
+  };
+  
+  const touchMove = (e) => {
+    if (!isDragging) return;
+    currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+  };
+  
+  const touchEnd = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    const diff = startX - currentX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) navigateGlobalGallery(1);
+      else navigateGlobalGallery(-1);
+    }
+  };
+  
+  mainView.addEventListener('touchstart', touchStart, {passive: true});
+  mainView.addEventListener('touchmove', touchMove, {passive: true});
+  mainView.addEventListener('touchend', touchEnd);
+  
+  mainView.addEventListener('mousedown', touchStart);
+  window.addEventListener('mousemove', touchMove);
+  window.addEventListener('mouseup', touchEnd);
+  
+  document.addEventListener('keydown', handleGpgKeyboard);
+}
+
+function handleGpgKeyboard(e) {
+  const overlay = document.getElementById('global-pano-gallery');
+  if (!overlay || !overlay.classList.contains('active')) return;
+  
+  if (e.key === 'Escape') {
+    closeGlobalPanoramaGallery();
+  } else if (e.key === 'ArrowLeft') {
+    navigateGlobalGallery(-1);
+    resetGpgInactivity();
+  } else if (e.key === 'ArrowRight') {
+    navigateGlobalGallery(1);
+    resetGpgInactivity();
+  }
+}
+
+function updateGlobalGalleryUI() {
+  const container = document.getElementById('gpg-slide-container');
+  if (!container) return;
+  
+  // Slide transform
+  container.style.transform = `translateX(-${gpgCurrentIndex * 100}%)`;
+  
+  // Active slide class
+  document.querySelectorAll('.gpg-slide').forEach((slide, idx) => {
+    slide.classList.toggle('active', idx === gpgCurrentIndex);
+  });
+  
+  // Active thumb class
+  const thumbsContainer = document.getElementById('gpg-thumbnails');
+  document.querySelectorAll('.gpg-thumb').forEach((thumb, idx) => {
+    thumb.classList.toggle('active', idx === gpgCurrentIndex);
+    if (idx === gpgCurrentIndex && thumbsContainer) {
+      const thumbRect = thumb.getBoundingClientRect();
+      const containerRect = thumbsContainer.getBoundingClientRect();
+      if (thumbRect.left < containerRect.left || thumbRect.right > containerRect.right) {
+        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
+  });
+}
+
+function navigateGlobalGallery(direction) {
+  let nextIndex = gpgCurrentIndex + direction;
+  if (nextIndex < 0) nextIndex = globalPanoramasList.length - 1;
+  if (nextIndex >= globalPanoramasList.length) nextIndex = 0;
+  goToGlobalGallerySlide(nextIndex);
+}
+
+function goToGlobalGallerySlide(index) {
+  gpgCurrentIndex = index;
+  updateGlobalGalleryUI();
+}
+
+function startGpgAutoSlide() {
+  stopGpgAutoSlide();
+  gpgAutoSlideInterval = setInterval(() => {
+    navigateGlobalGallery(1);
+  }, 4500);
+}
+
+function stopGpgAutoSlide() {
+  if (gpgAutoSlideInterval) {
+    clearInterval(gpgAutoSlideInterval);
+    gpgAutoSlideInterval = null;
+  }
+}
+
+function resetGpgInactivity() {
+  stopGpgAutoSlide();
+  if (gpgInactivityTimeout) clearTimeout(gpgInactivityTimeout);
+  gpgInactivityTimeout = setTimeout(() => {
+    startGpgAutoSlide();
+  }, 5000);
+}
+
+window.openGlobalPanoramaGallery = function() {
+  initGlobalPanoramaGallery();
+  const overlay = document.getElementById('global-pano-gallery');
+  if (overlay) {
+    overlay.classList.add('active');
+    goToGlobalGallerySlide(0);
+    startGpgAutoSlide();
+  }
+};
+
+function closeGlobalPanoramaGallery() {
+  const overlay = document.getElementById('global-pano-gallery');
+  if (overlay) {
+    overlay.classList.remove('active');
+    stopGpgAutoSlide();
+    if (gpgInactivityTimeout) clearTimeout(gpgInactivityTimeout);
+  }
+}
