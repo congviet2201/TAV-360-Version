@@ -1830,45 +1830,237 @@
 .minimap-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  opacity: 0.7;
+  object-fit: contain; /* Prevent distortion, show full image */
+  opacity: 1; /* Remove opacity to keep original colors */
+  image-rendering: high-quality; /* Ensure sharpness */
+  image-rendering: -webkit-optimize-contrast;
 }
 
 .minimap-viewcone {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 60px;
-  height: 60px;
-  margin-top: -30px;
-  margin-left: -30px;
-  background: conic-gradient(from 330deg, rgba(0, 242, 254, 0.4) 0deg, rgba(0, 242, 254, 0.4) 60deg, transparent 60deg);
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-top: -35px;
+  margin-left: -35px;
   pointer-events: none;
   transition: transform 0.1s linear;
+  /* FOV cone using SVG background */
+  background: transparent;
 }
 
-.layout-classic .minimap-viewcone {
-  background: conic-gradient(from 330deg, rgba(212, 175, 55, 0.5) 0deg, rgba(212, 175, 55, 0.5) 60deg, transparent 60deg);
+/* Draw the cone via a pseudo-element so the dot stays separate */
+.minimap-viewcone::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: conic-gradient(
+    from 330deg at 50% 50%,
+    rgba(220, 40, 40, 0.85) 0deg,
+    rgba(255, 80, 80, 0.6) 60deg,
+    transparent 60deg
+  );
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px rgba(255, 60, 60, 0.7));
 }
+
+.layout-classic .minimap-viewcone::before {
+  background: conic-gradient(
+    from 330deg at 50% 50%,
+    rgba(212, 175, 55, 0.9) 0deg,
+    rgba(212, 175, 55, 0.5) 60deg,
+    transparent 60deg
+  );
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
+}
+
 
 .minimap-dot {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 6px;
-  height: 6px;
-  margin-top: -3px;
-  margin-left: -3px;
-  background: #00f2fe;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  background: #ffffff;
+  border: 2px solid #dc2828;
   border-radius: 50%;
-  box-shadow: 0 0 8px #00f2fe;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  transform: scale(calc(1 / var(--mm-zoom, 1)));
+  transition: transform 0.1s linear;
+  z-index: 5;
 }
 
 .layout-classic .minimap-dot {
-  background: var(--gold-dark);
-  box-shadow: 0 0 8px var(--gold-dark);
+  border-color: var(--gold-dark);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.4), 0 0 10px rgba(212, 175, 55, 0.5);
 }
+
+/* =====================================================
+   PREMIUM HOTSPOT SYSTEM — Layout #1 Classic Only
+   ===================================================== */
+
+/* Pano2VR places .hs-container at the hotspot position.
+   We don't use transform here, because it would overwrite Pano2VR's inline position. */
+.layout-classic .hs-container {
+  position: absolute;
+  cursor: pointer;
+  user-select: none;
+  /* Instant hide/show via CSS class */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity;
+  z-index: 100;
+}
+
+.layout-classic .hs-container.hs-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Inner wrapper for offset and scale animation */
+.layout-classic .hs-scale-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px) scale(0.9);
+  transform-origin: bottom center;
+  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+}
+
+.layout-classic .hs-container.hs-visible .hs-scale-wrap {
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* Pulse ring — shown only when active */
+.layout-classic .hs-pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.layout-classic .hs-container.hs-active .hs-pulse-ring {
+  opacity: 1;
+  animation: hs-pulse 1.8s ease-out infinite;
+}
+
+.layout-classic .hs-interior .hs-pulse-ring {
+  border-color: rgba(212, 175, 55, 0.8); /* Gold */
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+.layout-classic .hs-amenities .hs-pulse-ring {
+  border-color: rgba(212, 175, 55, 0.8); /* Gold */
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.5);
+}
+
+@keyframes hs-pulse {
+  0%   { transform: translate(-50%, -50%) scale(1);    opacity: 0.9; }
+  70%  { transform: translate(-50%, -50%) scale(1.8);  opacity: 0; }
+  100% { transform: translate(-50%, -50%) scale(1.8);  opacity: 0; }
+}
+
+/* ---- PIN WITH LINE HOTSPOT ---- */
+.layout-classic .hs-line-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  /* Shift up so the dot at the bottom is exactly at the hotspot coord */
+  transform: translateY(0);
+}
+
+.layout-classic .hs-pin-text {
+  background-color: var(--gold-primary, #d4af37); /* Sync with layout */
+  color: #ffffff;
+  padding: 6px 12px;
+  font-family: var(--ui-font, sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.layout-classic .hs-container:hover .hs-pin-text {
+  background-color: var(--gold-dark, #b5952f);
+  transform: translateY(-2px);
+}
+
+.layout-classic .hs-pin-line {
+  width: 2px;
+  height: 35px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 5;
+}
+
+.layout-classic .hs-pin-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  z-index: 6;
+  margin-top: -2px; /* Pull up slightly to connect with line */
+}
+
+/* ---- MINIMAP HOTSPOT MARKERS ---- */
+.mm-hs-marker {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(calc(1 / var(--mm-zoom, 1)));
+  cursor: pointer;
+  z-index: 15;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  transition: transform 0.15s ease-out;
+}
+
+.mm-hs-marker:hover {
+  transform: translate(-50%, -50%) scale(calc(1.5 / var(--mm-zoom, 1)));
+}
+
+.mm-hs-interior  { background: #3b82f6; }
+.mm-hs-amenities { background: #22c55e; }
+
+.mm-hs-current {
+  background: var(--gold-primary, #d4af37) !important;
+  border-color: #fff;
+  animation: mm-pulse 2s ease-out infinite;
+  width: 13px;
+  height: 13px;
+}
+
+@keyframes mm-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(212,175,55,0.7); }
+  70%  { box-shadow: 0 0 0 8px rgba(212,175,55,0); }
+  100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+}
+
 
 .minimap-legend {
   display: flex;

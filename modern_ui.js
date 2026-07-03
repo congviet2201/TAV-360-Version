@@ -1774,11 +1774,13 @@ function generateSubmenuHTML(items, itemClass) {
       </div>
       <div class="minimap-body" id="minimap-body">
         <div class="minimap-canvas" id="minimap-canvas">
-          <img src="image/thumbnails/PIN TOP.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
-          <!-- Current viewpoint cone indicator -->
-          <div class="minimap-viewcone" id="minimap-viewcone"></div>
-          <!-- Current position dot -->
-          <div class="minimap-dot" id="minimap-dot"></div>
+          <div id="minimap-zoom-wrapper" style="width:100%; height:100%; position:absolute; top:0; left:0; transform-origin:50% 50%; transition: transform 0.1s;">
+            <img src="image/Map_optimized.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
+            <!-- Viewcone rotation indicator -->
+            <div class="minimap-viewcone" id="minimap-viewcone"></div>
+            <!-- Position dot -->
+            <div class="minimap-dot" id="minimap-dot"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1871,14 +1873,13 @@ function generateSubmenuHTML(items, itemClass) {
       </div>
       <div class="minimap-body" id="minimap-body">
         <div class="minimap-canvas" id="minimap-canvas">
-          <img src="image/thumbnails/PIN TOP.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
-          <!-- Current viewpoint cone indicator -->
-          <div class="minimap-viewcone" id="minimap-viewcone"></div>
-          <!-- Current position dot -->
-          <div class="minimap-dot" id="minimap-dot"></div>
-        </div>
-        <div class="minimap-legend">
-          <div class="minimap-legend-item"><span class="dot cyan"></span> Vị trí hiện tại</div>
+          <div id="minimap-zoom-wrapper" style="width:100%; height:100%; position:absolute; top:0; left:0; transform-origin:50% 50%; transition: transform 0.1s;">
+            <img src="image/Map_optimized.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
+            <!-- Viewcone rotation indicator -->
+            <div class="minimap-viewcone" id="minimap-viewcone"></div>
+            <!-- Position dot -->
+            <div class="minimap-dot" id="minimap-dot"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1888,87 +1889,102 @@ function generateSubmenuHTML(items, itemClass) {
   // SHARED STATE & DATA STACKS
   // ==========================================
 
-  const mapMarkers = [
+  // ==========================================
+  // PREMIUM HOTSPOT SYSTEM — Data Layer
+  // Active only in Layout #1 (Classic)
+  // Hotspots exist ONLY in pin_top & pin_topnight
+  // ==========================================
+
+  const HOTSPOT_TOP_VIEW_NODES = ["pin_top", "pin_topnight"];
+
+  const hotspotDefinitions = [
+    // --- INTERIOR ---
     {
-      id: "pin_villa_a1",
-      pan: -45,
-      tilt: -20,
-      label: "01",
-      title: "BIỆT THỰ ĐƠN LẬP A1",
-      area: "420 m²",
-      status: "Còn Trống",
-      colorClass: "",
-      nodeTarget: "node2"
+      id: "hs_living",
+      pan: -37, tilt: -38, // Center-right water circle
+      category: "interior",
+      nodeTarget: "pin_living",
+      title: "TAV LIVING 1",
+      desc: "Không gian phòng khách đẳng cấp",
+      thumb: "image/thumbnails/PIN LIVING.jpg"
     },
     {
-      id: "pin_villa_a2",
-      pan: -25,
-      tilt: -15,
-      label: "02",
-      title: "BIỆT THỰ ĐƠN LẬP A2",
-      area: "420 m²",
-      status: "Đã Đặt",
-      colorClass: "active",
-      nodeTarget: "node2"
+      id: "hs_living2",
+      pan: 10, tilt: -36, // Center-left water circle
+      category: "interior",
+      nodeTarget: "pin_living2",
+      title: "TAV LIVING 2",
+      desc: "Phòng khách sang trọng hướng sông",
+      thumb: "image/thumbnails/PIN LIVING 2.jpg"
     },
     {
-      id: "pin_villa_b1",
-      pan: 15,
-      tilt: -22,
-      label: "03",
-      title: "BIỆT THỰ SONG LẬP B1",
-      area: "320 m²",
-      status: "Còn Trống",
-      colorClass: "",
-      nodeTarget: "node3"
+      id: "hs_wc",
+      pan: -20, tilt: -36, // Center-top buildings
+      category: "interior",
+      nodeTarget: "pinwc",
+      title: "TAV WC",
+      desc: "Phòng vệ sinh tiêu chuẩn 5 sao",
+      thumb: "image/thumbnails/PIN WC.jpg"
     },
     {
-      id: "pin_villa_b2",
-      pan: 35,
-      tilt: -12,
-      label: "04",
-      title: "BIỆT THỰ SONG LẬP B2",
-      area: "320 m²",
-      status: "Còn Trống",
-      colorClass: "",
-      nodeTarget: "node3"
+      id: "hs_thongtang",
+      pan: 40, tilt: -30, // Far left white building
+      category: "interior",
+      nodeTarget: "pintangthong",
+      title: "TAV THÔNG TẦNG",
+      desc: "Không gian thông tầng ấn tượng",
+      thumb: "image/thumbnails/PIN THONG TANG.jpg"
+    },
+    // --- AMENITIES ---
+    {
+      id: "hs_park",
+      pan: -10, tilt: -48, // Center-bottom park
+      category: "amenities",
+      nodeTarget: "pin_park",
+      title: "TAV PARK",
+      desc: "Công viên sinh thái 10ha xanh mát",
+      thumb: "image/thumbnails/PIN PARK.jpg"
     },
     {
-      id: "pin_villa_c1",
-      pan: 75,
-      tilt: -28,
-      label: "05",
-      title: "BIỆT THỰ LIỀN KỀ C1",
-      area: "250 m²",
-      status: "Còn Trống",
-      colorClass: "",
-      nodeTarget: "node4"
+      id: "hs_park2",
+      pan: -45, tilt: -38, // Moved closer to apartments
+      category: "amenities",
+      nodeTarget: "pin_park2",
+      title: "TAV PARK 2",
+      desc: "Khu vui chơi & thể thao ngoài trời",
+      thumb: "image/thumbnails/PIN PARK 02.jpg"
     },
     {
-      id: "pin_clubhouse",
-      pan: -85,
-      tilt: -18,
-      label: "CH",
-      title: "CLUBHOUSE TRUNG TÂM",
-      area: "1,200 m²",
-      status: "Mở Cửa (8:00 - 22:00)",
-      colorClass: "active",
-      nodeTarget: "node1",
-      isAmenity: true
-    },
-    {
-      id: "pin_beach_bar",
-      pan: -135,
-      tilt: -24,
-      label: "BL",
-      title: "BEACH LOUNGE & BAR",
-      area: "650 m²",
-      status: "Mở Cửa (16:00 - 24:00)",
-      colorClass: "",
-      nodeTarget: "node1",
-      isAmenity: true
+      id: "hs_street",
+      pan: 25, tilt: -35, // Mid-left intersection
+      category: "amenities",
+      nodeTarget: "pin_street",
+      title: "TAV STREET",
+      desc: "Phố đi bộ thương mại sầm uất",
+      thumb: "image/thumbnails/PIN STREET.jpg"
     }
   ];
+
+  // Same hotspots mirrored for night node (different IDs to avoid DOM conflicts)
+  const hotspotData = {
+    "pin_top":      hotspotDefinitions,
+    "pin_topnight": hotspotDefinitions.map(h => ({ ...h, id: h.id + "_night" }))
+  };
+
+  // Minimap marker positions on the PIN TOP.jpg image (% from top-left)
+  const minimapMarkerPositions = {
+    "hs_living":    { x: 52, y: 48 },
+    "hs_living2":   { x: 58, y: 52 },
+    "hs_wc":        { x: 63, y: 45 },
+    "hs_thongtang": { x: 46, y: 44 },
+    "hs_park":      { x: 38, y: 58 },
+    "hs_park2":     { x: 32, y: 63 },
+    "hs_street":    { x: 44, y: 65 }
+  };
+
+  // Track active hotspot
+  let activeHotspotId = null;
+  let currentHotspotElements = []; // [{el, pan, tilt, id}]
 
   // Safe localStorage helper (works on file:// protocol)
   function lsGet(key, fallback) {
@@ -2226,8 +2242,7 @@ function generateSubmenuHTML(items, itemClass) {
     }
     document.body.appendChild(mapDiv.firstElementChild);
     setupMinimapListeners();
-    populateMinimapMarkers();
-    updateMinimapPosition(activePanoNode);
+    if (window.initMinimapPano) window.initMinimapPano();
     let minimapEl = document.getElementById("minimap-widget");
     if (minimapEl && (layoutMode === "prism" || layoutMode === "nexus" || layoutMode === "monarch" || layoutMode === "regal")) {
       minimapEl.classList.remove("collapsed");
@@ -3525,91 +3540,39 @@ document.addEventListener('click', (e) => {
       }
 
       syncMinimap(pan);
+
+      // Premium hotspot depth/visibility (Classic layout — check body class for reliability)
+      if (document.body.classList.contains('layout-classic') || layoutMode === 'classic') {
+        updateHotspotVisibility();
+      }
     } catch (e) {}
     compassAnimFrame = requestAnimationFrame(syncCompass);
   }
 
+  let activeViewer = 'main';
+
+  // ==========================================
+  // MINIMAP VIEWCONE SYNC (static topview)
+  // ==========================================
   function syncMinimap(pan) {
-    const viewcone = document.getElementById("minimap-viewcone");
-    if (!viewcone) return;
-    const normalizedDeg = ((pan % 360) + 360) % 360;
-    viewcone.style.transform = `rotate(${normalizedDeg}deg)`;
+    if (!window.pano) return;
+    try {
+      const cone = document.getElementById("minimap-viewcone");
+      const canvas = document.getElementById("minimap-canvas");
+      if (cone) {
+        // Rotate the viewcone and apply inverse scale to keep it original size
+        const zoom = canvas ? parseFloat(canvas.style.getPropertyValue('--mm-zoom')) || 1 : 1;
+        cone.style.transform = `rotate(${pan}deg) scale(${1 / zoom})`;
+      }
+    } catch (e) {}
   }
 
-  const node2dPositions = {
-    "node1": { x: 50, y: 50 },
-    "node2": { x: 42.5, y: 36 },
-    "node3": { x: 55.5, y: 38 },
-    "node4": { x: 66, y: 47 }
-  };
-
-  const node2dCoordinates = {
-    "pin_villa_a1": { x: 40, y: 34, color: "#a855f7" }, // Purple
-    "pin_villa_a2": { x: 45, y: 38, color: "#a855f7" }, // Purple
-    "pin_villa_b1": { x: 58, y: 35, color: "#ec4899" }, // Pink
-    "pin_villa_b2": { x: 53, y: 41, color: "#ec4899" }, // Pink
-    "pin_villa_c1": { x: 66, y: 47, color: "#10b981" }, // Emerald
-    "pin_clubhouse": { x: 32, y: 52, color: "#06b6d4" }, // Cyan
-    "pin_beach_bar": { x: 23, y: 65, color: "#f97316" }  // Orange
-  };
-
   function updateMinimapPosition(nodeId) {
-    const dot = document.getElementById("minimap-dot");
-    const viewcone = document.getElementById("minimap-viewcone");
-    if (!dot || !viewcone) return;
-    
-    const pos = node2dPositions[nodeId] || { x: 50, y: 50 };
-    dot.style.left = pos.x + "%";
-    dot.style.top = pos.y + "%";
-    viewcone.style.left = pos.x + "%";
-    viewcone.style.top = pos.y + "%";
+    // No-op: dot is centered on the topview image
   }
 
   function populateMinimapMarkers() {
-    const canvas = document.getElementById("minimap-canvas");
-    if (!canvas) return;
-    
-    const targetContainer = document.getElementById("minimap-zoom-wrapper") || canvas;
-    
-    const existing = targetContainer.querySelectorAll(".minimap-marker");
-    existing.forEach(el => el.remove());
-    
-    mapMarkers.forEach(pin => {
-      const coords = node2dCoordinates[pin.id];
-      if (!coords) return;
-      
-      const marker = document.createElement("div");
-      marker.className = "minimap-marker";
-      marker.style.left = coords.x + "%";
-      marker.style.top = coords.y + "%";
-      marker.style.setProperty("--marker-color", coords.color);
-      marker.setAttribute("data-id", pin.id);
-      marker.setAttribute("data-node-target", pin.nodeTarget);
-      
-      marker.innerHTML = `
-        <span class="marker-pulse-ring"></span>
-        <div class="minimap-marker-tooltip">${pin.title}</div>
-      `;
-      
-      marker.addEventListener("click", function(e) {
-        e.stopPropagation();
-        
-        // Open the pano node
-        if (window.pano) {
-          window.pano.openNext(`{${pin.nodeTarget}}`);
-        }
-        
-        // Highlight active card
-        const megaCards = document.querySelectorAll(".mega-card");
-        megaCards.forEach(card => {
-          if (card.getAttribute("data-pano-node") === pin.nodeTarget) {
-            card.click();
-          }
-        });
-      });
-      
-      targetContainer.appendChild(marker);
-    });
+    // Disabled for 360 viewer
   }
 
   function updateResizeIcons(isMaximised) {
@@ -3673,13 +3636,36 @@ document.addEventListener('click', (e) => {
         }
       });
 
-      // Mouse wheel zoom centered on cursor
+      // Mouse wheel zoom centered on cursor and panning
       const zoomWrapper = document.getElementById("minimap-zoom-wrapper");
       if (zoomWrapper) {
         let currentZoom = 1.0;
-        const maxZoom = 3.5;
+        let panX = 0;
+        let panY = 0;
+        const maxZoom = 4.0;
         const minZoom = 1.0;
-        const step = 0.15;
+        const step = 0.2;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+
+        zoomWrapper.style.transformOrigin = '0 0';
+        zoomWrapper.style.transition = 'none'; // Remove transition for instant drag response
+        canvas.style.cursor = 'grab';
+
+        function clampPan() {
+          if (currentZoom <= 1.0) {
+            panX = 0;
+            panY = 0;
+            return;
+          }
+          const rect = canvas.getBoundingClientRect();
+          const minPanX = rect.width * (1 - currentZoom);
+          const minPanY = rect.height * (1 - currentZoom);
+          
+          panX = Math.max(minPanX, Math.min(0, panX));
+          panY = Math.max(minPanY, Math.min(0, panY));
+        }
 
         canvas.addEventListener("wheel", function(e) {
           e.preventDefault();
@@ -3687,19 +3673,76 @@ document.addEventListener('click', (e) => {
 
           if (widget.classList.contains("collapsed")) return;
 
+          let newZoom = currentZoom;
           if (e.deltaY < 0) {
-            currentZoom = Math.min(maxZoom, currentZoom + step);
+            newZoom = Math.min(maxZoom, currentZoom + step);
           } else {
-            currentZoom = Math.max(minZoom, currentZoom - step);
+            newZoom = Math.max(minZoom, currentZoom - step);
           }
 
-          const rect = canvas.getBoundingClientRect();
-          const mouseX = ((e.clientX - rect.left) / rect.width) * 100;
-          const mouseY = ((e.clientY - rect.top) / rect.height) * 100;
+          if (newZoom === currentZoom) return;
 
-          zoomWrapper.style.transformOrigin = `${mouseX}% ${mouseY}%`;
-          zoomWrapper.style.transform = `scale(${currentZoom})`;
+          const rect = canvas.getBoundingClientRect();
+          const mouseX = e.clientX - rect.left;
+          const mouseY = e.clientY - rect.top;
+
+          // Math to keep mouse pointer at the exact same spot on the image
+          panX = mouseX - (mouseX - panX) * (newZoom / currentZoom);
+          panY = mouseY - (mouseY - panY) * (newZoom / currentZoom);
+
+          currentZoom = newZoom;
+          clampPan();
+          
+          zoomWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+          
+          // Pass zoom level to CSS for inverse scaling of markers
+          canvas.style.setProperty('--mm-zoom', currentZoom);
         }, { passive: false });
+
+        canvas.addEventListener("mousedown", (e) => {
+          if (widget.classList.contains("collapsed") || currentZoom <= 1.0) return;
+          e.preventDefault(); // Prevent native image drag/drop
+          isDragging = true;
+          startX = e.clientX - panX;
+          startY = e.clientY - panY;
+          canvas.style.cursor = 'grabbing';
+        });
+
+        window.addEventListener("mousemove", (e) => {
+          if (!isDragging) return;
+          panX = e.clientX - startX;
+          panY = e.clientY - startY;
+          clampPan();
+          zoomWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+        });
+
+        window.addEventListener("mouseup", () => {
+          if (isDragging) {
+            isDragging = false;
+            canvas.style.cursor = 'grab';
+          }
+        });
+        
+        // Touch support for mobile devices
+        canvas.addEventListener("touchstart", (e) => {
+          if (widget.classList.contains("collapsed") || e.touches.length !== 1 || currentZoom <= 1.0) return;
+          e.preventDefault(); // Prevent scrolling the page
+          isDragging = true;
+          startX = e.touches[0].clientX - panX;
+          startY = e.touches[0].clientY - panY;
+        }, { passive: false });
+        
+        window.addEventListener("touchmove", (e) => {
+          if (!isDragging || e.touches.length !== 1) return;
+          panX = e.touches[0].clientX - startX;
+          panY = e.touches[0].clientY - startY;
+          clampPan();
+          zoomWrapper.style.transform = `translate(${panX}px, ${panY}px) scale(${currentZoom})`;
+        }, { passive: false });
+        
+        window.addEventListener("touchend", () => {
+          isDragging = false;
+        });
       }
     }
   }
@@ -4209,41 +4252,184 @@ document.addEventListener('click', (e) => {
   }
 
   // ==========================================
-  // HOLOGRAPHIC HOTSPOTS MARKERS (Pano2VR Hooks)
+  // PREMIUM HOTSPOT SYSTEM — Layout #1 Classic
   // ==========================================
 
-  function createHologramMarker(pin) {
-    const container = document.createElement("div");
-    container.className = `hologram-marker-container ${pin.colorClass}`;
-    container.id = `marker-${pin.id}`;
+  const ICON_INTERIOR = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
+  const ICON_AMENITIES = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="8" r="4"/><path d="M12 12v8"/><path d="M8 16s1.5 2 4 2 4-2 4-2"/><path d="M6 20s2 2 6 2 6-2 6-2"/></svg>`;
+
+  function getHotspotIcon(category) {
+    return category === 'interior' ? ICON_INTERIOR : ICON_AMENITIES;
+  }
+
+  function createPremiumHotspot(pin) {
+    const container = document.createElement('div');
+    container.className = `hs-container hs-${pin.category}`;
+    container.id = `hs-${pin.id}`;
+    container.setAttribute('aria-label', pin.title);
+    container.setAttribute('tabindex', '0');
+    container.setAttribute('role', 'button');
+
+    const categoryLabel = pin.category === 'interior' ? 'NỘI THẤT' : 'TIỆN ÍCH';
 
     container.innerHTML = `
-      <div class="hotspot-hitbox"></div>
-      <div class="hotspot-marker"></div>
-      <div class="hotspot-label">${pin.title}</div>
+      <div class="hs-scale-wrap">
+        <div class="hs-line-pin">
+          <div class="hs-pin-text">${pin.title}</div>
+          <div class="hs-pin-line"></div>
+          <div class="hs-pin-dot"></div>
+        </div>
+      </div>
     `;
 
-    container.addEventListener("click", function (e) {
-      e.stopPropagation();
-      console.log(`Marker clicked: ${pin.id} -> target ${pin.nodeTarget}`);
+    // Hover interactions
+    const pinText = container.querySelector('.hs-pin-text');
+    container.addEventListener('mouseenter', () => {
+      container.classList.add('hs-hovered');
+    });
+    container.addEventListener('mouseleave', () => {
+      container.classList.remove('hs-hovered');
+    });
 
-      // Find the FIRST mega-card matching this node target and activate it
-      const megaCards = document.querySelectorAll(".mega-card");
+    // Click — navigate
+    const doNavigate = (e) => {
+      e.stopPropagation();
+      // Remove active from previous
+      document.querySelectorAll('.hs-container.hs-active').forEach(el => el.classList.remove('hs-active'));
+      container.classList.add('hs-active');
+      activeHotspotId = pin.id;
+
+      // Try matching mega-card first (keeps sidebar in sync)
+      const megaCards = document.querySelectorAll('.mega-card');
       let found = false;
       megaCards.forEach(card => {
-        if (card.getAttribute("data-pano-node") === pin.nodeTarget) {
-          if (!found) {
-            found = true;
-            card.click();
-          }
+        if (!found && card.getAttribute('data-pano-node') === pin.nodeTarget) {
+          found = true;
+          card.click();
         }
       });
-
       if (!found && window.pano) {
         window.pano.openNext(`{${pin.nodeTarget}}`);
       }
+    };
+    container.addEventListener('click', doNavigate);
+    container.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') doNavigate(e); });
+
+    return container;
+  }
+
+  // Inject all hotspots for a given top-view node
+  function injectPremiumHotspots(nodeId) {
+    if (!window.pano || typeof window.pano.addHotspot !== 'function') {
+        console.error("[PremiumHotspot] window.pano or addHotspot is not available!");
+        return;
+    }
+    currentHotspotElements = [];
+
+    const defs = hotspotData[nodeId];
+    if (!defs) {
+        console.warn(`[PremiumHotspot] No hotspot definitions found for node: ${nodeId}`);
+        return;
+    }
+
+    console.log(`[PremiumHotspot] Found ${defs.length} hotspots for node ${nodeId}`);
+
+    defs.forEach(pin => {
+      const el = createPremiumHotspot(pin);
+      window.pano.addHotspot(pin.id, pin.pan, pin.tilt, el);
+      currentHotspotElements.push({ el, pan: pin.pan, tilt: pin.tilt, id: pin.id });
+    });
+    
+    console.log(`[PremiumHotspot] Successfully injected ${currentHotspotElements.length} hotspots`);
+
+    // After injecting, render minimap markers
+    updateMinimapHotspots(nodeId);
+  }
+
+  // Update minimap overlay with hotspot markers (only in Classic layout)
+  function updateMinimapHotspots(nodeId) {
+    const canvas = document.getElementById('minimap-canvas');
+    if (!canvas) return;
+    const zoomWrapper = document.getElementById('minimap-zoom-wrapper') || canvas;
+
+    // Remove old markers
+    zoomWrapper.querySelectorAll('.mm-hs-marker').forEach(m => m.remove());
+    canvas.querySelectorAll('.mm-hs-marker').forEach(m => m.remove());
+
+    // We no longer return early; minimap markers show on all nodes
+
+
+    // Determine base definitions (strip _night suffix for position lookup)
+    const defs = hotspotData["pin_top"] || [];
+
+    defs.forEach(pin => {
+      const pos = minimapMarkerPositions[pin.id];
+      if (!pos) return;
+
+      const marker = document.createElement('div');
+      const isActive = (pin.nodeTarget === activePanoNode);
+      marker.className = `mm-hs-marker mm-hs-${pin.category}${isActive ? ' mm-hs-current' : ''}`;
+      marker.style.cssText = `left:${pos.x}%;top:${pos.y}%;`;
+      marker.title = pin.title;
+
+      marker.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.pano) window.pano.openNext(`{${pin.nodeTarget}}`);
+      });
+
+      zoomWrapper.appendChild(marker);
     });
 
+    // Gold pulse for current node marker if it's a top-view
+    const currentDef = defs.find(d => d.nodeTarget === activePanoNode);
+    if (!currentDef) {
+      // If current node is pin_top or pin_topnight itself, show center dot (handled by viewcone)
+    }
+  }
+
+  // Update hotspot depth/visibility every rAF frame — called from syncCompass
+  function updateHotspotVisibility() {
+    if (!window.pano || currentHotspotElements.length === 0) return;
+    try {
+      const camPan  = window.pano.getPan()  || 0;
+      const camTilt = window.pano.getTilt() || 0;
+      const camFov  = window.pano.getFov()  || 90;
+      const halfFov = camFov * 0.5;
+      const fadeZone = halfFov * 0.4; // outer 40% of FOV = fade zone
+
+      currentHotspotElements.forEach(({ el, pan, tilt }) => {
+        // Compute angular delta (wrap-around safe)
+        let dPan = pan - camPan;
+        while (dPan > 180)  dPan -= 360;
+        while (dPan < -180) dPan += 360;
+        const dTilt = tilt - camTilt;
+        const angDist = Math.sqrt(dPan * dPan + dTilt * dTilt);
+
+        // Visibility (only show when near the center of the screen)
+        // Set threshold to a tight cone (e.g. 35 degrees from center)
+        const hideThreshold = 35; // degrees from center
+
+        // Visibility (hide completely when passing by)
+        if (Math.abs(dPan) > hideThreshold || Math.abs(dTilt) > hideThreshold) {
+          el.classList.remove('hs-visible');
+          return;
+        }
+
+        el.classList.add('hs-visible');
+      });
+    } catch (e) {}
+  }
+
+  // Legacy stub — kept for backward compat with other layouts calling createHologramMarker
+  function createHologramMarker(pin) {
+    const container = document.createElement('div');
+    container.className = `hologram-marker-container ${pin.colorClass || ''}`;
+    container.id = `marker-${pin.id}`;
+    container.innerHTML = `<div class="hotspot-hitbox"></div><div class="hotspot-marker"></div><div class="hotspot-label">${pin.title}</div>`;
+    container.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (window.pano) window.pano.openNext(`{${pin.nodeTarget}}`);
+    });
     return container;
   }
 
@@ -4283,29 +4469,38 @@ document.addEventListener('click', (e) => {
 
   function onNodeChange() {
     if (!window.pano) return;
-    const currentNodeId = window.pano.qd();
+    // Use correct Pano2VR API: getCurrentNode() not qd() (qd = getDFov)
+    const currentNodeId = (typeof window.pano.getCurrentNode === 'function')
+      ? window.pano.getCurrentNode()
+      : window.pano.qd();
+    
+    console.log(`[PremiumHotspot] onNodeChange triggered. currentNodeId = ${currentNodeId}`);
+    
     if (!currentNodeId) return;
-    console.log(`Current Pano Node: ${currentNodeId}`);
 
     syncStateWithNode(currentNodeId);
     updateMinimapPosition(currentNodeId);
 
-    // Clear old hotspots
+    // Clear old hotspots every node change
+    currentHotspotElements = [];
     if (typeof window.pano.removeHotspots === 'function') {
       window.pano.removeHotspots();
     }
 
-    // Add maps markers on aerial node1
-    if (currentNodeId === "node1") {
-      console.log("Adding holographic map markers...");
-      mapMarkers.forEach(pin => {
-        const markerEl = createHologramMarker(pin);
-        if (typeof window.pano.addHotspot === 'function') {
-          window.pano.addHotspot(pin.id, pin.pan, pin.tilt, markerEl);
-        }
-      });
+    // === PREMIUM HOTSPOT SYSTEM ===
+    // Detect layout from body class (more reliable than var during init)
+    const isClassic = document.body.classList.contains('layout-classic') || layoutMode === 'classic';
+    console.log(`[PremiumHotspot] isClassic = ${isClassic}, layoutMode = ${layoutMode}, HOTSPOT_TOP_VIEW_NODES = ${HOTSPOT_TOP_VIEW_NODES.includes(currentNodeId)}`);
+    
+    if (isClassic && HOTSPOT_TOP_VIEW_NODES.includes(currentNodeId)) {
+      console.log(`[PremiumHotspot] Injecting hotspots for node ${currentNodeId}`);
+      injectPremiumHotspots(currentNodeId);
+    } else {
+      // Update marker active state for non-top-view
+      if (isClassic) updateMinimapHotspots(currentNodeId);
     }
   }
+
 
   function initPanoHooks() {
     if (window.pano && typeof window.pano.addListener === 'function') {
