@@ -87,3 +87,8 @@
 .layout-monarch .compass-degree-display {
   display: none !important;
 }
+
+/* Force all text in layouts to uppercase */
+body * {
+  text-transform: uppercase !important;
+}

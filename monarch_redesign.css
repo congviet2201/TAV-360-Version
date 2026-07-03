@@ -390,3 +390,8 @@ body.layout-monarch .compass-degree-display {
   font-weight: 500;
   text-shadow: 0 2px 8px rgba(0,0,0,0.8);
 }
+
+/* Force all text in layouts to uppercase */
+body * {
+  text-transform: uppercase !important;
+}

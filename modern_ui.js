@@ -1152,9 +1152,9 @@ function generateSubmenuHTML(items, itemClass) {
       <div class="prism-nav-wrapper">
         <div class="prism-nav-list">
           <!-- BRAND LOGO -->
-          <div class="prism-nav-item" data-id="latien-brand" style="display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 0; pointer-events: none; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 10px; background: transparent;">
+          <div class="prism-nav-item" data-id="latien-brand" style="position: fixed; top: 24px; left: 30px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0; pointer-events: none; background: transparent; border: none; width: auto; height: auto; z-index: 2000; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;">
             <div style="font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; letter-spacing: 2px; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.5);">${PROJECT_CONTENT.projectTitle.top}</div>
-            <div style="width: 30px; height: 2px; background: linear-gradient(90deg, transparent, #fff, transparent); margin: 5px 0;"></div>
+            <div style="width: 30px; height: 2px; background: linear-gradient(90deg, #fff, transparent); margin: 5px 0;"></div>
             <div style="font-family: 'Montserrat', sans-serif; font-size: 9px; letter-spacing: 4px; color: rgba(255,255,255,0.5); text-transform: uppercase;">${PROJECT_CONTENT.projectTitle.sub}</div>
           </div>
 
