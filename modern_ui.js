@@ -3526,7 +3526,7 @@ document.addEventListener('click', (e) => {
 
       case "hotspots":
         isHotspotsHidden = !isHotspotsHidden;
-        const hotspots = document.querySelectorAll(".hologram-marker-container, [class*='hotspot']");
+        const hotspots = document.querySelectorAll(".hologram-marker-container, [class*='hotspot'], .hs-container");
         hotspots.forEach(hs => {
           hs.style.visibility = isHotspotsHidden ? "hidden" : "visible";
           hs.style.opacity = isHotspotsHidden ? "0" : "";
@@ -4395,6 +4395,11 @@ document.addEventListener('click', (e) => {
     container.setAttribute('aria-label', pin.title);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'button');
+
+    if (isHotspotsHidden) {
+      container.style.visibility = "hidden";
+      container.style.opacity = "0";
+    }
 
     if (pin.category === 'aerial') {
       // Style C: Aerial Navigation
