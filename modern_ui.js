@@ -350,12 +350,12 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="quick-nav-list" id="quick-nav-list">
           <!-- TOP VIEW -->
           <div class="quick-nav-category">
-            <div class="quick-nav-cat-header expanded">
+            <div class="quick-nav-cat-header">
               <span class="cat-icon">🛰</span><span class="cat-title">TOP VIEW</span><span class="cat-arrow">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </div>
-            <div class="quick-nav-cat-body" style="display: block;">
+            <div class="quick-nav-cat-body">
               <div class="quick-nav-item" data-pano-node="pin_top">
                 <div class="qn-name">Top View Day</div>
                 <div class="qn-active-indicator"></div>
@@ -375,7 +375,15 @@ function generateSubmenuHTML(items, itemClass) {
             </div>
             <div class="quick-nav-cat-body">
               <div class="quick-nav-item" data-pano-node="pin_birdview">
-                <div class="qn-name">Bird View</div>
+                <div class="qn-name">Bird View 1</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pin_top">
+                <div class="qn-name">Bird View 2</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pin_topnight">
+                <div class="qn-name">Bird View 3</div>
                 <div class="qn-active-indicator"></div>
               </div>
             </div>
@@ -2489,10 +2497,6 @@ function generateSubmenuHTML(items, itemClass) {
             this.classList.remove("expanded");
             this.nextElementSibling.style.display = "none";
           } else {
-            qnCatHeaders.forEach(h => {
-              h.classList.remove("expanded");
-              h.nextElementSibling.style.display = "none";
-            });
             this.classList.add("expanded");
             this.nextElementSibling.style.display = "block";
           }
@@ -2504,8 +2508,21 @@ function generateSubmenuHTML(items, itemClass) {
       qnItems.forEach(item => {
         item.addEventListener("click", function() {
           const node = this.getAttribute("data-pano-node");
+          const pan = this.getAttribute("data-pan");
+          const tilt = this.getAttribute("data-tilt");
+
           if (node && window.pano) {
-            window.pano.openNext(`{${node}}`);
+            const isSameNode = window.pano.getCurrentNode() === node;
+            if (!isSameNode) {
+              window.pano.openNext(`{${node}}`);
+            }
+            
+            if (pan !== null && tilt !== null) {
+              setTimeout(() => {
+                window.pano.moveTo(parseFloat(pan), parseFloat(tilt), window.pano.getFov(), 20);
+              }, isSameNode ? 0 : 500);
+            }
+
             if (window.innerWidth <= 768) {
               qnPanel.classList.add("collapsed");
             }
@@ -4633,21 +4650,6 @@ document.addEventListener('click', (e) => {
       qnItems.forEach(item => {
         if (item.getAttribute("data-pano-node") === nodeId) {
           item.classList.add("active");
-          const catBody = item.closest(".quick-nav-cat-body");
-          if (catBody) {
-            catBody.style.display = "block";
-            const header = catBody.previousElementSibling;
-            if (header) {
-              const allHeaders = document.querySelectorAll(".quick-nav-cat-header");
-              allHeaders.forEach(h => {
-                if (h !== header) {
-                  h.classList.remove("expanded");
-                  if (h.nextElementSibling) h.nextElementSibling.style.display = "none";
-                }
-              });
-              header.classList.add("expanded");
-            }
-          }
         } else {
           item.classList.remove("active");
         }
