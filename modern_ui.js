@@ -337,6 +337,102 @@ function generateSubmenuHTML(items, itemClass) {
         </div>
   `;
 
+  // Quick Navigation Panel for Classic Layout
+  const quickNavClassicHTML = `
+    <div class="quick-nav-panel collapsed" id="quick-nav-panel">
+      <div class="quick-nav-toggle" id="quick-nav-toggle" title="Quick Navigation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+        </svg>
+      </div>
+      <div class="quick-nav-content">
+        <div class="quick-nav-list" id="quick-nav-list">
+          <!-- TOP VIEW -->
+          <div class="quick-nav-category">
+            <div class="quick-nav-cat-header expanded">
+              <span class="cat-icon">🛰</span><span class="cat-title">TOP VIEW</span><span class="cat-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </div>
+            <div class="quick-nav-cat-body" style="display: block;">
+              <div class="quick-nav-item" data-pano-node="pin_top">
+                <div class="qn-name">Top View Day</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pin_topnight">
+                <div class="qn-name">Top View Night</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <!-- BIRD VIEW -->
+          <div class="quick-nav-category">
+            <div class="quick-nav-cat-header">
+              <span class="cat-icon">🚁</span><span class="cat-title">BIRD VIEW</span><span class="cat-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </div>
+            <div class="quick-nav-cat-body">
+              <div class="quick-nav-item" data-pano-node="pin_birdview">
+                <div class="qn-name">Bird View</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <!-- INTERIOR -->
+          <div class="quick-nav-category">
+            <div class="quick-nav-cat-header">
+              <span class="cat-icon">🏠</span><span class="cat-title">INTERIOR</span><span class="cat-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </div>
+            <div class="quick-nav-cat-body">
+              <div class="quick-nav-item" data-pano-node="pin_living">
+                <div class="qn-name">TAV Living 1</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pin_living2">
+                <div class="qn-name">TAV Living 2</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pinwc">
+                <div class="qn-name">TAV WC</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pintangthong">
+                <div class="qn-name">TAV Thong Tang</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <!-- AMENITIES -->
+          <div class="quick-nav-category">
+            <div class="quick-nav-cat-header">
+              <span class="cat-icon">🌳</span><span class="cat-title">AMENITIES</span><span class="cat-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </div>
+            <div class="quick-nav-cat-body">
+              <div class="quick-nav-item" data-pano-node="pin_park">
+                <div class="qn-name">TAV Park</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pin_park2">
+                <div class="qn-name">TAV Park 2</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="pin_street">
+                <div class="qn-name">TAV Street</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
   // Right Tool Stack (Settings Panel) with gear integrated at the bottom
   const verticalToolStackClassicHTML = `
     <div class="vertical-tool-stack" id="right-tool-stack">
@@ -1897,81 +1993,35 @@ function generateSubmenuHTML(items, itemClass) {
 
   const HOTSPOT_TOP_VIEW_NODES = ["pin_top", "pin_topnight"];
 
-  const hotspotDefinitions = [
-    // --- INTERIOR ---
-    {
-      id: "hs_living",
-      pan: -37, tilt: -38, // Center-right water circle
-      category: "interior",
-      nodeTarget: "pin_living",
-      title: "TAV LIVING 1",
-      desc: "Không gian phòng khách đẳng cấp",
-      thumb: "image/thumbnails/PIN LIVING.jpg"
-    },
-    {
-      id: "hs_living2",
-      pan: 10, tilt: -36, // Center-left water circle
-      category: "interior",
-      nodeTarget: "pin_living2",
-      title: "TAV LIVING 2",
-      desc: "Phòng khách sang trọng hướng sông",
-      thumb: "image/thumbnails/PIN LIVING 2.jpg"
-    },
-    {
-      id: "hs_wc",
-      pan: -20, tilt: -36, // Center-top buildings
-      category: "interior",
-      nodeTarget: "pinwc",
-      title: "TAV WC",
-      desc: "Phòng vệ sinh tiêu chuẩn 5 sao",
-      thumb: "image/thumbnails/PIN WC.jpg"
-    },
-    {
-      id: "hs_thongtang",
-      pan: 40, tilt: -30, // Far left white building
-      category: "interior",
-      nodeTarget: "pintangthong",
-      title: "TAV THÔNG TẦNG",
-      desc: "Không gian thông tầng ấn tượng",
-      thumb: "image/thumbnails/PIN THONG TANG.jpg"
-    },
-    // --- AMENITIES ---
-    {
-      id: "hs_park",
-      pan: -10, tilt: -48, // Center-bottom park
-      category: "amenities",
-      nodeTarget: "pin_park",
-      title: "TAV PARK",
-      desc: "Công viên sinh thái 10ha xanh mát",
-      thumb: "image/thumbnails/PIN PARK.jpg"
-    },
-    {
-      id: "hs_park2",
-      pan: -45, tilt: -38, // Moved closer to apartments
-      category: "amenities",
-      nodeTarget: "pin_park2",
-      title: "TAV PARK 2",
-      desc: "Khu vui chơi & thể thao ngoài trời",
-      thumb: "image/thumbnails/PIN PARK 02.jpg"
-    },
-    {
-      id: "hs_street",
-      pan: 25, tilt: -35, // Mid-left intersection
-      category: "amenities",
-      nodeTarget: "pin_street",
-      title: "TAV STREET",
-      desc: "Phố đi bộ thương mại sầm uất",
-      thumb: "image/thumbnails/PIN STREET.jpg"
-    }
-  ];
+  // Shared generic hotspots with steep tilts restored for accurate Top View mapping
+  const hs_living = { id: "hs_living", pan: -37, tilt: -38, category: "interior", nodeTarget: "pin_living", title: "TAV LIVING 1", desc: "Không gian phòng khách đẳng cấp", thumb: "image/thumbnails/PIN LIVING.jpg" };
+  const hs_living2 = { id: "hs_living2", pan: 10, tilt: -36, category: "interior", nodeTarget: "pin_living2", title: "TAV LIVING 2", desc: "Phòng khách sang trọng hướng sông", thumb: "image/thumbnails/PIN LIVING 2.jpg" };
+  const hs_wc = { id: "hs_wc", pan: -20, tilt: -36, category: "interior", nodeTarget: "pinwc", title: "TAV WC", desc: "Phòng vệ sinh tiêu chuẩn 5 sao", thumb: "image/thumbnails/PIN WC.jpg" };
+  const hs_thongtang = { id: "hs_thongtang", pan: 40, tilt: -30, category: "interior", nodeTarget: "pintangthong", title: "TAV THÔNG TẦNG", desc: "Không gian thông tầng ấn tượng", thumb: "image/thumbnails/PIN THONG TANG.jpg" };
+  const hs_park = { id: "hs_park", pan: -10, tilt: -48, category: "amenities", nodeTarget: "pin_park", title: "TAV PARK", desc: "Công viên sinh thái 10ha xanh mát", thumb: "image/thumbnails/PIN PARK.jpg" };
+  const hs_park2 = { id: "hs_park2", pan: -45, tilt: -38, category: "amenities", nodeTarget: "pin_park2", title: "TAV PARK 2", desc: "Khu vui chơi & thể thao ngoài trời", thumb: "image/thumbnails/PIN PARK 02.jpg" };
+  const hs_street = { id: "hs_street", pan: 25, tilt: -35, category: "amenities", nodeTarget: "pin_street", title: "TAV STREET", desc: "Phố đi bộ thương mại sầm uất", thumb: "image/thumbnails/PIN STREET.jpg" };
+  const hs_birdview = { id: "hs_birdview", pan: 0, tilt: 8, category: "aerial", nodeTarget: "pin_birdview", title: "BIRD VIEW", desc: "Toàn cảnh từ trên cao", thumb: "preview.jpg" };
+  const hs_top = { id: "hs_top", pan: 0, tilt: -10, category: "aerial", nodeTarget: "pin_top", title: "TOP VIEW", desc: "Toàn cảnh dự án", thumb: "preview.jpg" };
 
-  // Same hotspots mirrored for night node (different IDs to avoid DOM conflicts)
+  const topViewDefs = [ hs_living, hs_living2, hs_wc, hs_thongtang, hs_park, hs_park2, hs_street, hs_birdview ];
+
+  // Full network mapping (Node-to-Node connections)
   const hotspotData = {
-    "pin_top":      hotspotDefinitions,
-    "pin_topnight": hotspotDefinitions.map(h => ({ ...h, id: h.id + "_night" }))
+    "pin_top":      topViewDefs,
+    "pin_topnight": topViewDefs.map(h => ({ ...h, id: h.id + "_night" })),
+    "pin_living":   [ { ...hs_wc, pan: 30, tilt: -5 }, { ...hs_thongtang, pan: 90, tilt: -5 }, { ...hs_park, pan: 180, tilt: -10 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
+    "pin_living2":  [ { ...hs_thongtang, pan: -90, tilt: -5 }, { ...hs_park2, pan: 180, tilt: -10 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
+    "pinwc":        [ { ...hs_living, pan: 0, tilt: -5 } ],
+    "pintangthong": [ { ...hs_living, pan: -90, tilt: -5 }, { ...hs_living2, pan: 90, tilt: -5 } ],
+    "pin_park":     [ { ...hs_street, pan: -30, tilt: -10 }, { ...hs_living, pan: 180, tilt: -5 }, { ...hs_park2, pan: 90, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
+    "pin_park2":    [ { ...hs_street, pan: 30, tilt: -10 }, { ...hs_park, pan: -90, tilt: -5 }, { ...hs_living2, pan: 180, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
+    "pin_street":   [ { ...hs_park, pan: 180, tilt: -5 }, { ...hs_park2, pan: -180, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
+    "pin_birdview": [ { ...hs_park, pan: 180, tilt: -45 }, { ...hs_living, pan: -135, tilt: -45 }, { ...hs_street, pan: 135, tilt: -45 }, { ...hs_top, pan: 0, tilt: 20 } ]
   };
 
-  // Minimap marker positions on the PIN TOP.jpg image (% from top-left)
+  // Minimap marker positions relative to the current panorama.
+  // Note: These positions are used for the Top View map layout.
   const minimapMarkerPositions = {
     "hs_living":    { x: 52, y: 48 },
     "hs_living2":   { x: 58, y: 52 },
@@ -1979,7 +2029,9 @@ function generateSubmenuHTML(items, itemClass) {
     "hs_thongtang": { x: 46, y: 44 },
     "hs_park":      { x: 38, y: 58 },
     "hs_park2":     { x: 32, y: 63 },
-    "hs_street":    { x: 44, y: 65 }
+    "hs_street":    { x: 44, y: 65 },
+    "hs_birdview":  { x: 50, y: 30 },
+    "hs_top":       { x: 50, y: 50 }
   };
 
   // Track active hotspot
@@ -2166,7 +2218,7 @@ function generateSubmenuHTML(items, itemClass) {
     // Render nodes based on mode
     if (layoutMode === "classic") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = verticalToolStackClassicHTML + bottomNavClassicHTML;
+      tempDiv.innerHTML = quickNavClassicHTML + verticalToolStackClassicHTML + bottomNavClassicHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -2410,6 +2462,57 @@ function generateSubmenuHTML(items, itemClass) {
         routeNavigation(this);
       });
     });
+
+    // Quick Navigation Panel Logic
+    const qnToggle = document.getElementById("quick-nav-toggle");
+    const qnPanel = document.getElementById("quick-nav-panel");
+    const qnSearch = document.getElementById("quick-nav-search-input");
+    const qnCatHeaders = document.querySelectorAll(".quick-nav-cat-header");
+    const qnItems = document.querySelectorAll(".quick-nav-item");
+
+    if (qnToggle && qnPanel) {
+      qnToggle.addEventListener("click", function(e) {
+        e.stopPropagation();
+        qnPanel.classList.toggle("collapsed");
+      });
+
+      // Prevent closing when clicking inside panel
+      qnPanel.addEventListener("click", function(e) {
+        e.stopPropagation();
+      });
+    }
+
+    if (qnCatHeaders.length > 0) {
+      qnCatHeaders.forEach(header => {
+        header.addEventListener("click", function() {
+          if (this.classList.contains("expanded")) {
+            this.classList.remove("expanded");
+            this.nextElementSibling.style.display = "none";
+          } else {
+            qnCatHeaders.forEach(h => {
+              h.classList.remove("expanded");
+              h.nextElementSibling.style.display = "none";
+            });
+            this.classList.add("expanded");
+            this.nextElementSibling.style.display = "block";
+          }
+        });
+      });
+    }
+
+    if (qnItems.length > 0) {
+      qnItems.forEach(item => {
+        item.addEventListener("click", function() {
+          const node = this.getAttribute("data-pano-node");
+          if (node && window.pano) {
+            window.pano.openNext(`{${node}}`);
+            if (window.innerWidth <= 768) {
+              qnPanel.classList.add("collapsed");
+            }
+          }
+        });
+      });
+    }
   }
 
   // Bind Listeners for OPTION B: FUTURISTIC
@@ -4257,33 +4360,83 @@ document.addEventListener('click', (e) => {
 
   const ICON_INTERIOR = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`;
   const ICON_AMENITIES = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><circle cx="12" cy="8" r="4"/><path d="M12 12v8"/><path d="M8 16s1.5 2 4 2 4-2 4-2"/><path d="M6 20s2 2 6 2 6-2 6-2"/></svg>`;
+  const ICON_HELICOPTER = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 13h18"/><path d="M11 13V9"/><path d="M5 9h14"/><path d="M12 9V5"/><path d="M8 5h8"/><path d="M10 17h4"/><path d="M6 13c0 3 2 4 6 4s6-1 6-4"/><path d="M5 17h14"/></svg>`;
 
   function getHotspotIcon(category) {
+    if (category === 'aerial') return ICON_HELICOPTER;
     return category === 'interior' ? ICON_INTERIOR : ICON_AMENITIES;
   }
 
   function createPremiumHotspot(pin) {
+    const isTopView = HOTSPOT_TOP_VIEW_NODES.includes(activePanoNode);
+    let styleClass = isTopView ? 'hs-beacon' : 'hs-subtle';
+    if (pin.category === 'aerial') styleClass = 'hs-aerial';
+
     const container = document.createElement('div');
-    container.className = `hs-container hs-${pin.category}`;
+    container.className = `hs-container hs-${pin.category} ${styleClass}`;
     container.id = `hs-${pin.id}`;
     container.setAttribute('aria-label', pin.title);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'button');
 
-    const categoryLabel = pin.category === 'interior' ? 'NỘI THẤT' : 'TIỆN ÍCH';
-
-    container.innerHTML = `
-      <div class="hs-scale-wrap">
-        <div class="hs-line-pin">
-          <div class="hs-pin-text">${pin.title}</div>
-          <div class="hs-pin-line"></div>
-          <div class="hs-pin-dot"></div>
+    if (pin.category === 'aerial') {
+      // Style C: Aerial Navigation
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-drone-icon">
+            ${ICON_HELICOPTER}
+            <div class="hs-pulse-ring"></div>
+          </div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to fly'}</p>
+              <div class="hs-enter-btn">Click to Fly</div>
+            </div>
+          </div>
         </div>
-      </div>
-    `;
+      `;
+    } else if (isTopView) {
+      // Style A: Navigation Beacon (Top Views)
+      const iconSvg = getHotspotIcon(pin.category);
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-line-pin">
+            <div class="hs-pin-text">
+               <span class="hs-pin-icon" style="vertical-align: middle; margin-right: 4px;">${iconSvg}</span>
+               ${pin.title}
+            </div>
+            <div class="hs-pin-line"></div>
+            <div class="hs-pin-dot"></div>
+          </div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to enter'}</p>
+              <div class="hs-enter-btn">Click to Enter</div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      // Style B: Subtle & Immersive (Interior / Amenities / Bird View)
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-circle">
+            <div class="hs-circle-inner"></div>
+            <div class="hs-pulse-soft"></div>
+          </div>
+          <div class="hs-subtle-hover">
+            <div class="hs-subtle-title">${pin.title}</div>
+            <div class="hs-subtle-enter">Click to Enter</div>
+          </div>
+        </div>
+      `;
+    }
 
     // Hover interactions
-    const pinText = container.querySelector('.hs-pin-text');
     container.addEventListener('mouseenter', () => {
       container.classList.add('hs-hovered');
     });
@@ -4318,7 +4471,7 @@ document.addEventListener('click', (e) => {
     return container;
   }
 
-  // Inject all hotspots for a given top-view node
+  // Inject all hotspots for a given node
   function injectPremiumHotspots(nodeId) {
     if (!window.pano || typeof window.pano.addHotspot !== 'function') {
         console.error("[PremiumHotspot] window.pano or addHotspot is not available!");
@@ -4328,7 +4481,7 @@ document.addEventListener('click', (e) => {
 
     const defs = hotspotData[nodeId];
     if (!defs) {
-        console.warn(`[PremiumHotspot] No hotspot definitions found for node: ${nodeId}`);
+        console.log(`[PremiumHotspot] No hotspot definitions found for node: ${nodeId}`);
         return;
     }
 
@@ -4356,19 +4509,33 @@ document.addEventListener('click', (e) => {
     zoomWrapper.querySelectorAll('.mm-hs-marker').forEach(m => m.remove());
     canvas.querySelectorAll('.mm-hs-marker').forEach(m => m.remove());
 
-    // We no longer return early; minimap markers show on all nodes
+    const isTopView = HOTSPOT_TOP_VIEW_NODES.includes(nodeId);
+    let defsToShow = [];
+    
+    if (isTopView) {
+      defsToShow = hotspotData["pin_top"] || [];
+    } else {
+      // Current panorama's hotspots
+      defsToShow = hotspotData[nodeId] || [];
+    }
 
-
-    // Determine base definitions (strip _night suffix for position lookup)
-    const defs = hotspotData["pin_top"] || [];
-
-    defs.forEach(pin => {
-      const pos = minimapMarkerPositions[pin.id];
+    defsToShow.forEach(pin => {
+      // Strip _night for pos lookup
+      const lookupId = pin.id.replace('_night', '');
+      const pos = minimapMarkerPositions[lookupId];
       if (!pos) return;
 
       const marker = document.createElement('div');
-      const isActive = (pin.nodeTarget === activePanoNode);
-      marker.className = `mm-hs-marker mm-hs-${pin.category}${isActive ? ' mm-hs-current' : ''}`;
+      
+      // Minimap dots are just representation of available paths.
+      // We don't have a "current" active marker for the current panorama in the same way Top View does,
+      // but we can highlight them all, or just style them normally.
+      marker.className = `mm-hs-marker mm-hs-${pin.category}`;
+      
+      if (pin.category === 'aerial') {
+        marker.innerHTML = ICON_HELICOPTER;
+      }
+
       marker.style.cssText = `left:${pos.x}%;top:${pos.y}%;`;
       marker.title = pin.title;
 
@@ -4379,12 +4546,6 @@ document.addEventListener('click', (e) => {
 
       zoomWrapper.appendChild(marker);
     });
-
-    // Gold pulse for current node marker if it's a top-view
-    const currentDef = defs.find(d => d.nodeTarget === activePanoNode);
-    if (!currentDef) {
-      // If current node is pin_top or pin_topnight itself, show center dot (handled by viewcone)
-    }
   }
 
   // Update hotspot depth/visibility every rAF frame — called from syncCompass
@@ -4465,6 +4626,33 @@ document.addEventListener('click', (e) => {
         }
       }
     });
+
+    // Sync Quick Navigation Panel active state
+    const qnItems = document.querySelectorAll(".quick-nav-item");
+    if (qnItems.length > 0) {
+      qnItems.forEach(item => {
+        if (item.getAttribute("data-pano-node") === nodeId) {
+          item.classList.add("active");
+          const catBody = item.closest(".quick-nav-cat-body");
+          if (catBody) {
+            catBody.style.display = "block";
+            const header = catBody.previousElementSibling;
+            if (header) {
+              const allHeaders = document.querySelectorAll(".quick-nav-cat-header");
+              allHeaders.forEach(h => {
+                if (h !== header) {
+                  h.classList.remove("expanded");
+                  if (h.nextElementSibling) h.nextElementSibling.style.display = "none";
+                }
+              });
+              header.classList.add("expanded");
+            }
+          }
+        } else {
+          item.classList.remove("active");
+        }
+      });
+    }
   }
 
   function onNodeChange() {
@@ -4490,13 +4678,13 @@ document.addEventListener('click', (e) => {
     // === PREMIUM HOTSPOT SYSTEM ===
     // Detect layout from body class (more reliable than var during init)
     const isClassic = document.body.classList.contains('layout-classic') || layoutMode === 'classic';
-    console.log(`[PremiumHotspot] isClassic = ${isClassic}, layoutMode = ${layoutMode}, HOTSPOT_TOP_VIEW_NODES = ${HOTSPOT_TOP_VIEW_NODES.includes(currentNodeId)}`);
+    console.log(`[PremiumHotspot] isClassic = ${isClassic}, layoutMode = ${layoutMode}, HasHotspots = ${!!hotspotData[currentNodeId]}`);
     
-    if (isClassic && HOTSPOT_TOP_VIEW_NODES.includes(currentNodeId)) {
+    if (isClassic && hotspotData[currentNodeId]) {
       console.log(`[PremiumHotspot] Injecting hotspots for node ${currentNodeId}`);
       injectPremiumHotspots(currentNodeId);
     } else {
-      // Update marker active state for non-top-view
+      // Update marker active state for non-top-view if needed (minimap dot)
       if (isClassic) updateMinimapHotspots(currentNodeId);
     }
   }
@@ -4728,10 +4916,15 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    // 5. Close Social Share on outside click
+    // 5. Close Menus on outside click
     const shareMenu = document.getElementById('social-share-menu');
     if (shareMenu && shareMenu.classList.contains('active')) {
       shareMenu.classList.remove('active');
+    }
+
+    const qnPanel = document.getElementById("quick-nav-panel");
+    if (qnPanel && !qnPanel.classList.contains("collapsed")) {
+      qnPanel.classList.add("collapsed");
     }
 
     // 6. Close Submenus on outside click (Gradient & Neo & Classic & Futuristic)
