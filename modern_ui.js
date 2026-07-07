@@ -4103,9 +4103,8 @@ document.addEventListener('click', (e) => {
       const canvas = document.getElementById("minimap-canvas");
       if (cone) {
         // Rotate the viewcone and apply inverse scale to keep it original size.
-        // Add 180 to pan because the minimap image is rotated 180deg via CSS.
         const zoom = canvas ? parseFloat(canvas.style.getPropertyValue('--mm-zoom')) || 1 : 1;
-        cone.style.transform = `rotate(${pan + 180}deg) scale(${1 / zoom})`;
+        cone.style.transform = `rotate(${pan}deg) scale(${1 / zoom})`;
       }
     } catch (e) {}
   }
