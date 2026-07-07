@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
@@ -68,7 +68,7 @@
 		}
 		var params = {};
 		parseParams(document.location.hash, params);
-		var startNode = params.startNode;
+		var startNode = params.startNode || 'node2';
 		var startView = params.startView;
 		if (("onhashchange" in window) && (!(/MSIE (\d+\.\d+);/.test(navigator.userAgent)))) {
 			window.onhashchange = function () {
@@ -123,6 +123,7 @@
 		<noscript>
 			<p><b>Please enable Javascript!</b></p>
 		</noscript>
+		<script type="text/javascript" src="hotspots.js?v=1"></script>
 		<script type="text/javascript" src="modern_ui.js?v=28"></script>
 <!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - -->
 	</body>

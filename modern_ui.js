@@ -35,25 +35,21 @@ const PROJECT_CONTENT = {
   navItems: {
     topview: {
       label: "Top View",
-      submenu: [
-        { node: "pin_top", label: "Top View Day" },
-        { node: "pin_topnight", label: "Top View Night" }
-      ]
+      node: "node1"
     },
     birdview: {
       label: "Bird View",
       submenu: [
-        { node: "pin_birdview", label: "Bird View 1" },
-        { node: "pin_top", label: "Bird View 2" },
-        { node: "pin_topnight", label: "Bird View 3" }
+        { node: "node2", label: "Bird View 1" },
+        { node: "node3", label: "Bird View 2" }
       ]
     },
     amenities: {
       label: "Tiện ích",
       submenu: [
-        { node: "pin_park", label: "TAV Park" },
-        { node: "pin_park2", label: "TAV Park 2" },
-        { node: "pin_street", label: "TAV Street" }
+        { node: "node4", label: "TAV Park" },
+        { node: "node5", label: "TAV Street" },
+        { node: "node6", label: "TAV Park 2" }
       ]
     },
     architecture: {
@@ -67,10 +63,11 @@ const PROJECT_CONTENT = {
     interior: {
       label: "Nội Thất",
       submenu: [
-        { node: "pin_living", label: "TAV Living 1" },
-        { node: "pin_living2", label: "TAV Living 2" },
-        { node: "pinwc", label: "TAV WC" },
-        { node: "pintangthong", label: "TAV Thông Tầng" }
+        { node: "node7", label: "TAV Living 2" },
+        { node: "node8", label: "TAV Living 1" },
+        { node: "node9", label: "TAV Thông Tầng" },
+        { node: "node10", label: "TAV Balcony" },
+        { node: "node11", label: "TAV WC" }
       ]
     },
     surrounding: {
@@ -93,17 +90,323 @@ function generateSubmenuHTML(items, itemClass) {
         TAV Version
       </div>
       <div class="layout-switcher-pill" id="layout-switcher">
-        <div class="switcher-segment" id="opt-layout-classic" data-layout="classic" title="Giao diện Cổ điển">Cổ điển</div>
-        <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic" title="Giao diện Tương lai">Tương lai</div>
-        <div class="switcher-segment" id="opt-layout-neo" data-layout="neo" title="Giao diện Neo">Neo</div>
-        <div class="switcher-segment" id="opt-layout-gradient" data-layout="gradient" title="Giao diện Gradient">Gradient</div>
-        <div class="switcher-segment" id="opt-layout-aurora" data-layout="aurora" title="Giao diện Aurora">Aurora</div>
-        <div class="switcher-segment" id="opt-layout-horizon" data-layout="horizon" title="Giao diện Horizon">Horizon</div>
-        <div class="switcher-segment" id="opt-layout-prism" data-layout="prism" title="Giao diện Prism">Prism</div>
-        <div class="switcher-segment" id="opt-layout-nexus" data-layout="nexus" title="Giao diện Nexus">Nexus</div>
-        <div class="switcher-segment" id="opt-layout-monarch" data-layout="monarch" title="Giao diện Monarch">Monarch</div>
-        <div class="switcher-segment" id="opt-layout-regal" data-layout="regal" title="Giao diện Regal">Regal</div>
+        <div class="switcher-segment" id="opt-layout-classic"    data-layout="classic"    title="Layout 01 — Cổ Điển"><span class="sw-num">01</span> Cổ Điển</div>
+        <div class="switcher-segment" id="opt-layout-futuristic" data-layout="futuristic" title="Layout 02 — Tương Lai"><span class="sw-num">02</span> Tương Lai</div>
+        <div class="switcher-segment" id="opt-layout-neo"        data-layout="neo"        title="Layout 03 — Neo"><span class="sw-num">03</span> Neo</div>
+        <div class="switcher-segment" id="opt-layout-gradient"   data-layout="gradient"   title="Layout 04 — Gradient"><span class="sw-num">04</span> Gradient</div>
+        <div class="switcher-segment" id="opt-layout-aurora"     data-layout="aurora"     title="Layout 05 — Aurora"><span class="sw-num">05</span> Aurora</div>
+        <div class="switcher-segment" id="opt-layout-horizon"    data-layout="horizon"    title="Layout 06 — Horizon"><span class="sw-num">06</span> Horizon</div>
+        <div class="switcher-segment" id="opt-layout-prism"      data-layout="prism"      title="Layout 07 — Prism"><span class="sw-num">07</span> Prism</div>
+        <div class="switcher-segment" id="opt-layout-nexus"      data-layout="nexus"      title="Layout 08 — Nexus"><span class="sw-num">08</span> Nexus</div>
+        <div class="switcher-segment" id="opt-layout-monarch"    data-layout="monarch"    title="Layout 09 — Monarch"><span class="sw-num">09</span> Monarch</div>
+        <div class="switcher-segment" id="opt-layout-regal"      data-layout="regal"      title="Layout 10 — Regal"><span class="sw-num">10</span> Regal</div>
+        <div class="switcher-segment" id="opt-layout-command"    data-layout="command"    title="Layout 11 — Command"><span class="sw-num">11</span> Command</div>
         <div class="switcher-slider" id="switcher-slider"></div>
+      </div>
+    </div>
+  `;
+
+  // ==========================================
+  // LAYOUT #11 — COMMAND: DIGITAL TWIN CONTROL CENTER
+  // ==========================================
+
+  const cmdTopRibbonHTML = `
+    <div class="cmd-top-ribbon" id="cmd-top-ribbon">
+      <div class="cmd-ribbon-left">
+        <div class="cmd-brand">
+          <span class="cmd-brand-accent">TAV</span>
+          <span class="cmd-brand-main">VILLA</span>
+        </div>
+        <div class="cmd-separator"></div>
+        <div class="cmd-status-pill">
+          <span class="cmd-pulse-dot"></span>
+          <span>LIVE SPATIAL DATA</span>
+        </div>
+      </div>
+      <div class="cmd-ribbon-center">
+        <div class="cmd-node-label" id="cmd-node-label">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          <span id="cmd-scene-name">TOP VIEW DAY 1</span>
+        </div>
+      </div>
+      <div class="cmd-ribbon-right">
+        <div class="cmd-coord-display" id="cmd-coord-display">
+          <span class="cmd-coord-label">PAN</span>
+          <span class="cmd-coord-val" id="cmd-pan-val">0°</span>
+          <span class="cmd-coord-label">TILT</span>
+          <span class="cmd-coord-val" id="cmd-tilt-val">0°</span>
+        </div>
+        <button class="cmd-ribbon-btn" data-action="fullscreen" title="Fullscreen">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+        </button>
+      </div>
+    </div>
+  `;
+
+  const cmdSceneExplorerHTML = `
+    <div class="cmd-scene-explorer" id="cmd-scene-explorer">
+      <div class="cmd-panel-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        <span>SCENE EXPLORER</span>
+        <button class="cmd-collapse-btn" id="cmd-explorer-collapse">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+      </div>
+      <div class="cmd-explorer-body" id="cmd-explorer-body">
+
+        <!-- TOP VIEW -->
+        <div class="cmd-category" data-cat="topview">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon cmd-cat-aerial">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <span>TOP VIEW</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cmd-cat-items">
+            <div class="cmd-scene-item" data-pano-node="node1" data-action="node1">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/thumb_PIN TOP.jpg" alt="Top View Day 1" onerror="this.src='image/PIN TOP.jpg'"></div>
+              <div class="cmd-scene-info">
+                <div class="cmd-scene-title">TOP VIEW DAY 1</div>
+                <div class="cmd-scene-sub">Aerial · Day</div>
+              </div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIRD VIEW -->
+        <div class="cmd-category" data-cat="birdview">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon cmd-cat-bird">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7-5 7 5"/><path d="M5 8v10a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1V8"/></svg>
+            </div>
+            <span>BIRD VIEW</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cmd-cat-items">
+            <div class="cmd-scene-item" data-pano-node="node2" data-action="node2">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN BIRD.jpg" alt="Bird View 1" onerror="this.src='image/PIN BIRD.jpg'"></div>
+              <div class="cmd-scene-info">
+                <div class="cmd-scene-title">BIRD VIEW 1</div>
+                <div class="cmd-scene-sub">Drone · 80m</div>
+              </div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node3" data-action="node3">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN TOP NIGHT.jpg" alt="Bird View 2" onerror="this.src='image/PIN TOP NIGHT.jpg'"></div>
+              <div class="cmd-scene-info">
+                <div class="cmd-scene-title">BIRD VIEW 2</div>
+                <div class="cmd-scene-sub">Aerial · Dusk</div>
+              </div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AMENITIES -->
+        <div class="cmd-category" data-cat="amenities">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon cmd-cat-amenities">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M12 12v8"/><path d="M8 16s1.5 2 4 2 4-2 4-2"/></svg>
+            </div>
+            <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cmd-cat-items">
+            <div class="cmd-scene-item" data-pano-node="node4" data-action="node4">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN PARK.jpg" alt="TAV Park" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV PARK</div><div class="cmd-scene-sub">Amenity</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node5" data-action="node5">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN STREET.jpg" alt="TAV Street" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV STREET</div><div class="cmd-scene-sub">Amenity</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node6" data-action="node6">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN PARK 02.jpg" alt="TAV Park 2" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV PARK 2</div><div class="cmd-scene-sub">Amenity</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ARCHITECTURE -->
+        <div class="cmd-category" data-cat="architecture">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon cmd-cat-architecture">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16M9 21v-4a2 2 0 012-2h2a2 2 0 012 2v4M9 7h6M9 11h6"/></svg>
+            </div>
+            <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cmd-cat-items">
+            <div class="cmd-scene-item cmd-route-item" data-action="architecture-1">
+              <div class="cmd-scene-thumb"><div style="width:100%; height:100%; background:#10ffa0;"></div></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">KIẾN TRÚC 1</div><div class="cmd-scene-sub">Exterior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item cmd-route-item" data-action="architecture-2">
+              <div class="cmd-scene-thumb"><div style="width:100%; height:100%; background:#10ffa0;"></div></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">KIẾN TRÚC 2</div><div class="cmd-scene-sub">Exterior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item cmd-route-item" data-action="architecture-3">
+              <div class="cmd-scene-thumb"><div style="width:100%; height:100%; background:#10ffa0;"></div></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">KIẾN TRÚC 3</div><div class="cmd-scene-sub">Exterior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERIOR -->
+        <div class="cmd-category" data-cat="interior">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon cmd-cat-interior">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2-2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span>${PROJECT_CONTENT.navItems.interior.label}</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cmd-cat-items">
+            <div class="cmd-scene-item" data-pano-node="node7" data-action="node7">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN LIVING 2.jpg" alt="Living 2" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV LIVING 2</div><div class="cmd-scene-sub">Interior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node8" data-action="node8">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN LIVING.jpg" alt="Living 1" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV LIVING 1</div><div class="cmd-scene-sub">Interior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node9" data-action="node9">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN THONG TANG.jpg" alt="Thong Tang" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV THÔNG TẦNG</div><div class="cmd-scene-sub">Interior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node10" data-action="node10">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN BALCONY.jpg" alt="Balcony" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">BALCONY</div><div class="cmd-scene-sub">Interior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+            <div class="cmd-scene-item" data-pano-node="node11" data-action="node11">
+              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN WC.jpg" alt="WC" onerror="this.parentNode.style.background='#0a1628'"></div>
+              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV WC</div><div class="cmd-scene-sub">Interior</div></div>
+              <div class="cmd-scene-active-dot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SURROUNDING (Liên kết vùng) -->
+        <div class="cmd-category cmd-route-item" data-cat="surrounding" data-action="region-page">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon cmd-cat-surrounding">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>LIÊN KẾT VÙNG</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  const cmdSpatialControlHTML = `
+    <div class="cmd-spatial-control" id="cmd-spatial-control">
+      <div class="cmd-ctrl-tile" data-action="images" title="Th\u01b0 vi\u1ec7n h\u00ecnh \u1ea3nh">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+        <div class="cmd-ctrl-label">GALLERY</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
+      <div class="cmd-ctrl-tile" data-action="music" id="cmd-music-tile" title="Nh\u1ea1c n\u1ec1n">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
+        <div class="cmd-ctrl-label">AUDIO</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
+      <div class="cmd-ctrl-tile" data-action="hotspots" id="cmd-hotspot-tile" title="Hi\u1ec7n/\u1ea8n Hotspot">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+        <div class="cmd-ctrl-label">NODES</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
+      <div class="cmd-ctrl-tile" data-action="share" title="Chia s\u1ebb">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
+        <div class="cmd-ctrl-label">SHARE</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
+      <div class="cmd-ctrl-tile" data-action="fullscreen" title="To\u00e0n m\u00e0n h\u00ecnh">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></div>
+        <div class="cmd-ctrl-label">EXPAND</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
+      <div class="cmd-ctrl-tile" data-action="call" title="Li\u00ean h\u1ec7">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .91h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 15.92z"/></svg></div>
+        <div class="cmd-ctrl-label">CONTACT</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
+    </div>
+  `;
+
+  const cmdTimelineHTML = `
+    <div class="cmd-timeline" id="cmd-timeline">
+      <div class="cmd-timeline-track">
+        <div class="cmd-timeline-inner" id="cmd-timeline-inner">
+          <div class="cmd-tl-node ${PROJECT_CONTENT.navItems.topview ? 'cmd-tl-aerial' : ''}" data-pano-node="node1" data-label="TOP VIEW">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">TOP VIEW</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-aerial" data-pano-node="node2" data-label="BIRD VIEW 1">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">BIRD VIEW 1</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-aerial" data-pano-node="node3" data-label="BIRD VIEW 2">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">BIRD VIEW 2</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-amenity" data-pano-node="node4" data-label="TAV PARK">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">TAV PARK</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-amenity" data-pano-node="node5" data-label="STREET">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">STREET</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-amenity" data-pano-node="node6" data-label="PARK 2">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">PARK 2</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node7" data-label="LIVING 2">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">LIVING 2</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node8" data-label="LIVING 1">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">LIVING 1</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node9" data-label="THÔNG TẦNG">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">THÔNG TẦNG</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node10" data-label="BALCONY">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">BALCONY</div>
+          </div>
+          <div class="cmd-tl-line"></div>
+          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node11" data-label="WC">
+            <div class="cmd-tl-dot"></div>
+            <div class="cmd-tl-label">WC</div>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -139,14 +442,12 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="project-subtitle">${PROJECT_CONTENT.projectTitle.sub}</div>
         </div>
         <!-- Top View -->
-        <div class="vision-icon-wrapper" data-id="topview">
+        <div class="vision-icon-wrapper" data-id="topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
           <div class="vision-icon" title="Top View">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
           </div>
           <span>${PROJECT_CONTENT.navItems.topview.label}</span>
-        <div class="vision-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'v-sub-item')}
-            </div></div>
+        </div>
         <!-- Bird View -->
         <div class="vision-icon-wrapper" data-id="birdview">
           <div class="vision-icon" title="Bird View">
@@ -356,60 +657,16 @@ function generateSubmenuHTML(items, itemClass) {
               </span>
             </div>
             <div class="quick-nav-cat-body">
-              <div class="quick-nav-item" data-pano-node="pin_top">
-                <div class="qn-name">Top View Day</div>
+              <div class="quick-nav-item" data-pano-node="node1">
+                <div class="qn-name">Top view day 1</div>
                 <div class="qn-active-indicator"></div>
               </div>
-              <div class="quick-nav-item" data-pano-node="pin_topnight">
-                <div class="qn-name">Top View Night</div>
+              <div class="quick-nav-item" data-pano-node="node2">
+                <div class="qn-name">Top Bird View</div>
                 <div class="qn-active-indicator"></div>
               </div>
-            </div>
-          </div>
-          <!-- BIRD VIEW -->
-          <div class="quick-nav-category">
-            <div class="quick-nav-cat-header">
-              <span class="cat-icon">🚁</span><span class="cat-title">BIRD VIEW</span><span class="cat-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </span>
-            </div>
-            <div class="quick-nav-cat-body">
-              <div class="quick-nav-item" data-pano-node="pin_birdview">
-                <div class="qn-name">Bird View 1</div>
-                <div class="qn-active-indicator"></div>
-              </div>
-              <div class="quick-nav-item" data-pano-node="pin_top">
-                <div class="qn-name">Bird View 2</div>
-                <div class="qn-active-indicator"></div>
-              </div>
-              <div class="quick-nav-item" data-pano-node="pin_topnight">
-                <div class="qn-name">Bird View 3</div>
-                <div class="qn-active-indicator"></div>
-              </div>
-            </div>
-          </div>
-          <!-- INTERIOR -->
-          <div class="quick-nav-category">
-            <div class="quick-nav-cat-header">
-              <span class="cat-icon">🏠</span><span class="cat-title">INTERIOR</span><span class="cat-arrow">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
-              </span>
-            </div>
-            <div class="quick-nav-cat-body">
-              <div class="quick-nav-item" data-pano-node="pin_living">
-                <div class="qn-name">TAV Living 1</div>
-                <div class="qn-active-indicator"></div>
-              </div>
-              <div class="quick-nav-item" data-pano-node="pin_living2">
-                <div class="qn-name">TAV Living 2</div>
-                <div class="qn-active-indicator"></div>
-              </div>
-              <div class="quick-nav-item" data-pano-node="pinwc">
-                <div class="qn-name">TAV WC</div>
-                <div class="qn-active-indicator"></div>
-              </div>
-              <div class="quick-nav-item" data-pano-node="pintangthong">
-                <div class="qn-name">TAV Thong Tang</div>
+              <div class="quick-nav-item" data-pano-node="node3">
+                <div class="qn-name">Top view night</div>
                 <div class="qn-active-indicator"></div>
               </div>
             </div>
@@ -417,21 +674,51 @@ function generateSubmenuHTML(items, itemClass) {
           <!-- AMENITIES -->
           <div class="quick-nav-category">
             <div class="quick-nav-cat-header">
-              <span class="cat-icon">🌳</span><span class="cat-title">AMENITIES</span><span class="cat-arrow">
+              <span class="cat-icon">🌳</span><span class="cat-title">TIỆN ÍCH</span><span class="cat-arrow">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
               </span>
             </div>
             <div class="quick-nav-cat-body">
-              <div class="quick-nav-item" data-pano-node="pin_park">
-                <div class="qn-name">TAV Park</div>
+              <div class="quick-nav-item" data-pano-node="node4">
+                <div class="qn-name">Park</div>
                 <div class="qn-active-indicator"></div>
               </div>
-              <div class="quick-nav-item" data-pano-node="pin_park2">
-                <div class="qn-name">TAV Park 2</div>
+              <div class="quick-nav-item" data-pano-node="node5">
+                <div class="qn-name">Street</div>
                 <div class="qn-active-indicator"></div>
               </div>
-              <div class="quick-nav-item" data-pano-node="pin_street">
-                <div class="qn-name">TAV Street</div>
+              <div class="quick-nav-item" data-pano-node="node6">
+                <div class="qn-name">Park 02</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+            </div>
+          </div>
+          <!-- INTERIOR -->
+          <div class="quick-nav-category">
+            <div class="quick-nav-cat-header">
+              <span class="cat-icon">🏠</span><span class="cat-title">NỘI THẤT</span><span class="cat-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </span>
+            </div>
+            <div class="quick-nav-cat-body">
+              <div class="quick-nav-item" data-pano-node="node7">
+                <div class="qn-name">Living 2</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="node8">
+                <div class="qn-name">Living</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="node9">
+                <div class="qn-name">Thông Tầng</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="node10">
+                <div class="qn-name">Balcony</div>
+                <div class="qn-active-indicator"></div>
+              </div>
+              <div class="quick-nav-item" data-pano-node="node11">
+                <div class="qn-name">WC</div>
                 <div class="qn-active-indicator"></div>
               </div>
             </div>
@@ -465,26 +752,22 @@ function generateSubmenuHTML(items, itemClass) {
         <!-- Active Back Glow element -->
         <div class="active-nav-glow" id="nav-glow"></div>
 
-        <!-- 1. TOP VIEW -->
-        <div class="nav-item" data-id="topview" id="nav-topview">
+        <!-- 1. TOP VIEW — node1 only -->
+        <div class="nav-item" data-id="topview" id="nav-topview" data-pano-node="node1">
             <svg viewBox="0 0 24 24" fill="none">
               <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
               <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
               <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
-            <span>${PROJECT_CONTENT.navItems.topview.label}</span>
-          <!-- Submenu -->
-          <div class="nav-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'submenu-item')}
-            </div>
-
-            
+            <span>Top View</span>
           </div>
 
         <!-- 2. BIRD VIEW -->
         <div class="nav-item" data-id="birdview" id="nav-birdview">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"></path>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 8l7-5 7 5"></path>
+            <path d="M5 8v10a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1V8"></path>
+            <path d="M12 3v5"></path>
           </svg>
           <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
           <!-- Submenu -->
@@ -543,8 +826,6 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="nav-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'submenu-item')}
             </div>
-
-          
         </div>
 
         <!-- 7. LIÊN KẾT VÙNG (Liên kết vùng) -->
@@ -600,19 +881,13 @@ function generateSubmenuHTML(items, itemClass) {
 
 
           <!-- 1. TOP VIEW -->
-          <div class="nav-item" data-id="topview" id="nav-topview">
+          <div class="nav-item" data-id="topview" id="nav-topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <svg viewBox="0 0 24 24" fill="none">
               <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
               <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
               <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
             <span>${PROJECT_CONTENT.navItems.topview.label}</span>
-          <!-- Submenu -->
-          <div class="nav-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'submenu-item')}
-            </div>
-
-            
           </div>
 
           <!-- 2. BIRD VIEW -->
@@ -708,7 +983,7 @@ function generateSubmenuHTML(items, itemClass) {
       <div class="neo-nav-panel" id="neo-nav-panel">
         <!-- Top View Group -->
         <div class="neo-nav-item-group" data-id="topview">
-          <div class="neo-nav-card" data-id="topview" id="nav-neo-topview">
+          <div class="neo-nav-card" data-id="topview" id="nav-neo-topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <svg viewBox="0 0 24 24" fill="none">
               <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
               <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
@@ -716,9 +991,7 @@ function generateSubmenuHTML(items, itemClass) {
             </svg>
             <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
-        <div class="neo-submenu-tree">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'submenu-item')}
-            </div></div>
+        </div>
         <!-- Bird View Group -->
         <div class="neo-nav-item-group" data-id="birdview">
           <div class="neo-nav-card" data-id="birdview" id="nav-neo-birdview">
@@ -853,7 +1126,7 @@ function generateSubmenuHTML(items, itemClass) {
 
         <!-- 1. TOP VIEW (Electric Cyan) -->
         <div class="aurora-nav-item-wrapper has-children" data-id="topview">
-          <div class="aurora-nav-item" data-id="topview" style="--accent-color: var(--aurora-cyan);">
+          <div class="aurora-nav-item" data-id="topview" style="--accent-color: var(--aurora-cyan);" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
@@ -862,13 +1135,8 @@ function generateSubmenuHTML(items, itemClass) {
               </svg>
             </div>
             <span class="aurora-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
-            <svg class="aurora-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
           </div>
-        <div class="aurora-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'aurora-submenu-item')}
-            </div></div>
+        </div>
 
         <!-- 2. BIRD VIEW (Purple) -->
         <div class="aurora-nav-item-wrapper has-children" data-id="birdview">
@@ -1102,13 +1370,11 @@ function generateSubmenuHTML(items, itemClass) {
   const horizonBottomDockHTML = `<div class="horizon-nav-container" id="horizon-nav-container">
       <div class="horizon-dock">
         <!-- 1. TOP VIEW -->
-        <div class="horizon-nav-item-wrapper has-submenu" data-id="topview">
-          <div class="horizon-nav-item" data-id="topview">
+        <div class="horizon-nav-item-wrapper" data-id="topview">
+          <div class="horizon-nav-item" data-id="topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <span class="horizon-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
-        <div class="horizon-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'horizon-submenu-item')}
-            </div></div>
+        </div>
 
         <!-- 2. BIRD VIEW -->
         <div class="horizon-nav-item-wrapper has-submenu" data-id="birdview">
@@ -1264,7 +1530,7 @@ function generateSubmenuHTML(items, itemClass) {
 
 
           <!-- Item 1: Top View -->
-          <div class="prism-nav-item has-submenu" data-id="topview">
+          <div class="prism-nav-item" data-id="topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <div class="prism-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
@@ -1272,9 +1538,7 @@ function generateSubmenuHTML(items, itemClass) {
               </svg>
             </div>
             <span class="prism-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
-          <div class="prism-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'prism-submenu-item')}
-            </div></div>
+          </div>
 
           <!-- Item 2: Bird View (has submenu) -->
           <div class="prism-nav-item has-submenu" data-id="birdview">
@@ -1464,7 +1728,7 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="nexus-nav-list">
 
           <!-- Item 1: Top View -->
-          <div class="nexus-nav-item" data-id="topview">
+          <div class="nexus-nav-item" data-id="topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
@@ -1473,9 +1737,7 @@ function generateSubmenuHTML(items, itemClass) {
             </div>
             <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.topview.label}</span>
             <span class="nexus-active-line"></span>
-          <div class="nexus-submenu">
-              ${generateSubmenuHTML(PROJECT_CONTENT.navItems.topview.submenu, 'nexus-submenu-item')}
-            </div></div>
+          </div>
 
           <!-- Item 2: Bird View -->
           <div class="nexus-nav-item has-submenu" data-id="birdview">
@@ -1696,7 +1958,7 @@ function generateSubmenuHTML(items, itemClass) {
           </div>`;
             } else {
                 return `
-          <div class="monarch-nav-item" data-id="${id}">
+          <div class="monarch-nav-item" data-id="${id}" ${item.node ? `data-pano-node="${item.node}"` : ''}>
             <div class="monarch-nav-btn monarch-hover-sweep">
               <span class="monarch-nav-label">${item.label}</span>
             </div>
@@ -1799,16 +2061,17 @@ function generateSubmenuHTML(items, itemClass) {
         <span>GIAO DIỆN</span>
       </div>
       <div class="monarch-selector-grid">
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="classic">01</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="futuristic">02</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="neo">03</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="gradient">04</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="aurora">05</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="horizon">06</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="prism">08</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="nexus">09</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="monarch">10</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="regal">11</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="classic"    title="01 — Cổ Điển">01</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="futuristic" title="02 — Tương Lai">02</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="neo"        title="03 — Neo">03</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="gradient"   title="04 — Gradient">04</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="aurora"     title="05 — Aurora">05</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="horizon"    title="06 — Horizon">06</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="prism"      title="07 — Prism">07</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="nexus"      title="08 — Nexus">08</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="monarch"    title="09 — Monarch">09</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="regal"      title="10 — Regal">10</div>
+        <div class="monarch-selector-item monarch-hover-sweep" data-layout="command"    title="11 — Command">11</div>
       </div>
     </div>
   `;
@@ -1999,48 +2262,9 @@ function generateSubmenuHTML(items, itemClass) {
   // Hotspots exist ONLY in pin_top & pin_topnight
   // ==========================================
 
-  const HOTSPOT_TOP_VIEW_NODES = ["pin_top", "pin_topnight"];
 
-  // Shared generic hotspots with steep tilts restored for accurate Top View mapping
-  const hs_living = { id: "hs_living", pan: -37, tilt: -38, category: "interior", nodeTarget: "pin_living", title: "TAV LIVING 1", desc: "Không gian phòng khách đẳng cấp", thumb: "image/thumbnails/PIN LIVING.jpg" };
-  const hs_living2 = { id: "hs_living2", pan: 10, tilt: -36, category: "interior", nodeTarget: "pin_living2", title: "TAV LIVING 2", desc: "Phòng khách sang trọng hướng sông", thumb: "image/thumbnails/PIN LIVING 2.jpg" };
-  const hs_wc = { id: "hs_wc", pan: -20, tilt: -36, category: "interior", nodeTarget: "pinwc", title: "TAV WC", desc: "Phòng vệ sinh tiêu chuẩn 5 sao", thumb: "image/thumbnails/PIN WC.jpg" };
-  const hs_thongtang = { id: "hs_thongtang", pan: 40, tilt: -30, category: "interior", nodeTarget: "pintangthong", title: "TAV THÔNG TẦNG", desc: "Không gian thông tầng ấn tượng", thumb: "image/thumbnails/PIN THONG TANG.jpg" };
-  const hs_park = { id: "hs_park", pan: -10, tilt: -48, category: "amenities", nodeTarget: "pin_park", title: "TAV PARK", desc: "Công viên sinh thái 10ha xanh mát", thumb: "image/thumbnails/PIN PARK.jpg" };
-  const hs_park2 = { id: "hs_park2", pan: -45, tilt: -38, category: "amenities", nodeTarget: "pin_park2", title: "TAV PARK 2", desc: "Khu vui chơi & thể thao ngoài trời", thumb: "image/thumbnails/PIN PARK 02.jpg" };
-  const hs_street = { id: "hs_street", pan: 25, tilt: -35, category: "amenities", nodeTarget: "pin_street", title: "TAV STREET", desc: "Phố đi bộ thương mại sầm uất", thumb: "image/thumbnails/PIN STREET.jpg" };
-  const hs_birdview = { id: "hs_birdview", pan: 0, tilt: 8, category: "aerial", nodeTarget: "pin_birdview", title: "BIRD VIEW", desc: "Toàn cảnh từ trên cao", thumb: "preview.jpg" };
-  const hs_top = { id: "hs_top", pan: 0, tilt: -10, category: "aerial", nodeTarget: "pin_top", title: "TOP VIEW", desc: "Toàn cảnh dự án", thumb: "preview.jpg" };
 
-  const topViewDefs = [ hs_living, hs_living2, hs_wc, hs_thongtang, hs_park, hs_park2, hs_street, hs_birdview ];
-
-  // Full network mapping (Node-to-Node connections)
-  const hotspotData = {
-    "pin_top":      topViewDefs,
-    "pin_topnight": topViewDefs.map(h => ({ ...h, id: h.id + "_night" })),
-    "pin_living":   [ { ...hs_wc, pan: 30, tilt: -5 }, { ...hs_thongtang, pan: 90, tilt: -5 }, { ...hs_park, pan: 180, tilt: -10 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-    "pin_living2":  [ { ...hs_thongtang, pan: -90, tilt: -5 }, { ...hs_park2, pan: 180, tilt: -10 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-    "pinwc":        [ { ...hs_living, pan: 0, tilt: -5 } ],
-    "pintangthong": [ { ...hs_living, pan: -90, tilt: -5 }, { ...hs_living2, pan: 90, tilt: -5 } ],
-    "pin_park":     [ { ...hs_street, pan: -30, tilt: -10 }, { ...hs_living, pan: 180, tilt: -5 }, { ...hs_park2, pan: 90, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-    "pin_park2":    [ { ...hs_street, pan: 30, tilt: -10 }, { ...hs_park, pan: -90, tilt: -5 }, { ...hs_living2, pan: 180, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-    "pin_street":   [ { ...hs_park, pan: 180, tilt: -5 }, { ...hs_park2, pan: -180, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-    "pin_birdview": [ { ...hs_park, pan: 180, tilt: -45 }, { ...hs_living, pan: -135, tilt: -45 }, { ...hs_street, pan: 135, tilt: -45 }, { ...hs_top, pan: 0, tilt: 20 } ]
-  };
-
-  // Minimap marker positions relative to the current panorama.
-  // Note: These positions are used for the Top View map layout.
-  const minimapMarkerPositions = {
-    "hs_living":    { x: 52, y: 48 },
-    "hs_living2":   { x: 58, y: 52 },
-    "hs_wc":        { x: 63, y: 45 },
-    "hs_thongtang": { x: 46, y: 44 },
-    "hs_park":      { x: 38, y: 58 },
-    "hs_park2":     { x: 32, y: 63 },
-    "hs_street":    { x: 44, y: 65 },
-    "hs_birdview":  { x: 50, y: 30 },
-    "hs_top":       { x: 50, y: 50 }
-  };
+  // Minimap marker positions are now mathematically calculated based on Top View pan/tilt.
 
   // Track active hotspot
   let activeHotspotId = null;
@@ -2287,6 +2511,13 @@ function generateSubmenuHTML(items, itemClass) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupMonarchListeners(handleSwitch);
+    } else if (layoutMode === "command") {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = cmdTopRibbonHTML + cmdSceneExplorerHTML + cmdSpatialControlHTML + cmdTimelineHTML;
+      while (tempDiv.firstChild) {
+        uiWrapper.appendChild(tempDiv.firstChild);
+      }
+      setupCommandListeners();
     }
 
     // Inject Minimap
@@ -2326,6 +2557,8 @@ function generateSubmenuHTML(items, itemClass) {
       compassDiv.innerHTML = nexusCompassHTML;
     } else if (layoutMode === "monarch" || layoutMode === "regal") {
       compassDiv.innerHTML = monarchCompassHTML;
+    } else if (layoutMode === "command") {
+      compassDiv.innerHTML = compassWidgetHTML; // reuse standard compass, styled via CSS
     } else {
       compassDiv.innerHTML = compassWidgetHTML;
     }
@@ -2415,6 +2648,7 @@ function generateSubmenuHTML(items, itemClass) {
           if (dropdown) dropdown.classList.toggle("open");
           return;
         }
+        
         e.stopPropagation();
         dispatchToolAction(this);
       });
@@ -2463,9 +2697,10 @@ function generateSubmenuHTML(items, itemClass) {
         lsSet("latien_active_node", activePanoNode);
 
         const parentNavItem = this.closest(".nav-item");
-        if (parentNavItem) {
-          parentNavItem.classList.remove("is-open");
-        }
+        // Do not close parentNavItem automatically so it behaves like other menus
+        // if (parentNavItem) {
+        //   parentNavItem.classList.remove("is-open");
+        // }
 
         routeNavigation(this);
       });
@@ -2672,10 +2907,10 @@ function generateSubmenuHTML(items, itemClass) {
 
         const parentNavItem = this.closest(".nav-item");
         if (parentNavItem) {
-          parentNavItem.classList.remove("is-open");
+          // parentNavItem.classList.remove("is-open");
           if (sidebarContainer) {
-            sidebarContainer.classList.remove("submenu-open");
-            sidebarContainer.classList.remove("mega-open");
+            // sidebarContainer.classList.remove("submenu-open");
+            // sidebarContainer.classList.remove("mega-open");
           }
         }
 
@@ -3391,6 +3626,178 @@ document.addEventListener('click', (e) => {
   }
 
   // ==========================================
+  // COMMAND LAYOUT LISTENERS (#11)
+  // ==========================================
+  function setupCommandListeners() {
+
+    // ── 1. Explorer panel collapse/expand ─────────────────────────────────
+    const explorerPanel = document.getElementById('cmd-scene-explorer');
+    const panelHeader = explorerPanel ? explorerPanel.querySelector('.cmd-panel-header') : null;
+    
+    if (explorerPanel && panelHeader) {
+      // Toggle on header click
+      panelHeader.addEventListener('click', (e) => {
+        e.stopPropagation();
+        explorerPanel.classList.toggle('collapsed');
+      });
+
+      // Close when clicking outside the panel
+      document.addEventListener('click', (e) => {
+        if (layoutMode === 'command' && !explorerPanel.classList.contains('collapsed')) {
+          if (!explorerPanel.contains(e.target)) {
+            explorerPanel.classList.add('collapsed');
+          }
+        }
+      });
+      
+      // Prevent clicks inside the panel from closing it
+      explorerPanel.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    // ── 2. Category accordion expand/collapse ─────────────────────────────
+    document.querySelectorAll('.cmd-cat-header').forEach(header => {
+      // Open first two categories by default
+      const cat = header.parentElement;
+      const items = cat.querySelector('.cmd-cat-items');
+      if (items) {
+        // Start with all expanded
+        cat.classList.add('expanded');
+        items.style.maxHeight = items.scrollHeight + 'px';
+      }
+
+      header.addEventListener('click', () => {
+        const cat = header.parentElement;
+        const items = cat.querySelector('.cmd-cat-items');
+        const isExpanded = cat.classList.contains('expanded');
+        // Collapse all others first for accordion effect
+        document.querySelectorAll('.cmd-category.expanded').forEach(c => {
+          if (c !== cat) {
+            c.classList.remove('expanded');
+            const i = c.querySelector('.cmd-cat-items');
+            if (i) i.style.maxHeight = '0';
+          }
+        });
+        if (!isExpanded) {
+          cat.classList.add('expanded');
+          if (items) items.style.maxHeight = items.scrollHeight + 'px';
+        } else {
+          cat.classList.remove('expanded');
+          if (items) items.style.maxHeight = '0';
+        }
+      });
+    });
+
+    // ── 3. Scene items — navigate to panorama ─────────────────────────────
+    document.querySelectorAll('.cmd-scene-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const node = item.getAttribute('data-pano-node');
+        if (node && window.pano) {
+          window.pano.openNext(`{${node}}`);
+          activePanoNode = node;
+          lsSet('latien_active_node', node);
+          // Update active state
+          document.querySelectorAll('.cmd-scene-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+          // Update timeline
+          syncCommandTimeline(node);
+          showNotification(`Đang chuyển đến: ${item.querySelector('.cmd-scene-title')?.textContent || node}`);
+        }
+      });
+    });
+
+    // ── 3b. Route items (Region page, architecture, etc.) ──────────────────
+    document.querySelectorAll('.cmd-route-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        // e.stopPropagation() is not necessary because parent doesn't have conflicting click
+        routeNavigation(item);
+        if (item.classList.contains('cmd-scene-item')) {
+          document.querySelectorAll('.cmd-scene-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // ── 4. Spatial control tiles (Hover Effects) ──────────────────────────
+    document.querySelectorAll('.cmd-ctrl-tile').forEach(tile => {
+      // Magnetic hover effect
+      tile.addEventListener('mousemove', (e) => {
+        const rect = tile.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        tile.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px) scale(1.04)`;
+      });
+      tile.addEventListener('mouseleave', () => {
+        tile.style.transform = '';
+      });
+    });
+
+    // ── 5. Timeline node navigation ───────────────────────────────────────
+    document.querySelectorAll('.cmd-tl-node').forEach(node => {
+      node.addEventListener('click', () => {
+        const panoNode = node.getAttribute('data-pano-node');
+        if (panoNode && window.pano) {
+          window.pano.openNext(`{${panoNode}}`);
+          activePanoNode = panoNode;
+          lsSet('latien_active_node', panoNode);
+          syncCommandTimeline(panoNode);
+          showNotification(`Đang chuyển đến: ${node.getAttribute('data-label') || panoNode}`);
+        }
+      });
+    });
+
+    // Note: fullscreen and tool actions are handled by the global [data-action] listener.
+
+    // ── 7. Ribbon coordinate display — live pan/tilt ─────────────────────
+    function updateCmdCoords() {
+      if (layoutMode !== 'command' || !window.pano) return;
+      try {
+        const pan  = window.pano.getPan  ? Math.round(window.pano.getPan())  : 0;
+        const tilt = window.pano.getTilt ? Math.round(window.pano.getTilt()) : 0;
+        const panEl  = document.getElementById('cmd-pan-val');
+        const tiltEl = document.getElementById('cmd-tilt-val');
+        if (panEl)  panEl.textContent  = `${pan}°`;
+        if (tiltEl) tiltEl.textContent = `${tilt}°`;
+      } catch(e) {}
+    }
+    // Piggyback on animation frame — poll every 300ms
+    let cmdCoordsInterval = setInterval(() => {
+      if (layoutMode !== 'command') { clearInterval(cmdCoordsInterval); return; }
+      updateCmdCoords();
+    }, 200);
+
+    // ── 8. Sync active state immediately ─────────────────────────────────
+    if (activePanoNode) {
+      syncCommandTimeline(activePanoNode);
+      // Mark active scene item
+      document.querySelectorAll('.cmd-scene-item').forEach(i => {
+        i.classList.toggle('active', i.getAttribute('data-pano-node') === activePanoNode);
+      });
+    }
+  }
+
+  function syncCommandTimeline(nodeId) {
+    // Update timeline nodes
+    document.querySelectorAll('.cmd-tl-node').forEach(n => {
+      n.classList.toggle('active', n.getAttribute('data-pano-node') === nodeId);
+    });
+    // Update explorer scene items
+    document.querySelectorAll('.cmd-scene-item').forEach(item => {
+      item.classList.toggle('active', item.getAttribute('data-pano-node') === nodeId);
+    });
+    // Update scene name in ribbon
+    const sceneNameMap = {
+      node1: 'TOP VIEW DAY 1', node2: 'BIRD VIEW 1', node3: 'BIRD VIEW 2',
+      node4: 'TAV PARK', node5: 'TAV STREET', node6: 'TAV PARK 2',
+      node7: 'TAV LIVING 2', node8: 'TAV LIVING 1', node9: 'TAV THÔNG TẦNG',
+      node10: 'BALCONY', node11: 'TAV WC'
+    };
+    const nameEl = document.getElementById('cmd-scene-name');
+    if (nameEl && sceneNameMap[nodeId]) nameEl.textContent = sceneNameMap[nodeId];
+  }
+
+  // ==========================================
   // MONARCH LAYOUT LISTENERS
   // ==========================================
   function setupMonarchListeners(handleSwitch) {
@@ -3521,7 +3928,9 @@ document.addEventListener('click', (e) => {
         break;
 
       case "images":
-        openGlobalPanoramaGallery();
+        if (typeof window.openGlobalPanoramaGallery === "function") {
+          window.openGlobalPanoramaGallery();
+        }
         break;
 
       case "hotspots":
@@ -3536,19 +3945,17 @@ document.addEventListener('click', (e) => {
         break;
 
       case "share":
-        if (navigator.share) {
-          navigator.share({ title: "TAV Villa", text: "Khám phá dự án TAV Villa", url: window.location.href })
-            .catch(err => console.log("Share cancelled", err));
-        } else {
-          navigator.clipboard.writeText(window.location.href)
-            .then(() => showNotification("Link đã sao chép vào clipboard!"))
-            .catch(() => showNotification("Không thể chia sẻ. Vui lòng sao chép URL."));
+        const menu = document.getElementById('social-share-menu');
+        if (menu) {
+          const rect = btn.getBoundingClientRect();
+          menu.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+          menu.style.left = rect.left + 'px';
+          menu.classList.toggle('active');
         }
         break;
 
       case "call":
-        window.open("tel:+84000000000", "_self");
-        showNotification("Đang kết nối tư vấn viên...");
+        window.location.href = 'consultation.html';
         break;
 
       case "info":
@@ -3643,26 +4050,41 @@ document.addEventListener('click', (e) => {
   // ==========================================
 
   let compassAnimFrame = null;
+  let lastRawPan = null;
+  let continuousPan = 0;
 
   function syncCompass() {
     if (!window.pano) return;
     try {
-      const pan = window.pano.getPan ? window.pano.getPan() : 0;
+      const rawPan = window.pano.getPan ? window.pano.getPan() : 0;
+      
+      if (lastRawPan === null) {
+        continuousPan = rawPan;
+      } else {
+        let dPan = rawPan - lastRawPan;
+        if (dPan > 180) dPan -= 360;
+        if (dPan < -180) dPan += 360;
+        continuousPan += dPan;
+      }
+      lastRawPan = rawPan;
+
       const dial = document.getElementById("compass-dial");
       const degDisplay = document.getElementById("compass-degree");
 
       if (dial) {
-        dial.style.transform = `rotate(${-pan}deg)`;
+        dial.style.transform = `rotate(${-continuousPan}deg)`;
       }
       if (degDisplay) {
-        const normalizedDeg = ((pan % 360) + 360) % 360;
+        const normalizedDeg = ((continuousPan % 360) + 360) % 360;
         degDisplay.textContent = `${Math.round(normalizedDeg)}°`;
       }
 
-      syncMinimap(pan);
+      syncMinimap(continuousPan);
 
-      // Premium hotspot depth/visibility (Classic layout — check body class for reliability)
-      if (document.body.classList.contains('layout-classic') || layoutMode === 'classic') {
+      // Premium hotspot depth/visibility (Layout 1 Classic + Layout 2 Futuristic)
+      if (document.body.classList.contains('layout-classic') ||
+          document.body.classList.contains('layout-futuristic') ||
+          layoutMode === 'classic' || layoutMode === 'futuristic') {
         updateHotspotVisibility();
       }
     } catch (e) {}
@@ -3680,9 +4102,10 @@ document.addEventListener('click', (e) => {
       const cone = document.getElementById("minimap-viewcone");
       const canvas = document.getElementById("minimap-canvas");
       if (cone) {
-        // Rotate the viewcone and apply inverse scale to keep it original size
+        // Rotate the viewcone and apply inverse scale to keep it original size.
+        // Add 180 to pan because the minimap image is rotated 180deg via CSS.
         const zoom = canvas ? parseFloat(canvas.style.getPropertyValue('--mm-zoom')) || 1 : 1;
-        cone.style.transform = `rotate(${pan}deg) scale(${1 / zoom})`;
+        cone.style.transform = `rotate(${pan + 180}deg) scale(${1 / zoom})`;
       }
     } catch (e) {}
   }
@@ -4249,7 +4672,7 @@ document.addEventListener('click', (e) => {
         lsSet("latien_layout_mode", layoutMode);
 
         // Update body layout class namespaces
-        document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-prism", "layout-nexus", "layout-monarch", "layout-regal");
+        document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-prism", "layout-nexus", "layout-monarch", "layout-regal", "layout-command");
         document.body.classList.add(`layout-${layoutMode}`);
 
         // Update container class namespaces
@@ -4276,6 +4699,7 @@ document.addEventListener('click', (e) => {
         else if (layoutMode === "nexus") notifMsg = "Đã chuyển sang Giao diện Nexus";
         else if (layoutMode === "monarch") notifMsg = "Đã chuyển sang Giao diện Monarch";
         else if (layoutMode === "regal") notifMsg = "Đã chuyển sang Giao diện Regal";
+        else if (layoutMode === "command") notifMsg = "Đã chuyển sang Giao diện Command";
         showNotification(notifMsg);
 
       }, 300);
@@ -4306,6 +4730,8 @@ document.addEventListener('click', (e) => {
     if (nexusSeg) nexusSeg.addEventListener("click", () => handleSwitch("nexus"));
     if (monarchSeg) monarchSeg.addEventListener("click", () => handleSwitch("monarch"));
     if (regalSeg) regalSeg.addEventListener("click", () => handleSwitch("regal"));
+    const commandSeg = document.getElementById("opt-layout-command");
+    if (commandSeg) commandSeg.addEventListener("click", () => handleSwitch("command"));
 
     // 4. Initialize layout Switcher segments
     updateSwitcherUI();
@@ -4369,6 +4795,11 @@ document.addEventListener('click', (e) => {
       if (activeItem) updateActiveGlow(activeItem);
       updateSwitcherUI();
     });
+
+    // Inject global modals ONLY ONCE if not already present
+    if (!document.getElementById("image-gallery-modal")) {
+      document.body.insertAdjacentHTML("beforeend", globalModalsHTML);
+    }
   }
 
   // ==========================================
@@ -4385,9 +4816,25 @@ document.addEventListener('click', (e) => {
   }
 
   function createPremiumHotspot(pin) {
-    const isTopView = HOTSPOT_TOP_VIEW_NODES.includes(activePanoNode);
-    let styleClass = isTopView ? 'hs-beacon' : 'hs-subtle';
-    if (pin.category === 'aerial') styleClass = 'hs-aerial';
+    const isBirdView = HOTSPOT_BIRD_VIEW_NODES.includes(activePanoNode);
+    const isTopView  = HOTSPOT_TOP_VIEW_NODES.includes(activePanoNode);
+    const isTopViewDay1 = activePanoNode === "node1";
+
+    // ── Style classes ─────────────────────────────────────────────────────
+    // TYPE A  → Top View Day 1 : hs-matterport-point (matterport ground marker)
+    // TYPE B  → Top View Night : hs-aerial-point (glowing orb without label)
+    // TYPE C  → Bird View      : hs-beacon (line-pin with always-visible label & icon)
+    // TYPE D  → Interior / Amenities: hs-subtle (circle dot, soft pulse)
+    let styleClass;
+    if (isTopViewDay1) {
+      styleClass = 'hs-matterport-point';
+    } else if (isTopView) {
+      styleClass = 'hs-aerial-point';
+    } else if (isBirdView) {
+      styleClass = 'hs-beacon';
+    } else {
+      styleClass = pin.category === 'aerial' ? 'hs-aerial' : 'hs-subtle';
+    }
 
     const container = document.createElement('div');
     container.className = `hs-container hs-${pin.category} ${styleClass}`;
@@ -4401,39 +4848,22 @@ document.addEventListener('click', (e) => {
       container.style.opacity = "0";
     }
 
-    if (pin.category === 'aerial') {
-      // Style C: Aerial Navigation
+    if (isTopViewDay1) {
+      // ══════════════════════════════════════════════════════════════════
+      // TYPE A — TOP VIEW DAY 1: Matterport-style Premium Ground Marker
+      // ══════════════════════════════════════════════════════════════════
+      const dotColorClass = pin.category === 'interior' ? 'hs-mp-blue'
+                          : pin.category === 'amenities' ? 'hs-mp-green' : 'hs-mp-cyan';
       container.innerHTML = `
         <div class="hs-scale-wrap">
-          <div class="hs-drone-icon">
-            ${ICON_HELICOPTER}
-            <div class="hs-pulse-ring"></div>
+          <div class="hs-matterport-ground ${dotColorClass}">
+            <div class="hs-mp-pulse"></div>
+            <div class="hs-mp-inner"></div>
+            <div class="hs-mp-ring"></div>
           </div>
+          <div class="hs-mp-label">${pin.title}</div>
           <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}">
-            <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to fly'}</p>
-              <div class="hs-enter-btn">Click to Fly</div>
-            </div>
-          </div>
-        </div>
-      `;
-    } else if (isTopView) {
-      // Style A: Navigation Beacon (Top Views)
-      const iconSvg = getHotspotIcon(pin.category);
-      container.innerHTML = `
-        <div class="hs-scale-wrap">
-          <div class="hs-line-pin">
-            <div class="hs-pin-text">
-               <span class="hs-pin-icon" style="vertical-align: middle; margin-right: 4px;">${iconSvg}</span>
-               ${pin.title}
-            </div>
-            <div class="hs-pin-line"></div>
-            <div class="hs-pin-dot"></div>
-          </div>
-          <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
             <div class="hs-preview-content">
               <h4>${pin.title}</h4>
               <p>${pin.desc || 'Click to enter'}</p>
@@ -4442,8 +4872,76 @@ document.addEventListener('click', (e) => {
           </div>
         </div>
       `;
+    } else if (isTopView) {
+      // ══════════════════════════════════════════════════════════════════
+      // TYPE B — TOP VIEW NIGHT: Glowing orb without permanent text label
+      // ══════════════════════════════════════════════════════════════════
+      const orbClass = pin.category === 'interior' ? 'hs-orb-blue'
+                     : pin.category === 'amenities' ? 'hs-orb-green' : 'hs-orb-cyan';
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-glow-orb ${orbClass}">
+            <div class="hs-orb-inner"></div>
+            <div class="hs-orb-pulse"></div>
+          </div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to enter'}</p>
+              <div class="hs-enter-btn">Click to Enter</div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (isBirdView) {
+      // ══════════════════════════════════════════════════════════════════
+      // TYPE B — BIRD VIEW: Line-pin beacon with ALWAYS-VISIBLE label
+      // ══════════════════════════════════════════════════════════════════
+      const iconSvg = getHotspotIcon(pin.category);
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-line-pin">
+            <div class="hs-pin-text">
+              <span class="hs-pin-icon">${iconSvg}</span>${pin.title}
+            </div>
+            <div class="hs-pin-line"></div>
+            <div class="hs-pin-dot"></div>
+          </div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to enter'}</p>
+              <div class="hs-enter-btn">Click to Enter</div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (pin.category === 'aerial') {
+      // ══════════════════════════════════════════════════════════════════
+      // Aerial back-link from Interior / Amenities → Bird View / Top View
+      // ══════════════════════════════════════════════════════════════════
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-drone-icon">
+            ${ICON_HELICOPTER}
+            <div class="hs-pulse-ring"></div>
+          </div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to fly'}</p>
+              <div class="hs-enter-btn">Click to Fly</div>
+            </div>
+          </div>
+        </div>
+      `;
     } else {
-      // Style B: Subtle & Immersive (Interior / Amenities / Bird View)
+      // ══════════════════════════════════════════════════════════════════
+      // TYPE C — INTERIOR / AMENITIES: Floor marker, soft pulse, small glow
+      // ══════════════════════════════════════════════════════════════════
       container.innerHTML = `
         <div class="hs-scale-wrap">
           <div class="hs-circle">
@@ -4501,7 +4999,7 @@ document.addEventListener('click', (e) => {
     }
     currentHotspotElements = [];
 
-    const defs = hotspotData[nodeId];
+    const defs = window.hotspotData[nodeId];
     if (!defs) {
         console.log(`[PremiumHotspot] No hotspot definitions found for node: ${nodeId}`);
         return;
@@ -4531,35 +5029,54 @@ document.addEventListener('click', (e) => {
     zoomWrapper.querySelectorAll('.mm-hs-marker').forEach(m => m.remove());
     canvas.querySelectorAll('.mm-hs-marker').forEach(m => m.remove());
 
-    const isTopView = HOTSPOT_TOP_VIEW_NODES.includes(nodeId);
+    const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES.includes(nodeId);
+    const isTopView  = window.HOTSPOT_TOP_VIEW_NODES.includes(nodeId);
     let defsToShow = [];
-    
-    if (isTopView) {
-      defsToShow = hotspotData["pin_top"] || [];
+
+    if (isBirdView) {
+      // Bird View: show its own pins (navigation hub)
+      defsToShow = window.hotspotData["node2"] || [];
     } else {
-      // Current panorama's hotspots
-      defsToShow = hotspotData[nodeId] || [];
+      // Top View & All Interiors: Always show the global navigation hotspots
+      defsToShow = window.hotspotData["node1"] || [];
     }
 
     defsToShow.forEach(pin => {
-      // Strip _night for pos lookup
-      const lookupId = pin.id.replace('_night', '');
-      const pos = minimapMarkerPositions[lookupId];
-      if (!pos) return;
+      // Hardcoded manual coordinates based on the user's explicit drawn image dots
+      const manualPositions = {
+        "hs_street":    { x: 34.5, y: 45.0 },
+        "hs_living2":   { x: 43.5, y: 45.5 },
+        "hs_park":      { x: 48.5, y: 56.5 },
+        "hs_wc":        { x: 59.0, y: 45.5 },
+        "hs_living":    { x: 62.0, y: 57.0 },
+        "hs_park2":     { x: 74.0, y: 42.5 },
+        "hs_thongtang": { x: 86.5, y: 41.5 },
+        "hs_birdview":  { x: 50, y: 20 },
+        "hs_top":       { x: 50, y: 50 }
+      };
+
+      const lookupId = pin.id.replace(/_tv$/, '').replace(/_bv$/, '').replace(/_night$/, '');
+      if (lookupId === 'hs_top' || lookupId === 'hs_topnight') return; // Do not render Aerial Top View shortcuts in minimap
+      
+      const pos = manualPositions[lookupId] || { x: 50, y: 50 };
+      
+      const posX = pos.x;
+      const posY = pos.y;
 
       const marker = document.createElement('div');
+      marker.className = `mm-luxury-hotspot`;
       
-      // Minimap dots are just representation of available paths.
-      // We don't have a "current" active marker for the current panorama in the same way Top View does,
-      // but we can highlight them all, or just style them normally.
-      marker.className = `mm-hs-marker mm-hs-${pin.category}`;
-      
-      if (pin.category === 'aerial') {
-        marker.innerHTML = ICON_HELICOPTER;
+      // Highlight the active panorama
+      if (pin.nodeTarget === nodeId || pin.id.replace(/_tv$/, '') === nodeId) {
+        marker.classList.add('is-active');
       }
 
-      marker.style.cssText = `left:${pos.x}%;top:${pos.y}%;`;
-      marker.title = pin.title;
+      // Add HTML structure with hover tooltip
+      marker.innerHTML = `
+        <div class="mm-tooltip">${pin.title}</div>
+      `;
+
+      marker.style.cssText += `left:${posX}%;top:${posY}%;`;
 
       marker.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -4577,28 +5094,77 @@ document.addEventListener('click', (e) => {
       const camPan  = window.pano.getPan()  || 0;
       const camTilt = window.pano.getTilt() || 0;
       const camFov  = window.pano.getFov()  || 90;
-      const halfFov = camFov * 0.5;
-      const fadeZone = halfFov * 0.4; // outer 40% of FOV = fade zone
+
+      let currentNode = '';
+      try { currentNode = window.pano.getCurrentNode() || ''; } catch(e) {}
+
+      const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
+      const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
+
+      // Aspect ratio: assume 16:9 — horizontal FOV wider than vertical
+      const hFov = camFov;            // horizontal field of view
+      const vFov = camFov * (9 / 16); // vertical field of view approximation
 
       currentHotspotElements.forEach(({ el, pan, tilt }) => {
-        // Compute angular delta (wrap-around safe)
+        // Angular distance from camera center to hotspot (wrap-around safe)
         let dPan = pan - camPan;
-        while (dPan > 180)  dPan -= 360;
+        while (dPan >  180) dPan -= 360;
         while (dPan < -180) dPan += 360;
         const dTilt = tilt - camTilt;
-        const angDist = Math.sqrt(dPan * dPan + dTilt * dTilt);
 
-        // Visibility (only show when near the center of the screen)
-        // Set threshold to a tight cone (e.g. 35 degrees from center)
-        const hideThreshold = 35; // degrees from center
-
-        // Visibility (hide completely when passing by)
-        if (Math.abs(dPan) > hideThreshold || Math.abs(dTilt) > hideThreshold) {
-          el.classList.remove('hs-visible');
+        if (isTopView) {
+          // Top View (Nadir): camera rotates around vertical axis only.
+          // All hotspots always remain visible regardless of pan.
+          el.classList.add('hs-visible');
+          el.style.opacity = '';
           return;
         }
 
-        el.classList.add('hs-visible');
+        if (isBirdView) {
+          // Bird View visibility zone:
+          // Screen is divided into 6 equal columns — hotspots visible ONLY in the 2 center columns.
+          // Center 2/6 = 1/3 of FOV → each side shows up to ±(FOV/6) from camera center.
+          // A 15° smooth fade zone is applied just outside this boundary.
+          const halfH = hFov / 6;       // ±FOV/6 from center (e.g. ±15° when FOV=90°)
+          const halfV = vFov * 0.5;     // full vertical FOV kept as-is
+
+          const FADE_ZONE = 15; // degrees of smooth fade beyond the boundary
+
+          const absPan  = Math.abs(dPan);
+          const absTilt = Math.abs(dTilt);
+
+          // Fade factor: 0 = fully visible, 1 = fully hidden
+          const fadePan  = Math.max(0, Math.min(1, (absPan  - halfH) / FADE_ZONE));
+          const fadeTilt = Math.max(0, Math.min(1, (absTilt - halfV) / FADE_ZONE));
+
+          // Take the worst axis — if either is outside the zone, start fading
+          const fadeMax = Math.max(fadePan, fadeTilt);
+
+          if (fadeMax >= 1) {
+            // Fully outside — hidden
+            el.classList.remove('hs-visible');
+            el.style.opacity = '';
+          } else if (fadeMax > 0) {
+            // In fade zone — smooth transition
+            el.classList.add('hs-visible');
+            el.style.opacity = String(1 - fadeMax);
+          } else {
+            // Fully inside center zone — visible
+            el.classList.add('hs-visible');
+            el.style.opacity = '';
+          }
+          return;
+        }
+
+        // Interior / Amenities nodes: hide when hotspot is clearly off-screen
+        const hideThreshold = 75;
+        if (Math.abs(dPan) > hideThreshold || Math.abs(dTilt) > hideThreshold) {
+          el.classList.remove('hs-visible');
+          el.style.opacity = '';
+        } else {
+          el.classList.add('hs-visible');
+          el.style.opacity = '';
+        }
       });
     } catch (e) {}
   }
@@ -4655,11 +5221,39 @@ document.addEventListener('click', (e) => {
       qnItems.forEach(item => {
         if (item.getAttribute("data-pano-node") === nodeId) {
           item.classList.add("active");
+          // Auto-expand the parent category so user can see which node is active
+          const parentBody = item.closest(".quick-nav-cat-body");
+          const parentHeader = parentBody ? parentBody.previousElementSibling : null;
+          if (parentBody && parentHeader) {
+            // Collapse all categories first
+            document.querySelectorAll(".quick-nav-cat-body").forEach(b => b.style.display = "none");
+            document.querySelectorAll(".quick-nav-cat-header").forEach(h => h.classList.remove("expanded"));
+            // Open the active one
+            parentBody.style.display = "block";
+            parentHeader.classList.add("expanded");
+          }
         } else {
           item.classList.remove("active");
         }
       });
     }
+
+    // Sync Classic bottom nav submenu-item active state
+    const subMenuItems = document.querySelectorAll(".layout-classic .submenu-item");
+    subMenuItems.forEach(item => {
+      if (item.getAttribute("data-pano-node") === nodeId) {
+        item.classList.add("active");
+        // Also mark parent nav-item as active
+        const parentNav = item.closest(".nav-item");
+        if (parentNav) {
+          document.querySelectorAll(".layout-classic .nav-item").forEach(n => n.classList.remove("active"));
+          parentNav.classList.add("active");
+          updateActiveGlow(parentNav);
+        }
+      } else {
+        item.classList.remove("active");
+      }
+    });
   }
 
   function onNodeChange() {
@@ -4683,16 +5277,23 @@ document.addEventListener('click', (e) => {
     }
 
     // === PREMIUM HOTSPOT SYSTEM ===
-    // Detect layout from body class (more reliable than var during init)
-    const isClassic = document.body.classList.contains('layout-classic') || layoutMode === 'classic';
-    console.log(`[PremiumHotspot] isClassic = ${isClassic}, layoutMode = ${layoutMode}, HasHotspots = ${!!hotspotData[currentNodeId]}`);
+    // Hotspots are now injected into Layout 1 (classic) and Layout 2 (futuristic) ONLY.
+    const isPremiumLayout = layoutMode === 'classic' || layoutMode === 'futuristic';
     
-    if (isClassic && hotspotData[currentNodeId]) {
-      console.log(`[PremiumHotspot] Injecting hotspots for node ${currentNodeId}`);
-      injectPremiumHotspots(currentNodeId);
-    } else {
-      // Update marker active state for non-top-view if needed (minimap dot)
-      if (isClassic) updateMinimapHotspots(currentNodeId);
+    if (isPremiumLayout) {
+      console.log(`[PremiumHotspot] layoutMode = ${layoutMode}, HasHotspots = ${!!window.hotspotData[currentNodeId]}`);
+      if (window.hotspotData && window.hotspotData[currentNodeId]) {
+        console.log(`[PremiumHotspot] Injecting hotspots for node ${currentNodeId}`);
+        injectPremiumHotspots(currentNodeId);
+      }
+    }
+    
+    // Always update minimap for all layouts to keep markers synchronized
+    updateMinimapHotspots(currentNodeId);
+
+    // Sync Command layout (#11) active states when node changes
+    if (layoutMode === 'command') {
+      syncCommandTimeline(currentNodeId);
     }
   }
 
@@ -4713,22 +5314,6 @@ document.addEventListener('click', (e) => {
     }
   }
 
-  // Run initializer
-  if (document.readyState === "complete" || document.readyState === "interactive") {
-    injectUI();
-    initPanoHooks();
-  } else {
-    window.addEventListener("DOMContentLoaded", () => {
-      injectUI();
-      initPanoHooks();
-    });
-  }
-
-})();
-
-
-
-// =========================================================
 // GLOBAL UI COMPONENTS & EVENT LISTENERS
 // =========================================================
 
@@ -4778,18 +5363,18 @@ const globalModalsHTML = `
     <div class="global-modal-content gallery-content">
       <div class="modal-header">
         <h2>Thư Viện Ảnh 360</h2>
-        <div class="modal-close-btn" onclick="document.getElementById('image-gallery-modal').classList.remove('active')">&times;</div>
+        <div class="modal-close-btn" onclick="document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">&times;</div>
       </div>
       <div class="modal-body gallery-grid">
-        <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node1}'); document.getElementById('image-gallery-modal').classList.remove('active')">
-          <img src="pano_aerial.png" alt="Top View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'" />
+        <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node1}'); document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">
+          <img src="pano_aerial.png" alt="Top View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100px\\' style=\\'background:%23333\\'%3E%3C/svg%3E'" />
           <div class="card-title">Top View</div>
         </div>
-        <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node2}'); document.getElementById('image-gallery-modal').classList.remove('active')">
-          <img src="pano_detached.png" alt="Bird View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'" />
+        <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node2}'); document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">
+          <img src="pano_detached.png" alt="Bird View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100px\\' style=\\'background:%23333\\'%3E%3C/svg%3E'" />
           <div class="card-title">Bird View</div>
         </div>
-        <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node3}'); document.getElementById('image-gallery-modal').classList.remove('active')">
+        <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node3}'); document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">
           <img src="pano_semidetached.png" alt="Biệt Thự" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'" />
           <div class="card-title">Biệt Thự Song Lập</div>
         </div>
@@ -4825,14 +5410,7 @@ const globalModalsHTML = `
 `;
 
 document.addEventListener("DOMContentLoaded", function() {
-  const wrapper = document.getElementById("modern-ui-overlay");
-  if (wrapper) {
-    const temp = document.createElement("div");
-    temp.innerHTML = globalModalsHTML;
-    while(temp.firstChild) {
-      wrapper.appendChild(temp.firstChild);
-    }
-  }
+  // Global modals are already injected by injectUI() during initialization.
 
   // Global Click Event Delegation
   document.addEventListener("click", function(e) {
@@ -4895,8 +5473,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 3. Image Gallery
     if (e.target.closest('[data-action="images"]')) {
-      const modal = document.getElementById('image-gallery-modal');
-      if (modal) modal.classList.add('active');
+      if (typeof window.openGlobalPanoramaGallery === "function") {
+        window.openGlobalPanoramaGallery();
+      }
       return;
     }
 
@@ -4995,14 +5574,14 @@ document.addEventListener("DOMContentLoaded", function() {
 // GLOBAL PANORAMA GALLERY MODAL
 // ==========================================
 const globalPanoramasList = [
-  { id: 'nodegallarey1', title: 'Gallarey 1', thumb: 'tiles/nodegallarey1/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_aerial.png' },
-  { id: 'nodegallarey2', title: 'Gallarey 2', thumb: 'tiles/nodegallarey2/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_detached.png' },
-  { id: 'nodegallarey3', title: 'Gallarey 3', thumb: 'tiles/nodegallarey3/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_semidetached.png' },
-  { id: 'nodegallarey4', title: 'Gallarey 4', thumb: 'tiles/nodegallarey4/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_townhouse.png' },
-  { id: 'nodegallarey5', title: 'Gallarey 5', thumb: 'tiles/nodegallarey5/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_aerial.png' },
-  { id: 'nodegallarey6', title: 'Gallarey 6', thumb: 'tiles/nodegallarey6/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_detached.png' },
-  { id: 'nodegallarey7', title: 'Gallarey 7', thumb: 'tiles/nodegallarey7/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_semidetached.png' },
-  { id: 'nodegallarey8', title: 'Gallarey 8', thumb: 'tiles/nodegallarey8/cf_0/l_0/c_0/tile_0.jpg', fallback: 'pano_townhouse.png' }
+  { id: 'gallery1', title: 'Gallery 01', src: 'image/GALLERY 01.jpg', thumb: 'image/thumbnails/GALLERY 01.jpg' },
+  { id: 'gallery2', title: 'Gallery 02', src: 'image/GALLERY 02.jpg', thumb: 'image/thumbnails/GALLERY 02.jpg' },
+  { id: 'gallery3', title: 'Gallery 03', src: 'image/GALLERY 03.jpg', thumb: 'image/thumbnails/GALLERY 03.jpg' },
+  { id: 'gallery4', title: 'Gallery 04', src: 'image/GALLERY 04.jpg', thumb: 'image/thumbnails/GALLERY 04.jpg' },
+  { id: 'gallery5', title: 'Gallery 05', src: 'image/GALLERY 05.jpg', thumb: 'image/thumbnails/GALLERY 05.jpg' },
+  { id: 'gallery6', title: 'Gallery 06', src: 'image/GALLERY 06.jpg', thumb: 'image/thumbnails/GALLERY 06.jpg' },
+  { id: 'gallery7', title: 'Gallery 07', src: 'image/GALLERY 07.jpg', thumb: 'image/thumbnails/GALLERY 07.jpg' },
+  { id: 'gallery8', title: 'Gallery 08', src: 'image/GALLERY 08.jpg', thumb: 'image/thumbnails/GALLERY 08.jpg' }
 ];
 
 let gpgCurrentIndex = 0;
@@ -5022,24 +5601,32 @@ function initGlobalPanoramaGallery() {
   globalPanoramasList.forEach((pano, index) => {
     slidesHTML += `
       <div class="gpg-slide" data-index="${index}">
-        <img src="${pano.thumb}" onerror="this.src='${pano.fallback}'" alt="${pano.title}">
+        <img src="${pano.thumb}" data-src="${pano.src}" alt="${pano.title}" class="gpg-lazy-img">
         <div class="gpg-slide-overlay">
           <div class="gpg-slide-title">${pano.title}</div>
+          <div class="gpg-slide-hint">Click để xem toàn màn hình</div>
         </div>
       </div>
     `;
     thumbsHTML += `
       <div class="gpg-thumb" data-index="${index}">
-        <img src="${pano.thumb}" onerror="this.src='${pano.fallback}'" alt="${pano.title}">
+        <img src="${pano.thumb}" alt="${pano.title}" loading="lazy">
       </div>
     `;
   });
 
   overlay.innerHTML = `
-    <div class="gpg-close-btn" id="gpg-close">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M18 6L6 18M6 6l12 12"></path>
-      </svg>
+    <div class="gpg-header">
+      <div class="gpg-header-title">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        Thư Viện Hình Ảnh
+      </div>
+      <div class="gpg-counter" id="gpg-counter">1 / ${globalPanoramasList.length}</div>
+      <div class="gpg-close-btn" id="gpg-close">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 6L6 18M6 6l12 12"></path>
+        </svg>
+      </div>
     </div>
     
     <div class="gpg-main-view" id="gpg-main-view">
@@ -5063,6 +5650,14 @@ function initGlobalPanoramaGallery() {
         ${thumbsHTML}
       </div>
     </div>
+
+    <!-- Fullscreen Lightbox -->
+    <div class="gpg-lightbox" id="gpg-lightbox">
+      <div class="gpg-lightbox-close" id="gpg-lightbox-close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </div>
+      <img class="gpg-lightbox-img" id="gpg-lightbox-img" src="" alt="">
+    </div>
   `;
   
   document.body.appendChild(overlay);
@@ -5073,6 +5668,12 @@ function initGlobalPanoramaGallery() {
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeGlobalPanoramaGallery();
   });
+
+  // Lightbox
+  const lightbox = document.getElementById('gpg-lightbox');
+  const lightboxImg = document.getElementById('gpg-lightbox-img');
+  document.getElementById('gpg-lightbox-close').addEventListener('click', () => lightbox.classList.remove('active'));
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
   
   document.getElementById('gpg-prev').addEventListener('click', () => {
     navigateGlobalGallery(-1);
@@ -5092,15 +5693,17 @@ function initGlobalPanoramaGallery() {
     });
   });
   
+  // Slide click → open fullscreen lightbox
   const slides = overlay.querySelectorAll('.gpg-slide');
   slides.forEach(slide => {
     slide.addEventListener('click', () => {
       const idx = parseInt(slide.getAttribute('data-index'));
-      const panoId = globalPanoramasList[idx].id;
-      if (window.pano && typeof window.pano.openNext === 'function') {
-        window.pano.openNext('{' + panoId + '}');
-      }
-      closeGlobalPanoramaGallery();
+      const src = globalPanoramasList[idx].src;
+      const title = globalPanoramasList[idx].title;
+      lightboxImg.src = src;
+      lightboxImg.alt = title;
+      lightbox.classList.add('active');
+      stopGpgAutoSlide();
     });
   });
   
@@ -5163,10 +5766,24 @@ function updateGlobalGalleryUI() {
   
   // Slide transform
   container.style.transform = `translateX(-${gpgCurrentIndex * 100}%)`;
+
+  // Update counter
+  const counter = document.getElementById('gpg-counter');
+  if (counter) counter.textContent = `${gpgCurrentIndex + 1} / ${globalPanoramasList.length}`;
   
-  // Active slide class
+  // Active slide class and Lazy Loading
   document.querySelectorAll('.gpg-slide').forEach((slide, idx) => {
-    slide.classList.toggle('active', idx === gpgCurrentIndex);
+    const isActive = idx === gpgCurrentIndex;
+    slide.classList.toggle('active', isActive);
+    
+    // Lazy-load active and adjacent slides to prevent lag
+    if (isActive || idx === (gpgCurrentIndex + 1) % globalPanoramasList.length || idx === (gpgCurrentIndex - 1 + globalPanoramasList.length) % globalPanoramasList.length) {
+      const img = slide.querySelector('.gpg-lazy-img');
+      if (img && img.dataset.src) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src'); // Prevent re-loading
+      }
+    }
   });
   
   // Active thumb class
@@ -5232,6 +5849,21 @@ function closeGlobalPanoramaGallery() {
   if (overlay) {
     overlay.classList.remove('active');
     stopGpgAutoSlide();
-    if (gpgInactivityTimeout) clearTimeout(gpgInactivityTimeout);
   }
 }
+
+// =========================================================
+// BOOTSTRAP INITIALIZATION
+// =========================================================
+
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  if (typeof injectUI === "function") injectUI();
+  if (typeof initPanoHooks === "function") initPanoHooks();
+} else {
+  window.addEventListener("DOMContentLoaded", () => {
+    if (typeof injectUI === "function") injectUI();
+    if (typeof initPanoHooks === "function") initPanoHooks();
+  });
+}
+
+})();
