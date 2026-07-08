@@ -4081,12 +4081,8 @@ document.addEventListener('click', (e) => {
 
       syncMinimap(continuousPan);
 
-      // Premium hotspot depth/visibility (Layout 1 Classic + Layout 2 Futuristic)
-      if (document.body.classList.contains('layout-classic') ||
-          document.body.classList.contains('layout-futuristic') ||
-          layoutMode === 'classic' || layoutMode === 'futuristic') {
-        updateHotspotVisibility();
-      }
+      // Premium hotspot depth/visibility (All Layouts)
+      updateHotspotVisibility();
     } catch (e) {}
     compassAnimFrame = requestAnimationFrame(syncCompass);
   }
@@ -5276,8 +5272,8 @@ document.addEventListener('click', (e) => {
     }
 
     // === PREMIUM HOTSPOT SYSTEM ===
-    // Hotspots are now injected into Layout 1 (classic) and Layout 2 (futuristic) ONLY.
-    const isPremiumLayout = layoutMode === 'classic' || layoutMode === 'futuristic';
+    // Hotspots are now injected into ALL layouts
+    const isPremiumLayout = true;
     
     if (isPremiumLayout) {
       console.log(`[PremiumHotspot] layoutMode = ${layoutMode}, HasHotspots = ${!!window.hotspotData[currentNodeId]}`);

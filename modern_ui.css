@@ -3735,7 +3735,11 @@ body.layout-regal .minimap-action-btn:hover {
    GLOBAL HOLOGRAPHIC HOTSPOTS MARKERS (Pano2VR Hooks)
    ========================================================= */
 
-/* Theme Variables for Hotspots */
+:root {
+  --hotspot-color: #00F2FE; /* Default fallback */
+  --hotspot-hover: #FF007F;
+  --hotspot-bg: rgba(8, 14, 24, 0.85);
+}
 .layout-classic {
   --hotspot-color: #D4AF37; /* Gold */
   --hotspot-hover: #F2D06B;
@@ -3743,7 +3747,7 @@ body.layout-regal .minimap-action-btn:hover {
 }
 .layout-futuristic {
   --hotspot-color: #00F2FE; /* Neon Cyan */
-  --hotspot-hover: #FF007F; /* Magenta */
+  --hotspot-hover: #4FACFE; /* Neon Blue */
   --hotspot-bg: rgba(8, 14, 24, 0.85);
 }
 .layout-neo {
@@ -3751,8 +3755,81 @@ body.layout-regal .minimap-action-btn:hover {
   --hotspot-hover: #8B5CF6; /* Purple */
   --hotspot-bg: rgba(15, 17, 23, 0.85);
 }
+.layout-gradient {
+  --hotspot-color: #FF8A00; /* Orange */
+  --hotspot-hover: #FF007F; /* Pink */
+  --hotspot-bg: rgba(20, 10, 15, 0.85);
+}
+.layout-aurora {
+  --hotspot-color: #00E676; /* Emerald */
+  --hotspot-hover: #00D9FF; /* Cyan */
+  --hotspot-bg: rgba(8, 17, 31, 0.85);
+}
 
-.hologram-marker-container {
+
+/* =========================================================
+   FUTURISTIC LAYOUT HOTSPOT OVERRIDES
+   Synchronizes all hotspots to match Layout 2 (Futuristic)
+   ========================================================= */
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+\n
+/* Minimap hotspots for layout 2 */
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+@keyframes mm-cyan-pulse {
+  0% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+  50% { box-shadow: 0 0 12px 5px rgba(0,242,254,1); }
+  100% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+}
+\n.hologram-marker-container {
   position: absolute;
   width: 120px;
   height: 120px;
@@ -9591,7 +9668,70 @@ body.layout-prism .minimap-legend .dot.cyan {
 /* ================================================
    6. HOTSPOTS — Redesigned Glassmorphic Cards
    ================================================ */
-body.layout-prism .hologram-marker-container {
+body.layout-prism 
+/* =========================================================
+   FUTURISTIC LAYOUT HOTSPOT OVERRIDES
+   Synchronizes all hotspots to match Layout 2 (Futuristic)
+   ========================================================= */
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+\n
+/* Minimap hotspots for layout 2 */
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+@keyframes mm-cyan-pulse {
+  0% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+  50% { box-shadow: 0 0 12px 5px rgba(0,242,254,1); }
+  100% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+}
+\n.hologram-marker-container {
   display: flex !important;
   flex-direction: column-reverse !important; /* Stack label above dot */
   align-items: center !important;
@@ -10349,7 +10489,70 @@ body.layout-nexus .minimap-legend {
 
 
 /* ---------- 6. HOTSPOTS — Premium Glass Capsules ---------- */
-body.layout-nexus .hologram-marker-container {
+body.layout-nexus 
+/* =========================================================
+   FUTURISTIC LAYOUT HOTSPOT OVERRIDES
+   Synchronizes all hotspots to match Layout 2 (Futuristic)
+   ========================================================= */
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+\n
+/* Minimap hotspots for layout 2 */
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+@keyframes mm-cyan-pulse {
+  0% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+  50% { box-shadow: 0 0 12px 5px rgba(0,242,254,1); }
+  100% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+}
+\n.hologram-marker-container {
   display: flex !important;
   flex-direction: column-reverse !important; /* Stack label above dot */
   align-items: center !important;
@@ -11120,7 +11323,70 @@ body.layout-regal .minimap-legend {
 /* -------------------------------------------------------
    HOTSPOT JEWEL MARKER DESIGN
    ------------------------------------------------------- */
-body.layout-regal .hologram-marker-container {
+body.layout-regal 
+/* =========================================================
+   FUTURISTIC LAYOUT HOTSPOT OVERRIDES
+   Synchronizes all hotspots to match Layout 2 (Futuristic)
+   ========================================================= */
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+\n
+/* Minimap hotspots for layout 2 */
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+@keyframes mm-cyan-pulse {
+  0% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+  50% { box-shadow: 0 0 12px 5px rgba(0,242,254,1); }
+  100% { box-shadow: 0 0 8px 3px rgba(0,242,254,0.8); }
+}
+\n.hologram-marker-container {
   display: flex;
   flex-direction: column;
   align-items: center;
