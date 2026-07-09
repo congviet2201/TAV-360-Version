@@ -1,0 +1,491 @@
+/* ==========================================================================
+   LAYOUT 10 - ARCHITECT BLUEPRINT EDITION
+   ========================================================================== */
+.layout-regal {
+  --bp-ivory: #F9F8F6;
+  --bp-stone: #F3F2EE;
+  --bp-concrete: #E5E4E0;
+  --bp-graphite: #2A2A2A;
+  --bp-copper: #B87333;
+  --bp-champagne: #EBE0D0;
+  --bp-forest: #2E4735;
+  --bp-shadow: rgba(0,0,0,0.08);
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+  color: var(--bp-graphite);
+}
+
+/* TOP BAR */
+.layout-regal .blueprint-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: var(--bp-ivory);
+  border-bottom: 1px solid var(--bp-concrete);
+  display: flex;
+  align-items: center;
+  padding: 0 30px;
+  z-index: 100;
+  box-shadow: 0 2px 10px var(--bp-shadow);
+  pointer-events: auto;
+}
+
+.layout-regal .blueprint-logo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--bp-graphite);
+}
+
+.layout-regal .blueprint-separator {
+  width: 1px;
+  height: 16px;
+  background: var(--bp-concrete);
+  margin: 0 15px;
+}
+
+.layout-regal .blueprint-view-title {
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  color: var(--bp-copper);
+}
+
+/* SIDEBAR INDEX */
+.layout-regal .blueprint-sidebar {
+  position: absolute;
+  top: 60px;
+  left: 30px;
+  width: 240px;
+  background: var(--bp-ivory);
+  border: 1px solid var(--bp-concrete);
+  border-radius: 4px;
+  z-index: 100;
+  box-shadow: 0 4px 15px var(--bp-shadow);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.layout-regal .blueprint-sidebar-title {
+  padding: 12px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  border-bottom: 1px solid var(--bp-concrete);
+  background: var(--bp-stone);
+  color: #777;
+}
+
+.layout-regal .blueprint-nav-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-regal .blueprint-nav-item {
+  border-bottom: 1px solid var(--bp-concrete);
+  background: var(--bp-ivory);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  border-left: 2px solid transparent;
+}
+
+.layout-regal .blueprint-nav-item:last-child {
+  border-bottom: none;
+}
+
+.layout-regal .blueprint-nav-item:hover {
+  background: var(--bp-stone);
+}
+
+.layout-regal .blueprint-nav-item.active {
+  background: #fff;
+  border-left: 3px solid var(--bp-copper);
+}
+
+.layout-regal .blueprint-nav-header {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.layout-regal .blueprint-nav-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 12px 16px;
+  display: block;
+}
+
+.layout-regal .blueprint-nav-header .blueprint-nav-text {
+  padding: 0;
+}
+
+.layout-regal .blueprint-nav-item.active .blueprint-nav-text {
+  font-weight: 700;
+  color: var(--bp-graphite);
+}
+
+.layout-regal .blueprint-accordion-icon {
+  font-size: 14px;
+  font-weight: 300;
+  color: #999;
+  transition: transform 0.3s;
+}
+
+.layout-regal .blueprint-nav-item.active .blueprint-accordion-icon {
+  transform: rotate(45deg);
+  color: var(--bp-copper);
+}
+
+.layout-regal .blueprint-submenu {
+  max-height: 0;
+  overflow: hidden;
+  background: var(--bp-stone);
+  transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.layout-regal .blueprint-submenu.open {
+  max-height: 300px;
+}
+
+.layout-regal .blueprint-submenu-item {
+  padding: 10px 16px 10px 30px;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  border-bottom: 1px solid rgba(0,0,0,0.03);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.layout-regal .blueprint-submenu-item:hover {
+  background: var(--bp-champagne);
+}
+
+.layout-regal .blueprint-submenu-item.active {
+  color: var(--bp-copper);
+  font-weight: 600;
+}
+
+/* UTILITY DOCK */
+.layout-regal .blueprint-utility-dock {
+  position: absolute;
+  top: 60px;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.layout-regal .blueprint-tool {
+  width: 36px;
+  height: 36px;
+  background: var(--bp-ivory);
+  border: 1px solid var(--bp-concrete);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px var(--bp-shadow);
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  color: var(--bp-graphite);
+}
+
+.layout-regal .blueprint-tool:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  border-color: #ccc;
+}
+
+.layout-regal .blueprint-tool.active {
+  background: var(--bp-graphite);
+  color: var(--bp-ivory);
+  border-color: var(--bp-graphite);
+}
+
+.layout-regal .blueprint-tool svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* BOTTOM GALLERY STRIP */
+.layout-regal .blueprint-gallery-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: var(--bp-ivory);
+  border-top: 1px solid var(--bp-concrete);
+  padding: 15px 30px;
+  z-index: 100;
+  pointer-events: auto;
+  box-shadow: 0 -2px 10px var(--bp-shadow);
+}
+
+.layout-regal .blueprint-gallery-track {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+}
+
+.layout-regal .blueprint-gallery-track::-webkit-scrollbar {
+  height: 4px;
+}
+.layout-regal .blueprint-gallery-track::-webkit-scrollbar-thumb {
+  background: var(--bp-concrete);
+  border-radius: 2px;
+}
+
+.layout-regal .blueprint-gallery-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+  min-width: 120px;
+  transition: opacity 0.3s;
+  opacity: 0.6;
+}
+
+.layout-regal .blueprint-gallery-item:hover {
+  opacity: 1;
+}
+
+.layout-regal .blueprint-gallery-item.active {
+  opacity: 1;
+}
+
+.layout-regal .blueprint-thumb {
+  width: 120px;
+  height: 68px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid var(--bp-concrete);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.layout-regal .blueprint-gallery-item.active .blueprint-thumb {
+  border-color: var(--bp-copper);
+  box-shadow: 0 4px 10px var(--bp-shadow);
+}
+
+.layout-regal .blueprint-thumb-title {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #777;
+}
+
+.layout-regal .blueprint-gallery-item.active .blueprint-thumb-title {
+  color: var(--bp-copper);
+  font-weight: 700;
+}
+
+/* MINIMAP & COMPASS (BOTTOM LEFT, ABOVE GALLERY) */
+.layout-regal .blueprint-minimap {
+  position: absolute;
+  bottom: 120px;
+  left: 30px;
+  width: 280px;
+  background: var(--bp-ivory);
+  border: 1px solid var(--bp-concrete);
+  border-radius: 4px;
+  z-index: 90;
+  box-shadow: 0 4px 15px var(--bp-shadow);
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  overflow: hidden;
+}
+
+.layout-regal .blueprint-minimap.collapsed {
+  height: 40px !important;
+}
+
+.layout-regal .blueprint-minimap .minimap-header {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: var(--bp-stone);
+  border-bottom: 1px solid var(--bp-concrete);
+}
+
+.layout-regal .blueprint-minimap .minimap-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--bp-graphite);
+}
+
+.layout-regal .blueprint-minimap .minimap-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.layout-regal .blueprint-minimap .minimap-action-btn {
+  background: none;
+  border: none;
+  color: #999;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.layout-regal .blueprint-minimap .minimap-action-btn:hover {
+  color: var(--bp-graphite);
+}
+
+.layout-regal .blueprint-minimap .minimap-chevron {
+  transition: transform 0.3s;
+}
+
+.layout-regal .blueprint-minimap:not(.collapsed) .minimap-chevron {
+  transform: rotate(180deg);
+}
+
+.layout-regal .blueprint-minimap .minimap-body {
+  height: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.layout-regal .blueprint-minimap .minimap-canvas {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #FFF;
+}
+
+.layout-regal .blueprint-minimap .minimap-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.9;
+  filter: grayscale(100%) contrast(1.2);
+}
+
+.layout-regal .blueprint-minimap .minimap-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--bp-copper);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border: 1.5px solid #fff;
+}
+
+.layout-regal .blueprint-minimap .minimap-viewcone {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 30px solid rgba(184, 115, 51, 0.2);
+  transform-origin: top center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.layout-regal .blueprint-compass {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid var(--bp-concrete);
+  border-radius: 50%;
+  z-index: 95;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px var(--bp-shadow);
+}
+
+.layout-regal .blueprint-compass .compass-dial {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.1s linear;
+}
+
+.layout-regal .blueprint-compass .compass-cardinal {
+  position: absolute;
+  top: 2px;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--bp-copper);
+}
+
+.layout-regal .blueprint-compass .compass-degree-display {
+  display: none;
+}
+
+/* SWITCHER */
+.layout-regal .blueprint-layout-switcher {
+  position: absolute;
+  bottom: 120px;
+  right: 30px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.layout-regal .blueprint-select-switcher {
+  appearance: none;
+  background: var(--bp-ivory);
+  border: 1px solid var(--bp-concrete);
+  padding: 8px 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--bp-graphite);
+  cursor: pointer;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px var(--bp-shadow);
+  outline: none;
+}
+
+/* OVERRIDE HOTSPOTS */
+.layout-regal .hotspot-marker {
+  background: #FFF !important;
+  border: 2px solid var(--bp-copper) !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+  width: 16px !important;
+  height: 16px !important;
+  border-radius: 50% !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+.layout-regal .hologram-marker-container:hover .hotspot-marker {
+  transform: scale(1.3) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+.layout-regal .hologram-marker-container:active .hotspot-marker {
+  transform: scale(0.9) !important;
+  box-shadow: 0 0 0 4px rgba(184, 115, 51, 0.2) !important;
+}
+
+.layout-regal .hotspot-label {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  background: var(--bp-ivory) !important;
+  color: var(--bp-graphite) !important;
+  border: 1px solid var(--bp-concrete) !important;
+  padding: 4px 8px !important;
+  border-radius: 2px !important;
+  box-shadow: 0 2px 8px var(--bp-shadow) !important;
+  text-shadow: none !important;
+  margin-top: 5px !important;
+}

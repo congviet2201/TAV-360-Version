@@ -882,18 +882,16 @@ function generateSubmenuHTML(items, itemClass) {
 
           <!-- 1. TOP VIEW -->
           <div class="nav-item" data-id="topview" id="nav-topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
-              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
-              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
+              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
             </svg>
             <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
 
           <!-- 2. BIRD VIEW -->
           <div class="nav-item" data-id="birdview" id="nav-birdview">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
+              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
             </svg>
             <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
             <!-- Submenu -->
@@ -984,10 +982,8 @@ function generateSubmenuHTML(items, itemClass) {
         <!-- Top View Group -->
         <div class="neo-nav-item-group" data-id="topview">
           <div class="neo-nav-card" data-id="topview" id="nav-neo-topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
-            <svg viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="20" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
-              <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
-              <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
+              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
             </svg>
             <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
@@ -995,8 +991,8 @@ function generateSubmenuHTML(items, itemClass) {
         <!-- Bird View Group -->
         <div class="neo-nav-item-group" data-id="birdview">
           <div class="neo-nav-card" data-id="birdview" id="nav-neo-birdview">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6" stroke="currentColor" stroke-width="2"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
+              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
             </svg>
             <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
           </div>
@@ -2154,6 +2150,205 @@ function generateSubmenuHTML(items, itemClass) {
   `;
 
   // ==========================================
+  // REGAL (LAYOUT 10 - ARCHITECT BLUEPRINT EDITION)
+  // ==========================================
+
+  const regalHeaderHTML = `
+    <div class="blueprint-top-ribbon">
+      <div class="blueprint-ribbon-left">
+        <div class="blueprint-logo">${PROJECT_CONTENT.projectTitle.top}</div>
+        <div class="blueprint-ribbon-divider"></div>
+        <div class="blueprint-project-sub">${PROJECT_CONTENT.projectTitle.sub}</div>
+      </div>
+      <div class="blueprint-ribbon-center">
+        <div class="blueprint-view-title" id="regal-current-pano-title">Top View</div>
+      </div>
+      <div class="blueprint-ribbon-right"></div>
+    </div>
+  `;
+
+  const regalNavHTML = `
+    <div class="blueprint-nav-container" id="blueprint-nav-container">
+      <div class="blueprint-nav-button" id="blueprint-nav-button" title="Menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </div>
+      <div class="blueprint-left-panel" id="blueprint-left-panel">
+        <div class="blueprint-panel-content">
+          <div class="blueprint-panel-title">INDEX</div>
+        <div class="blueprint-nav-list">
+          <div class="blueprint-nav-item" data-id="topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
+            <span class="blueprint-nav-text">${PROJECT_CONTENT.navItems.topview.label}</span>
+          </div>
+          
+          <div class="blueprint-nav-item has-submenu" data-id="birdview">
+            <div class="blueprint-nav-header">
+              <span class="blueprint-nav-text">${PROJECT_CONTENT.navItems.birdview.label}</span>
+              <span class="blueprint-accordion-icon">+</span>
+            </div>
+            <div class="blueprint-submenu">
+               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'blueprint-submenu-item')}
+            </div>
+          </div>
+
+          <div class="blueprint-nav-item has-submenu" data-id="amenities">
+            <div class="blueprint-nav-header">
+              <span class="blueprint-nav-text">${PROJECT_CONTENT.navItems.amenities.label}</span>
+              <span class="blueprint-accordion-icon">+</span>
+            </div>
+            <div class="blueprint-submenu">
+               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'blueprint-submenu-item')}
+            </div>
+          </div>
+
+          <div class="blueprint-nav-item has-submenu" data-id="architecture">
+            <div class="blueprint-nav-header">
+              <span class="blueprint-nav-text">${PROJECT_CONTENT.navItems.architecture.label}</span>
+              <span class="blueprint-accordion-icon">+</span>
+            </div>
+            <div class="blueprint-submenu">
+               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'blueprint-submenu-item')}
+            </div>
+          </div>
+
+          <div class="blueprint-nav-item has-submenu" data-id="interior">
+            <div class="blueprint-nav-header">
+              <span class="blueprint-nav-text">${PROJECT_CONTENT.navItems.interior.label}</span>
+              <span class="blueprint-accordion-icon">+</span>
+            </div>
+            <div class="blueprint-submenu">
+               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'blueprint-submenu-item')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+
+  const regalUtilityHTML = `
+    <div class="blueprint-right-toolbar">
+      <div class="blueprint-tool" data-action="toggle-minimap" title="Bản đồ">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
+      </div>
+      <div class="blueprint-tool" data-action="images" title="Hình ảnh">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /><circle cx="9" cy="9" r="2" /></svg>
+      </div>
+      <div class="blueprint-tool" data-action="hotspots" title="Điểm neo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10" /><path d="m12 8-4 4 4 4 4-4-4-4Z" /></svg>
+      </div>
+      <div class="blueprint-tool" data-action="share" title="Chia sẻ MXH">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+      </div>
+      <div class="blueprint-tool" data-action="call" title="Liên hệ tư vấn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
+      </div>
+      <div class="blueprint-tool" data-action="fullscreen" title="Toàn màn hình">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
+      </div>
+      <div class="blueprint-tool" data-action="music" title="Cài đặt / Nhạc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>
+      </div>
+    </div>
+  `;
+
+  const regalGalleryHTML = `
+    <div class="blueprint-floating-gallery-container" id="blueprint-gallery-container">
+      <div class="blueprint-view-selector" id="blueprint-view-selector">
+        <span class="blueprint-selector-text" id="blueprint-selector-text">VIEW</span>
+        <svg class="blueprint-selector-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 15l-6-6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="blueprint-floating-panel" id="blueprint-gallery-panel">
+        <div class="blueprint-gallery-nav prev" id="blueprint-gallery-prev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="blueprint-floating-track-wrapper">
+          <div class="blueprint-floating-track" id="blueprint-gallery-track">
+            <div class="blueprint-gallery-item active" data-pano-node="node1"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/thumb_PIN TOP.jpg'), url('image/PIN TOP.jpg')"></div><span class="blueprint-thumb-title">Top View</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node2"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN BIRD.jpg')"></div><span class="blueprint-thumb-title">Bird View 1</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node3"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN TOP NIGHT.jpg')"></div><span class="blueprint-thumb-title">Bird View 2</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node4"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN PARK.jpg')"></div><span class="blueprint-thumb-title">Park</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node5"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN STREET.jpg')"></div><span class="blueprint-thumb-title">Street</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node6"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN PARK 02.jpg')"></div><span class="blueprint-thumb-title">Park 2</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node7"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN LIVING 2.jpg')"></div><span class="blueprint-thumb-title">Living 2</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node8"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN LIVING.jpg')"></div><span class="blueprint-thumb-title">Living 1</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node9"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN THONG TANG.jpg')"></div><span class="blueprint-thumb-title">Thông Tầng</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node10"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN BALCONY.jpg')"></div><span class="blueprint-thumb-title">Balcony</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node11"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN WC.jpg')"></div><span class="blueprint-thumb-title">WC</span></div>
+          </div>
+        </div>
+        <div class="blueprint-gallery-nav next" id="blueprint-gallery-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  `;
+
+  const regalTimelineHTML = ``;
+
+  const regalSwitcherHTML = `
+    <div class="blueprint-layout-switcher" id="regal-layout-switcher">
+      <select class="blueprint-select-switcher" id="blueprint-switcher-select">
+        <option value="classic">01 CLASSIC</option>
+        <option value="futuristic">02 FUTURISTIC</option>
+        <option value="neo">03 NEO</option>
+        <option value="gradient">04 GRADIENT</option>
+        <option value="aurora">05 AURORA</option>
+        <option value="horizon">06 HORIZON</option>
+        <option value="prism">07 PRISM</option>
+        <option value="nexus">08 NEXUS</option>
+        <option value="monarch">09 MONARCH</option>
+        <option value="regal" selected>10 ARCHITECT</option>
+        <option value="command">11 COMMAND</option>
+      </select>
+    </div>
+  `;
+
+  const regalMinimapHTML = `
+    <div class="minimap-widget blueprint-minimap collapsed" id="minimap-widget">
+      <div class="minimap-header" id="minimap-toggle-btn">
+        <div class="minimap-header-title">
+          <span class="minimap-label">SITE PLAN</span>
+        </div>
+        <div class="minimap-controls">
+          <button class="minimap-action-btn" id="minimap-resize-btn" title="Thu phóng bản đồ">
+            <svg viewBox="0 0 24 24" fill="none" width="12" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" class="expand-icon" />
+              <path d="M4 14h6v6M20 10h-6V4M14 10l7-7M10 14l-7 7" class="shrink-icon" style="display:none;" />
+            </svg>
+          </button>
+          <button class="minimap-action-btn" id="minimap-chevron-btn" title="Thu nhỏ/Mở rộng bản đồ">
+            <svg class="minimap-chevron" viewBox="0 0 24 24" fill="none" width="12" height="12"><path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="minimap-body" id="minimap-body">
+        <div class="minimap-canvas" id="minimap-canvas">
+          <div id="minimap-zoom-wrapper" style="width:100%; height:100%; position:absolute; top:0; left:0; transform-origin:50% 50%; transition: transform 0.1s;">
+            <img src="image/Map_optimized.jpg" alt="Bản đồ dự án" class="minimap-img" id="minimap-img">
+            <div class="minimap-viewcone" id="minimap-viewcone"></div>
+            <div class="minimap-dot" id="minimap-dot"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const regalCompassHTML = `
+    <div class="compass-widget blueprint-compass" id="compass-widget">
+      <div class="compass-dial" id="compass-dial">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <circle cx="50" cy="50" r="48" stroke="#2A2A2A" stroke-width="0.5" fill="none" />
+          <line x1="50" y1="5" x2="50" y2="95" stroke="#E5E4E0" stroke-width="0.5"/>
+          <line x1="5" y1="50" x2="95" y2="50" stroke="#E5E4E0" stroke-width="0.5"/>
+          <g>
+            <polygon points="50,15 53,50 50,50 47,50" fill="#B87333" />
+            <polygon points="50,85 53,50 50,50 47,50" fill="#2A2A2A" />
+            <circle cx="50" cy="50" r="2" fill="#B87333" />
+          </g>
+        </svg>
+      </div>
+      <div class="compass-cardinal regal-n">N</div>
+      <div class="compass-degree-display" id="compass-degree">0°</div>
+    </div>
+  `;
+
+  // ==========================================
   // SHARED WIDGET TEMPLATES (both layouts)
   // ==========================================
 
@@ -2504,13 +2699,20 @@ function generateSubmenuHTML(items, itemClass) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupNexusListeners();
-    } else if (layoutMode === "monarch" || layoutMode === "regal") {
+    } else if (layoutMode === "monarch") {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = globalFloatingLogoHTML + monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
       setupMonarchListeners(handleSwitch);
+    } else if (layoutMode === "regal") {
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = regalHeaderHTML + regalNavHTML + regalUtilityHTML + regalGalleryHTML + regalSwitcherHTML;
+      while (tempDiv.firstChild) {
+        uiWrapper.appendChild(tempDiv.firstChild);
+      }
+      setupRegalListeners(handleSwitch);
     } else if (layoutMode === "command") {
       const tempDiv = document.createElement("div");
       tempDiv.innerHTML = cmdTopRibbonHTML + cmdSceneExplorerHTML + cmdSpatialControlHTML + cmdTimelineHTML;
@@ -2526,8 +2728,10 @@ function generateSubmenuHTML(items, itemClass) {
       oldMinimap.remove();
     }
     const mapDiv = document.createElement("div");
-    if (layoutMode === "monarch" || layoutMode === "regal") {
+    if (layoutMode === "monarch") {
       mapDiv.innerHTML = monarchMinimapHTML;
+    } else if (layoutMode === "regal") {
+      mapDiv.innerHTML = regalMinimapHTML;
     } else {
       mapDiv.innerHTML = minimapWidgetHTML;
     }
@@ -2555,8 +2759,10 @@ function generateSubmenuHTML(items, itemClass) {
       compassDiv.innerHTML = prismCompassHTML;
     } else if (layoutMode === "nexus") {
       compassDiv.innerHTML = nexusCompassHTML;
-    } else if (layoutMode === "monarch" || layoutMode === "regal") {
+    } else if (layoutMode === "monarch") {
       compassDiv.innerHTML = monarchCompassHTML;
+    } else if (layoutMode === "regal") {
+      compassDiv.innerHTML = regalCompassHTML;
     } else if (layoutMode === "command") {
       compassDiv.innerHTML = compassWidgetHTML; // reuse standard compass, styled via CSS
     } else {
@@ -3800,6 +4006,160 @@ document.addEventListener('click', (e) => {
   // ==========================================
   // MONARCH LAYOUT LISTENERS
   // ==========================================
+  function setupRegalListeners(handleSwitch) {
+    // Left panel toggle logic
+    const navContainer = document.getElementById("blueprint-nav-container");
+    const navButton = document.getElementById("blueprint-nav-button");
+    if (navContainer && navButton) {
+      navButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        navContainer.classList.toggle("pinned");
+      });
+      document.addEventListener("click", (e) => {
+        if (!navContainer.contains(e.target)) {
+          navContainer.classList.remove("pinned");
+        }
+      });
+    }
+
+    const navItems = document.querySelectorAll(".layout-regal .blueprint-nav-item");
+    navItems.forEach(item => {
+      const openSubmenu = (toggle = false) => {
+        if (item.classList.contains("has-submenu")) {
+          const submenu = item.querySelector(".blueprint-submenu");
+          if (submenu) {
+            if (toggle) {
+              submenu.classList.toggle("open");
+              item.classList.toggle("submenu-open");
+            } else {
+              submenu.classList.add("open");
+              item.classList.add("submenu-open");
+            }
+            if (submenu.classList.contains("open")) {
+              navItems.forEach(other => {
+                if (other !== item && other.classList.contains("has-submenu")) {
+                  const otherSub = other.querySelector(".blueprint-submenu");
+                  if (otherSub) {
+                    otherSub.classList.remove("open");
+                    other.classList.remove("submenu-open");
+                  }
+                }
+              });
+            }
+          }
+        }
+      };
+
+      item.addEventListener("click", (e) => {
+        if (e.target.closest(".blueprint-submenu")) return;
+        if (item.classList.contains("has-submenu")) {
+          openSubmenu(true);
+        } else {
+          routeNavigation(item);
+          navItems.forEach(n => n.classList.remove("active"));
+          item.classList.add("active");
+          activeNavItemId = item.getAttribute("data-id");
+          lsSet("latien_active_nav", activeNavItemId);
+        }
+      });
+
+      item.addEventListener("mouseenter", () => {
+        if (item.classList.contains("has-submenu")) {
+          openSubmenu(false);
+        }
+      });
+    });
+
+    const submenuItems = document.querySelectorAll(".layout-regal .blueprint-submenu-item");
+    submenuItems.forEach(item => {
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        routeNavigation(item);
+        
+        submenuItems.forEach(n => n.classList.remove("active"));
+        item.classList.add("active");
+
+        const parentNav = item.closest(".blueprint-nav-item");
+        if (parentNav) {
+          navItems.forEach(n => n.classList.remove("active"));
+          parentNav.classList.add("active");
+          activeNavItemId = parentNav.getAttribute("data-id");
+          lsSet("latien_active_nav", activeNavItemId);
+        }
+      });
+    });
+
+    const galleryContainer = document.getElementById("blueprint-gallery-container");
+    const viewSelector = document.getElementById("blueprint-view-selector");
+    const track = document.getElementById("blueprint-gallery-track");
+    const prevBtn = document.getElementById("blueprint-gallery-prev");
+    const nextBtn = document.getElementById("blueprint-gallery-next");
+
+    if (galleryContainer && viewSelector) {
+      // Toggle pinned state on click
+      viewSelector.addEventListener("click", (e) => {
+        e.stopPropagation();
+        galleryContainer.classList.toggle("pinned");
+      });
+
+      // Close when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!galleryContainer.contains(e.target)) {
+          galleryContainer.classList.remove("pinned");
+        }
+      });
+    }
+
+    if (track && prevBtn && nextBtn) {
+      const scrollAmount = (90 + 12) * 2; // scroll 2 items
+      prevBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    }
+
+    const galleryItems = document.querySelectorAll(".layout-regal .blueprint-gallery-item");
+    galleryItems.forEach(item => {
+      item.addEventListener("click", (e) => {
+        const panoId = item.dataset.panoNode;
+        if (panoId && window.pano) {
+          window.pano.openNext(`{${panoId}}`);
+          if (galleryContainer) galleryContainer.classList.remove("pinned");
+        }
+      });
+    });
+
+    const tools = document.querySelectorAll(".layout-regal .blueprint-tool");
+    tools.forEach(tool => {
+      tool.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const action = tool.dataset.action;
+        if (action === "toggle-minimap") {
+          const minimap = document.getElementById("minimap-widget");
+          if (minimap) {
+            minimap.classList.toggle("collapsed");
+            tool.classList.toggle("active-tool");
+          }
+        } else {
+          if (typeof dispatchToolAction === "function") {
+            dispatchToolAction(tool);
+          }
+        }
+      });
+    });
+
+    const switcherSelect = document.getElementById("blueprint-switcher-select");
+    if (switcherSelect) {
+      switcherSelect.addEventListener("change", (e) => {
+        handleSwitch(e.target.value);
+      });
+    }
+  }
+
   function setupMonarchListeners(handleSwitch) {
     const navItems = document.querySelectorAll(".layout-monarch .monarch-nav-item, .layout-regal .monarch-nav-item");
     const popoverItems = document.querySelectorAll(".layout-monarch .monarch-popover-item, .layout-regal .monarch-popover-item");
@@ -3955,7 +4315,7 @@ document.addEventListener('click', (e) => {
         break;
 
       case "call":
-        window.location.href = 'consultation.html';
+        window.open('https://tav.vn/', '_blank');
         break;
 
       case "info":
@@ -3963,7 +4323,7 @@ document.addEventListener('click', (e) => {
         break;
 
       case "facebook":
-        window.open("https://www.facebook.com", "_blank");
+        window.open("https://www.facebook.com/search/top?q=t%20architect%20%26%20visualization%20company%20limited", "_blank");
         break;
 
       case "instagram":
@@ -4522,7 +4882,7 @@ document.addEventListener('click', (e) => {
     document.body.appendChild(uiWrapper);
 
     // Sync top-level body classes
-    document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-prism", "layout-nexus", "layout-monarch");
+    document.body.classList.remove("layout-classic", "layout-futuristic", "layout-neo", "layout-gradient", "layout-aurora", "layout-horizon", "layout-prism", "layout-nexus", "layout-monarch", "layout-regal", "layout-command");
     document.body.classList.add(`layout-${layoutMode}`);
 
 
@@ -4848,7 +5208,29 @@ document.addEventListener('click', (e) => {
       container.style.opacity = "0";
     }
 
-    if (isTopViewDay1) {
+    if (pin.category === 'aerial') {
+      // ══════════════════════════════════════════════════════════════════
+      // ALL AERIAL HOTSPOTS (BIRD VIEW / TOP VIEW): Pure Helicopter Icon
+      // ══════════════════════════════════════════════════════════════════
+      container.innerHTML = `
+        <div class="hs-scale-wrap">
+          <div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; z-index:6; position:relative;">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
+              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
+            </svg>
+            <div class="hs-pulse-ring"></div>
+          </div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to fly'}</p>
+              <div class="hs-enter-btn">Click to Fly</div>
+            </div>
+          </div>
+        </div>
+      `;
+    } else if (isTopViewDay1) {
       // ══════════════════════════════════════════════════════════════════
       // TYPE A — TOP VIEW DAY 1: Matterport-style Premium Ground Marker
       // ══════════════════════════════════════════════════════════════════
@@ -4858,14 +5240,7 @@ document.addEventListener('click', (e) => {
         <div class="hs-scale-wrap">
           <div class="hs-matterport-ground ${dotColorClass}">
             <div class="hs-mp-pulse"></div>
-            ${pin.category === 'aerial' 
-              ? `<div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; z-index:6;">
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
-                     <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
-                   </svg>
-                 </div>`
-              : `<div class="hs-mp-inner"></div>`
-            }
+            <div class="hs-mp-inner"></div>
             <div class="hs-mp-ring"></div>
           </div>
           <div class="hs-mp-label">${pin.title}</div>
@@ -4888,14 +5263,7 @@ document.addEventListener('click', (e) => {
       container.innerHTML = `
         <div class="hs-scale-wrap">
           <div class="hs-glow-orb ${orbClass}">
-            ${pin.category === 'aerial'
-              ? `<div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; z-index:6; position:absolute; left:-4px; top:-4px;">
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
-                     <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
-                   </svg>
-                 </div>`
-              : `<div class="hs-orb-inner"></div>`
-            }
+            <div class="hs-orb-inner"></div>
             <div class="hs-orb-pulse"></div>
           </div>
           <div class="hs-preview-card">
@@ -4920,14 +5288,7 @@ document.addEventListener('click', (e) => {
               <span class="hs-pin-icon">${iconSvg}</span>${pin.title}
             </div>
             <div class="hs-pin-line"></div>
-            ${(pin.id === 'hs_topnight_bv' || pin.id === 'hs_top_bv')
-              ? `<div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; margin-top:-7px; z-index:6;">
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
-                     <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
-                   </svg>
-                 </div>`
-              : `<div class="hs-pin-dot"></div>`
-            }
+            <div class="hs-pin-dot"></div>
           </div>
           <div class="hs-preview-card">
             <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
@@ -4935,26 +5296,6 @@ document.addEventListener('click', (e) => {
               <h4>${pin.title}</h4>
               <p>${pin.desc || 'Click to enter'}</p>
               <div class="hs-enter-btn">Click to Enter</div>
-            </div>
-          </div>
-        </div>
-      `;
-    } else if (pin.category === 'aerial') {
-      // ══════════════════════════════════════════════════════════════════
-      // Aerial back-link from Interior / Amenities → Bird View / Top View
-      // ══════════════════════════════════════════════════════════════════
-      container.innerHTML = `
-        <div class="hs-scale-wrap">
-          <div class="hs-drone-icon">
-            ${ICON_HELICOPTER}
-            <div class="hs-pulse-ring"></div>
-          </div>
-          <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
-            <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to fly'}</p>
-              <div class="hs-enter-btn">Click to Fly</div>
             </div>
           </div>
         </div>
@@ -5282,6 +5623,48 @@ document.addEventListener('click', (e) => {
         item.classList.remove("active");
       }
     });
+
+    // Sync Regal navigation
+    const blueprintNavItems = document.querySelectorAll(".layout-regal .blueprint-nav-item, .layout-regal .blueprint-submenu-item");
+    blueprintNavItems.forEach(item => {
+      if (item.getAttribute("data-pano-node") === nodeId) {
+        item.classList.add("active");
+        const parentNav = item.closest(".blueprint-nav-item");
+        if (parentNav && parentNav !== item) {
+          parentNav.classList.add("active");
+        }
+      } else {
+        item.classList.remove("active");
+      }
+    });
+
+    const blueprintGalleryItems = document.querySelectorAll(".layout-regal .blueprint-gallery-item");
+    blueprintGalleryItems.forEach(item => {
+      if (item.getAttribute("data-pano-node") === nodeId) {
+        item.classList.add("active");
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      } else {
+        item.classList.remove("active");
+      }
+    });
+
+    const regalTitleEl = document.getElementById("regal-current-pano-title");
+    if (regalTitleEl) {
+      const activeSubmenuItem = document.querySelector(".layout-regal .blueprint-submenu-item.active");
+      const activeGalleryItem = document.querySelector(".layout-regal .blueprint-gallery-item.active .blueprint-thumb-title");
+      const activeNavItem = document.querySelector(".layout-regal .blueprint-nav-item.active:not(.has-submenu) .blueprint-nav-text");
+      
+      let titleText = "";
+      if (activeGalleryItem) {
+        titleText = activeGalleryItem.textContent;
+      } else if (activeSubmenuItem) {
+        titleText = activeSubmenuItem.textContent;
+      } else if (activeNavItem) {
+        titleText = activeNavItem.textContent;
+      }
+      
+      regalTitleEl.textContent = titleText.replace('+', '').trim();
+    }
   }
 
   function onNodeChange() {
@@ -5526,7 +5909,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 7. Contact Info Call
     if (e.target.closest('[data-action="call"]')) {
-      window.location.href = 'consultation.html';
+      window.open('https://tav.vn/', '_blank');
       return;
     }
 
