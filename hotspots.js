@@ -48,7 +48,7 @@ window.hotspotData = {
     { ...hs_park,      id: "hs_park_tv",      pan:  -72, tilt: -78, title: "TAV PARK"       },
     { ...hs_street,    id: "hs_street_tv",    pan:  108, tilt: -55, title: "TAV STREET"     },
     // ── Aerial Shortcuts ───────────────────────────────────────────────
-    { ...hs_birdview,  id: "hs_birdview_tv",  pan:   0, tilt:  -10 }, // → Bird View hub
+    { ...hs_birdview,  id: "hs_birdview_tv",  pan:  17.12, tilt: -45 }, // → Bird View hub
   ],
 
   // ─── node3: Top View NIGHT — mirrors node1 ───────────────────────────
@@ -75,19 +75,83 @@ window.hotspotData = {
     { ...hs_park,      id: "hs_park_bv",      pan:  -5, tilt: -38, title: "TAV PARK"       }, // Center left (lower)
     { ...hs_street,    id: "hs_street_bv",    pan:  15, tilt: -35, title: "TAV STREET"     }, // Far left
     // ── View shortcuts ────────────────────────────────────────────────
-    { ...hs_topnight, id: "hs_topnight_bv",   pan:  80, tilt:  -8, title: "TOP VIEW NIGHT" },
-    { ...hs_top,      id: "hs_top_bv",        pan: 180, tilt:   5, title: "TOP VIEW DAY 1" },
+    { ...hs_topnight, id: "hs_topnight_bv",   pan: -16.44, tilt: -20, title: "TOP VIEW NIGHT" },
+    { ...hs_top,      id: "hs_top_bv",        pan: 180, tilt: -20, title: "TOP VIEW DAY 1" },
   ],
 
-  // ─── Interior nodes ──────────────────────────────────────────────────
-  "node8":  [ { ...hs_wc,        pan:  30, tilt: -5 }, { ...hs_thongtang, pan:  90, tilt: -5 }, { ...hs_park,   pan: 180, tilt: -10 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-  "node7":  [ { ...hs_thongtang, pan: -90, tilt: -5 }, { ...hs_park2,     pan: 180, tilt: -10 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-  "node11": [ { ...hs_living,    pan:   0, tilt: -5 } ],
-  "node9":  [ { ...hs_living,    pan: -90, tilt: -5 }, { ...hs_living2, pan: 90, tilt: -5 } ],
+  // ─── Interior nodes (Các không gian bên trong biệt thự) ───────────────
+  
+  // Node 8: TAV LIVING 1 (Phòng khách 1)
+  "node8":  [ 
+    // Hướng đi WC (pan_classic: giữ nguyên)
+    { ...hs_wc,        pan:  -30, tilt: -5,  pan_classic:  -30, tilt_classic:  -5 }, 
+    // Hướng đi Thông tầng (pan_classic: đặt gần hoặc trên cầu thang)
+    { ...hs_thongtang, pan:  90, tilt: -5,  pan_classic:  80, tilt_classic: -15 }, 
+    // Hướng ra Công viên (pan_classic: đặt ở cửa kính lùa ra công viên)
+    { ...hs_park,      pan: -40, tilt: -10, pan_classic: -40, tilt_classic:  -5 }, 
+    // Nút bay lên góc nhìn chim bay
+    { ...hs_birdview,  pan: 0, tilt: 20 } 
+  ],
+  
+  // Node 7: TAV LIVING 2 (Phòng khách 2)
+  "node7":  [ 
+    // Hướng đi Thông tầng (pan_classic: đặt gần hoặc trên cầu thang)
+    { ...hs_thongtang, pan: -90, tilt: -5,  pan_classic: -80, tilt_classic: -15 }, 
+    // Hướng ra Công viên số 2 (pan_classic: đặt ở cửa sổ hoặc cửa lùa ra công viên)
+    { ...hs_park2,     pan: 180, tilt: -10, pan_classic: 180, tilt_classic:  -5 }, 
+    // Nút bay lên góc nhìn chim bay
+    { ...hs_birdview,  pan: 0, tilt: 20 } 
+  ],
+  
+  // Node 11: TAV WC (Phòng vệ sinh)
+  "node11": [ 
+    // Trở ra Phòng khách 1 (pan_classic: đặt ở cửa ra vào WC)
+    { ...hs_living,    pan:   -120, tilt: -5,  pan_classic:   -120, tilt_classic:  -5 } 
+  ],
+  
+  // Node 9: TAV THÔNG TẦNG
+  "node9":  [ 
+    // Đi xuống Phòng khách 1 (pan_classic: hướng nhìn từ trên cầu thang đi xuống)
+    { ...hs_living,    pan: -90, tilt: -5,  pan_classic: -90, tilt_classic: -25 }, 
+    // Đi sang Phòng khách 2 (pan_classic: hướng nhìn từ trên cầu thang đi xuống)
+    { ...hs_living2,   pan: 90, tilt: -5,   pan_classic:  90, tilt_classic: -25 } 
+  ],
+  
   "node10": [],
 
-  // ─── Amenity nodes ───────────────────────────────────────────────────
-  "node4":  [ { ...hs_street, pan: -30, tilt: -10 }, { ...hs_living,  pan: 180, tilt: -5 }, { ...hs_park2, pan:  90, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-  "node6":  [ { ...hs_street, pan:  30, tilt: -10 }, { ...hs_park,    pan: -90, tilt: -5 }, { ...hs_living2, pan: 180, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
-  "node5":  [ { ...hs_park,   pan: 180, tilt: -5  }, { ...hs_park2,   pan:-180, tilt: -5 }, { ...hs_birdview, pan: 0, tilt: 20 } ],
+  // ─── Amenity nodes (Các không gian tiện ích bên ngoài) ───────────────
+  
+  // Node 4: TAV PARK (Công viên sinh thái)
+  "node4":  [ 
+    // Hướng ra Phố đi bộ (pan_classic: đặt trên đường dạo bộ ra phố)
+    { ...hs_street,  pan: 180, tilt: -5,  pan_classic: 180, tilt_classic:  -5 }, 
+    // Đi vào Phòng khách 1 (pan_classic: đặt ở cửa kính vào nhà)
+    { ...hs_living,  pan: -30, tilt: -10, pan_classic: -30, tilt_classic: -15 },  
+    // Đi sang Công viên 2 (pan_classic: dọc theo đường dạo bộ công viên)
+    { ...hs_park2,     pan:  -90, tilt:-20,  pan_classic:  120, tilt_classic:  -35 }, 
+    // Nút bay lên góc nhìn chim bay
+    { ...hs_birdview,  pan: 0, tilt: 20 } 
+  ],
+  
+  // Node 6: TAV PARK 2 (Khu vui chơi & Thể thao)
+  "node6":  [ 
+    // Hướng ra Phố đi bộ (pan_classic: đặt trên lối đi ra phố)
+    { ...hs_street,    pan:  -50, tilt: -10, pan_classic:  80, tilt_classic: -15 }, 
+    // Trở lại Công viên sinh thái (pan_classic: dọc theo lối đi)
+    { ...hs_park,      pan: -90, tilt: -5,  pan_classic: -90, tilt_classic:  -5 }, 
+    // Đi vào Phòng khách 2 (pan_classic: đặt ở cửa vào nhà)
+    { ...hs_living2,   pan: -230, tilt: -5,  pan_classic: -230, tilt_classic:  3 }, 
+    // Nút bay lên góc nhìn chim bay
+    { ...hs_birdview,  pan: 0, tilt: 20 } 
+  ],
+  
+  // Node 5: TAV STREET (Phố đi bộ thương mại)
+  "node5":  [ 
+    // Lối đi vào Công viên 1 (pan_classic: lối vào từ đường chính)
+    { ...hs_park,      pan: 180, tilt: -5,  pan_classic: 180, tilt_classic: -10 }, 
+    // Lối đi vào Công viên 2 (pan_classic: lối vào từ đường chính)
+    { ...hs_park2,     pan:-180, tilt: -5,  pan_classic:-180, tilt_classic: -10 }, 
+    // Nút bay lên góc nhìn chim bay
+    { ...hs_birdview,  pan: 0, tilt: 20 } 
+  ]
 };

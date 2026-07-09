@@ -4100,7 +4100,7 @@ document.addEventListener('click', (e) => {
       if (cone) {
         // Rotate the viewcone and apply inverse scale to keep it original size.
         const zoom = canvas ? parseFloat(canvas.style.getPropertyValue('--mm-zoom')) || 1 : 1;
-        cone.style.transform = `rotate(${pan}deg) scale(${1 / zoom})`;
+        cone.style.transform = `rotate(${-pan}deg) scale(${1 / zoom})`;
       }
     } catch (e) {}
   }
@@ -4678,6 +4678,11 @@ document.addEventListener('click', (e) => {
 
         // Slide the switcher segments
         updateSwitcherUI();
+        
+        // Re-render hotspots if the layout affects their coordinates
+        if (typeof window.reRenderHotspots === 'function') {
+          window.reRenderHotspots();
+        }
 
         // 4. Fade back in
         setTimeout(() => {
@@ -4853,7 +4858,14 @@ document.addEventListener('click', (e) => {
         <div class="hs-scale-wrap">
           <div class="hs-matterport-ground ${dotColorClass}">
             <div class="hs-mp-pulse"></div>
-            <div class="hs-mp-inner"></div>
+            ${pin.category === 'aerial' 
+              ? `<div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; z-index:6;">
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
+                     <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
+                   </svg>
+                 </div>`
+              : `<div class="hs-mp-inner"></div>`
+            }
             <div class="hs-mp-ring"></div>
           </div>
           <div class="hs-mp-label">${pin.title}</div>
@@ -4876,7 +4888,14 @@ document.addEventListener('click', (e) => {
       container.innerHTML = `
         <div class="hs-scale-wrap">
           <div class="hs-glow-orb ${orbClass}">
-            <div class="hs-orb-inner"></div>
+            ${pin.category === 'aerial'
+              ? `<div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; z-index:6; position:absolute; left:-4px; top:-4px;">
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
+                     <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
+                   </svg>
+                 </div>`
+              : `<div class="hs-orb-inner"></div>`
+            }
             <div class="hs-orb-pulse"></div>
           </div>
           <div class="hs-preview-card">
@@ -4901,7 +4920,14 @@ document.addEventListener('click', (e) => {
               <span class="hs-pin-icon">${iconSvg}</span>${pin.title}
             </div>
             <div class="hs-pin-line"></div>
-            <div class="hs-pin-dot"></div>
+            ${(pin.id === 'hs_topnight_bv' || pin.id === 'hs_top_bv')
+              ? `<div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; margin-top:-7px; z-index:6;">
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
+                     <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
+                   </svg>
+                 </div>`
+              : `<div class="hs-pin-dot"></div>`
+            }
           </div>
           <div class="hs-preview-card">
             <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
@@ -5003,9 +5029,16 @@ document.addEventListener('click', (e) => {
     console.log(`[PremiumHotspot] Found ${defs.length} hotspots for node ${nodeId}`);
 
     defs.forEach(pin => {
+      let finalPan = pin.pan;
+      let finalTilt = pin.tilt;
+      const currentLayoutMode = lsGet("latien_layout_mode", "futuristic");
+      if (currentLayoutMode === "classic") {
+        if (pin.pan_classic !== undefined) finalPan = pin.pan_classic;
+        if (pin.tilt_classic !== undefined) finalTilt = pin.tilt_classic;
+      }
       const el = createPremiumHotspot(pin);
-      window.pano.addHotspot(pin.id, pin.pan, pin.tilt, el);
-      currentHotspotElements.push({ el, pan: pin.pan, tilt: pin.tilt, id: pin.id });
+      window.pano.addHotspot(pin.id, finalPan, finalTilt, el);
+      currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: pin.id });
     });
     
     console.log(`[PremiumHotspot] Successfully injected ${currentHotspotElements.length} hotspots`);
