@@ -3898,9 +3898,7 @@ document.addEventListener('click', (e) => {
       const cat = header.parentElement;
       const items = cat.querySelector('.cmd-cat-items');
       if (items) {
-        // Start with all expanded
-        cat.classList.add('expanded');
-        items.style.maxHeight = items.scrollHeight + 'px';
+        // Do not expand by default
       }
 
       header.addEventListener('click', () => {

@@ -12184,10 +12184,10 @@ body * {
   left: 0;
   right: 0;
   height: 52px;
-  background: rgba(9, 4, 26, 0.82);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--cmd-border);
+  background: transparent;
+  /* backdrop-filter removed */
+  /* -webkit-backdrop-filter removed */
+  /* border-bottom removed */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12200,6 +12200,13 @@ body * {
   display: flex;
   align-items: center;
   gap: 16px;
+
+  background: rgba(9, 4, 26, 0.65);
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .cmd-brand {
@@ -12286,6 +12293,13 @@ body * {
   display: flex;
   align-items: center;
   gap: 14px;
+
+  background: rgba(9, 4, 26, 0.65);
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .cmd-coord-display {
@@ -12684,10 +12698,10 @@ body * {
   left: 0;
   right: 0;
   height: 72px;
-  background: rgba(9, 4, 26, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--cmd-border);
+  background: transparent;
+  /* backdrop-filter removed */
+  /* -webkit-backdrop-filter removed */
+  /* border-top removed */
   z-index: 800;
   display: flex;
   align-items: center;
@@ -12748,11 +12762,15 @@ body * {
   padding: 8px 6px;
   border-radius: 8px;
   transition: background 0.2s ease;
+  background: rgba(9, 4, 26, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.05);
   flex-shrink: 0;
   position: relative;
 }
 
-.cmd-tl-node:hover { background: var(--cmd-glass-hover); }
+.cmd-tl-node:hover { background: rgba(255, 255, 255, 0.12); }
 
 .cmd-tl-dot {
   width: 10px;
