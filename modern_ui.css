@@ -2,8 +2,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
-
-
 :root {
   /* Global Text Uppercase Rule as requested */
 }
@@ -42,10 +40,6 @@
   --ui-font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', 'Outfit', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
 /* modern_ui.css - Premium Accessible UI with Compact Mega Menu & Localized High Contrast styling */
-
-
-
-
 
 /* Base resets & fonts for UI overlays */
 .layout-classic .modern-ui-overlay {
@@ -247,7 +241,6 @@
   opacity: 1;
   transform: translateX(0);
 }
-
 
 /* ========================================================
    1.5 QUICK NAVIGATION PANEL (Left Side)
@@ -807,7 +800,6 @@
   text-shadow: 0 0 4px rgba(212, 175, 55, 0.5);
 }
 
-
 /* Pulse animation for active node logo */
 @keyframes pulse-glow {
   0% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.3); }
@@ -898,10 +890,6 @@
 }
 
 /* modern_ui.css - Premium Futuristic Dark Cyberpunk UI with Glassmorphism & Left Collapsible Sidebar */
-
-
-
-
 
 /* Base resets & fonts for UI overlays */
 .layout-futuristic .modern-ui-overlay {
@@ -1181,7 +1169,6 @@
 .layout-futuristic .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
   left: 410px; /* 220px (sidebar) + 170px (mega menu) + 8px (gap) + 12px (offset) */
 }
-
 
 .layout-futuristic .sidebar-toggle-btn svg {
   width: 14px; /* Slimmer icon */
@@ -1512,7 +1499,6 @@
   text-shadow: 0 0 5px rgba(0, 242, 254, 0.4);
 }
 
-
 /* Media Queries for Tablets & Small Desktops */
 @media (max-width: 1024px) {
   .layout-futuristic .sidebar-content {
@@ -1598,7 +1584,6 @@
     right: 12px;
   }
 }
-
 
 /* ==========================================
    LAYOUT SWITCHER WIDGET STYLES
@@ -1711,7 +1696,6 @@
 .switcher-segment.active .sw-num {
   opacity: 0.65;
 }
-
 
 .layout-classic .switcher-segment {
   color: #55524a;
@@ -2088,7 +2072,6 @@
   filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.6));
 }
 
-
 .minimap-dot {
   position: absolute;
   top: 50%;
@@ -2235,7 +2218,6 @@
 /* Hide the old hs-subtle-hover in beacon mode (preview card replaces it) */
 .hs-beacon .hs-subtle-hover { display: none; }
 
-
 /* ===================================================================
    TYPE B — BIRD VIEW: Small luminous navigation orb
    No helicopter/drone icons. Soft glowing sphere with float.
@@ -2377,7 +2359,6 @@
 
 /* Old TYPE B top-view dot kept for compat */
 .hs-topview .hs-scale-wrap { animation: none; }
-
 
 @keyframes hs-float {
   0%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
@@ -2938,7 +2919,6 @@
   100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
 }
 
-
 .minimap-legend {
   display: flex;
   font-family: var(--ui-font);
@@ -3165,8 +3145,6 @@
   box-shadow: 0 0 10px rgba(246, 193, 119, 0.3) !important;
 }
 
-
-
 body.layout-prism .minimap-action-btn {
   background: rgba(124, 58, 237, 0.08) !important;
   border-color: rgba(124, 58, 237, 0.2) !important;
@@ -3191,23 +3169,7 @@ body.layout-nexus .minimap-action-btn:hover {
   border-color: var(--nexus-sky) !important;
   color: #ffffff !important;
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
-}
-
-body.layout-regal .minimap-action-btn {
-  background: rgba(200, 169, 107, 0.08) !important;
-  border-color: rgba(200, 169, 107, 0.25) !important;
-  color: var(--monarch-champagne) !important;
-  border-radius: 0 !important;
-}
-
-body.layout-regal .minimap-action-btn:hover {
-  background: rgba(200, 169, 107, 0.22) !important;
-  border-color: var(--monarch-champagne) !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(200, 169, 107, 0.3) !important;
-}
-
-
+}}}
 
 /* Project Info Panel */
 .project-info-panel {
@@ -3738,8 +3700,6 @@ body.layout-regal .minimap-action-btn:hover {
   box-shadow: 0 0 0 2px var(--neo-primary), var(--neo-shadow-active) !important;
 }
 
-
-
 /* =========================================================
    GLOBAL HOLOGRAPHIC HOTSPOTS MARKERS (Pano2VR Hooks)
    ========================================================= */
@@ -3774,7 +3734,6 @@ body.layout-regal .minimap-action-btn:hover {
   --hotspot-hover: #00D9FF; /* Cyan */
   --hotspot-bg: rgba(8, 17, 31, 0.85);
 }
-
 
 /* =========================================================
    FUTURISTIC LAYOUT HOTSPOT OVERRIDES
@@ -3929,8 +3888,6 @@ body.layout-regal .minimap-action-btn:hover {
   100% { box-shadow: 0 0 0 0 rgba(255,255,255, 0); }
 }
 
-
-
 /* =========================================================
    OPTION 4: GRADIENT LAYOUT TEMPLATES (REDESIGN)
    ========================================================= */
@@ -4059,9 +4016,6 @@ body.layout-regal .minimap-action-btn:hover {
   justify-content: center;
 }
 
-
-
-
 /* 2. Top Right Quick Actions */
 .layout-gradient .gradient-quick-actions {
   position: absolute;
@@ -4135,7 +4089,6 @@ body.layout-regal .minimap-action-btn:hover {
   pointer-events: none; /* allow clicks to pass through gaps */
 }
 
-
 .layout-gradient .gradient-nav-item {
   pointer-events: auto !important;
   width: 18px !important;
@@ -4175,7 +4128,6 @@ body.layout-regal .minimap-action-btn:hover {
   transition: width 0.3s ease;
 }
 
-
 /* Horizontal Submenu (Expandable Card) */
 .layout-gradient .gradient-submenu {
   position: absolute;
@@ -4206,7 +4158,6 @@ body.layout-regal .minimap-action-btn:hover {
   transform: translateX(-50%) translateY(16px);
   pointer-events: auto;
 }
-
 
 .layout-gradient .gradient-submenu .submenu-item {
   background: rgba(255, 255, 255, 0.65);
@@ -4479,8 +4430,6 @@ body.layout-regal .minimap-action-btn:hover {
   box-shadow: 0 10px 30px rgba(229, 192, 88, 0.3);
 }
 
-
-
 /* ==========================================
    GLOBAL UI MODALS & PANELS (INFO, GALLERY)
    ========================================== */
@@ -4659,9 +4608,6 @@ body.layout-regal .minimap-action-btn:hover {
 .social-btn.instagram { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
 .social-btn.zalo { background: #0068FF; }
 
-
-
-
 /* Increase opacity for Layout Switcher in Gradient Layout */
 .layout-gradient .layout-switcher-pill {
   background: rgba(255, 255, 255, 0.85) !important;
@@ -4680,8 +4626,6 @@ body.layout-regal .minimap-action-btn:hover {
   background: var(--primary-grad);
   box-shadow: 0 4px 15px rgba(255, 94, 98, 0.4);
 }
-
-
 
 /* ==========================================
    GRADIENT DOCK SUBMENUS (Share & Images)
@@ -4908,9 +4852,6 @@ body.layout-regal .minimap-action-btn:hover {
   height: auto !important;
 }
 
-
-
-
 .layout-gradient .glass-circle-node svg {
   width: 20px;
   height: 20px;
@@ -4997,7 +4938,6 @@ body.layout-regal .minimap-action-btn:hover {
   background: rgba(212, 175, 55, 0.2);
   color: #b89020;
 }
-
 
 /* =========================================
    NEO COLLAPSIBLE PANELS (Drawers)
@@ -5619,13 +5559,6 @@ body.layout-regal .minimap-action-btn:hover {
   align-items: center !important;
 }
 
-
-
-
-
-
-
-
 .layout-gradient .gradient-left-toolbar {
   display: flex !important;
   flex-direction: column !important;
@@ -5642,12 +5575,7 @@ body.layout-regal .minimap-action-btn:hover {
 
 /* Give glass background to individual nodes instead */
 
-
-
 /* Cascading animation from right to left */
-
-
-
 
 /* Delay each item sequentially */
 .layout-gradient .glass-circle-node:nth-child(1) { transition-delay: 0.05s !important; }
@@ -5657,7 +5585,6 @@ body.layout-regal .minimap-action-btn:hover {
 .layout-gradient .glass-circle-node:nth-child(5) { transition-delay: 0.25s !important; }
 .layout-gradient .glass-circle-node:nth-child(6) { transition-delay: 0.30s !important; }
 .layout-gradient .glass-circle-node:nth-child(7) { transition-delay: 0.35s !important; }
-
 
 /* Remove old gradient-right-toolbar */
 .layout-gradient .gradient-right-toolbar {
@@ -5726,7 +5653,6 @@ body.layout-regal .minimap-action-btn:hover {
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-
 .layout-gradient .gradient-nav-item:hover .nav-content {
   opacity: 1;
   visibility: visible;
@@ -5752,7 +5678,6 @@ body.layout-regal .minimap-action-btn:hover {
   visibility: visible !important;
 }
 
-
 .layout-gradient .gradient-submenu .submenu-item {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
@@ -5776,7 +5701,6 @@ body.layout-regal .minimap-action-btn:hover {
   border-color: rgba(255, 255, 255, 0.8);
   transform: scale(1.05) translateY(0);
 }
-
 
 .layout-gradient .gradient-nav-item:hover .gradient-submenu .submenu-item,
 .layout-gradient .gradient-nav-item.pinned .gradient-submenu .submenu-item {
@@ -5802,17 +5726,13 @@ body.layout-regal .minimap-action-btn:hover {
 /* When submenu opens, hide nav-content tooltip to prevent overlap */
 .layout-gradient .gradient-nav-item:hover .nav-content,
 
-
 /* Shrink glass-circle-node in gradient layout */
-
 
 .layout-gradient .glass-circle-node svg {
   width: 18px !important;
   height: 18px !important;
   stroke-width: 1.5px !important;
 }
-
-
 
 /* Fresh Bright Glassmorphism for Gradient Layout */
 .layout-gradient .gradient-toolbar-trigger,
@@ -5997,7 +5917,6 @@ body.layout-regal .minimap-action-btn:hover {
   background: rgba(255, 255, 255, 0.3) !important;
   border-color: rgba(255, 255, 255, 0.8) !important;
 }
-
 
 /* --- RIGHT SIDE: TOOLBAR --- */
 .layout-gradient .gradient-toolbar-wrapper {
@@ -6197,7 +6116,6 @@ body.layout-regal .minimap-action-btn:hover {
   text-align: center !important;
   display: block !important;
 }
-
 
 /* OPTION 4: GRADIENT LAYOUT (VISION UI REDESIGN) */
 
@@ -7490,7 +7408,6 @@ body.region-mode-active #container {
   transform: perspective(600px) rotateY(0deg) translateX(0) scale(1) !important;
   transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
-
 
 /* =========================================================
    OPTION 5: AURORA LAYOUT SPECIFIC VARIABLES & GLOBAL OVERRIDES
@@ -9210,12 +9127,7 @@ body.region-mode-active #container {
 .layout-monarch .switcher-slider {
   border-color: #C8A96B !important;
   box-shadow: 0 0 12px rgba(200, 169, 107, 0.8) !important;
-}
-.layout-regal .switcher-slider {
-  border-color: #E21B52 !important;
-  box-shadow: 0 0 12px rgba(226, 27, 82, 0.8) !important;
-}
-
+}}
 
 /* ====================================================
    LAYOUT 8 — PRISM LAYOUT
@@ -9365,7 +9277,6 @@ body.layout-prism {
   box-shadow: none !important;
   animation: none !important;
 }
-
 
 .layout-prism .prism-nav-item:active {
   transform: scale(0.96);
@@ -9562,7 +9473,6 @@ body.layout-prism {
 .layout-prism .prism-tool-item:active {
   transform: scale(0.96);
 }
-
 
 /* ---------- TOOL ICON WRAPPER ---------- */
 .layout-prism .prism-tool-icon-wrapper {
@@ -10169,7 +10079,6 @@ body.layout-nexus {
   color: var(--nexus-text);
 }
 
-
 .layout-nexus .nexus-nav-icon-wrapper {
   display: flex;
   align-items: center;
@@ -10277,7 +10186,6 @@ body.layout-nexus {
   color: var(--nexus-mint) !important;
   font-weight: 600;
 }
-
 
 /* ---------- 3. RIGHT TOOLBAR — Horizontal Expansion ---------- */
 .layout-nexus .nexus-tool-container {
@@ -10398,12 +10306,10 @@ body.layout-nexus {
   stroke: var(--nexus-mint) !important;
 }
 
-
 /* Unused tooltips in slide mode, keeping styling clean */
 .layout-nexus .nexus-tool-tooltip {
   display: none !important;
 }
-
 
 /* ---------- 4. COMPASS WIDGET — Minimal Dial ---------- */
 body.layout-nexus .compass-widget {
@@ -10460,7 +10366,6 @@ body.layout-nexus .compass-degree-display {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
-
 /* ---------- 5. MINIMAP WIDGET — Minimalist Card ---------- */
 body.layout-nexus .minimap-widget {
   border-radius: 8px !important;
@@ -10511,7 +10416,6 @@ body.layout-nexus .minimap-legend {
   font-family: var(--nexus-font) !important;
   font-size: 12px !important;
 }
-
 
 /* ---------- 6. HOTSPOTS — Premium Glass Capsules ---------- */
 body.layout-nexus 
@@ -10680,14 +10584,12 @@ body.layout-nexus .hologram-marker-container:hover .hotspot-label {
   transform: translateY(0) !important;
 }
 
-
 /* ---------- 7. LAYOUT SWITCHER — Nexus Segment ---------- */
 #opt-layout-nexus { color: var(--nexus-muted); }
 #opt-layout-nexus.active { color: #fff; }
 .layout-switcher-pill #opt-layout-nexus.active {
   background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(56,189,248,0.2)) !important;
 }
-
 
 /* ---------- 8. NOTIFICATION — Nexus ---------- */
 body.layout-nexus #ui-notification {
@@ -10700,7 +10602,6 @@ body.layout-nexus #ui-notification {
   letter-spacing: 0.04em !important;
   border-radius: 8px !important;
 }
-
 
 /* ---------- 9. REGION & INTERIOR PAGES — Nexus Overrides ---------- */
 body.layout-nexus .back-to-360-btn {
@@ -10852,7 +10753,6 @@ body.layout-nexus .pin-label {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
 }
 
-
 /* ---------- 10. MODALS — Nexus Overrides ---------- */
 body.layout-nexus .global-modal-content {
   background: rgba(23, 25, 35, 0.97) !important;
@@ -10872,33 +10772,7 @@ body.layout-nexus .modal-header h2 {
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-}
-
-/* =========================================================
-   11. GIAO DIỆN MONARCH (LAYOUT #10) - PREMIUM SHOWROOM
-   ========================================================= */
-
-/* Typography & Root variables override for Monarch */
-.layout-regal {
-  --monarch-bg: #0D0D0D;
-  --monarch-secondary: #151515;
-  --monarch-gold: #C8A96B;
-  --monarch-champagne: #E4C590;
-  --monarch-accent: #D4AF37;
-  --monarch-white: #FFFFFF;
-  --monarch-font-h: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  --monarch-font-b: 'DM Sans', 'Inter', sans-serif;
-}
-
-body.layout-regal {
-  background-color: var(--monarch-bg) !important;
-  font-family: var(--monarch-font-b) !important;
-}
-
-/* Hide default layout switcher wrapper when Monarch is active */
-body.layout-regal #layout-switcher-wrapper {
-  display: none !important;
-}
+}}}}
 
 /* -------------------------------------------------------
    LUXURY LIGHT SWEEP ANIMATION
@@ -10906,381 +10780,13 @@ body.layout-regal #layout-switcher-wrapper {
 .monarch-hover-sweep {
   position: relative;
   overflow: hidden;
+  /* Fix GPU edge smearing */
+  transform: translateZ(0);
 }
 
-.monarch-hover-sweep::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(228, 197, 144, 0) 30%,
-    rgba(228, 197, 144, 0.2) 50%,
-    rgba(228, 197, 144, 0) 70%,
-    transparent 100%
-  );
-  pointer-events: none;
-  z-index: 5;
-  transition: none;
-}
+.monarch-hover-sweep::after { display: none; }
 
-.monarch-hover-sweep:hover::after {
-  left: 150%;
-  transition: left 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* -------------------------------------------------------
-   BOTTOM NAVIGATION DOCK
-   ------------------------------------------------------- */
-.layout-regal .monarch-nav-container {
-  position: fixed;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2000;
-  pointer-events: auto;
-  overflow: visible !important;
-}
-
-.layout-regal .monarch-nav-dock {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  background: rgba(21, 21, 21, 0.75);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(200, 169, 107, 0.35);
-  border-radius: 0;
-  padding: 4px 12px;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(228, 197, 144, 0.05);
-  overflow: visible !important;
-}
-
-.layout-regal .monarch-nav-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: visible !important;
-}
-
-.layout-regal .monarch-nav-btn {
-  color: rgba(255, 255, 255, 0.7);
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: 0;
-  font-family: var(--monarch-font-h);
-  font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  white-space: nowrap;
-  border: 1px solid transparent;
-}
-
-.layout-regal .monarch-nav-btn:hover {
-  color: var(--monarch-champagne);
-  background: rgba(200, 169, 107, 0.08);
-}
-
-.layout-regal .monarch-nav-item.active .monarch-nav-btn {
-  color: var(--monarch-champagne);
-  border: 1px solid rgba(200, 169, 107, 0.6);
-  background: rgba(21, 21, 21, 0.9);
-  box-shadow: 0 4px 15px rgba(228, 197, 144, 0.15);
-}
-
-/* Popover details */
-.layout-regal .monarch-popover {
-  position: absolute;
-  bottom: calc(100% + 20px);
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
-  background: rgba(13, 13, 13, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(200, 169, 107, 0.45);
-  border-radius: 0; /* Premium structural look */
-  padding: 14px 0;
-  min-width: 180px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 100;
-  pointer-events: auto;
-}
-
-.layout-regal .monarch-nav-item:hover .monarch-popover,
-.layout-regal .monarch-popover.open {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* Triangle indicator with gold border */
-.layout-regal .monarch-popover::after {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 8px;
-  border-style: solid;
-  border-color: rgba(13, 13, 13, 0.95) transparent transparent transparent;
-}
-
-.layout-regal .monarch-popover::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 9px;
-  border-style: solid;
-  border-color: rgba(200, 169, 107, 0.45) transparent transparent transparent;
-  z-index: -1;
-}
-
-.layout-regal .monarch-popover-title {
-  font-family: var(--monarch-font-h);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  text-align: center;
-  color: var(--monarch-gold);
-  border-bottom: 1px solid rgba(200, 169, 107, 0.25);
-  padding-bottom: 8px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-
-.layout-regal .monarch-popover-item {
-  color: rgba(255, 255, 255, 0.75);
-  font-family: var(--monarch-font-b);
-  font-size: 14px;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  padding: 8px 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-}
-
-.layout-regal .monarch-popover-item:hover {
-  color: var(--monarch-champagne);
-  background: rgba(200, 169, 107, 0.1);
-}
-
-.layout-regal .monarch-popover-item.active {
-  color: var(--monarch-champagne);
-  font-weight: 700;
-  background: rgba(200, 169, 107, 0.15);
-  box-shadow: inset 0 0 5px rgba(228, 197, 144, 0.1);
-}
-
-/* -------------------------------------------------------
-   TOP LEFT COMMAND PANEL
-   ------------------------------------------------------- */
-.layout-regal .monarch-command-panel {
-  position: fixed;
-  top: 160px;
-  right: 15px;
-  left: auto;
-  z-index: 2000;
-  pointer-events: auto;
-}
-
-.layout-regal .monarch-command-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: rgba(21, 21, 21, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(200, 169, 107, 0.35);
-  padding: 10px 8px;
-  border-radius: 0; /* Architectural block look */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-.layout-regal .monarch-command-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0;
-  cursor: pointer;
-  padding: 6px;
-  color: rgba(255, 255, 255, 0.65);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: visible;
-}
-
-.layout-regal .monarch-command-icon {
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.layout-regal .monarch-command-icon svg {
-  width: 100%;
-  height: 100%;
-  transition: transform 0.3s ease;
-}
-
-.layout-regal .monarch-command-label {
-  width: 0;
-  opacity: 0;
-  visibility: hidden;
-  white-space: nowrap;
-  font-family: var(--monarch-font-b);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--monarch-champagne);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: translateX(5px);
-}
-
-/* Hover triggers expansion and label reveal */
-.layout-regal .monarch-command-item:hover {
-  color: var(--monarch-champagne);
-  background: rgba(200, 169, 107, 0.08);
-}
-
-.layout-regal .monarch-command-item:hover .monarch-command-label {
-  width: 110px;
-  opacity: 1;
-  visibility: visible;
-  margin-right: 12px;
-  margin-left: 0;
-  transform: translateX(0);
-}
-
-.layout-regal .monarch-command-item.active-tool,
-.layout-regal .monarch-command-item.pinned {
-  color: var(--monarch-gold) !important;
-  border-right: 2px solid var(--monarch-accent) !important;
-  border-left: none !important;
-  background: rgba(200, 169, 107, 0.15) !important;
-  box-shadow: inset 0 0 10px rgba(228, 197, 144, 0.15) !important;
-}
-
-.layout-regal .monarch-command-item.active-tool .monarch-command-icon svg,
-.layout-regal .monarch-command-item.pinned .monarch-command-icon svg {
-  stroke: var(--monarch-accent) !important;
-  filter: drop-shadow(0 0 4px var(--monarch-accent)) !important;
-  transform: scale(1.05);
-}
-
-/* -------------------------------------------------------
-   TOP RIGHT LAYOUT SELECTOR
-   ------------------------------------------------------- */
-.layout-regal .monarch-layout-selector {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  z-index: 2000;
-  background: rgba(21, 21, 21, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(200, 169, 107, 0.3);
-  padding: 12px 14px;
-  border-radius: 0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  pointer-events: auto;
-  min-width: 140px;
-}
-
-.layout-regal .monarch-selector-header {
-  font-family: var(--monarch-font-h);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--monarch-gold);
-  border-bottom: 1px solid rgba(200, 169, 107, 0.25);
-  padding-bottom: 6px;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.layout-regal .monarch-selector-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 6px;
-}
-
-.layout-regal .monarch-selector-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.5);
-  font-family: var(--monarch-font-b);
-  font-size: 13px;
-  font-weight: 500;
-  width: 22px;
-  height: 22px;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.layout-regal .monarch-selector-item:hover {
-  color: var(--monarch-champagne);
-  background: rgba(200, 169, 107, 0.1);
-  border-color: rgba(228, 197, 144, 0.25);
-}
-
-.layout-regal .monarch-selector-item.active {
-  color: var(--monarch-champagne);
-  border-color: var(--monarch-gold);
-  background: rgba(21, 21, 21, 0.95);
-  font-weight: 700;
-  box-shadow: 0 0 6px rgba(228, 197, 144, 0.25);
-}
-
-/* -------------------------------------------------------
-   COMPASS
-   ------------------------------------------------------- */
-body.layout-regal .compass-widget {
-  bottom: 15px;
-  left: 15px;
-  width: 76px;
-  height: 76px;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-body.layout-regal .compass-dial {
-  width: 100% !important;
-  height: 100% !important;
-}
-
-body.layout-regal .compass-cardinal {
-  font-family: var(--monarch-font-h) !important;
-  color: var(--monarch-champagne) !important;
-  font-weight: 700 !important;
-  font-size: 13px !important;
-  top: 6px !important;
-}
-
-body.layout-regal .compass-degree-display {
-  display: none !important;
-}
-
+.monarch-hover-sweep:hover::after { display: none; }
 
 /* =========================================================
    FUTURISTIC LAYOUT HOTSPOT OVERRIDES
@@ -11350,539 +10856,31 @@ body.layout-regal .compass-degree-display {
   align-items: center;
   justify-content: center;
   pointer-events: auto !important;
-}
-
-body.layout-regal .hologram-marker-container .hotspot-hitbox {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  border-radius: 50%;
-  cursor: pointer;
-  pointer-events: auto;
-  z-index: 10;
-}
-
-body.layout-regal .hologram-marker-container .hotspot-marker {
-  width: 12px;
-  height: 12px;
-  background: var(--monarch-gold) !important;
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) rotate(45deg) !important;
-  border: 1.5px solid #FFFFFF !important;
-  box-shadow: 0 0 10px rgba(200, 169, 107, 0.6), inset 0 0 3px rgba(255,255,255,0.7);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  animation: none !important;
-}
-
-/* Reflection inside crystal */
-body.layout-regal .hologram-marker-container .hotspot-marker::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%);
-  pointer-events: none;
-}
-
-body.layout-regal .hologram-marker-container .hotspot-label {
-  position: absolute;
-  top: calc(50% + 16px) !important;
-  left: 50% !important;
-  background: rgba(13, 13, 13, 0.95) !important;
-  color: var(--monarch-champagne) !important;
-  border: 1px solid rgba(200, 169, 107, 0.5) !important;
-  padding: 6px 12px !important;
-  font-family: var(--monarch-font-b) !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  letter-spacing: 1px !important;
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateX(-50%) translateY(5px) !important;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  pointer-events: none;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.6) !important;
-  border-radius: 0 !important;
-}
-
-body.layout-regal .hologram-marker-container:hover .hotspot-label {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0) !important;
-}
-
-body.layout-regal .hologram-marker-container:hover .hotspot-marker {
-  transform: translate(-50%, -50%) rotate(45deg) scale(1.2) !important;
-  border-color: var(--monarch-champagne) !important;
-  box-shadow: 0 0 15px rgba(228, 197, 144, 0.8), inset 0 0 5px rgba(255,255,255,1);
-}
-
-body.layout-regal .hologram-marker-container.active .hotspot-marker {
-  background: var(--monarch-champagne) !important;
-  border: 1.5px solid var(--monarch-accent) !important;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.95), inset 0 0 6px rgba(255,255,255,1) !important;
-}
-
-/* -------------------------------------------------------
-   CUSTOM PAGES OVERRIDES (INTERIOR & REGION PAGES)
-   ------------------------------------------------------- */
-
-/* Interior Page Overlay */
-body.layout-regal.interior-mode-active #interior-page {
-  display: block;
-  pointer-events: none;
-  background: transparent !important;
-  animation: monarchCrossfade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
+}}}}}}}}}
 
 @keyframes monarchCrossfade {
   from { opacity: 0; }
   to { opacity: 1; }
-}
-
-.layout-regal #interior-page .interior-switcher-container {
-  background: rgba(21, 21, 21, 0.8);
-  border: 1px solid rgba(200, 169, 107, 0.45);
-  border-radius: 0;
-  padding: 8px 18px;
-  gap: 16px;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.7);
-}
-
-.layout-regal #interior-page .interior-switch-btn {
-  font-family: var(--monarch-font-h);
-  font-size: 15px;
-  font-weight: 500;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-  border-bottom: 2px solid transparent;
-  transition: all 0.35s ease;
-  border-radius: 0;
-  padding: 6px 12px;
-}
-
-.layout-regal #interior-page .interior-switch-btn:hover {
-  color: var(--monarch-champagne);
-}
-
-.layout-regal #interior-page .interior-switch-btn.active {
-  background: transparent;
-  color: var(--monarch-gold);
-  border-bottom: 2px solid var(--monarch-gold);
-  box-shadow: none;
-  font-weight: 700;
-}
-
-/* Region Page Overlay */
-body.layout-regal.region-mode-active #region-page {
-  background: var(--monarch-bg) !important;
-}
-
-.layout-regal #region-page .region-sidebar, .layout-regal #classic-topview-page .region-sidebar, .layout-regal #classic-interior-page .region-sidebar {
-  background: var(--monarch-secondary) !important;
-  border-right: 1px solid rgba(200, 169, 107, 0.3) !important;
-  font-family: var(--monarch-font-b) !important;
-  padding-top: 40px !important;
-  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.5) !important;
-}
-
-.layout-regal #region-page .region-sidebar h3, .layout-regal #classic-topview-page .region-sidebar h3, .layout-regal #classic-interior-page .region-sidebar h3 {
-  font-family: var(--monarch-font-h) !important;
-  color: var(--monarch-gold) !important;
-  font-size: 22px !important;
-  font-weight: 600 !important;
-  letter-spacing: 3px !important;
-  border-bottom: 1px solid rgba(200, 169, 107, 0.2) !important;
-  padding-bottom: 18px !important;
-  margin-bottom: 24px !important;
-  text-align: center;
-}
-
-.layout-regal #region-page .region-menu-item, .layout-regal #classic-topview-page .region-menu-item, .layout-regal #classic-interior-page .region-menu-item {
-  color: rgba(255, 255, 255, 0.65) !important;
-  border-left: 2px solid transparent !important;
-  font-size: 15px !important;
-  letter-spacing: 1px !important;
-  text-transform: uppercase !important;
-  padding: 12px 18px !important;
-  border-radius: 0 !important;
-}
-
-.layout-regal #region-page .region-menu-item:hover, .layout-regal #classic-topview-page .region-menu-item:hover, .layout-regal #classic-interior-page .region-menu-item:hover {
-  background: rgba(200, 169, 107, 0.05) !important;
-  color: var(--monarch-champagne) !important;
-}
-
-.layout-regal #region-page .region-menu-item.active, .layout-regal #classic-topview-page .region-menu-item.active, .layout-regal #classic-interior-page .region-menu-item.active {
-  background: rgba(200, 169, 107, 0.1) !important;
-  color: var(--monarch-gold) !important;
-  border-left: 2px solid var(--monarch-gold) !important;
-}
-
-.layout-regal #region-page .region-map-container, .layout-regal #classic-topview-page .region-map-container, .layout-regal #classic-interior-page .region-map-container {
-  background: var(--monarch-bg) !important;
-}
-
-.layout-regal #region-page .region-map-wrapper, .layout-regal #classic-topview-page .region-map-wrapper, .layout-regal #classic-interior-page .region-map-wrapper {
-  border: 1px solid rgba(200, 169, 107, 0.3) !important;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8) !important;
-  border-radius: 0 !important;
-}
-
-.layout-regal #region-page .map-pin .pin-dot {
-  background: var(--monarch-secondary) !important;
-  border: 1.5px solid var(--monarch-gold) !important;
-  box-shadow: 0 0 10px rgba(200, 169, 107, 0.4) !important;
-  color: var(--monarch-champagne) !important;
-  border-radius: 0 !important;
-}
-
-.layout-regal #region-page .map-pin .pin-pulse {
-  background: rgba(200, 169, 107, 0.15) !important;
-  border-radius: 0 !important;
-}
-
-.layout-regal #region-page .map-pin.active .pin-dot {
-  background: var(--monarch-gold) !important;
-  border-color: var(--monarch-champagne) !important;
-  color: var(--monarch-secondary) !important;
-  box-shadow: 0 0 20px rgba(228, 197, 144, 0.8) !important;
-}
-
-.layout-regal #region-page .map-pin.active .pin-pulse {
-  background: rgba(228, 197, 144, 0.3) !important;
-}
-
-.layout-regal #region-page .pin-label {
-  background: var(--monarch-secondary) !important;
-  border: 1px solid rgba(200, 169, 107, 0.3) !important;
-  color: #FFFFFF !important;
-  font-family: var(--monarch-font-b) !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.5px !important;
-  border-radius: 0 !important;
-}
-
-/* Common Back button override */
-.layout-regal .back-to-360-btn {
-  font-family: var(--monarch-font-h) !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
-  letter-spacing: 2px !important;
-  text-transform: uppercase !important;
-  background: rgba(13, 13, 13, 0.95) !important;
-  border: 1px solid var(--monarch-gold) !important;
-  color: #FFFFFF !important;
-  border-radius: 0 !important;
-  padding: 12px 24px !important;
-}
-
-.layout-regal .back-to-360-btn:hover {
-  background: var(--monarch-gold) !important;
-  color: var(--monarch-bg) !important;
-  border-color: var(--monarch-champagne) !important;
-}
-
-/* -------------------------------------------------------
-   RESPONSIVENESS AND COLLAPSES
-   ------------------------------------------------------- */
-@media (max-width: 991px) {
-  .layout-regal .monarch-nav-dock {
-    gap: 8px;
-    padding: 6px 16px;
-  }
-  
-  .layout-regal .monarch-nav-item {
-    font-size: 15px;
-    padding: 8px 12px;
-  }
-  
-  .layout-regal .monarch-command-panel {
-    top: 145px;
-    right: 10px;
-    left: auto;
-  }
-  
-  .layout-regal .monarch-layout-selector {
-    top: 10px;
-    right: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .layout-regal .monarch-nav-container {
-    bottom: 10px;
-    width: 90%;
-  }
-
-  .layout-regal .monarch-nav-dock {
-    width: 100%;
-    justify-content: space-around;
-    padding: 6px 8px;
-    border-radius: 0;
-  }
-  
-  .layout-regal .monarch-nav-item {
-    font-size: 13px;
-    padding: 6px 8px;
-    letter-spacing: 0.5px;
-  }
-
-  .layout-regal .monarch-popover {
-    min-width: 140px;
-    bottom: calc(100% + 15px);
-  }
-  
-  body.layout-regal .minimap-widget {
-    bottom: 70px;
-    right: 10px;
-    width: 200px !important;
-  }
-
-  body.layout-regal .minimap-canvas {
-    height: 90px !important;
-  }
-
-  body.layout-regal .compass-widget {
-    bottom: 70px;
-    left: 10px;
-    width: 50px !important;
-    height: 50px !important;
-  }
-  
-  .layout-regal #region-page .region-sidebar, .layout-regal #classic-topview-page .region-sidebar, .layout-regal #classic-interior-page .region-sidebar {
-    width: 220px !important;
-    padding-top: 40px !important;
-  }
-  
-  .layout-regal #region-page .region-sidebar h3, .layout-regal #classic-topview-page .region-sidebar h3, .layout-regal #classic-interior-page .region-sidebar h3 {
-    font-size: 17px !important;
-  }
-  
-  .layout-regal #region-page .region-menu-item, .layout-regal #classic-topview-page .region-menu-item, .layout-regal #classic-interior-page .region-menu-item {
-    font-size: 13px !important;
-    padding: 10px 12px !important;
-  }
-}
-
-@media (max-width: 576px) {
-  /* Prevent overlap of widgets with nav on mobile */
-  .layout-regal .monarch-command-panel {
-    right: 10px;
-    top: 140px;
-    left: auto;
-  }
-  
-  .layout-regal .monarch-layout-selector {
-    right: 10px;
-    top: 10px;
-    min-width: 110px;
-    padding: 8px 10px;
-  }
-  
-  .layout-regal .monarch-selector-grid {
-    grid-template-columns: repeat(5, 1fr);
-  }
-  
-  .layout-regal .monarch-selector-item {
-    width: 18px;
-    height: 18px;
-    font-size: 12px;
-  }
-
-  .layout-regal .monarch-nav-dock {
-    flex-wrap: wrap;
-    gap: 4px;
-    border-radius: 0;
-  }
-
-  .layout-regal .monarch-nav-item {
-    padding: 4px 6px;
-    font-size: 13px;
-  }
-  
-  body.layout-regal .minimap-widget,
-  body.layout-regal .compass-widget {
-    display: none !important; /* Hide on small mobile to maximize view space */
-  }
-}
-
-/* Layout #10 Modals, Social Share, and Scrollbar overrides to match square theme */
-body.layout-regal .global-modal-content {
-  border-radius: 0 !important;
-  border-color: rgba(200, 169, 107, 0.4) !important;
-  background: rgba(13, 13, 13, 0.95) !important;
-}
-body.layout-regal .gallery-card {
-  border-radius: 0 !important;
-  border-color: rgba(200, 169, 107, 0.25) !important;
-}
-body.layout-regal .social-share-menu {
-  border-radius: 0 !important;
-  border-color: rgba(200, 169, 107, 0.4) !important;
-  background: rgba(13, 13, 13, 0.95) !important;
-}
-body.layout-regal .social-btn {
-  border-radius: 0 !important;
-}
-body.layout-regal .gallery-grid::-webkit-scrollbar-thumb {
-  border-radius: 0 !important;
-}
-body.layout-regal .scrollable-modal-body::-webkit-scrollbar-thumb {
-  border-radius: 0 !important;
-}
-
-/* =======================================================
-   12. GIAO DIỆN REGAL (LAYOUT #11) - ROUNDED CORNERS THEME
-   ======================================================= */
-.layout-regal .monarch-nav-dock {
-  border-radius: 30px !important; /* Soft rounded dock */
-}
-.layout-regal .monarch-nav-btn {
-  border-radius: 20px !important; /* Soft rounded nav button */
-}
-.layout-regal .monarch-popover {
-  border-radius: 16px !important; /* Soft rounded popovers */
-}
-.layout-regal .monarch-command-list {
-  border-radius: 16px !important; /* Soft rounded command list */
-}
-.layout-regal .monarch-layout-selector {
-  border-radius: 16px !important; /* Soft rounded layout selector */
-}
-body.layout-regal .minimap-widget {
-  border-radius: 16px !important; /* Soft rounded minimap */
-}
-body.layout-regal .hologram-marker-container .hotspot-label {
-  border-radius: 8px !important; /* Soft rounded hotspot label */
-}
-.layout-regal #interior-page .interior-switcher-container {
-  border-radius: 20px !important; /* Soft rounded interior container */
-}
-.layout-regal #interior-page .interior-switch-btn {
-  border-radius: 12px !important; /* Soft rounded interior button */
-}
-.layout-regal #region-page .region-menu-item, .layout-regal #classic-topview-page .region-menu-item, .layout-regal #classic-interior-page .region-menu-item {
-  border-radius: 8px !important; /* Soft rounded menu items */
-}
-.layout-regal #region-page .region-map-wrapper, .layout-regal #classic-topview-page .region-map-wrapper, .layout-regal #classic-interior-page .region-map-wrapper {
-  border-radius: 16px !important; /* Soft rounded map wrapper */
-}
-.layout-regal #region-page .map-pin .pin-dot {
-  border-radius: 4px !important; /* Soft rounded map pin */
-}
-.layout-regal #region-page .map-pin .pin-pulse {
-  border-radius: 4px !important;
-}
-.layout-regal #region-page .pin-label {
-  border-radius: 6px !important;
-}
-.layout-regal .back-to-360-btn {
-  border-radius: 10px !important;
-}
-body.layout-regal .minimap-action-btn {
-  border-radius: 50% !important; /* Circular action buttons */
-}
-body.layout-regal .global-modal-content {
-  border-radius: 20px !important;
-}
-body.layout-regal .gallery-card {
-  border-radius: 12px !important;
-}
-body.layout-regal .social-share-menu {
-  border-radius: 16px !important;
-}
-body.layout-regal .social-btn {
-  border-radius: 50% !important;
-}
-body.layout-regal .gallery-grid::-webkit-scrollbar-thumb {
-  border-radius: 4px !important;
-}
-body.layout-regal .scrollable-modal-body::-webkit-scrollbar-thumb {
-  border-radius: 4px !important;
-}
-
-/* Responsive rounded borders for Layout #11 (Regal) */
-@media (max-width: 768px) {
-  .layout-regal .monarch-nav-dock {
-    border-radius: 20px !important;
-  }
-}
-
-@media (max-width: 576px) {
-  .layout-regal .monarch-nav-dock {
-    border-radius: 10px !important;
-  }
-}
-
-/* Layout #11 (Regal) Command Panel Icon-Only & Hover Highlight */
-.layout-regal .monarch-command-label {
-  display: none !important; /* Hide labels */
-}
-
-.layout-regal .monarch-command-item {
-  width: 30px !important;
-  height: 30px !important;
-  border-radius: 50% !important; /* Circular buttons in rounded layout */
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 0 !important;
-  border: 1px solid transparent !important;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-.layout-regal .monarch-command-item:hover {
-  background: rgba(200, 169, 107, 0.15) !important;
-  border-color: var(--monarch-gold) !important;
-  color: var(--monarch-champagne) !important;
-  box-shadow: 0 0 15px rgba(200, 169, 107, 0.5) !important;
-  transform: scale(1.15) !important;
-}
-
-.layout-regal .monarch-command-item:hover svg {
-  stroke: var(--monarch-champagne) !important;
-  filter: drop-shadow(0 0 4px var(--monarch-champagne)) !important;
-}
-
-/* Active/Pinned State for Regal Tools */
-.layout-regal .monarch-command-item.active-tool,
-.layout-regal .monarch-command-item.pinned {
-  background: rgba(200, 169, 107, 0.25) !important;
-  border-color: var(--monarch-accent) !important;
-  color: var(--monarch-gold) !important;
-  box-shadow: inset 0 0 10px rgba(228, 197, 144, 0.2) !important;
-  border-radius: 50% !important;
-}
-
+}}}}}}}}}}}}}}}}}}}}}}}}
+}}}}}}}}}}}
+}}}}}}}}
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+}}
+}}}}}}
 
 /* =========================================================
    GIAO DIỆN MONARCH (LAYOUT #10) - LUXURY REDESIGN
    ========================================================= */
 
-.layout-monarch {
-  --monarch-bg: #0B0C10;
-  --monarch-secondary: #171A22;
-  --monarch-gold: #D6B36A;
-  --monarch-champagne: #F4EFE6;
-  --monarch-accent: #2EC4A6;
-  --monarch-white: #FFFFFF;
-  --monarch-muted: #C7CDD6;
-  --monarch-bronze: #8D6E63;
-  --monarch-font-h: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
-  --monarch-font-b: 'General Sans', 'Neue Haas Grotesk', 'Inter', sans-serif;
-  --monarch-glass: rgba(23, 26, 34, 0.6);
-  --monarch-border: rgba(214, 179, 106, 0.2);
-  --monarch-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  --monarch-glass-bg: rgba(15, 15, 15, 0.6);
+  --monarch-glass-border: 1px solid rgba(214, 179, 106, 0.2);
+  --monarch-glass-blur: blur(24px) saturate(150%);
+  --monarch-transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  --monarch-elevation-1: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --monarch-elevation-2: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --monarch-hover-bg: rgba(214, 179, 106, 0.1);
+  --monarch-active-bg: rgba(214, 179, 106, 0.15);
 }
 
 body.layout-monarch {
@@ -11890,8 +10888,13 @@ body.layout-monarch {
   font-family: var(--monarch-font-b) !important;
 }
 
-body.layout-monarch #layout-switcher-wrapper {
-  display: none !important;
+body.layout-monarch #layout-switcher-wrapper,
+body.layout-regal #layout-switcher-wrapper,
+body.layout-command #layout-switcher-wrapper {
+  display: flex !important;
+  left: 24px !important;
+  right: auto !important;
+  bottom: 24px !important;
 }
 
 /* -------------------------------------------------------
@@ -11899,19 +10902,33 @@ body.layout-monarch #layout-switcher-wrapper {
    ------------------------------------------------------- */
 .layout-monarch .monarch-nav-container {
   position: absolute;
-  top: 30px;
+  top: 45px;
   left: 0;
   width: 100%;
   pointer-events: none;
   z-index: 100;
+  display: flex;
+  justify-content: center;
 }
 
 .layout-monarch .monarch-nav-dock {
+
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 8px;
+  padding: 8px;
   pointer-events: auto;
+  border-radius: 100px;
+  position: relative;
+  z-index: 1;
+
+}
+
+.layout-monarch .monarch-nav-dock::before {
+
+  display: none !important;
+
 }
 
 .layout-monarch .monarch-nav-item {
@@ -11919,60 +10936,104 @@ body.layout-monarch #layout-switcher-wrapper {
 }
 
 .layout-monarch .monarch-nav-btn {
+
   display: flex;
   align-items: center;
-  padding: 6px 16px;
-  background: var(--monarch-glass);
-  border: 1px solid var(--monarch-border);
-  border-radius: 9999px;
-  color: var(--monarch-muted);
+  justify-content: center;
+  padding: 10px 24px;
+  
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.75) 0%, rgba(35, 35, 35, 0.85) 100%);
+  border: 1px solid rgba(214, 179, 106, 0.25);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: var(--monarch-shadow);
-  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+
 }
 
 .layout-monarch .monarch-nav-btn:hover {
-  border-color: rgba(214, 179, 106, 0.5);
-  color: var(--monarch-champagne);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 1px rgba(214, 179, 106, 0.3);
-  transform: translateY(-2px);
+
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.85) 0%, rgba(50, 50, 50, 0.95) 100%);
+  border-color: rgba(214, 179, 106, 0.7);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 0 16px rgba(214, 179, 106, 0.25);
+
 }
 
 .layout-monarch .monarch-nav-item.active .monarch-nav-btn {
-  background: rgba(214, 179, 106, 0.1);
-  border-color: var(--monarch-gold);
+
+  background: linear-gradient(135deg, rgba(214, 179, 106, 0.2) 0%, rgba(214, 179, 106, 0.05) 100%);
+  border-color: rgba(214, 179, 106, 0.9);
   color: var(--monarch-gold);
-  box-shadow: 0 8px 32px rgba(214, 179, 106, 0.15);
+  box-shadow: 0 0 20px rgba(214, 179, 106, 0.3), inset 0 0 0 1px rgba(214, 179, 106, 0.2);
+
+}
+
+.layout-monarch .monarch-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 3px;
+  background: var(--monarch-gold, #D6B36A);
+  border-radius: 4px;
+  /* Shadow removed */
+  opacity: 0.9;
 }
 
 .layout-monarch .monarch-nav-label {
-  font-family: var(--monarch-font-h);
-  font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 10;
+  font-family: var(--monarch-font-h), 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  transition: color 400ms ease;
 }
 
 /* POPOVER MENU (SUBMENU) */
 .layout-monarch .monarch-popover {
+
   position: absolute;
   top: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%) translateY(10px);
-  background: rgba(11, 12, 16, 0.85);
-  border: 1px solid var(--monarch-border);
-  border-radius: 16px;
   min-width: 200px;
   padding: 12px 8px;
   opacity: 0;
   visibility: hidden;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-  transition: all 280ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--monarch-transition);
   pointer-events: none;
+  z-index: 150;
+
+}
+
+.layout-monarch .monarch-popover::before {\n  clip-path: inset(0 round 16px);
+
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--monarch-glass-bg);
+  border: var(--monarch-glass-border);
+  border-radius: 16px;
+  backdrop-filter: var(--monarch-glass-blur);
+  -webkit-backdrop-filter: var(--monarch-glass-blur);
+  box-shadow: var(--monarch-elevation-2);
+  z-index: -1;
+  pointer-events: none;
+
 }
 
 .layout-monarch .monarch-nav-item:hover .monarch-popover,
@@ -11984,35 +11045,48 @@ body.layout-monarch #layout-switcher-wrapper {
 }
 
 .layout-monarch .monarch-popover-title {
-  font-family: var(--monarch-font-b);
-  font-size: 13px;
-  color: var(--monarch-gold);
-  letter-spacing: 0.15em;
-  padding: 0 12px 8px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(214, 179, 106, 0.15);
+
+  display: none !important;
+
 }
 
 .layout-monarch .monarch-popover-item {
-  padding: 10px 14px;
-  color: var(--monarch-muted);
-  font-size: 15px;
+
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 14px;
+  font-family: var(--monarch-font-b);
+  font-weight: 500;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 220ms ease;
-  margin-bottom: 2px;
+  transition: all 250ms ease;
+  margin-bottom: 6px;
+  
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
 }
 
 .layout-monarch .monarch-popover-item:hover {
-  background: rgba(214, 179, 106, 0.08);
-  color: var(--monarch-white);
-  padding-left: 20px;
+
+  background: linear-gradient(135deg, rgba(214, 179, 106, 0.9) 0%, rgba(214, 179, 106, 0.7) 100%);
+  border-color: rgba(214, 179, 106, 1);
+  color: #111111;
+  transform: translateX(4px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(214, 179, 106, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+
 }
 
 .layout-monarch .monarch-popover-item.active {
+
+  background: linear-gradient(135deg, rgba(214, 179, 106, 0.4) 0%, rgba(214, 179, 106, 0.2) 100%);
+  border-color: rgba(214, 179, 106, 0.9);
   color: var(--monarch-gold);
-  font-weight: 500;
-  background: rgba(214, 179, 106, 0.12);
+  box-shadow: 0 0 16px rgba(214, 179, 106, 0.3), inset 0 0 0 1px rgba(214, 179, 106, 0.2);
+
 }
 
 /* -------------------------------------------------------
@@ -12036,26 +11110,38 @@ body.layout-monarch #layout-switcher-wrapper {
 }
 
 .layout-monarch .monarch-command-item {
+
   display: flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  background: var(--monarch-glass);
-  border: 1px solid var(--monarch-border);
-  border-radius: 22px;
   cursor: pointer;
   position: relative;
-  overflow: visible; /* Required for absolute tooltip */
-  color: var(--monarch-muted);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: var(--monarch-shadow);
-  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
   flex-shrink: 0;
+  z-index: 1;
+  
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.75) 0%, rgba(35, 35, 35, 0.85) 100%);
+  border: 1px solid rgba(214, 179, 106, 0.25);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  
+  border-radius: 100px;
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
+.layout-monarch .monarch-command-item::before {
+
+  display: none !important;
+
 }
 
 .layout-monarch .monarch-command-icon {
+  position: relative;
+  z-index: 2;
   width: 18px;
   height: 18px;
   display: flex;
@@ -12073,34 +11159,42 @@ body.layout-monarch #layout-switcher-wrapper {
 
 /* Floating Tooltip Label */
 .layout-monarch .monarch-command-label {
+
   position: absolute;
   right: calc(100% + 14px);
   top: 50%;
   transform: translateY(-50%) translateX(10px);
-  background: rgba(17, 19, 26, 0.95);
-  border: 1px solid var(--monarch-border);
-  border-radius: 9999px;
-  padding: 6px 16px;
+  
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.75) 0%, rgba(35, 35, 35, 0.85) 100%);
+  border: 1px solid rgba(214, 179, 106, 0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  
+  border-radius: 100px;
+  padding: 8px 16px;
+  font-family: var(--monarch-font-b);
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0.05em;
-  color: var(--monarch-muted);
+  color: var(--monarch-champagne);
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 10;
+
 }
 
 .layout-monarch .monarch-command-item:hover {
-  border-color: rgba(214, 179, 106, 0.6);
+
+  background: linear-gradient(135deg, rgba(30, 30, 30, 0.85) 0%, rgba(50, 50, 50, 0.95) 100%);
+  border-color: rgba(214, 179, 106, 0.7);
   color: var(--monarch-champagne);
-  box-shadow: 0 8px 25px rgba(214, 179, 106, 0.2);
-  transform: scale(1.02);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 0 16px rgba(214, 179, 106, 0.25);
+
 }
 
 .layout-monarch .monarch-command-item:hover .monarch-command-label {
@@ -12109,13 +11203,7 @@ body.layout-monarch #layout-switcher-wrapper {
   transform: translateY(-50%) translateX(0);
 }
 
-.layout-monarch .monarch-command-item.active-tool,
-.layout-monarch .monarch-command-item.pinned {
-  background: rgba(214, 179, 106, 0.15);
-  border-color: var(--monarch-gold);
-  color: var(--monarch-gold);
-  box-shadow: 0 0 20px rgba(214, 179, 106, 0.3);
-}
+.layout-monarch .monarch-command-item.active-tool,\n.layout-monarch .monarch-command-item.pinned {\n  background: linear-gradient(135deg, rgba(214, 179, 106, 0.2) 0%, rgba(214, 179, 106, 0.05) 100%);\n  border-color: rgba(214, 179, 106, 0.9);\n  color: var(--monarch-gold);\n  box-shadow: 0 0 20px rgba(214, 179, 106, 0.3), inset 0 0 0 1px rgba(214, 179, 106, 0.2);\n}
 
 /* -------------------------------------------------------
    HOTSPOTS - LUXURY CRYSTAL MARKER
@@ -12126,13 +11214,14 @@ body.layout-monarch .hologram-marker-container .hotspot-hitbox {
 }
 
 body.layout-monarch .hologram-marker-container .hotspot-marker {
+
   width: 14px;
   height: 14px;
-  background: var(--monarch-secondary);
+  background: rgba(23, 26, 34, 0.8);
   border: 2px solid var(--monarch-gold);
   border-radius: 50%;
-  box-shadow: 0 0 12px rgba(214, 179, 106, 0.5);
-  transition: all 300ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: var(--monarch-transition);
+
 }
 
 body.layout-monarch .hologram-marker-container .hotspot-marker::before {
@@ -12154,39 +11243,48 @@ body.layout-monarch .hologram-marker-container .hotspot-marker::before {
 }
 
 body.layout-monarch .hologram-marker-container .hotspot-label {
-  background: var(--monarch-secondary);
-  border: 1px solid var(--monarch-border);
+
+  background: var(--monarch-glass-bg);
+  border: var(--monarch-glass-border);
   color: var(--monarch-white);
   padding: 6px 14px;
   border-radius: 9999px;
   font-family: var(--monarch-font-b);
   font-size: 14px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.6);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--monarch-elevation-1);
+  backdrop-filter: var(--monarch-glass-blur);
+  -webkit-backdrop-filter: var(--monarch-glass-blur);
+
 }
 
 body.layout-monarch .hologram-marker-container:hover .hotspot-marker {
+
   transform: scale(1.2);
   border-color: var(--monarch-champagne);
-  box-shadow: 0 0 20px rgba(214, 179, 106, 0.8);
+  box-shadow: 0 0 16px rgba(214, 179, 106, 0.6);
+
 }
 
 body.layout-monarch .hologram-marker-container.active .hotspot-marker {
+
   border-color: var(--monarch-accent);
-  box-shadow: 0 0 25px rgba(46, 196, 166, 0.6);
+  box-shadow: 0 0 16px rgba(46, 196, 166, 0.6);
+
 }
 
 /* -------------------------------------------------------
    MINI MAP - SCULPTED FLOATING PANEL
    ------------------------------------------------------- */
 body.layout-monarch .minimap-widget {
-  background: rgba(11, 12, 16, 0.9);
-  border: 1px solid var(--monarch-border);
-  border-radius: 20px 40px 20px 20px; /* Asymmetric */
-  box-shadow: 0 24px 60px rgba(0,0,0,0.8);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+
+  background: var(--monarch-glass-bg);
+  border: var(--monarch-glass-border);
+  border-radius: 16px;
+  box-shadow: var(--monarch-elevation-1);
+  backdrop-filter: var(--monarch-glass-blur);
+  -webkit-backdrop-filter: var(--monarch-glass-blur);
+  z-index: 100;
+
 }
 
 body.layout-monarch .minimap-header {
@@ -12209,17 +11307,17 @@ body.layout-monarch .minimap-action-btn:hover {
 body.layout-monarch .minimap-dot {
   background: var(--monarch-secondary);
   border: 2px solid var(--monarch-gold);
-  box-shadow: 0 0 10px rgba(214, 179, 106, 0.5);
+  /* box-shadow: none; */
 }
 
 /* -------------------------------------------------------
    MODALS & REGION PAGE OVERRIDES
    ------------------------------------------------------- */
 body.layout-monarch .global-modal-content {
-  background: rgba(17, 19, 26, 0.98) !important;
+  background: rgba(15, 15, 15, 0.8) !important;
   border: 1px solid var(--monarch-border) !important;
   border-radius: 24px !important;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.8), 0 0 40px rgba(214, 179, 106, 0.05) !important;
+  /* box-shadow: none; */
 }
 
 body.layout-monarch .modal-header h2 {
@@ -12246,7 +11344,7 @@ body.layout-monarch .compass-degree-display {
   color: var(--monarch-gold);
   font-family: var(--monarch-font-b);
   font-weight: 500;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  /* text-shadow: none; */
 }
 
 /* -------------------------------------------------------
@@ -12257,16 +11355,29 @@ body.layout-monarch .compass-degree-display {
   top: 30px;
   right: 24px;
   z-index: 2000;
-  background: var(--monarch-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--monarch-border);
   padding: 8px 12px;
-  border-radius: 9999px;
-  box-shadow: var(--monarch-shadow);
   pointer-events: auto;
   display: flex;
   align-items: center;
+}
+
+.layout-monarch .monarch-layout-selector::before {
+
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--monarch-glass-bg);
+  backdrop-filter: var(--monarch-glass-blur);
+  -webkit-backdrop-filter: var(--monarch-glass-blur);
+  border: var(--monarch-glass-border);
+  border-radius: 9999px;
+  box-shadow: var(--monarch-elevation-1);
+  z-index: -1;
+  pointer-events: none;
+
 }
 
 .layout-monarch .monarch-selector-header {
@@ -12279,21 +11390,7 @@ body.layout-monarch .compass-degree-display {
   gap: 4px;
 }
 
-.layout-monarch .monarch-selector-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--monarch-muted);
-  font-family: var(--monarch-font-b);
-  font-size: 13px;
-  font-weight: 500;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
-}
+.layout-monarch .monarch-selector-item {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  color: rgba(255, 255, 255, 0.9);\n  font-family: var(--monarch-font-b);\n  font-size: 13px;\n  font-weight: 500;\n  width: 28px;\n  height: 28px;\n  border-radius: 50%;\n  cursor: pointer;\n  border: 1px solid rgba(214, 179, 106, 0.1);\n  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);\n  background: linear-gradient(135deg, rgba(20, 20, 20, 0.6) 0%, rgba(35, 35, 35, 0.7) 100%);\n}
 
 .layout-monarch .monarch-selector-item:hover {
   color: var(--monarch-champagne);
@@ -12306,15 +11403,17 @@ body.layout-monarch .compass-degree-display {
   background: var(--monarch-gold);
   border-color: var(--monarch-gold);
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(214, 179, 106, 0.3);
+  /* box-shadow: none; */
 }
 
 /* -------------------------------------------------------
    COMPASS POSITIONING (BOTTOM LEFT)
    ------------------------------------------------------- */
-.layout-monarch .compass-widget {
-  bottom: 24px;
-  left: 24px;
+.layout-monarch .compass-widget,
+.layout-regal .compass-widget {
+  bottom: 84px !important; /* Lifted above the layout switcher */
+  left: 24px !important;
+  right: auto !important;
   width: 76px;
   height: 76px;
   background: transparent !important;
@@ -12339,10 +11438,7 @@ body.layout-monarch .compass-degree-display {
   display: none !important;
 }
 
-
-
 #classic-topview-page .region-sidebar, #classic-interior-page .region-sidebar { width: 260px !important; }
-
 
 /* Layout 1: Classic Grid Page Modal */
 .classic-grid-modal {
@@ -12709,7 +11805,6 @@ body.classic-interior-page-active #classic-interior-page {
   pointer-events: none;
 }
 
-
 /* ==========================================
    GLOBAL PANORAMA GALLERY MODAL
    ========================================== */
@@ -13014,10 +12109,6 @@ body.classic-interior-page-active #classic-interior-page {
   .gpg-next { right: 10px; }
 }
 
-
-
-
-
 .layout-aurora #layout-switcher-wrapper {
   bottom: 80px !important;
 }
@@ -13299,7 +12390,6 @@ body * {
   background: var(--cmd-glass-hover);
 }
 
-
 .cmd-panel-header svg {
   flex-shrink: 0;
   opacity: 0.8;
@@ -13517,7 +12607,6 @@ body * {
 
 .cmd-ctrl-tile:hover::before,
 .cmd-ctrl-tile.active-tool::before { opacity: 1; }
-
 
 .cmd-ctrl-glow {
   position: absolute;
@@ -13773,9 +12862,7 @@ body * {
 .layout-command #compass-widget .compass-needle { filter: hue-rotate(180deg) saturate(2); }
 
 /* Layout switcher offset â€” command has bottom bar */
-.layout-command #layout-switcher-wrapper {
-  bottom: 80px !important;
-}
+
 
 /* ================================================================
    RESPONSIVE â€” TABLET
@@ -13821,491 +12908,7 @@ body * {
   .cmd-top-ribbon { padding: 0 12px; }
   .cmd-ribbon-center { display: none; }
   .cmd-status-pill { display: none; }
-}
-
-/* ==========================================================================
-   LAYOUT 10 - ARCHITECT BLUEPRINT EDITION
-   ========================================================================== */
-.layout-regal.modern-ui-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.layout-regal {
-  --bp-ivory: #F9F8F6;
-  --bp-stone: #F3F2EE;
-  --bp-concrete: #E5E4E0;
-  --bp-graphite: #2A2A2A;
-  --bp-copper: #B87333;
-  --bp-champagne: #EBE0D0;
-  --bp-forest: #2E4735;
-  --bp-shadow: rgba(0,0,0,0.08);
-  font-family: 'Inter', sans-serif;
-  text-transform: uppercase;
-  color: var(--bp-graphite);
-}
-
-/* TOP RIBBON */
-.layout-regal .blueprint-top-ribbon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background: var(--bp-ivory);
-  border-bottom: 1px solid var(--bp-concrete);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  z-index: 100;
-  box-shadow: 0 2px 10px var(--bp-shadow);
-  pointer-events: auto;
-}
-
-.layout-regal .blueprint-ribbon-left {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.layout-regal .blueprint-logo {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  color: var(--bp-graphite);
-}
-
-.layout-regal .blueprint-ribbon-divider {
-  width: 1px;
-  height: 20px;
-  background: var(--bp-concrete);
-}
-
-.layout-regal .blueprint-project-sub {
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 2px;
-  color: #777;
-}
-
-.layout-regal .blueprint-ribbon-center {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.layout-regal .blueprint-view-title {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  color: var(--bp-copper);
-}
-
-.layout-regal .blueprint-ribbon-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-/* LEFT NAV CONTAINER */
-.layout-regal .blueprint-nav-container {
-  position: absolute;
-  top: 70px;
-  left: 30px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  pointer-events: none;
-}
-
-.layout-regal .blueprint-nav-button {
-  width: 44px;
-  height: 44px;
-  background: rgba(249, 248, 246, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--bp-concrete);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  pointer-events: auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  color: var(--bp-graphite);
-  transition: all 0.3s;
-}
-
-.layout-regal .blueprint-nav-button:hover {
-  background: rgba(255, 255, 255, 0.95);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.layout-regal .blueprint-nav-button svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* LEFT PANEL (COLLAPSIBLE) */
-.layout-regal .blueprint-left-panel {
-  width: 260px;
-  background: rgba(249, 248, 246, 0.95);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--bp-concrete);
-  border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  pointer-events: auto;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-20px) scale(0.98);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  display: flex;
-  flex-direction: column;
-  max-height: calc(100vh - 160px);
-}
-
-.layout-regal .blueprint-nav-container.pinned .blueprint-left-panel {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(0) scale(1);
-}
-
-.layout-regal .blueprint-panel-content {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-
-.layout-regal .blueprint-panel-title {
-  padding: 12px 16px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 2px;
-  border-bottom: 1px solid var(--bp-concrete);
-  background: var(--bp-stone);
-  color: #777;
-}
-
-.layout-regal .blueprint-nav-list {
-  display: flex;
-  flex-direction: column;
-  max-height: calc(100vh - 250px);
-  overflow-y: auto;
-}
-.layout-regal .blueprint-nav-list::-webkit-scrollbar { width: 4px; }
-.layout-regal .blueprint-nav-list::-webkit-scrollbar-thumb { background: var(--bp-concrete); border-radius: 2px; }
-
-.layout-regal .blueprint-nav-item {
-  border-bottom: 1px solid var(--bp-concrete);
-  background: var(--bp-ivory);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  border-left: 2px solid transparent;
-}
-
-.layout-regal .blueprint-nav-item:last-child {
-  border-bottom: none;
-}
-
-.layout-regal .blueprint-nav-item:hover {
-  background: var(--bp-stone);
-}
-
-.layout-regal .blueprint-nav-item.active {
-  background: #fff;
-  border-left: 3px solid var(--bp-copper);
-}
-
-.layout-regal .blueprint-nav-header {
-  padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.layout-regal .blueprint-nav-text {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  padding: 12px 16px;
-  display: block;
-}
-
-.layout-regal .blueprint-nav-header .blueprint-nav-text {
-  padding: 0;
-}
-
-.layout-regal .blueprint-nav-item.active .blueprint-nav-text {
-  font-weight: 700;
-  color: var(--bp-graphite);
-}
-
-.layout-regal .blueprint-accordion-icon {
-  font-size: 14px;
-  font-weight: 300;
-  color: #999;
-  transition: transform 0.3s;
-}
-
-.layout-regal .blueprint-nav-item.active .blueprint-accordion-icon,
-.layout-regal .blueprint-nav-item.has-submenu.submenu-open .blueprint-accordion-icon {
-  transform: rotate(45deg);
-  color: var(--bp-copper);
-}
-
-.layout-regal .blueprint-submenu {
-  max-height: 0;
-  overflow: hidden;
-  background: var(--bp-stone);
-  transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.layout-regal .blueprint-submenu.open {
-  max-height: 400px;
-}
-
-.layout-regal .blueprint-submenu-item {
-  padding: 10px 16px 10px 30px;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  border-bottom: 1px solid rgba(0,0,0,0.03);
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-}
-
-.layout-regal .blueprint-submenu-item:hover {
-  background: var(--bp-champagne);
-}
-
-.layout-regal .blueprint-submenu-item.active {
-  color: var(--bp-copper);
-  font-weight: 600;
-}
-
-/* RIGHT FLOATING TOOLBAR */
-.layout-regal .blueprint-right-toolbar {
-  position: absolute;
-  top: 70px;
-  right: 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 100;
-  pointer-events: auto;
-}
-
-.layout-regal .blueprint-tool {
-  width: 36px;
-  height: 36px;
-  background: var(--bp-ivory);
-  border: 1px solid var(--bp-concrete);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 2px 8px var(--bp-shadow);
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-  color: var(--bp-graphite);
-}
-
-.layout-regal .blueprint-tool:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-  border-color: #ccc;
-}
-
-.layout-regal .blueprint-tool.active {
-  background: var(--bp-graphite);
-  color: var(--bp-ivory);
-  border-color: var(--bp-graphite);
-}
-
-.layout-regal .blueprint-tool svg {
-  width: 16px;
-  height: 16px;
-}
-
-/* FLOATING VIEW SELECTOR AND PANEL */
-.layout-regal .blueprint-floating-gallery-container {
-  position: absolute;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 100;
-  display: flex;
-  flex-direction: column-reverse; /* Button at bottom, panel above */
-  align-items: center;
-  pointer-events: none;
-}
-
-.layout-regal .blueprint-view-selector {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 48px;
-  padding: 0 20px;
-  background: rgba(249, 248, 246, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--bp-concrete);
-  border-radius: 24px;
-  cursor: pointer;
-  pointer-events: auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.layout-regal .blueprint-view-selector:hover {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
-
-.layout-regal .blueprint-selector-text {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  color: var(--bp-graphite);
-}
-
-.layout-regal .blueprint-selector-icon {
-  width: 16px;
-  height: 16px;
-  color: var(--bp-graphite);
-  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.layout-regal .blueprint-floating-gallery-container:hover .blueprint-selector-icon,
-.layout-regal .blueprint-floating-gallery-container.pinned .blueprint-selector-icon {
-  transform: rotate(180deg);
-}
-
-.layout-regal .blueprint-floating-panel {
-  position: absolute;
-  bottom: calc(100% + 15px);
-  background: rgba(249, 248, 246, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--bp-concrete);
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  pointer-events: auto;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px) scale(0.95);
-  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-  transform-origin: bottom center;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.layout-regal .blueprint-floating-gallery-container:hover .blueprint-floating-panel,
-.layout-regal .blueprint-floating-gallery-container.pinned .blueprint-floating-panel {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-}
-
-.layout-regal .blueprint-floating-track-wrapper {
-  overflow: hidden;
-  width: calc(90px * 5 + 12px * 4);
-  max-width: 80vw;
-}
-
-.layout-regal .blueprint-floating-track {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 5px;
-  scrollbar-width: none;
-  scroll-behavior: smooth;
-}
-
-.layout-regal .blueprint-floating-track::-webkit-scrollbar {
-  display: none;
-}
-
-.layout-regal .blueprint-gallery-nav {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--bp-ivory);
-  border: 1px solid var(--bp-concrete);
-  cursor: pointer;
-  color: var(--bp-graphite);
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-
-.layout-regal .blueprint-gallery-nav:hover {
-  background: var(--bp-graphite);
-  color: var(--bp-ivory);
-}
-
-.layout-regal .blueprint-gallery-nav svg {
-  width: 14px;
-  height: 14px;
-}
-
-.layout-regal .blueprint-gallery-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  cursor: pointer;
-  min-width: 90px;
-  transition: opacity 0.3s;
-  opacity: 0.6;
-}
-
-.layout-regal .blueprint-gallery-item:hover,
-.layout-regal .blueprint-gallery-item.active {
-  opacity: 1;
-}
-
-.layout-regal .blueprint-thumb {
-  width: 90px;
-  height: 50px;
-  background-size: cover;
-  background-position: center;
-  border: 1px solid var(--bp-concrete);
-  border-radius: 4px;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.layout-regal .blueprint-gallery-item.active .blueprint-thumb {
-  border-color: var(--bp-copper);
-  box-shadow: 0 4px 10px var(--bp-shadow);
-}
-
-.layout-regal .blueprint-thumb-title {
-  font-size: 8px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-align: center;
-  color: #777;
-}
-
-.layout-regal .blueprint-gallery-item.active .blueprint-thumb-title {
-  color: var(--bp-copper);
-  font-weight: 700;
-}
-
+}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
 
 /* MINIMAP & COMPASS */
 /* Compass moved to Bottom Left */
@@ -14341,40 +12944,7 @@ body * {
 
 .blueprint-compass .compass-degree-display {
   display: none;
-}
-
-/* Layout Switcher moved next to Compass */
-.layout-regal .blueprint-layout-switcher {
-  position: absolute;
-  bottom: 35px;
-  left: 95px;
-  z-index: 100;
-  pointer-events: auto;
-}
-
-.layout-regal .blueprint-select-switcher {
-  appearance: none;
-  background: rgba(249, 248, 246, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--bp-concrete);
-  padding: 8px 14px;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: var(--bp-graphite);
-  cursor: pointer;
-  border-radius: 18px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  outline: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-.layout-regal .blueprint-select-switcher:hover {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-  transform: translateY(-2px);
-}
+}}}}
 
 /* Minimap moved to Bottom Right */
 .blueprint-minimap {
@@ -14487,70 +13057,703 @@ body * {
   transform-origin: top center;
   z-index: 1;
   pointer-events: none;
+}}}}}}}}}}
+
+.layout-command #layout-switcher-wrapper {
+  bottom: 80px !important;
 }
 
-/* OVERRIDE HOTSPOTS */
-.layout-regal .hotspot-marker {
-  background: #FFF !important;
-  border: 2px solid var(--bp-copper) !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
-  width: 16px !important;
-  height: 16px !important;
-  border-radius: 50% !important;
-  transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+
+/* ==========================================================================
+   LAYOUT 10 - FUTURE TECHNOLOGY (REGAL REDESIGN)
+   ========================================================================== */
+.layout-regal {
+  --rgl-neo-bg: rgba(8, 11, 16, 0.65);
+  --rgl-neo-blur: blur(20px);
+  --rgl-neo-border: rgba(255, 255, 255, 0.08);
+  --rgl-neo-accent: #00E5FF;
+  --rgl-neo-accent-glow: rgba(0, 229, 255, 0.3);
+  --rgl-neo-text-main: #FFFFFF;
+  --rgl-neo-text-dim: #8A96A8;
 }
 
-.layout-regal .hologram-marker-container:hover .hotspot-marker {
-  transform: scale(1.3) !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+/* NAVIGATION HUB */
+.layout-regal .rgl-neo-nav-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 30px;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
 }
 
-.layout-regal .hologram-marker-container:active .hotspot-marker {
-  transform: scale(0.9) !important;
-  box-shadow: 0 0 0 4px rgba(184, 115, 51, 0.2) !important;
+.layout-regal .rgl-neo-nav-core {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(16, 22, 34, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rgl-neo-text-main);
+  cursor: pointer;
+  pointer-events: auto;
+  position: relative;
+  transition: all 0.2s ease-out;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  z-index: 2;
 }
 
-.layout-regal .hotspot-label {
-  font-family: 'Inter', sans-serif !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  letter-spacing: 1px !important;
-  text-transform: uppercase !important;
-  background: var(--bp-ivory) !important;
-  color: var(--bp-graphite) !important;
-  border: 1px solid var(--bp-concrete) !important;
-  padding: 4px 8px !important;
-  border-radius: 2px !important;
-  box-shadow: 0 2px 8px var(--bp-shadow) !important;
+.layout-regal .rgl-neo-nav-core:hover {
+  transform: scale(1.05);
+  border-color: rgba(0, 229, 255, 0.4);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  background: rgba(16, 22, 34, 0.65);
+}
+
+.layout-regal .rgl-neo-core-ring {
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--rgl-neo-accent);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.layout-regal .rgl-neo-nav-wrapper.pinned .rgl-neo-core-ring {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.layout-regal .rgl-neo-panel {
+  position: absolute;
+  left: 28px;
+  opacity: 0;
+  transform: translateX(-20px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--rgl-neo-bg);
+  backdrop-filter: var(--rgl-neo-blur);
+  -webkit-backdrop-filter: var(--rgl-neo-blur);
+  border: 1px solid var(--rgl-neo-border);
+  border-radius: 20px;
+  padding: 16px;
+  width: 240px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.layout-regal .rgl-neo-nav-wrapper.pinned .rgl-neo-panel {
+  opacity: 1;
+  transform: translateX(32px) scale(1);
+  pointer-events: auto;
+}
+
+.layout-regal .rgl-neo-nav-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.layout-regal .rgl-neo-nav-module {
+  position: relative;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  overflow: hidden;
+}
+
+.layout-regal .rgl-neo-nav-module:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+  transform: translateY(-2px);
+}
+
+.layout-regal .rgl-neo-nav-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 60%;
+  background: var(--rgl-neo-accent);
+  border-radius: 0 4px 4px 0;
+  transition: transform 0.2s ease-out;
+  box-shadow: 0 0 10px var(--rgl-neo-accent);
+}
+
+.layout-regal .rgl-neo-nav-module.active .rgl-neo-nav-indicator {
+  transform: translateY(-50%) scaleY(1);
+}
+
+.layout-regal .rgl-neo-nav-module.active {
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.1) 0%, transparent 100%);
+  border-color: rgba(0, 229, 255, 0.2);
+}
+
+.layout-regal .rgl-neo-nav-text {
+  color: var(--rgl-neo-text-dim);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.2s ease-out;
+  position: relative;
+  z-index: 2;
+  font-family: 'Inter', sans-serif;
+}
+
+.layout-regal .rgl-neo-nav-module.active .rgl-neo-nav-text,
+.layout-regal .rgl-neo-nav-module:hover .rgl-neo-nav-text {
+  color: var(--rgl-neo-text-main);
+}
+
+/* SUBMENU */
+.layout-regal .rgl-neo-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.layout-regal .rgl-neo-chevron {
+  width: 16px; height: 16px;
+  color: var(--rgl-neo-text-dim);
+  transition: transform 0.2s ease-out;
+}
+
+.layout-regal .rgl-neo-nav-module.submenu-open .rgl-neo-chevron {
+  transform: rotate(180deg);
+  color: var(--rgl-neo-accent);
+}
+
+.layout-regal .rgl-neo-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  padding-left: 12px;
+  margin-top: 0;
+}
+
+.layout-regal .rgl-neo-submenu.open {
+  max-height: 200px;
+  margin-top: 8px;
+}
+
+.layout-regal .rgl-neo-sub-item {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: var(--rgl-neo-text-dim);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  margin-bottom: 4px;
+}
+
+.layout-regal .rgl-neo-sub-item:hover {
+  color: var(--rgl-neo-text-main);
+  border-left-color: var(--rgl-neo-accent);
+  background: rgba(255,255,255,0.03);
+}
+.layout-regal .rgl-neo-sub-item.active {
+  color: var(--rgl-neo-accent);
+  border-left-color: var(--rgl-neo-accent);
+  font-weight: 600;
+}
+
+/* TOOLBAR MODULES */
+.layout-regal .rgl-neo-tools-system {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.layout-regal .rgl-neo-tool-module {
+  background: var(--rgl-neo-bg);
+  backdrop-filter: var(--rgl-neo-blur);
+  -webkit-backdrop-filter: var(--rgl-neo-blur);
+  border: 1px solid var(--rgl-neo-border);
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.layout-regal .rgl-neo-tool-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(16, 22, 34, 0.35);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--rgl-neo-text-dim);
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.layout-regal .rgl-neo-tool-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.2s ease-out;
+}
+
+.layout-regal .rgl-neo-tool-btn:hover {
+  color: var(--rgl-neo-accent);
+  border-color: rgba(0, 229, 255, 0.25);
+  transform: scale(1.05);
+  background: rgba(0, 229, 255, 0.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 229, 255, 0.1);
+}
+
+.layout-regal .rgl-neo-tool-btn:hover::after {
+  opacity: 1;
+}
+
+.layout-regal .rgl-neo-tool-btn.active-tool {
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--rgl-neo-accent);
+  border-color: var(--rgl-neo-accent);
+  box-shadow: 0 0 15px var(--rgl-neo-accent-glow);
+}
+
+/* FIX SVG SCALING BUG IN REGAL LAYOUT */
+.layout-regal .rgl-neo-nav-core svg,
+.layout-regal .rgl-neo-tool-btn svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.layout-regal .rgl-neo-chevron svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  display: block;
+}
+.layout-regal .rgl-neo-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FIX WEBGL COMPOSITING GLITCH FOR BACKDROP-FILTER */
+.layout-regal .rgl-neo-panel,
+.layout-regal .rgl-neo-nav-core,
+.layout-regal .rgl-neo-tool-btn,
+.layout-regal .rgl-neo-tools-system {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.layout-regal .rgl-neo-tools-system {
+  transform: translateY(-50%) translateZ(0) !important;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* ==========================================================================
+   LAYOUT 10 - WOW EFFECTS (RUNNING LINES & SHINE)
+   ========================================================================== */
+
+/* 1. Animated Angle Property for Rotating Borders */
+@property --rgl-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rglBorderSpin {
+  0% { --rgl-angle: 0deg; }
+  100% { --rgl-angle: 360deg; }
+}
+
+/* 2. Apply Rotating Glow Border to Panels and Tool Modules */
+.layout-regal .rgl-neo-panel,
+.layout-regal .rgl-neo-tool-module,
+.layout-regal .rgl-neo-nav-core {
+  border: 1px solid transparent !important;
+  background: 
+    linear-gradient(var(--rgl-neo-bg), var(--rgl-neo-bg)) padding-box,
+    conic-gradient(from 0deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.05) 70%, var(--rgl-neo-accent) 100%) border-box !important;
+  animation: rglBorderSpin 4s linear infinite;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 15px rgba(0, 229, 255, 0.1) !important;
+}
+
+.layout-regal .rgl-neo-nav-core:hover {
+  box-shadow: 0 0 25px var(--rgl-neo-accent-glow), inset 0 0 15px rgba(0, 229, 255, 0.2) !important;
+}
+
+/* 3. Text Running Color Effect (Màu chạy chạy trên chữ) */
+@keyframes rglTextShine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.layout-regal .rgl-neo-nav-module.active .rgl-neo-nav-text,
+.layout-regal .rgl-neo-sub-item.active {
+  background: linear-gradient(90deg, #fff 0%, var(--rgl-neo-accent) 25%, #fff 50%, var(--rgl-neo-accent) 75%, #fff 100%);
+  background-size: 200% auto;
+  color: transparent !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rglTextShine 4s linear infinite;
+  font-weight: 700;
+  text-shadow: none; /* Text shadow breaks background-clip */
+}
+
+/* 4. Scanning Light Line on Active Menu Items */
+@keyframes rglSweep {
+  0% { left: -100%; opacity: 0; }
+  10% { opacity: 1; }
+  50% { left: 100%; opacity: 0; }
+  100% { left: 100%; opacity: 0; }
+}
+
+.layout-regal .rgl-neo-nav-module {
+  position: relative;
+  overflow: hidden;
+}
+
+.layout-regal .rgl-neo-nav-module.active::after {
+  content: "";
+  position: absolute;
+  top: 0; 
+  left: -100%; 
+  width: 50%; 
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  animation: rglSweep 3s infinite;
+  pointer-events: none;
+}
+
+.layout-regal .rgl-neo-nav-module.active {
+  background: rgba(0, 229, 255, 0.08) !important;
+  border-color: rgba(0, 229, 255, 0.3) !important;
+  box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.1);
+}
+
+/* 5. Tool Button Hover Glow */
+.layout-regal .rgl-neo-tool-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.layout-regal .rgl-neo-tool-btn:hover {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: var(--rgl-neo-accent);
+  color: #fff;
+  box-shadow: 0 0 15px var(--rgl-neo-accent-glow);
+  transform: scale(1.05);
+}
+
+.layout-regal .rgl-neo-tool-btn.active {
+  background: var(--rgl-neo-accent);
+  color: #000;
+  box-shadow: 0 0 20px var(--rgl-neo-accent-glow);
+}
+
+
+
+/* ==========================================================================
+   LAYOUT 10 - BALANCED WOW EFFECTS (AURORA TECH)
+   ========================================================================== */
+
+:root {
+  --rgl-bal-1: #00E5FF; /* Cyan */
+  --rgl-bal-2: #2979FF; /* Royal Blue */
+  --rgl-bal-3: #7C4DFF; /* Soft Indigo */
+  --rgl-bal-bg: rgba(12, 16, 24, 0.65);
+}
+
+@property --rgl-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rglBorderSpin {
+  0% { --rgl-angle: 0deg; }
+  100% { --rgl-angle: 360deg; }
+}
+
+/* 1. Subtle Rotating Aurora Border */
+.layout-regal .rgl-neo-panel,
+.layout-regal .rgl-neo-tool-module,
+.layout-regal .rgl-neo-nav-core {
+  background: var(--rgl-bal-bg) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(41, 121, 255, 0.1) !important;
+}
+
+/* 2. Balanced Nav Core Hover */
+.layout-regal .rgl-neo-nav-core {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+.layout-regal .rgl-neo-nav-core:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 0 20px var(--rgl-bal-2), inset 0 0 15px rgba(0, 229, 255, 0.3) !important;
+}
+.layout-regal .rgl-neo-nav-core:hover svg {
+  color: #fff;
+  filter: drop-shadow(0 0 4px var(--rgl-bal-1));
+  animation: rglPulseIcon 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes rglPulseIcon {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.12); }
+}
+
+/* 3. Balanced Text Shine */
+@keyframes elegantTextShine {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.layout-regal .rgl-neo-nav-module.active .rgl-neo-nav-text,
+.layout-regal .rgl-neo-sub-item.active {
+  background: linear-gradient(90deg, #fff 0%, var(--rgl-bal-1) 30%, var(--rgl-bal-3) 60%, #fff 100%);
+  background-size: 200% auto;
+  color: transparent !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: elegantTextShine 4s linear infinite !important;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* 4. Elegant Scanline on Active */
+@keyframes elegantSweep {
+  0% { left: -100%; opacity: 0; }
+  10% { opacity: 1; }
+  60% { left: 100%; opacity: 0; }
+  100% { left: 100%; opacity: 0; }
+}
+
+.layout-regal .rgl-neo-nav-module {
+  transition: all 0.3s ease !important;
+  border: 1px solid transparent !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.layout-regal .rgl-neo-nav-module.active::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%; width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.25), transparent);
+  transform: skewX(-20deg);
+  animation: elegantSweep 4s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+  pointer-events: none;
+}
+.layout-regal .rgl-neo-nav-module.active {
+  background: rgba(41, 121, 255, 0.08) !important;
+  border-color: rgba(0, 229, 255, 0.2) !important;
+}
+
+/* Hover for Nav Modules */
+.layout-regal .rgl-neo-nav-module:hover {
+  transform: translateX(6px) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-left: 3px solid var(--rgl-bal-1) !important;
+}
+.layout-regal .rgl-neo-nav-module:hover .rgl-neo-nav-text {
+  color: #fff !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+}
+.layout-regal .rgl-neo-nav-module:hover .rgl-neo-nav-indicator {
+  height: 60%;
+  background: var(--rgl-bal-1);
+  box-shadow: 0 0 10px var(--rgl-bal-2);
+}
+
+/* 5. Tool Button Balanced Hover */
+.layout-regal .rgl-neo-tool-btn {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+}
+.layout-regal .rgl-neo-tool-btn:hover {
+  transform: scale(1.12) translateY(-1px) !important;
+  background: rgba(41, 121, 255, 0.15) !important;
+  border-color: var(--rgl-bal-1) !important;
+  color: #fff !important;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4), 0 0 12px rgba(0, 229, 255, 0.3) !important;
+}
+.layout-regal .rgl-neo-tool-btn:hover svg {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 3px rgba(255,255,255,0.8));
+}
+
+/* 6. Submenu Item Hover */
+.layout-regal .rgl-neo-sub-item {
+  transition: all 0.2s ease !important;
+}
+.layout-regal .rgl-neo-sub-item:hover {
+  color: #fff !important;
+  transform: translateX(5px) !important;
+  border-left-color: var(--rgl-bal-2) !important;
+  border-left-width: 2px !important;
+  background: rgba(41, 121, 255, 0.08) !important;
+  text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
+}
+
+
+/* Hide the core ring when opening navigation */
+.layout-regal .rgl-neo-core-ring { display: none !important; }
+
+.layout-regal .rgl-neo-nav-core { border-radius: 50% !important; }
+
+
+
+
+/* ==========================================================================
+   LAYOUT 10 - SHINE REFLECTION EFFECT (DÒNG SÁNG CHẠY)
+   ========================================================================== */
+
+/* The physical light beam animation */
+@keyframes rglShineBeam {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* 1. Base Static Design for Frames */
+.layout-regal .rgl-neo-nav-module,
+.layout-regal .rgl-neo-sub-item,
+.layout-regal .rgl-neo-tool-btn,
+.layout-regal .rgl-neo-nav-core {
+  background: rgba(12, 16, 24, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+  transition: all 0.3s ease !important;
+  position: relative !important;
+  overflow: hidden !important; /* Crucial to clip the light beam */
+}
+
+/* 2. Static Text and Icons */
+.layout-regal .rgl-neo-nav-text,
+.layout-regal .rgl-neo-sub-item {
+  background: none !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  font-weight: 600 !important;
   text-shadow: none !important;
-  margin-top: 5px !important;
-}
-
-/* Minimap Hotspots in Blueprint Layout */
-.layout-regal .mm-luxury-hotspot {
-  background: var(--bp-ivory) !important;
-  border: 1px solid var(--bp-concrete) !important;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-}
-
-.layout-regal .mm-luxury-hotspot::after {
-  background: var(--bp-copper) !important;
-  box-shadow: none !important;
-}
-
-.layout-regal .mm-luxury-hotspot:hover {
-  border-color: var(--bp-graphite) !important;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
-}
-
-.layout-regal .mm-luxury-hotspot.is-active {
-  border-color: var(--bp-graphite) !important;
-  background: var(--bp-copper) !important;
-  box-shadow: 0 0 10px rgba(184, 115, 51, 0.5) !important;
-}
-
-.layout-regal .mm-luxury-hotspot.is-active::after {
-  background: #fff !important;
-  box-shadow: none !important;
   animation: none !important;
+}
+
+.layout-regal .rgl-neo-tool-btn svg,
+.layout-regal .rgl-neo-nav-core svg {
+  color: #ffffff !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+/* 3. The Shining Light Beam (Dòng sáng chạy) injected into ALL items */
+.layout-regal .rgl-neo-nav-module::after,
+.layout-regal .rgl-neo-sub-item::after,
+.layout-regal .rgl-neo-tool-btn::after,
+.layout-regal .rgl-neo-nav-core::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+  transform: skewX(-25deg);
+  animation: rglShineBeam 3s linear infinite !important;
+  opacity: 1 !important;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 4. Active/Hover States (Static Highlight) */
+.layout-regal .rgl-neo-nav-module.active,
+.layout-regal .rgl-neo-sub-item.active {
+  background: rgba(0, 229, 255, 0.15) !important;
+  border-color: rgba(0, 229, 255, 0.4) !important;
+}
+
+.layout-regal .rgl-neo-nav-module.active > .rgl-neo-nav-text,
+.layout-regal .rgl-neo-sub-item.active {
+  color: #00E5FF !important;
+  -webkit-text-fill-color: #00E5FF !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.3) !important;
+}
+
+/* Active items have a Cyan light beam instead of white */
+.layout-regal .rgl-neo-nav-module.active::after,
+.layout-regal .rgl-neo-sub-item.active::after {
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.4), transparent) !important;
+}
+
+.layout-regal .rgl-neo-nav-module:hover,
+.layout-regal .rgl-neo-sub-item:hover,
+.layout-regal .rgl-neo-tool-btn:hover {
+  transform: scale(1.02) !important;
+  border-color: #00E5FF !important;
+  background: rgba(30, 40, 55, 0.8) !important;
+}
+
+.layout-regal .rgl-neo-tool-btn:hover svg {
+  color: #00E5FF !important;
+  filter: drop-shadow(0 0 5px rgba(0, 229, 255, 0.6)) !important;
+}
+
+/* Add border-radius to sub-items to sync with parent module */
+.layout-regal .rgl-neo-sub-item {
+  border-radius: 12px !important;
+  margin-top: 4px !important;
+  margin-bottom: 4px !important;
+}
+
+/* ==========================================================================
+   LAYOUT 10 - TOOLBAR ACTIVE (TURNED ON) STATE
+   ========================================================================== */
+
+/* Active state makes the button light up permanently until turned off */
+.layout-regal .rgl-neo-tool-btn.active {
+  background: rgba(0, 229, 255, 0.2) !important;
+  border-color: rgba(0, 229, 255, 0.8) !important;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.4), inset 0 0 10px rgba(0, 229, 255, 0.2) !important;
+  transform: scale(1.05) !important;
+}
+
+.layout-regal .rgl-neo-tool-btn.active svg {
+  color: #00E5FF !important;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.8)) !important;
+}
+
+/* Light beam turns Cyan when the tool is active */
+.layout-regal .rgl-neo-tool-btn.active::after {
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.5), transparent) !important;
 }
