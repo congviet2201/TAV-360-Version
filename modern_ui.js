@@ -350,7 +350,10 @@ function generateSubmenuHTML(items, itemClass) {
 
   const cmdTimelineHTML = `
     <div class="cmd-timeline" id="cmd-timeline">
-      <div class="cmd-timeline-track">
+      <div class="cmd-scroll-btn left hidden" id="cmd-scroll-left">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </div>
+      <div class="cmd-timeline-track" id="cmd-timeline-track">
         <div class="cmd-timeline-inner" id="cmd-timeline-inner">
           <div class="cmd-tl-node ${PROJECT_CONTENT.navItems.topview ? 'cmd-tl-aerial' : ''}" data-pano-node="node1" data-label="TOP VIEW">
             <div class="cmd-tl-dot"></div>
@@ -407,6 +410,9 @@ function generateSubmenuHTML(items, itemClass) {
             <div class="cmd-tl-label">WC</div>
           </div>
         </div>
+      </div>
+      <div class="cmd-scroll-btn right" id="cmd-scroll-right">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </div>
     </div>
   `;
@@ -882,16 +888,19 @@ function generateSubmenuHTML(items, itemClass) {
 
           <!-- 1. TOP VIEW -->
           <div class="nav-item" data-id="topview" id="nav-topview" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
-              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
+            <svg viewBox="0 0 24 24" fill="none">
+              <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" stroke-linecap="round" stroke-linejoin="round"></polygon>
+              <line x1="8" y1="2" x2="8" y2="18" stroke-linecap="round" stroke-linejoin="round"></line>
+              <line x1="16" y1="6" x2="16" y2="22" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
             <span>${PROJECT_CONTENT.navItems.topview.label}</span>
           </div>
 
           <!-- 2. BIRD VIEW -->
           <div class="nav-item" data-id="birdview" id="nav-birdview">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="currentColor">
-              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="12" cy="12" r="3" stroke-linecap="round" stroke-linejoin="round"></circle>
             </svg>
             <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
             <!-- Submenu -->
@@ -3980,6 +3989,49 @@ document.addEventListener('click', (e) => {
         }
       });
     });
+    // ── 5b. Timeline scrolling ────────────────────────────────────────────
+    const tlTrack = document.getElementById('cmd-timeline-track');
+    const btnLeft = document.getElementById('cmd-scroll-left');
+    const btnRight = document.getElementById('cmd-scroll-right');
+    
+    if (tlTrack && btnLeft && btnRight) {
+      const updateScrollBtns = () => {
+        // If track is not scrollable, hide both
+        if (tlTrack.scrollWidth <= tlTrack.clientWidth) {
+          btnLeft.classList.add('hidden');
+          btnRight.classList.add('hidden');
+          return;
+        }
+        
+        // Show/hide left button
+        if (tlTrack.scrollLeft <= 10) {
+          btnLeft.classList.add('hidden');
+        } else {
+          btnLeft.classList.remove('hidden');
+        }
+        
+        // Show/hide right button
+        if (tlTrack.scrollLeft + tlTrack.clientWidth >= tlTrack.scrollWidth - 10) {
+          btnRight.classList.add('hidden');
+        } else {
+          btnRight.classList.remove('hidden');
+        }
+      };
+
+      // Check on scroll and window resize
+      tlTrack.addEventListener('scroll', updateScrollBtns);
+      window.addEventListener('resize', updateScrollBtns);
+      // Initial check (use a small timeout to let CSS render)
+      setTimeout(updateScrollBtns, 200);
+
+      btnLeft.addEventListener('click', () => {
+        tlTrack.scrollBy({ left: -300, behavior: 'smooth' });
+      });
+
+      btnRight.addEventListener('click', () => {
+        tlTrack.scrollBy({ left: 300, behavior: 'smooth' });
+      });
+    }
 
     // Note: fullscreen and tool actions are handled by the global [data-action] listener.
 
