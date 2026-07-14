@@ -1130,7 +1130,7 @@ function generateSubmenuHTML(items, itemClass) {
         
 
         <!-- 1. TOP VIEW (Electric Cyan) -->
-        <div class="aurora-nav-item-wrapper has-children" data-id="topview">
+        <div class="aurora-nav-item-wrapper" data-id="topview">
           <div class="aurora-nav-item" data-id="topview" style="--accent-color: var(--aurora-cyan);" data-pano-node="${PROJECT_CONTENT.navItems.topview.node}">
             <div class="aurora-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
