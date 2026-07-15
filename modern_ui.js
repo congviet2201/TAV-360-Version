@@ -130,13 +130,6 @@ function generateSubmenuHTML(items, itemClass) {
   const cmdTopRibbonHTML = `
     <div class="cmd-top-ribbon" id="cmd-top-ribbon">
       <div class="cmd-ribbon-left">
-        <button class="cmd-icon-btn" id="cmd-scene-btn" title="Thanh điều hướng" style="background:transparent; border:none; color:white; cursor:pointer; margin-right:8px; display:flex; align-items:center; justify-content:center;">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
         <div class="cmd-brand">
           <span class="cmd-brand-accent">TAV</span>
           <span class="cmd-brand-main">VILLA</span>
