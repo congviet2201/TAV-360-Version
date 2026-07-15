@@ -1,0 +1,15 @@
+Created At: 2026-07-15T06:47:44Z
+Completed At: 2026-07-15T06:47:44Z
+File Path: `file:///d:/Latien%20Project%20-%20Copy/modern_ui.js`
+Total Lines: 6297
+Total Bytes: 307444
+Showing lines 140 to 165
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+140:           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+141:         </button>
+142:       </div>
+143:     </div>
+144:   `;
+145: 
+146:   const cmdSceneExplorerHTML = `
+147:     

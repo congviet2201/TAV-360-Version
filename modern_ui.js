@@ -3,6 +3,23 @@
 (function () {
   console.log("Modern UI Script: Initializing dual-layout switching system...");
 
+  window.TAV_SCENES = [
+    { id: "node1", title: "TOP VIEW DAY 1", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
+    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "BIRD VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
+    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "BIRD VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
+    { id: "node4", title: "TAV PARK", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK.jpg", action: "node4" },
+    { id: "node5", title: "TAV STREET", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN STREET.jpg", action: "node5" },
+    { id: "node6", title: "TAV PARK 2", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK 02.jpg", action: "node6" },
+    { id: "architecture-1", title: "KIẾN TRÚC 1", sub: "Exterior", category: "ARCHITECTURE", thumb: "", color: "#10ffa0", action: "architecture-1" },
+    { id: "architecture-2", title: "KIẾN TRÚC 2", sub: "Exterior", category: "ARCHITECTURE", thumb: "", color: "#10ffa0", action: "architecture-2" },
+    { id: "architecture-3", title: "KIẾN TRÚC 3", sub: "Exterior", category: "ARCHITECTURE", thumb: "", color: "#10ffa0", action: "architecture-3" },
+    { id: "node7", title: "TAV LIVING 2", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN LIVING 2.jpg", action: "node7" },
+    { id: "node8", title: "TAV LIVING 1", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN LIVING.jpg", action: "node8" },
+    { id: "node9", title: "TAV THÔNG TẦNG", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN THONG TANG.jpg", action: "node9" },
+    { id: "node10", title: "BALCONY", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN BALCONY.jpg", action: "node10" },
+    { id: "node11", title: "TAV WC", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN WC.jpg", action: "node11" }
+  ];
+
   // 1. Shared SVG Gradients definitions to inject
   const gradientDefs = `
     <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" aria-hidden="true">
@@ -113,6 +130,13 @@ function generateSubmenuHTML(items, itemClass) {
   const cmdTopRibbonHTML = `
     <div class="cmd-top-ribbon" id="cmd-top-ribbon">
       <div class="cmd-ribbon-left">
+        <button class="cmd-icon-btn" id="cmd-scene-btn" title="Thanh điều hướng" style="background:transparent; border:none; color:white; cursor:pointer; margin-right:8px; display:flex; align-items:center; justify-content:center;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
         <div class="cmd-brand">
           <span class="cmd-brand-accent">TAV</span>
           <span class="cmd-brand-main">VILLA</span>
@@ -144,8 +168,9 @@ function generateSubmenuHTML(items, itemClass) {
   `;
 
   const cmdSceneExplorerHTML = `
+    <!-- Left Sidebar: Scene Explorer -->
     <div class="cmd-scene-explorer" id="cmd-scene-explorer">
-      <div class="cmd-panel-header">
+      <div class="cmd-panel-header" id="cmd-explorer-collapse-header">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
         <span>SCENE EXPLORER</span>
         <button class="cmd-collapse-btn" id="cmd-explorer-collapse">
@@ -153,162 +178,52 @@ function generateSubmenuHTML(items, itemClass) {
         </button>
       </div>
       <div class="cmd-explorer-body" id="cmd-explorer-body">
-
-        <!-- TOP VIEW -->
-        <div class="cmd-category" data-cat="topview">
-          <div class="cmd-cat-header">
-            <div class="cmd-cat-icon cmd-cat-aerial">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
-            </div>
-            <span>TOP VIEW</span>
-            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="cmd-cat-items">
-            <div class="cmd-scene-item" data-pano-node="node1" data-action="node1">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/thumb_PIN TOP.jpg" alt="Top View Day 1" onerror="this.src='image/PIN TOP.jpg'"></div>
-              <div class="cmd-scene-info">
-                <div class="cmd-scene-title">TOP VIEW DAY 1</div>
-                <div class="cmd-scene-sub">Aerial · Day</div>
-              </div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-          </div>
+        <div class="cmd-explorer-list" id="cmd-explorer-list">
+          <!-- scene items will be mapped here dynamically -->
         </div>
+      </div>
+    </div>
+  `;
 
-        <!-- BIRD VIEW -->
-        <div class="cmd-category" data-cat="birdview">
-          <div class="cmd-cat-header">
-            <div class="cmd-cat-icon cmd-cat-bird">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l7-5 7 5"/><path d="M5 8v10a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1V8"/></svg>
-            </div>
-            <span>BIRD VIEW</span>
-            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+  const premiumCarouselHTML = `
+    <div id="premium-scene-carousel" class="premium-carousel-container">
+      <button class="premium-carousel-nav prev" id="pc-prev" aria-label="Previous Scene">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      
+      <div class="premium-carousel-track" id="pc-track">
+        <!-- Cards injected dynamically -->
+      </div>
+      
+      <button class="premium-carousel-nav next" id="pc-next" aria-label="Next Scene">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+
+      <button class="premium-carousel-all-views" id="pc-all-views" aria-label="All Views">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+      </button>
+    </div>
+
+    <!-- Floating Expand Mode (Scene Browser) -->
+    <div id="premium-scene-browser" class="premium-scene-browser">
+      <div class="psb-overlay" id="psb-overlay"></div>
+      <div class="psb-modal">
+        <div class="psb-header">
+          <h2>All Views</h2>
+          <div class="psb-search-wrapper">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="psb-search" placeholder="Search scenes..." />
           </div>
-          <div class="cmd-cat-items">
-            <div class="cmd-scene-item" data-pano-node="node2" data-action="node2">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN BIRD.jpg" alt="Bird View 1" onerror="this.src='image/PIN BIRD.jpg'"></div>
-              <div class="cmd-scene-info">
-                <div class="cmd-scene-title">BIRD VIEW 1</div>
-                <div class="cmd-scene-sub">Drone · 80m</div>
-              </div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node3" data-action="node3">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN TOP NIGHT.jpg" alt="Bird View 2" onerror="this.src='image/PIN TOP NIGHT.jpg'"></div>
-              <div class="cmd-scene-info">
-                <div class="cmd-scene-title">BIRD VIEW 2</div>
-                <div class="cmd-scene-sub">Aerial · Dusk</div>
-              </div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-          </div>
+          <button class="psb-close" id="psb-close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
         </div>
-
-        <!-- AMENITIES -->
-        <div class="cmd-category" data-cat="amenities">
-          <div class="cmd-cat-header">
-            <div class="cmd-cat-icon cmd-cat-amenities">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M12 12v8"/><path d="M8 16s1.5 2 4 2 4-2 4-2"/></svg>
-            </div>
-            <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
-            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="cmd-cat-items">
-            <div class="cmd-scene-item" data-pano-node="node4" data-action="node4">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN PARK.jpg" alt="TAV Park" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV PARK</div><div class="cmd-scene-sub">Amenity</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node5" data-action="node5">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN STREET.jpg" alt="TAV Street" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV STREET</div><div class="cmd-scene-sub">Amenity</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node6" data-action="node6">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN PARK 02.jpg" alt="TAV Park 2" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV PARK 2</div><div class="cmd-scene-sub">Amenity</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-          </div>
+        <div class="psb-filters" id="psb-filters">
+          <!-- Filter pills injected dynamically -->
         </div>
-
-        <!-- ARCHITECTURE -->
-        <div class="cmd-category" data-cat="architecture">
-          <div class="cmd-cat-header">
-            <div class="cmd-cat-icon cmd-cat-architecture">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16M9 21v-4a2 2 0 012-2h2a2 2 0 012 2v4M9 7h6M9 11h6"/></svg>
-            </div>
-            <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
-            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="cmd-cat-items">
-            <div class="cmd-scene-item cmd-route-item" data-action="architecture-1">
-              <div class="cmd-scene-thumb"><div style="width:100%; height:100%; background:#10ffa0;"></div></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">KIẾN TRÚC 1</div><div class="cmd-scene-sub">Exterior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item cmd-route-item" data-action="architecture-2">
-              <div class="cmd-scene-thumb"><div style="width:100%; height:100%; background:#10ffa0;"></div></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">KIẾN TRÚC 2</div><div class="cmd-scene-sub">Exterior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item cmd-route-item" data-action="architecture-3">
-              <div class="cmd-scene-thumb"><div style="width:100%; height:100%; background:#10ffa0;"></div></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">KIẾN TRÚC 3</div><div class="cmd-scene-sub">Exterior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-          </div>
+        <div class="psb-grid" id="psb-grid">
+          <!-- Thumbnails injected dynamically -->
         </div>
-
-        <!-- INTERIOR -->
-        <div class="cmd-category" data-cat="interior">
-          <div class="cmd-cat-header">
-            <div class="cmd-cat-icon cmd-cat-interior">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2-2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            </div>
-            <span>${PROJECT_CONTENT.navItems.interior.label}</span>
-            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-          <div class="cmd-cat-items">
-            <div class="cmd-scene-item" data-pano-node="node7" data-action="node7">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN LIVING 2.jpg" alt="Living 2" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV LIVING 2</div><div class="cmd-scene-sub">Interior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node8" data-action="node8">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN LIVING.jpg" alt="Living 1" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV LIVING 1</div><div class="cmd-scene-sub">Interior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node9" data-action="node9">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN THONG TANG.jpg" alt="Thong Tang" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV THÔNG TẦNG</div><div class="cmd-scene-sub">Interior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node10" data-action="node10">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN BALCONY.jpg" alt="Balcony" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">BALCONY</div><div class="cmd-scene-sub">Interior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-            <div class="cmd-scene-item" data-pano-node="node11" data-action="node11">
-              <div class="cmd-scene-thumb"><img src="image/thumbnails/PIN WC.jpg" alt="WC" onerror="this.parentNode.style.background='#0a1628'"></div>
-              <div class="cmd-scene-info"><div class="cmd-scene-title">TAV WC</div><div class="cmd-scene-sub">Interior</div></div>
-              <div class="cmd-scene-active-dot"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- SURROUNDING (Liên kết vùng) -->
-        <div class="cmd-category cmd-route-item" data-cat="surrounding" data-action="region-page">
-          <div class="cmd-cat-header">
-            <div class="cmd-cat-icon cmd-cat-surrounding">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <span>LIÊN KẾT VÙNG</span>
-            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </div>
-        </div>
-
       </div>
     </div>
   `;
@@ -320,12 +235,12 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="cmd-ctrl-label">GALLERY</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
-      <div class="cmd-ctrl-tile" data-action="music" id="cmd-music-tile" title="Nh\u1ea1c n\u1ec1n">
+      <div class="cmd-ctrl-tile active" data-action="music" id="cmd-music-tile" title="Nh\u1ea1c n\u1ec1n">
         <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
         <div class="cmd-ctrl-label">AUDIO</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
-      <div class="cmd-ctrl-tile" data-action="hotspots" id="cmd-hotspot-tile" title="Hi\u1ec7n/\u1ea8n Hotspot">
+      <div class="cmd-ctrl-tile active" data-action="hotspots" id="cmd-hotspot-tile" title="Hi\u1ec7n/\u1ea8n Hotspot">
         <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
         <div class="cmd-ctrl-label">NODES</div>
         <div class="cmd-ctrl-glow"></div>
@@ -348,74 +263,7 @@ function generateSubmenuHTML(items, itemClass) {
     </div>
   `;
 
-  const cmdTimelineHTML = `
-    <div class="cmd-timeline" id="cmd-timeline">
-      <div class="cmd-scroll-btn left hidden" id="cmd-scroll-left">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      </div>
-      <div class="cmd-timeline-track" id="cmd-timeline-track">
-        <div class="cmd-timeline-inner" id="cmd-timeline-inner">
-          <div class="cmd-tl-node ${PROJECT_CONTENT.navItems.topview ? 'cmd-tl-aerial' : ''}" data-pano-node="node1" data-label="TOP VIEW">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">TOP VIEW</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-aerial" data-pano-node="node2" data-label="BIRD VIEW 1">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">BIRD VIEW 1</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-aerial" data-pano-node="node3" data-label="BIRD VIEW 2">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">BIRD VIEW 2</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-amenity" data-pano-node="node4" data-label="TAV PARK">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">TAV PARK</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-amenity" data-pano-node="node5" data-label="STREET">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">STREET</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-amenity" data-pano-node="node6" data-label="PARK 2">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">PARK 2</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node7" data-label="LIVING 2">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">LIVING 2</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node8" data-label="LIVING 1">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">LIVING 1</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node9" data-label="THÔNG TẦNG">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">THÔNG TẦNG</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node10" data-label="BALCONY">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">BALCONY</div>
-          </div>
-          <div class="cmd-tl-line"></div>
-          <div class="cmd-tl-node cmd-tl-interior" data-pano-node="node11" data-label="WC">
-            <div class="cmd-tl-dot"></div>
-            <div class="cmd-tl-label">WC</div>
-          </div>
-        </div>
-      </div>
-      <div class="cmd-scroll-btn right" id="cmd-scroll-right">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-      </div>
-    </div>
-  `;
+  const cmdTimelineHTML = "";
 
   // ==========================================
   // OPTION 4: GRADIENT LAYOUT TEMPLATES
@@ -2754,7 +2602,7 @@ function generateSubmenuHTML(items, itemClass) {
       setupRegalListeners(handleSwitch);
     } else if (layoutMode === "command") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = cmdTopRibbonHTML + cmdSceneExplorerHTML + cmdSpatialControlHTML + cmdTimelineHTML;
+      tempDiv.innerHTML = cmdTopRibbonHTML + cmdSceneExplorerHTML + cmdSpatialControlHTML + premiumCarouselHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -3878,18 +3726,29 @@ document.addEventListener('click', (e) => {
     // ── 1. Explorer panel collapse/expand ─────────────────────────────────
     const explorerPanel = document.getElementById('cmd-scene-explorer');
     const panelHeader = explorerPanel ? explorerPanel.querySelector('.cmd-panel-header') : null;
+    const sceneBtn = document.getElementById('cmd-scene-btn');
     
-    if (explorerPanel && panelHeader) {
-      // Toggle on header click
-      panelHeader.addEventListener('click', (e) => {
-        e.stopPropagation();
-        explorerPanel.classList.toggle('collapsed');
-      });
+    if (explorerPanel) {
+      if (panelHeader) {
+        // Toggle on header click
+        panelHeader.addEventListener('click', (e) => {
+          e.stopPropagation();
+          explorerPanel.classList.toggle('collapsed');
+        });
+      }
+
+      if (sceneBtn) {
+        // Toggle on button click
+        sceneBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          explorerPanel.classList.toggle('collapsed');
+        });
+      }
 
       // Close when clicking outside the panel
       document.addEventListener('click', (e) => {
         if (layoutMode === 'command' && !explorerPanel.classList.contains('collapsed')) {
-          if (!explorerPanel.contains(e.target)) {
+          if (!explorerPanel.contains(e.target) && (!sceneBtn || !sceneBtn.contains(e.target))) {
             explorerPanel.classList.add('collapsed');
           }
         }
@@ -3901,6 +3760,88 @@ document.addEventListener('click', (e) => {
       });
     }
 
+    const explorerList = document.getElementById('cmd-explorer-list');
+    if (explorerList && window.TAV_SCENES) {
+      const categories = {};
+      window.TAV_SCENES.forEach(s => {
+        const cat = s.category || "OTHER";
+        if (!categories[cat]) categories[cat] = [];
+        categories[cat].push(s);
+      });
+
+      let html = '';
+      
+      const iconClasses = {
+        "TOP VIEW": "cmd-cat-aerial",
+        "BIRD VIEW": "cmd-cat-bird",
+        "AMENITIES": "cmd-cat-amenities",
+        "ARCHITECTURE": "cmd-cat-amenities",
+        "INTERIOR": "cmd-cat-interior"
+      };
+
+      for (const catName in categories) {
+        const iconClass = iconClasses[catName] || "cmd-cat-aerial";
+        
+        html += `
+          <div class="cmd-category">
+            <div class="cmd-cat-header">
+              <div class="cmd-cat-icon ${iconClass}">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+              </div>
+              <span>${catName}</span>
+              <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="cmd-cat-items">
+        `;
+        categories[catName].forEach(s => {
+          let isRoute = s.action && s.action.startsWith('architecture-');
+          let itemClass = isRoute ? "cmd-scene-item cmd-route-item" : "cmd-scene-item";
+          
+          html += `
+            <div class="${itemClass}" data-pano-node="${s.action}">
+              <div class="cmd-scene-thumb">
+                ${s.thumb ? `<img src="${s.thumb}" alt="">` : `<div style="width:100%;height:100%;background-color:${s.color||'#333'};"></div>`}
+              </div>
+              <div class="cmd-scene-info">
+                <div class="cmd-scene-title">${s.title}</div>
+                <div class="cmd-scene-sub">${s.sub || ''}</div>
+              </div>
+            </div>
+          `;
+        });
+        html += `
+            </div>
+          </div>
+        `;
+      }
+      
+      // Also add Liên kết vùng manually
+      html += `
+        <div class="cmd-category">
+          <div class="cmd-cat-header">
+            <div class="cmd-cat-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <span>LIÊN KẾT VÙNG</span>
+            <svg class="cmd-cat-arrow" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="cmd-cat-items">
+            <div class="cmd-scene-item cmd-route-item" data-action="region-page">
+              <div class="cmd-scene-thumb">
+                <img src="image/NỀN.png" alt="">
+              </div>
+              <div class="cmd-scene-info">
+                <div class="cmd-scene-title">LIÊN KẾT VÙNG</div>
+                <div class="cmd-scene-sub">Bản đồ tiện ích</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      explorerList.innerHTML = html;
+    }
+
     // ── 2. Category accordion expand/collapse ─────────────────────────────
     document.querySelectorAll('.cmd-cat-header').forEach(header => {
       // Open first two categories by default
@@ -3910,6 +3851,7 @@ document.addEventListener('click', (e) => {
         // Do not expand by default
       }
 
+      // Allow opening via click (for mobile/touch)
       header.addEventListener('click', () => {
         const cat = header.parentElement;
         const items = cat.querySelector('.cmd-cat-items');
@@ -3929,6 +3871,21 @@ document.addEventListener('click', (e) => {
           cat.classList.remove('expanded');
           if (items) items.style.maxHeight = '0';
         }
+      });
+
+      // Allow opening via hover
+      cat.addEventListener('mouseenter', () => {
+        const items = cat.querySelector('.cmd-cat-items');
+        // Collapse all others
+        document.querySelectorAll('.cmd-category.expanded').forEach(c => {
+          if (c !== cat) {
+            c.classList.remove('expanded');
+            const i = c.querySelector('.cmd-cat-items');
+            if (i) i.style.maxHeight = '0';
+          }
+        });
+        cat.classList.add('expanded');
+        if (items) items.style.maxHeight = items.scrollHeight + 'px';
       });
     });
 
@@ -3962,8 +3919,16 @@ document.addEventListener('click', (e) => {
       });
     });
 
-    // ── 4. Spatial control tiles (Hover Effects) ──────────────────────────
+    // ── 4. Spatial control tiles (Hover & Click Effects) ──────────────────────────
     document.querySelectorAll('.cmd-ctrl-tile').forEach(tile => {
+      // Click action
+      tile.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (typeof dispatchToolAction === 'function') {
+          dispatchToolAction(tile);
+        }
+      });
+      
       // Magnetic hover effect
       tile.addEventListener('mousemove', (e) => {
         const rect = tile.getBoundingClientRect();
@@ -4060,6 +4025,11 @@ document.addEventListener('click', (e) => {
       document.querySelectorAll('.cmd-scene-item').forEach(i => {
         i.classList.toggle('active', i.getAttribute('data-pano-node') === activePanoNode);
       });
+    }
+
+    // Initialize/Rebind Premium Carousel since DOM was just injected
+    if (typeof window.initPremiumCarousel === 'function') {
+      window.initPremiumCarousel();
     }
   }
 
@@ -4856,23 +4826,19 @@ document.addEventListener('click', (e) => {
   }
 
   function setupRegionPageListeners() {
-    const listItems = document.querySelectorAll("#region-page .region-menu-item");
-    const pins = document.querySelectorAll("#region-page .map-pin");
+    const listItems = document.querySelectorAll("#region-page .region-layer-item");
+    const layers = document.querySelectorAll("#region-page .region-map-layer");
 
     listItems.forEach(item => {
       item.addEventListener("click", function(e) {
         e.stopPropagation();
-        listItems.forEach(li => li.classList.remove("active"));
-        this.classList.add("active");
-
-        const category = this.getAttribute("data-category");
-        pins.forEach(pin => {
-          if (pin.classList.contains(category)) {
-            pin.classList.add("active");
-          } else {
-            pin.classList.remove("active");
-          }
-        });
+        this.classList.toggle("active");
+        
+        const layerId = this.getAttribute("data-layer");
+        const layerImg = document.querySelector(`.region-map-layer[data-layer-id="${layerId}"]`);
+        if (layerImg) {
+          layerImg.classList.toggle("active", this.classList.contains("active"));
+        }
       });
     });
 
@@ -4961,34 +4927,30 @@ document.addEventListener('click', (e) => {
       regionDiv.id = "region-page";
       regionDiv.className = "custom-overlay-page";
       regionDiv.innerHTML = `
-        <div class="region-sidebar">
+        <div class="region-controls-panel">
           <div class="sidebar-header">
             <h3>LIÊN KẾT VÙNG</h3>
           </div>
-          <ul class="region-menu-list">
-            <li class="region-menu-item active" data-category="hospital">
-              <span class="icon">🏥</span> Bệnh viện
+          <ul class="region-layer-list">
+            <li class="region-layer-item" data-layer="giao-thong">
+              <div class="region-layer-glow"></div>
+              <span class="layer-indicator"></span> Các Tuyến Giao Thông
             </li>
-            <li class="region-menu-item" data-category="school">
-              <span class="icon">🏫</span> Trường học
+            <li class="region-layer-item" data-layer="chu-thich">
+              <div class="region-layer-glow"></div>
+              <span class="layer-indicator"></span> Chú Thích
             </li>
-            <li class="region-menu-item" data-category="station">
-              <span class="icon">🚉</span> Nhà ga
+            <li class="region-layer-item" data-layer="hanh-chinh">
+              <div class="region-layer-glow"></div>
+              <span class="layer-indicator"></span> Trung Tâm Hành Chính
             </li>
-            <li class="region-menu-item" data-category="airport">
-              <span class="icon">✈️</span> Sân bay
+            <li class="region-layer-item" data-layer="the-thao">
+              <div class="region-layer-glow"></div>
+              <span class="layer-indicator"></span> Trung Tâm Thể Thao
             </li>
-            <li class="region-menu-item" data-category="mall">
-              <span class="icon">🛍️</span> Trung tâm thương mại
-            </li>
-            <li class="region-menu-item" data-category="park">
-              <span class="icon">🌳</span> Công viên
-            </li>
-            <li class="region-menu-item" data-category="admin">
-              <span class="icon">🏛️</span> Cơ quan hành chính
-            </li>
-            <li class="region-menu-item" data-category="highway">
-              <span class="icon">🛣️</span> Đường quốc lộ
+            <li class="region-layer-item" data-layer="tien-ich">
+              <div class="region-layer-glow"></div>
+              <span class="layer-indicator"></span> Tiện Ích Khác
             </li>
           </ul>
           <button class="back-to-360-btn" id="region-back-btn">
@@ -5001,47 +4963,12 @@ document.addEventListener('click', (e) => {
         </div>
         <div class="region-map-container">
           <div class="region-map-wrapper">
-            <img src="regional_map.png" alt="Bản đồ liên kết vùng" class="region-map-img">
-            <div class="map-pin hospital active" style="top: 45%; left: 35%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🏥</div>
-              <div class="pin-label">Bệnh viện Đa khoa Quốc tế</div>
-            </div>
-            <div class="map-pin school" style="top: 30%; left: 60%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🏫</div>
-              <div class="pin-label">Trường THPT Quốc tế</div>
-            </div>
-            <div class="map-pin station" style="top: 65%; left: 20%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🚉</div>
-              <div class="pin-label">Nhà ga Trung tâm</div>
-            </div>
-            <div class="map-pin airport" style="top: 15%; left: 80%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">✈️</div>
-              <div class="pin-label">Sân bay Quốc tế</div>
-            </div>
-            <div class="map-pin mall" style="top: 50%; left: 55%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🛍️</div>
-              <div class="pin-label">Trung tâm Thương mại Latien Mall</div>
-            </div>
-            <div class="map-pin park" style="top: 40%; left: 45%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🌳</div>
-              <div class="pin-label">Công viên Trung tâm 10ha</div>
-            </div>
-            <div class="map-pin admin" style="top: 25%; left: 30%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🏛️</div>
-              <div class="pin-label">Ủy ban Nhân dân Quận</div>
-            </div>
-            <div class="map-pin highway" style="top: 75%; left: 70%;">
-              <div class="pin-pulse"></div>
-              <div class="pin-dot">🛣️</div>
-              <div class="pin-label">Đường Quốc lộ 1A</div>
-            </div>
+            <img src="image/NỀN.png" alt="Bản đồ liên kết vùng" class="region-map-base">
+            <img src="image/CÁC TUYẾN GIAO THÔNG CHÍNH.png" class="region-map-layer" data-layer-id="giao-thong">
+            <img src="image/CHÚ THÍCH.png" class="region-map-layer" data-layer-id="chu-thich">
+            <img src="image/TRUNG TÂM HÀNH CHÍNH.png" class="region-map-layer" data-layer-id="hanh-chinh">
+            <img src="image/TRUNG TÂM THỂ THAO.png" class="region-map-layer" data-layer-id="the-thao">
+            <img src="image/TIỆN ÍCH KHÁC.png" class="region-map-layer" data-layer-id="tien-ich">
           </div>
         </div>
       `;
@@ -6299,16 +6226,316 @@ function closeGlobalPanoramaGallery() {
 }
 
 // =========================================================
+// PREMIUM ADAPTIVE SCENE CAROUSEL
+// =========================================================
+
+class PremiumSceneCarousel {
+  constructor() {
+    this.scenes = window.TAV_SCENES || [];
+    this.currentIndex = 0;
+    this.isAnimating = false;
+    
+    // DOM Elements
+    this.container = document.getElementById('premium-scene-carousel');
+    this.track = document.getElementById('pc-track');
+    this.prevBtn = document.getElementById('pc-prev');
+    this.nextBtn = document.getElementById('pc-next');
+    this.allViewsBtn = document.getElementById('pc-all-views');
+    
+    // Browser Modal Elements
+    this.browserModal = document.getElementById('premium-scene-browser');
+    this.browserOverlay = document.getElementById('psb-overlay');
+    this.browserClose = document.getElementById('psb-close');
+    this.browserGrid = document.getElementById('psb-grid');
+    this.browserFilters = document.getElementById('psb-filters');
+    this.browserSearch = document.getElementById('psb-search');
+    
+    if (!this.container || !this.track) return;
+    
+    this.init();
+  }
+  
+  init() {
+    this.renderCarousel();
+    this.setupEventListeners();
+    this.buildBrowser();
+  }
+  
+  getWrappedIndex(index) {
+    const len = this.scenes.length;
+    return (index % len + len) % len;
+  }
+  
+  renderCarousel() {
+    this.track.innerHTML = '';
+    
+    // Render 5 cards to allow smooth sliding from off-screen
+    const indices = [
+      this.getWrappedIndex(this.currentIndex - 2),
+      this.getWrappedIndex(this.currentIndex - 1),
+      this.currentIndex,
+      this.getWrappedIndex(this.currentIndex + 1),
+      this.getWrappedIndex(this.currentIndex + 2)
+    ];
+    
+    indices.forEach((sceneIndex, i) => {
+      const scene = this.scenes[sceneIndex];
+      // i=0 (far left), i=1 (left), i=2 (center), i=3 (right), i=4 (far right)
+      let positionClass = 'pc-card-hidden';
+      if (i === 1) positionClass = 'pc-card-prev';
+      if (i === 2) positionClass = 'pc-card-center';
+      if (i === 3) positionClass = 'pc-card-next';
+      
+      const card = document.createElement('div');
+      card.className = `pc-card ${positionClass}`;
+      card.dataset.index = sceneIndex;
+      
+      const hasThumb = scene.thumb && scene.thumb.length > 0;
+      const thumbStyle = hasThumb ? `background-image: url('${scene.thumb}');` : `background-color: ${scene.color || '#333'};`;
+      
+      card.innerHTML = `
+        <div class="pc-card-thumb" style="${thumbStyle}"></div>
+        <div class="pc-card-info">
+          <div class="pc-card-title">${scene.title}</div>
+          ${scene.sub ? `<div class="pc-card-sub">${scene.sub}</div>` : ''}
+        </div>
+        ${i === 2 ? '<div class="pc-card-active-glow"></div>' : ''}
+      `;
+      
+      card.addEventListener('click', () => {
+        if (this.isAnimating) return;
+        if (i === 1) this.navigate(-1);
+        else if (i === 3) this.navigate(1);
+        else if (i === 2) this.triggerScene(scene);
+      });
+      
+      this.track.appendChild(card);
+    });
+  }
+  
+  navigate(direction) {
+    if (this.isAnimating) return;
+    this.isAnimating = true;
+    
+    // Smooth class transitions on existing cards
+    const cards = Array.from(this.track.children); // 5 cards
+    if (cards.length === 5) {
+      if (direction > 0) {
+        // Next: everything shifts left
+        cards[0].className = 'pc-card pc-card-hidden'; // far left stays hidden
+        cards[1].className = 'pc-card pc-card-hidden'; // left becomes far left
+        cards[2].className = 'pc-card pc-card-prev';   // center becomes left
+        cards[3].className = 'pc-card pc-card-center'; // right becomes center
+        cards[4].className = 'pc-card pc-card-next';   // far right becomes right
+      } else {
+        // Prev: everything shifts right
+        cards[0].className = 'pc-card pc-card-prev';   // far left becomes left
+        cards[1].className = 'pc-card pc-card-center'; // left becomes center
+        cards[2].className = 'pc-card pc-card-next';   // center becomes right
+        cards[3].className = 'pc-card pc-card-hidden'; // right becomes far right
+        cards[4].className = 'pc-card pc-card-hidden'; // far right stays hidden
+      }
+    }
+    
+    // Enable track sliding
+    this.track.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+    this.track.classList.add(`sliding-${direction > 0 ? 'next' : 'prev'}`);
+    
+    setTimeout(() => {
+      // Jump to new state instantly without animation
+      this.track.style.transition = 'none';
+      this.currentIndex = this.getWrappedIndex(this.currentIndex + direction);
+      this.renderCarousel();
+      this.track.classList.remove('sliding-next', 'sliding-prev');
+      
+      // Auto-trigger the panorama if needed
+      const scene = this.scenes[this.currentIndex];
+      this.triggerScene(scene);
+      
+      // Force reflow
+      void this.track.offsetWidth;
+      this.track.style.transition = ''; // Let CSS handle it
+      
+      setTimeout(() => { this.isAnimating = false; }, 20);
+    }, 300); // Wait for transition to complete
+  }
+  
+  triggerScene(scene) {
+    if (!scene || !scene.action) return;
+    const action = scene.action;
+    
+    if (action.startsWith('node')) {
+      if (typeof window.pano !== 'undefined' && window.pano.openNext) {
+        window.pano.openNext('{' + action + '}');
+        
+        if (typeof window.activePanoNode !== 'undefined') window.activePanoNode = action;
+        if (typeof window.lsSet === 'function') window.lsSet('latien_active_node', action);
+        if (typeof window.syncCommandTimeline === 'function') window.syncCommandTimeline(action);
+        if (typeof window.showNotification === 'function') window.showNotification(`Đang chuyển đến: ${scene.title}`);
+        
+        const label = document.getElementById('cmd-scene-name');
+        if (label) label.textContent = scene.title;
+      } else {
+        console.log("Trigger pano node:", action);
+      }
+    } else {
+      const mockItem = document.createElement('div');
+      mockItem.setAttribute('data-action', action);
+      if (typeof window.routeNavigation === 'function') {
+        window.routeNavigation(mockItem);
+      } else {
+        console.log("Trigger custom action:", action);
+      }
+    }
+  }
+  
+  setupEventListeners() {
+    this.prevBtn.addEventListener('click', () => this.navigate(-1));
+    this.nextBtn.addEventListener('click', () => this.navigate(1));
+    
+    // Keyboard (bind once)
+    if (!window._premiumCarouselKeyBound) {
+      document.addEventListener('keydown', (e) => {
+        if (!window.premiumCarouselInstance) return;
+        if (e.key === 'ArrowLeft') window.premiumCarouselInstance.navigate(-1);
+        if (e.key === 'ArrowRight') window.premiumCarouselInstance.navigate(1);
+      });
+      window._premiumCarouselKeyBound = true;
+    }
+    
+    // Mouse wheel on carousel
+    this.container.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (e.deltaY > 0) this.navigate(1);
+      else if (e.deltaY < 0) this.navigate(-1);
+    });
+    
+    // Swipe
+    let touchStartX = 0;
+    this.container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+    this.container.addEventListener('touchend', e => {
+      const touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) this.navigate(1);
+      if (touchEndX - touchStartX > 50) this.navigate(-1);
+    });
+    
+    // Browser
+    this.allViewsBtn.addEventListener('click', () => this.openBrowser());
+    this.browserClose.addEventListener('click', () => this.closeBrowser());
+    this.browserOverlay.addEventListener('click', () => this.closeBrowser());
+    
+    this.browserSearch.addEventListener('input', (e) => this.filterBrowser(e.target.value));
+  }
+  
+  // Browser logic
+  buildBrowser() {
+    if (!this.browserGrid) return;
+    this.browserGrid.innerHTML = '';
+    
+    const categories = new Set();
+    
+    this.scenes.forEach((scene, i) => {
+      if (scene.category) categories.add(scene.category);
+      
+      const thumb = document.createElement('div');
+      thumb.className = 'psb-item';
+      thumb.dataset.title = scene.title.toLowerCase();
+      thumb.dataset.category = scene.category || '';
+      
+      const hasThumb = scene.thumb && scene.thumb.length > 0;
+      const thumbStyle = hasThumb ? `background-image: url('${scene.thumb}');` : `background-color: ${scene.color || '#333'};`;
+      
+      thumb.innerHTML = `
+        <div class="psb-item-thumb" style="${thumbStyle}"></div>
+        <div class="psb-item-title">${scene.title}</div>
+      `;
+      
+      thumb.addEventListener('click', () => {
+        this.currentIndex = i;
+        this.renderCarousel();
+        this.triggerScene(scene);
+        this.closeBrowser();
+      });
+      
+      this.browserGrid.appendChild(thumb);
+    });
+    
+    // Build filters
+    if (this.browserFilters) {
+      this.browserFilters.innerHTML = '<button class="psb-filter active" data-filter="all">All</button>';
+      categories.forEach(cat => {
+        this.browserFilters.innerHTML += `<button class="psb-filter" data-filter="${cat}">${cat}</button>`;
+      });
+      
+      this.browserFilters.querySelectorAll('.psb-filter').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          this.browserFilters.querySelectorAll('.psb-filter').forEach(b => b.classList.remove('active'));
+          e.target.classList.add('active');
+          this.filterBrowser(this.browserSearch.value, e.target.dataset.filter);
+        });
+      });
+    }
+  }
+  
+  filterBrowser(searchTerm, category = 'all') {
+    const term = searchTerm.toLowerCase();
+    const activeCat = category === 'all' 
+      ? (this.browserFilters.querySelector('.psb-filter.active')?.dataset.filter || 'all') 
+      : category;
+      
+    this.browserGrid.querySelectorAll('.psb-item').forEach(item => {
+      const matchSearch = item.dataset.title.includes(term);
+      const matchCat = activeCat === 'all' || item.dataset.category === activeCat;
+      item.style.display = (matchSearch && matchCat) ? 'block' : 'none';
+    });
+  }
+  
+  openBrowser() {
+    this.browserModal.classList.add('active');
+  }
+  
+  closeBrowser() {
+    this.browserModal.classList.remove('active');
+  }
+}
+
+window.initPremiumCarousel = function() {
+  if (window.premiumCarouselInstance) {
+    const container = document.getElementById('premium-scene-carousel');
+    if (container) {
+      window.premiumCarouselInstance.container = container;
+      window.premiumCarouselInstance.track = document.getElementById('pc-track');
+      window.premiumCarouselInstance.prevBtn = document.getElementById('pc-prev');
+      window.premiumCarouselInstance.nextBtn = document.getElementById('pc-next');
+      window.premiumCarouselInstance.allViewsBtn = document.getElementById('pc-all-views');
+      
+      window.premiumCarouselInstance.browserModal = document.getElementById('premium-scene-browser');
+      window.premiumCarouselInstance.browserOverlay = document.getElementById('psb-overlay');
+      window.premiumCarouselInstance.browserClose = document.getElementById('psb-close');
+      window.premiumCarouselInstance.browserGrid = document.getElementById('psb-grid');
+      window.premiumCarouselInstance.browserFilters = document.getElementById('psb-filters');
+      window.premiumCarouselInstance.browserSearch = document.getElementById('psb-search');
+      
+      window.premiumCarouselInstance.init();
+    }
+  } else {
+    window.premiumCarouselInstance = new PremiumSceneCarousel();
+  }
+};
+
+// =========================================================
 // BOOTSTRAP INITIALIZATION
 // =========================================================
 
 if (document.readyState === "complete" || document.readyState === "interactive") {
   if (typeof injectUI === "function") injectUI();
   if (typeof initPanoHooks === "function") initPanoHooks();
+  if (typeof initPremiumCarousel === "function") initPremiumCarousel();
 } else {
   window.addEventListener("DOMContentLoaded", () => {
     if (typeof injectUI === "function") injectUI();
     if (typeof initPanoHooks === "function") initPanoHooks();
+    if (typeof initPremiumCarousel === "function") initPremiumCarousel();
   });
 }
 
