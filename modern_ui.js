@@ -4846,6 +4846,41 @@ document.addEventListener('click', (e) => {
   function setupRegionPageListeners() {
     const listItems = document.querySelectorAll("#region-page .region-layer-item");
     const layers = document.querySelectorAll("#region-page .region-map-layer");
+    const globalToggle = document.getElementById("region-global-toggle");
+
+    // Default ON state
+    listItems.forEach(item => item.classList.add("active"));
+    layers.forEach(layer => layer.classList.add("active"));
+
+    const updateGlobalToggleState = () => {
+      if (!globalToggle) return;
+      const allActive = Array.from(listItems).every(item => item.classList.contains("active"));
+      if (allActive) {
+        globalToggle.textContent = "Ẩn tất cả";
+        globalToggle.classList.add("active");
+      } else {
+        globalToggle.textContent = "Hiện tất cả";
+        globalToggle.classList.remove("active");
+      }
+    };
+
+    if (globalToggle) {
+      globalToggle.addEventListener("click", function(e) {
+        e.stopPropagation();
+        const isCurrentlyAllActive = this.classList.contains("active");
+        
+        if (isCurrentlyAllActive) {
+          // Turn OFF all
+          listItems.forEach(item => item.classList.remove("active"));
+          layers.forEach(layer => layer.classList.remove("active"));
+        } else {
+          // Turn ON all
+          listItems.forEach(item => item.classList.add("active"));
+          layers.forEach(layer => layer.classList.add("active"));
+        }
+        updateGlobalToggleState();
+      });
+    }
 
     listItems.forEach(item => {
       item.addEventListener("click", function(e) {
@@ -4857,6 +4892,7 @@ document.addEventListener('click', (e) => {
         if (layerImg) {
           layerImg.classList.toggle("active", this.classList.contains("active"));
         }
+        updateGlobalToggleState();
       });
     });
 
@@ -4971,6 +5007,7 @@ document.addEventListener('click', (e) => {
               <span class="layer-indicator"></span> Tiện Ích Khác
             </li>
           </ul>
+          <button id="region-global-toggle" class="region-global-btn active">Ẩn tất cả</button>
           <button class="back-to-360-btn" id="region-back-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="19" y1="12" x2="5" y2="12"></line>
