@@ -13479,7 +13479,7 @@ body * {
 .layout-regal .rgl-neo-tools-system {
   position: absolute;
   right: 20px;
-  top: 50%;
+  top: 35%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -14468,4 +14468,28 @@ body * {
     width: 100%;
     order: 3;
   }
+}
+
+/* Initial load animation for layouts without collapsed states */
+@keyframes initialLayoutSlideIn {
+  0% {
+    opacity: 0;
+    translate: 0 20px;
+  }
+  100% {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+.layout-horizon .horizon-nav-container,
+.layout-horizon .horizon-tool-panel,
+.layout-prism .prism-nav-container,
+.layout-prism .prism-tool-panel,
+.layout-nexus .nexus-nav-container,
+.layout-nexus .nexus-tool-panel,
+.layout-monarch .monarch-nav-container,
+.layout-monarch .monarch-command-panel,
+.layout-regal .regal-nav-wrapper,
+.layout-regal .rgl-neo-tools-system {
+  animation: initialLayoutSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }

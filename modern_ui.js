@@ -162,7 +162,7 @@ function generateSubmenuHTML(items, itemClass) {
 
   const cmdSceneExplorerHTML = `
     <!-- Left Sidebar: Scene Explorer -->
-    <div class="cmd-scene-explorer" id="cmd-scene-explorer">
+    <div class="cmd-scene-explorer collapsed" id="cmd-scene-explorer">
       <div class="cmd-panel-header" id="cmd-explorer-collapse-header">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
         <span>SCENE EXPLORER</span>
@@ -1901,26 +1901,7 @@ function generateSubmenuHTML(items, itemClass) {
     </div>
   `;
 
-  const monarchLayoutSelectorHTML = `
-    <div class="monarch-layout-selector" id="monarch-layout-selector">
-      <div class="monarch-selector-header">
-        <span>GIAO DIỆN</span>
-      </div>
-      <div class="monarch-selector-grid">
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="classic"    title="01 — Cổ Điển">01</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="futuristic" title="02 — Tương Lai">02</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="neo"        title="03 — Neo">03</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="gradient"   title="04 — Gradient">04</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="aurora"     title="05 — Aurora">05</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="horizon"    title="06 — Horizon">06</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="prism"      title="07 — Prism">07</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="nexus"      title="08 — Nexus">08</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="monarch"    title="09 — Monarch">09</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="regal"      title="10 — Regal">10</div>
-        <div class="monarch-selector-item monarch-hover-sweep" data-layout="command"    title="11 — Command">11</div>
-      </div>
-    </div>
-  `;
+  const monarchLayoutSelectorHTML = ``;
 
   const monarchCompassHTML = `
     <div class="compass-widget monarch-compass" id="compass-widget">
@@ -2652,6 +2633,50 @@ function generateSubmenuHTML(items, itemClass) {
 
     // Restore selected active highlights
     restoreActiveStates();
+
+    // Trigger smooth expansion for primary panels on load
+    setTimeout(function() {
+      // Classic & Futuristic Toolbar
+      var rightToolStack = document.getElementById("right-tool-stack");
+      if (rightToolStack) {
+        rightToolStack.classList.add("expanded");
+        rightToolStack.classList.add("pinned");
+      }
+
+      // Futuristic Sidebar
+      var sidebarContainer = document.getElementById("sidebar-container");
+      if (sidebarContainer && !sidebarContainer.classList.contains("expanded")) {
+        sidebarContainer.classList.add("expanded");
+        if (typeof isSidebarExpanded !== 'undefined') isSidebarExpanded = true;
+      }
+
+      // Gradient
+      var leftRail = document.getElementById("gradient-left-rail");
+      if (leftRail && !leftRail.classList.contains("pinned")) leftRail.classList.add("pinned");
+      var rightRail = document.getElementById("gradient-right-rail");
+      if (rightRail && !rightRail.classList.contains("pinned")) rightRail.classList.add("pinned");
+
+      // Neo
+      var neoContainer = document.getElementById("neo-unified-container");
+      if (neoContainer) {
+        neoContainer.classList.remove("collapsed");
+        neoContainer.classList.add("active", "pinned");
+      }
+
+      // Aurora
+      var auroraNav = document.getElementById("aurora-nav-container");
+      if (auroraNav && auroraNav.classList.contains("collapsed")) auroraNav.classList.remove("collapsed");
+      var auroraTool = document.getElementById("aurora-tool-panel");
+      if (auroraTool && auroraTool.classList.contains("collapsed")) auroraTool.classList.remove("collapsed");
+
+      // Regal
+      var regalNav = document.getElementById("blueprint-nav-container");
+      if (regalNav && !regalNav.classList.contains("pinned")) regalNav.classList.add("pinned");
+
+      // Command
+      var cmdExplorer = document.getElementById("cmd-scene-explorer");
+      if (cmdExplorer && cmdExplorer.classList.contains("collapsed")) cmdExplorer.classList.remove("collapsed");
+    }, 50);
   }
 
   // Restore navigation and submenu highlight states on rebuild
