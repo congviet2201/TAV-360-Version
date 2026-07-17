@@ -1,0 +1,208 @@
+﻿/* mobile_ui.css - Premium Mobile UI (Matterport/3DVista Style) */
+
+:root {
+  --m-primary: #00f2fe;
+  --m-bg-glass: rgba(20, 20, 20, 0.7);
+  --m-bg-sheet: rgba(25, 25, 25, 0.95);
+  --m-text: #ffffff;
+  --m-text-dim: rgba(255, 255, 255, 0.6);
+  --m-radius: 12px;
+  --m-backdrop: blur(15px);
+  --safe-bottom: env(safe-area-inset-bottom, 20px);
+}
+
+#mobile-ui-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  width: 100vw; height: 100dvh;
+  pointer-events: none; z-index: 9999;
+  font-family: "Inter", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden; color: var(--m-text);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Allow pointer events only on interactive elements */
+.mob-header, .mob-minimap-panel, .mob-carousel-container, .mob-toolbar, .mob-bottom-sheet {
+  pointer-events: auto;
+}
+
+/* 1. Header (Compass & Minimap Toggle) */
+.mob-header {
+  position: absolute; top: env(safe-area-inset-top, 15px); left: 15px; right: 15px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.mob-compass, .mob-minimap {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--m-bg-glass); backdrop-filter: var(--m-backdrop);
+  display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
+}
+
+/* 2. Floating Minimap Panel */
+.mob-minimap-panel {
+  position: absolute; top: 70px; right: 15px; width: 140px; height: 140px;
+  background: var(--m-bg-glass); backdrop-filter: var(--m-backdrop);
+  border-radius: var(--m-radius); overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  transform: scale(0); transform-origin: top right; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.mob-minimap-panel.open { transform: scale(1); }
+.mob-minimap-zoom-ctrl {
+  position: absolute; bottom: 5px; right: 5px; display: flex; flex-direction: column; gap: 2px;
+}
+.mob-minimap-zoom-ctrl button {
+  width: 24px; height: 24px; border-radius: 4px; background: rgba(0,0,0,0.6);
+  color: white; border: none; font-size: 16px; display: grid; place-items: center;
+}
+
+/* 3. Horizontal Carousel */
+.mob-carousel-container {
+  position: absolute; bottom: 90px; left: 15px; right: 15px;
+  height: 60px; display: flex; align-items: center; gap: 8px;
+}
+.mob-carousel {
+  flex: 1; display: flex; gap: 10px; overflow-x: auto;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.mob-carousel::-webkit-scrollbar { display: none; }
+.mob-carousel-item {
+  flex: 0 0 calc(33.333% - 7px); height: 60px;
+  border-radius: 8px; overflow: hidden; position: relative;
+  scroll-snap-align: start; opacity: 0.6; transition: 0.3s;
+  border: 2px solid transparent; background: #000;
+}
+.mob-carousel-item.active { opacity: 1; border-color: var(--m-primary); transform: scale(1.02); }
+.mob-carousel-item img { width: 100%; height: 100%; object-fit: cover; }
+.mob-carousel-text {
+  position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7);
+  padding: 4px; text-align: center;
+}
+.mob-carousel-title { font-size: 9px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.mob-carousel-btn, .mob-carousel-expand {
+  width: 36px; height: 36px; border-radius: 50%; border: none;
+  background: var(--m-bg-glass); backdrop-filter: var(--m-backdrop);
+  color: #fff; display: grid; place-items: center; flex-shrink: 0;
+}
+
+/* 4. Floating Bottom Toolbar */
+.mob-toolbar {
+  position: absolute; bottom: calc(15px + var(--safe-bottom)); left: 15px; right: 15px;
+  height: 60px; background: var(--m-bg-glass); backdrop-filter: var(--m-backdrop);
+  border-radius: 30px; border: 1px solid rgba(255,255,255,0.15);
+  display: flex; justify-content: space-evenly; align-items: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+.mob-tool-btn {
+  background: none; border: none; color: var(--m-text);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  width: 60px; height: 100%; justify-content: center;
+}
+.mob-tool-btn svg { opacity: 0.8; }
+.mob-tool-btn span { font-size: 9px; opacity: 0.8; font-weight: 500; font-family: "Inter", sans-serif; }
+
+/* 5. Bottom Sheets */
+.mob-overlay {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.7); opacity: 0; pointer-events: none;
+  transition: opacity 0.3s; z-index: 10000;
+}
+.mob-overlay.open { opacity: 1; pointer-events: auto; }
+
+.mob-bottom-sheet {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: var(--m-bg-sheet); backdrop-filter: var(--m-backdrop);
+  border-radius: 20px 20px 0 0; padding: 0 20px calc(20px + var(--safe-bottom));
+  transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 10001; max-height: 80dvh; display: flex; flex-direction: column;
+}
+.mob-bottom-sheet.open { transform: translateY(0); }
+
+.mob-sheet-handle {
+  width: 40px; height: 4px; background: rgba(255,255,255,0.3);
+  border-radius: 2px; margin: 12px auto 20px;
+}
+.mob-sheet-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+
+/* Tools Grid */
+.mob-tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.mob-grid-tool {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px; padding: 15px 5px; color: #fff; font-size: 12px; font-weight: 500;
+}
+
+/* Menu List */
+.mob-menu-list { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.mob-menu-group { margin-bottom: 20px; }
+.mob-menu-group-title { font-size: 11px; color: var(--m-primary); text-transform: uppercase; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; }
+.mob-menu-item {
+  display: block; width: 100%; text-align: left; background: none; border: none;
+  color: #fff; font-size: 15px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+/* Ensure Desktop Overlays (Gallery, Region) appear above Mobile UI */
+.global-pano-gallery-overlay, #region-page {
+  z-index: 99999 !important;
+}
+
+/* ==========================================
+   REGION PAGE MOBILE HAMBURGER
+   ========================================== */
+.region-mobile-hamburger {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .region-mobile-hamburger {
+    display: flex !important;
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  .region-mobile-hamburger svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--m-primary, #00f2fe);
+  }
+  .region-menu-collapsible {
+    display: none;
+    flex-direction: column;
+    animation: fadeInDown 0.3s ease forwards;
+  }
+  .region-menu-collapsible.open {
+    display: flex;
+  }
+  
+    /* Make sure the panel doesn't block the screen entirely if it's closed */
+  body.region-mode-active #region-page { display: flex !important; flex-direction: column !important; }
+  
+  .region-controls-panel {
+    position: relative !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap !important;
+    background: rgba(10, 15, 30, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: auto !important;
+    padding: 15px !important;
+    z-index: 20 !important;
+  }
+  
+  .region-controls-panel .sidebar-header {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+  
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

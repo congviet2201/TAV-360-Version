@@ -4849,6 +4849,14 @@ document.addEventListener('click', (e) => {
   }
 
   function setupRegionPageListeners() {
+    const hamburger = document.getElementById("region-mobile-hamburger");
+    const collapsible = document.getElementById("region-menu-collapsible");
+    if (hamburger && collapsible) {
+      hamburger.addEventListener("click", () => {
+        collapsible.classList.toggle("open");
+      });
+    }
+
     const listItems = document.querySelectorAll("#region-page .region-layer-item");
     const layers = document.querySelectorAll("#region-page .region-map-layer");
     const globalToggle = document.getElementById("region-global-toggle");
@@ -4951,7 +4959,7 @@ document.addEventListener('click', (e) => {
     const uiWrapper = document.createElement("div");
     uiWrapper.id = "modern-ui-overlay";
     uiWrapper.className = `modern-ui-overlay layout-${layoutMode}`;
-    uiWrapper.innerHTML = gradientDefs + layoutSwitcherHTML;
+    uiWrapper.innerHTML = gradientDefs + (window.innerWidth <= 1024 ? "" : layoutSwitcherHTML);
     document.body.appendChild(uiWrapper);
 
     // Sync top-level body classes
@@ -4985,34 +4993,48 @@ document.addEventListener('click', (e) => {
       const regionDiv = document.createElement("div");
       regionDiv.id = "region-page";
       regionDiv.className = "custom-overlay-page";
+      
+      const isMobile = window.innerWidth <= 1024;
+      const imgNen = isMobile ? "image/NỀN MB.png" : "image/NỀN.png";
+      const imgGiaoThong = isMobile ? "image/CÁC TUYẾN GIAO THÔNG CHÍNH MB.png" : "image/CÁC TUYẾN GIAO THÔNG CHÍNH.png";
+      const imgChuThich = isMobile ? "image/CHÚ THÍCH MB.png" : "image/CHÚ THÍCH.png";
+      const imgHanhChinh = isMobile ? "image/TRUNG TÂM HÀNH CHÍNH MB.png" : "image/TRUNG TÂM HÀNH CHÍNH.png";
+      const imgTheThao = isMobile ? "image/TRUNG TÂM THỂ THAO MB.png" : "image/TRUNG TÂM THỂ THAO.png";
+      const imgTienIch = isMobile ? "image/TIỆN ÍCH KHÁC MB.png" : "image/TIỆN ÍCH KHÁC.png";
+
       regionDiv.innerHTML = `
         <div class="region-controls-panel">
-          <div class="sidebar-header">
+          <div class="sidebar-header" style="display:flex; justify-content:space-between; align-items:center;">
             <h3>LIÊN KẾT VÙNG</h3>
+            <button id="region-mobile-hamburger" class="region-mobile-hamburger">
+              <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
           </div>
-          <ul class="region-layer-list">
-            <li class="region-layer-item" data-layer="giao-thong">
-              <div class="region-layer-glow"></div>
-              <span class="layer-indicator"></span> Các Tuyến Giao Thông
-            </li>
-            <li class="region-layer-item" data-layer="chu-thich">
-              <div class="region-layer-glow"></div>
-              <span class="layer-indicator"></span> Chú Thích
-            </li>
-            <li class="region-layer-item" data-layer="hanh-chinh">
-              <div class="region-layer-glow"></div>
-              <span class="layer-indicator"></span> Trung Tâm Hành Chính
-            </li>
-            <li class="region-layer-item" data-layer="the-thao">
-              <div class="region-layer-glow"></div>
-              <span class="layer-indicator"></span> Trung Tâm Thể Thao
-            </li>
-            <li class="region-layer-item" data-layer="tien-ich">
-              <div class="region-layer-glow"></div>
-              <span class="layer-indicator"></span> Tiện Ích Khác
-            </li>
-          </ul>
-          <button id="region-global-toggle" class="region-global-btn active">Ẩn tất cả</button>
+          <div id="region-menu-collapsible" class="region-menu-collapsible">
+            <ul class="region-layer-list">
+              <li class="region-layer-item" data-layer="giao-thong">
+                <div class="region-layer-glow"></div>
+                <span class="layer-indicator"></span> Các Tuyến Giao Thông
+              </li>
+              <li class="region-layer-item" data-layer="chu-thich">
+                <div class="region-layer-glow"></div>
+                <span class="layer-indicator"></span> Chú Thích
+              </li>
+              <li class="region-layer-item" data-layer="hanh-chinh">
+                <div class="region-layer-glow"></div>
+                <span class="layer-indicator"></span> Trung Tâm Hành Chính
+              </li>
+              <li class="region-layer-item" data-layer="the-thao">
+                <div class="region-layer-glow"></div>
+                <span class="layer-indicator"></span> Trung Tâm Thể Thao
+              </li>
+              <li class="region-layer-item" data-layer="tien-ich">
+                <div class="region-layer-glow"></div>
+                <span class="layer-indicator"></span> Tiện Ích Khác
+              </li>
+            </ul>
+            <button id="region-global-toggle" class="region-global-btn active">Ẩn tất cả</button>
+          </div>
           <button class="back-to-360-btn" id="region-back-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <line x1="19" y1="12" x2="5" y2="12"></line>
@@ -5023,12 +5045,12 @@ document.addEventListener('click', (e) => {
         </div>
         <div class="region-map-container">
           <div class="region-map-wrapper">
-            <img src="image/NỀN.png" alt="Bản đồ liên kết vùng" class="region-map-base">
-            <img src="image/CÁC TUYẾN GIAO THÔNG CHÍNH.png" class="region-map-layer" data-layer-id="giao-thong">
-            <img src="image/CHÚ THÍCH.png" class="region-map-layer" data-layer-id="chu-thich">
-            <img src="image/TRUNG TÂM HÀNH CHÍNH.png" class="region-map-layer" data-layer-id="hanh-chinh">
-            <img src="image/TRUNG TÂM THỂ THAO.png" class="region-map-layer" data-layer-id="the-thao">
-            <img src="image/TIỆN ÍCH KHÁC.png" class="region-map-layer" data-layer-id="tien-ich">
+            <img src="${imgNen}" alt="Bản đồ liên kết vùng" class="region-map-base">
+            <img src="${imgGiaoThong}" class="region-map-layer" data-layer-id="giao-thong">
+            <img src="${imgChuThich}" class="region-map-layer" data-layer-id="chu-thich">
+            <img src="${imgHanhChinh}" class="region-map-layer" data-layer-id="hanh-chinh">
+            <img src="${imgTheThao}" class="region-map-layer" data-layer-id="the-thao">
+            <img src="${imgTienIch}" class="region-map-layer" data-layer-id="tien-ich">
           </div>
         </div>
       `;
@@ -5800,15 +5822,15 @@ const globalModalsHTML = `
       </div>
       <div class="modal-body gallery-grid">
         <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node1}'); document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">
-          <img src="pano_aerial.png" alt="Top View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100px\\' style=\\'background:%23333\\'%3E%3C/svg%3E'" />
+          <img src="image/GALLERY 01.jpg" alt="Top View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100px\\' style=\\'background:%23333\\'%3E%3C/svg%3E'" />
           <div class="card-title">Top View</div>
         </div>
         <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node2}'); document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">
-          <img src="pano_detached.png" alt="Bird View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100px\\' style=\\'background:%23333\\'%3E%3C/svg%3E'" />
+          <img src="image/GALLERY 02.jpg" alt="Bird View" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100%\\' height=\\'100px\\' style=\\'background:%23333\\'%3E%3C/svg%3E'" />
           <div class="card-title">Bird View</div>
         </div>
         <div class="gallery-card" onclick="window.pano && window.pano.openNext('{node3}'); document.querySelectorAll('#image-gallery-modal').forEach(m=>m.classList.remove('active'))">
-          <img src="pano_semidetached.png" alt="Biệt Thự" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'" />
+          <img src="image/GALLERY 03.jpg" alt="Biệt Thự" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100%\' height=\'100px\' style=\'background:%23333\'%3E%3C/svg%3E'" />
           <div class="card-title">Biệt Thự Song Lập</div>
         </div>
       </div>
