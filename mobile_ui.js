@@ -1,4 +1,4 @@
-﻿function initMobileUI() {
+function initMobileUI() {
   if (window.innerWidth > 1024) return;
   
   // Hide ALL Desktop UIs
@@ -26,7 +26,6 @@
     { id: "node11", title: "TAV WC", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN WC.jpg", action: "node11" }
   ];
 
-  let isMusicMuted = true;
   let isHotspotsHidden = false;
 
   const mobileUI = document.createElement("div");
@@ -237,27 +236,9 @@
             const regionBtn = document.querySelector('[data-action="region-page"]:not(.mob-grid-tool):not(.mob-tool-btn)');
             if (regionBtn) regionBtn.click();
             break;
-          case "info": 
-            const infoBtn = document.querySelector('[data-action="info"]:not(.mob-grid-tool):not(.mob-tool-btn)');
-            if (infoBtn) infoBtn.click();
-            break;
           case "contact": 
             const contactBtn = document.querySelector('[data-action="call"]:not(.mob-grid-tool):not(.mob-tool-btn)');
             if (contactBtn) contactBtn.click();
-            break;
-          case "share": 
-            const shareBtn = document.querySelector('[data-action="share"]:not(.mob-grid-tool):not(.mob-tool-btn)');
-            if (shareBtn) shareBtn.click();
-            break;
-          case "music":
-            isMusicMuted = !isMusicMuted;
-            if(window.pano && window.pano.setMute) window.pano.setMute(isMusicMuted);
-            break;
-          case "hotspots":
-            isHotspotsHidden = !isHotspotsHidden;
-            document.querySelectorAll(".hologram-marker-container, [class*='hotspot'], .hs-container").forEach(hs => {
-              hs.style.visibility = isHotspotsHidden ? "hidden" : "visible";
-            });
             break;
         }
       }

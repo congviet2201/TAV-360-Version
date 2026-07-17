@@ -3,6 +3,56 @@
 (function () {
   console.log("Modern UI Script: Initializing dual-layout switching system...");
 
+  window.bgmAudio = new Audio('Music/music.mp3');
+  window.bgmAudio.loop = true;
+  window.isMusicMuted = false;
+
+  window.toggleGlobalMusic = function() {
+    window.isMusicMuted = !window.isMusicMuted;
+    if (window.isMusicMuted) {
+      window.bgmAudio.pause();
+    } else {
+      window.bgmAudio.play().catch(e => {
+        console.warn("Audio play blocked:", e);
+      });
+    }
+    // Sync hotspots initially to ON (visible)
+    document.querySelectorAll('[data-action="hotspots"]').forEach(btn => {
+      btn.classList.add("active", "active-tool");
+    });
+    
+    document.querySelectorAll('[data-action="music"]').forEach(btn => {
+      btn.classList.toggle('active', !window.isMusicMuted);
+      btn.classList.toggle('active-tool', !window.isMusicMuted);
+    });
+    return window.isMusicMuted;
+  };
+
+  function tryAutoplay() {
+    if (!window.isMusicMuted) {
+      window.bgmAudio.play().then(() => {
+        document.removeEventListener('click', tryAutoplay);
+        document.removeEventListener('touchstart', tryAutoplay);
+      }).catch(e => {
+        console.warn("Autoplay blocked, falling back to muted state");
+        window.isMusicMuted = true;
+        // Sync hotspots initially to ON (visible)
+    document.querySelectorAll('[data-action="hotspots"]').forEach(btn => {
+      btn.classList.add("active", "active-tool");
+    });
+    
+    document.querySelectorAll('[data-action="music"]').forEach(btn => {
+          btn.classList.toggle('active', false);
+          btn.classList.toggle('active-tool', false);
+        });
+        document.removeEventListener('click', tryAutoplay);
+        document.removeEventListener('touchstart', tryAutoplay);
+      });
+    }
+  }
+
+  tryAutoplay();
+
   window.TAV_SCENES = [
     { id: "node1", title: "TOP VIEW DAY 1", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
     { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "BIRD VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
@@ -223,6 +273,11 @@ function generateSubmenuHTML(items, itemClass) {
 
   const cmdSpatialControlHTML = `
     <div class="cmd-spatial-control" id="cmd-spatial-control">
+      <div class="cmd-ctrl-tile" data-action="info" title="Thông tin dự án">
+        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path d="M12 16v-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="8" r="1.5" fill="currentColor"/></svg></div>
+        <div class="cmd-ctrl-label">INFO</div>
+        <div class="cmd-ctrl-glow"></div>
+      </div>
       <div class="cmd-ctrl-tile" data-action="images" title="Th\u01b0 vi\u1ec7n h\u00ecnh \u1ea3nh">
         <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
         <div class="cmd-ctrl-label">GALLERY</div>
@@ -381,8 +436,8 @@ function generateSubmenuHTML(items, itemClass) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
           </div>
           <div class="vision-submenu">
-            <a href="https://facebook.com" target="_blank" class="v-sub-item">Facebook</a>
-            <a href="https://zalo.me" target="_blank" class="v-sub-item">Zalo</a>
+            <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="v-sub-item">Facebook</a>
+            <a href="https://zalo.me/0776469999" target="_blank" class="v-sub-item">Zalo</a>
           </div>
         </div>
         <!-- Tool Call -->
@@ -469,15 +524,15 @@ function generateSubmenuHTML(items, itemClass) {
           </svg>
           <div class="tool-tooltip">Mạng Xã Hội</div>
           <div class="social-dropdown" id="social-dropdown">
-            <a href="https://www.facebook.com" target="_blank" class="social-link" data-social="facebook">
+            <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="social-link" data-social="facebook">
               <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
               <span>Facebook</span>
             </a>
-            <a href="https://www.instagram.com" target="_blank" class="social-link" data-social="instagram">
+            <a href="https://www.instagram.com/tav.visualization?fbclid=IwY2xjawTGyFdleHRuA2FlbQIxMABicmlkETF6WFNQUG5pVHdyaTMzYXZzc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHnfmDGTf1jMMqXi9hVWtOqCfWiEucmX8Skbl4uXpKa6AEDbPpxaGRLa3qH4U_aem_aCheCes_KVmYiFV-DyesRw" target="_blank" class="social-link" data-social="instagram">
               <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12c0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
               <span>Instagram</span>
             </a>
-            <a href="https://zalo.me" target="_blank" class="social-link" data-social="zalo">
+            <a href="https://zalo.me/0776469999" target="_blank" class="social-link" data-social="zalo">
               <svg viewBox="0 0 40 40" fill="currentColor" width="16" height="16"><path d="M20 0C8.955 0 0 8.954 0 20c0 11.045 8.955 20 20 20s20-8.955 20-20C40 8.954 31.045 0 20 0zm9.09 28.182c-1.091 1.09-2.273 1.636-3.636 1.636-.727 0-1.454-.182-2.09-.455l-5.91 2.364.91-5.273c-1.636-1.454-2.637-3.545-2.637-5.818 0-4.364 3.546-7.909 7.91-7.909 4.363 0 7.909 3.545 7.909 7.909 0 2.909-1.546 5.454-4 6.909l1.544 .637z"/></svg>
               <span>Zalo</span>
             </a>
@@ -932,8 +987,8 @@ function generateSubmenuHTML(items, itemClass) {
           <svg viewBox="0 0 24 24" fill="none"><path d="M18 8A3 3 0 1018 2a3 3 0 000 6zM6 15a3 3 0 100-6 3 3 0 000 6zM18 22a3 3 0 100-6 3 3 0 000 6zM8.59 13.51l6.83 3.98M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2"></path></svg>
           <div class="neo-tooltip">Chia Sẻ</div>
           <div class="neo-dock-submenu flex-col">
-            <a href="https://facebook.com" target="_blank" class="dock-share-btn facebook">Facebook</a>
-            <a href="https://zalo.me" target="_blank" class="dock-share-btn zalo">Zalo</a>
+            <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="dock-share-btn facebook">Facebook</a>
+            <a href="https://zalo.me/0776469999" target="_blank" class="dock-share-btn zalo">Zalo</a>
           </div>
         </div>
         <!-- Call -->
@@ -1142,8 +1197,8 @@ function generateSubmenuHTML(items, itemClass) {
           </div>
           <span class="aurora-tool-label">Chia Sẻ</span>
           <div class="aurora-tool-submenu flex-col">
-            <a href="https://facebook.com" target="_blank" class="aurora-share-btn facebook">Facebook</a>
-            <a href="https://zalo.me" target="_blank" class="aurora-share-btn zalo">Zalo</a>
+            <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="aurora-share-btn facebook">Facebook</a>
+            <a href="https://zalo.me/0776469999" target="_blank" class="aurora-share-btn zalo">Zalo</a>
           </div>
         </div>
         <!-- Call (Electric Cyan) -->
@@ -1314,8 +1369,8 @@ function generateSubmenuHTML(items, itemClass) {
           <line x1="12" y1="2" x2="12" y2="15"></line>
         </svg>
         <div class="horizon-tool-submenu flex-col">
-          <a href="https://facebook.com" target="_blank" class="horizon-share-btn facebook">Facebook</a>
-          <a href="https://zalo.me" target="_blank" class="horizon-share-btn zalo">Zalo</a>
+          <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="horizon-share-btn facebook">Facebook</a>
+          <a href="https://zalo.me/0776469999" target="_blank" class="horizon-share-btn zalo">Zalo</a>
         </div>
       </div>
       <!-- Call -->
@@ -2262,10 +2317,17 @@ function generateSubmenuHTML(items, itemClass) {
   
   // Sync initial toolbar button states
   setTimeout(() => {
-    const musicBtn = document.querySelector('.rgl-neo-tool-btn[data-action="music"]');
-    if (musicBtn && typeof isMusicMuted !== 'undefined') {
-       musicBtn.classList.toggle("active", !isMusicMuted);
-    }
+    // Sync hotspots initially to ON (visible)
+    document.querySelectorAll('[data-action="hotspots"]').forEach(btn => {
+      btn.classList.add("active", "active-tool");
+    });
+    
+    document.querySelectorAll('[data-action="music"]').forEach(btn => {
+      if (typeof window.isMusicMuted !== 'undefined') {
+        btn.classList.toggle("active", !window.isMusicMuted);
+        btn.classList.toggle("active-tool", !window.isMusicMuted);
+      }
+    });
     const hotspotsBtn = document.querySelector('.rgl-neo-tool-btn[data-action="hotspots"]');
     if (hotspotsBtn && typeof isHotspotsHidden !== 'undefined') {
        hotspotsBtn.classList.toggle("active", !isHotspotsHidden);
@@ -4306,7 +4368,6 @@ document.addEventListener('click', (e) => {
   // ==========================================
 
   // Per-tool state
-  let isMusicMuted = false;
   let isImagesHidden = false;
   let isHotspotsHidden = false;
 
@@ -4317,12 +4378,10 @@ document.addEventListener('click', (e) => {
 
     switch (action) {
       case "music":
-        isMusicMuted = !isMusicMuted;
-        if (window.pano && typeof window.pano.setMute === "function") {
-          window.pano.setMute(isMusicMuted);
+        if (typeof window.toggleGlobalMusic === 'function') {
+          const muted = window.toggleGlobalMusic();
+          showNotification(muted ? "Nhạc nền đã tắt" : "Nhạc nền đã bật");
         }
-        btn.classList.toggle("active", !isMusicMuted);
-        showNotification(isMusicMuted ? "Nhạc nền đã tắt" : "Nhạc nền đã bật");
         break;
 
       case "images":
@@ -4361,15 +4420,15 @@ document.addEventListener('click', (e) => {
         break;
 
       case "facebook":
-        window.open("https://www.facebook.com/search/top?q=t%20architect%20%26%20visualization%20company%20limited", "_blank");
+        window.open("https://www.facebook.com/profile.php?id=100068490675716", "_blank");
         break;
 
       case "instagram":
-        window.open("https://www.instagram.com", "_blank");
+        window.open("https://www.instagram.com/tav.visualization?fbclid=IwY2xjawTGyFdleHRuA2FlbQIxMABicmlkETF6WFNQUG5pVHdyaTMzYXZzc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHnfmDGTf1jMMqXi9hVWtOqCfWiEucmX8Skbl4uXpKa6AEDbPpxaGRLa3qH4U_aem_aCheCes_KVmYiFV-DyesRw", "_blank");
         break;
 
       case "zalo":
-        window.open("https://zalo.me", "_blank");
+        window.open("https://zalo.me/0776469999", "_blank");
         break;
 
       case "fullscreen":
@@ -5807,7 +5866,7 @@ const globalModalsHTML = `
         </section>
         <section class="contact-section">
           <h3>Thông Tin Liên Hệ</h3>
-          <p>Hotline: <strong>090 123 4567</strong></p>
+          <p>Hotline: <strong>077 646 9999</strong></p>
           <p>Email: contact@latien.vn</p>
           <p>Website: www.latien.vn</p>
         </section>
@@ -5852,7 +5911,7 @@ const globalModalsHTML = `
           <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
         </svg>
         <h3 style="margin-bottom: 8px;">Hotline Kinh Doanh</h3>
-        <a href="tel:0901234567" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; text-decoration: none; border-radius: 24px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,242,254,0.3);">090 123 4567</a>
+        <a href="tel:0776469999" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; text-decoration: none; border-radius: 24px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,242,254,0.3);">077 646 9999</a>
         <p style="margin-top: 16px; font-size: 13px; color: #aaa;">Hỗ trợ tư vấn 24/7</p>
       </div>
     </div>
@@ -5860,9 +5919,9 @@ const globalModalsHTML = `
 
   <!-- 3. Social Share Floating Menu -->
   <div class="social-share-menu" id="social-share-menu">
-    <a href="https://www.facebook.com" target="_blank" class="social-btn facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-    <a href="https://www.instagram.com" target="_blank" class="social-btn instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12c0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-    <a href="https://zalo.me" target="_blank" class="social-btn zalo"><svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 0C8.955 0 0 8.954 0 20c0 11.045 8.955 20 20 20s20-8.955 20-20C40 8.954 31.045 0 20 0zm9.09 28.182c-1.091 1.09-2.273 1.636-3.636 1.636-.727 0-1.454-.182-2.09-.455l-5.91 2.364.91-5.273c-1.636-1.454-2.637-3.545-2.637-5.818 0-4.364 3.546-7.909 7.91-7.909 4.363 0 7.909 3.545 7.909 7.909 0 2.909-1.546 5.454-4 6.909l1.544 .637z"/></svg></a>
+    <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="social-btn facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+    <a href="https://www.instagram.com/tav.visualization?fbclid=IwY2xjawTGyFdleHRuA2FlbQIxMABicmlkETF6WFNQUG5pVHdyaTMzYXZzc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHnfmDGTf1jMMqXi9hVWtOqCfWiEucmX8Skbl4uXpKa6AEDbPpxaGRLa3qH4U_aem_aCheCes_KVmYiFV-DyesRw" target="_blank" class="social-btn instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12c0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+    <a href="https://zalo.me/0776469999" target="_blank" class="social-btn zalo"><svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 0C8.955 0 0 8.954 0 20c0 11.045 8.955 20 20 20s20-8.955 20-20C40 8.954 31.045 0 20 0zm9.09 28.182c-1.091 1.09-2.273 1.636-3.636 1.636-.727 0-1.454-.182-2.09-.455l-5.91 2.364.91-5.273c-1.636-1.454-2.637-3.545-2.637-5.818 0-4.364 3.546-7.909 7.91-7.909 4.363 0 7.909 3.545 7.909 7.909 0 2.909-1.546 5.454-4 6.909l1.544 .637z"/></svg></a>
   </div>
 `;
 
@@ -5901,8 +5960,14 @@ document.addEventListener("DOMContentLoaded", function() {
     // Hotspots Toggle
     if (e.target.closest('[data-action="hotspots"]')) {
       const btn = e.target.closest('[data-action="hotspots"]');
-      btn.classList.toggle('active-tool');
-      const isVisible = btn.classList.contains('active-tool');
+      // Determine new state based on the clicked button's CURRENT state
+      const isVisible = !btn.classList.contains('active-tool');
+      
+      // Sync ALL hotspot buttons
+      document.querySelectorAll('[data-action="hotspots"]').forEach(b => {
+        b.classList.toggle('active-tool', isVisible);
+        b.classList.toggle('active', isVisible);
+      });
       
       // CSS approach
       document.body.classList.toggle('hide-hotspots', !isVisible);
@@ -5918,11 +5983,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Music Toggle
     if (e.target.closest('[data-action="music"]')) {
-      const btn = e.target.closest('[data-action="music"]');
-      btn.classList.toggle('active-tool');
-      const isPlaying = btn.classList.contains('active-tool');
-      if (window.pano && typeof window.pano.setVolume === 'function') {
-         window.pano.setVolume(isPlaying ? 1 : 0);
+      if (typeof window.toggleGlobalMusic === 'function') {
+        window.toggleGlobalMusic();
       }
       return;
     }

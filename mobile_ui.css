@@ -237,3 +237,42 @@
 .mob-side-panel .mob-menu-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 2px; }
 
 .mob-overlay.transparent-bg { background: transparent !important; backdrop-filter: none !important; }
+
+/* Music active state */
+.mob-grid-tool.active {
+  background: rgba(246, 193, 119, 0.2);
+  color: var(--m-primary);
+  border: 1px solid var(--m-primary);
+}
+
+/* Fix Social Share Menu Position on Mobile */
+@media (max-width: 768px) {
+  #social-share-menu {
+    left: 50% !important;
+    bottom: 130px !important;
+    transform: translateX(-50%) translateY(20px) scale(0.9) !important;
+  }
+  #social-share-menu.active {
+    transform: translateX(-50%) translateY(0) scale(1) !important;
+  }
+}
+
+/* Fix Social Share Menu Position on Mobile (Right Side) */
+@media (max-width: 768px) {
+  #social-share-menu {
+    left: auto !important;
+    right: 15px !important;
+    bottom: 130px !important;
+    transform: translateY(20px) scale(0.9) !important;
+  }
+  #social-share-menu.active {
+    transform: translateY(0) scale(1) !important;
+  }
+}
+
+/* Make Hotspot active visually on Mobile */
+.mob-grid-tool.active-tool {
+  background: rgba(246, 193, 119, 0.2);
+  color: var(--m-primary);
+  border: 1px solid var(--m-primary);
+}
