@@ -1,4 +1,4 @@
-/* modern_ui.css - Combined Dual-Layout Stylesheet (Classic & Futuristic) */
+﻿/* modern_ui.css - Combined Dual-Layout Stylesheet (Classic & Futuristic) */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Share+Tech+Mono&family=Sora:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 
@@ -86,7 +86,7 @@
 }
 
 /* Settings Toggle Button - ACCESSIBLE MEDIUM SIZE & SOFT CORNERS */
-.layout-classic .settings-toggle-btn {
+.layout-classic .settings-toggle-btn { display: none !important;
   position: relative;
   width: 46px; /* Increased from 40px for accessibility */
   height: 46px; /* Increased from 40px for accessibility */
@@ -131,7 +131,7 @@
 }
 
 .vertical-tool-stack:hover .settings-toggle-btn,
-.layout-classic .vertical-tool-stack.expanded .settings-toggle-btn {
+.layout-classic .vertical-tool-stack.expanded .settings-toggle-btn { display: none !important;
   border-color: rgba(212, 175, 55, 0.8);
 }
 
@@ -708,7 +708,7 @@
   box-shadow: 0 3px 8px rgba(212, 175, 55, 0.3);
 }
 
-/* 2.2 SPECIAL: "La ti�n" Image-based Mega Menu - REFINED COMPACT & PREMIUM */
+/* 2.2 SPECIAL: "La tiï¿½n" Image-based Mega Menu - REFINED COMPACT & PREMIUM */
 .layout-classic .bottom-nav-bar .nav-submenu.mega-menu {
   flex-direction: row;
   gap: 8px; /* Reduced from 10px */
@@ -844,7 +844,7 @@
   .layout-classic .vertical-tool-stack {
     right: 10px;
   }
-  .layout-classic .settings-toggle-btn {
+  .layout-classic .settings-toggle-btn { display: none !important;
     width: 38px;
     height: 38px;
     border-radius: 12px;
@@ -934,7 +934,7 @@
 }
 
 /* 1. Settings Toggle Button - Top-Right Corner */
-.layout-futuristic .settings-toggle-btn {
+.layout-futuristic .settings-toggle-btn { display: none !important;
   position: relative;
   width: 42px;
   height: 42px;
@@ -1585,7 +1585,7 @@
     top: 60px;
     width: 180px;
   }
-  .layout-futuristic .settings-toggle-btn {
+  .layout-futuristic .settings-toggle-btn { display: none !important;
     top: 12px;
     right: 12px;
   }
@@ -2101,7 +2101,7 @@
 }
 
 /* =====================================================
-   PREMIUM HOTSPOT SYSTEM — Layout #1 Classic Only
+   PREMIUM HOTSPOT SYSTEM â€” Layout #1 Classic Only
    ===================================================== */
 
 /* Pano2VR places .hs-container at the hotspot position.
@@ -2112,7 +2112,7 @@
   user-select: none;
   opacity: 0;
   pointer-events: none;
-  /* Smooth fade transition — applies to both class-driven and inline-style opacity changes */
+  /* Smooth fade transition â€” applies to both class-driven and inline-style opacity changes */
   transition: opacity 0.25s cubic-bezier(0.25, 1, 0.5, 1);
   will-change: opacity;
   z-index: 100;
@@ -2120,7 +2120,7 @@
 
 /* hs-visible enables pointer-events and lets opacity be controlled:
    - by this class (opacity:1) for Top View / Interior nodes
-   - by inline style (0→1 gradient) for Bird View fade zones */
+   - by inline style (0â†’1 gradient) for Bird View fade zones */
 .hs-container.hs-visible {
   opacity: 1;         /* default full visibility; overridden by inline style in Bird View */
   pointer-events: auto;
@@ -2145,7 +2145,7 @@
 }
 
 /* ===================================================================
-   TYPE A — TOP VIEW DAY 1: Line-pin beacon with ALWAYS-VISIBLE label
+   TYPE A â€” TOP VIEW DAY 1: Line-pin beacon with ALWAYS-VISIBLE label
    Label (hs-pin-text) is permanently shown. No hover required.
    Float animation gives a gentle lift effect.
    =================================================================== */
@@ -2225,7 +2225,7 @@
 .hs-beacon .hs-subtle-hover { display: none; }
 
 /* ===================================================================
-   TYPE B — BIRD VIEW: Small luminous navigation orb
+   TYPE B â€” BIRD VIEW: Small luminous navigation orb
    No helicopter/drone icons. Soft glowing sphere with float.
    Always-visible mini label below the orb.
    =================================================================== */
@@ -2239,7 +2239,7 @@
   50%      { transform: translateX(-50%) translateY(-10px) scale(1.04); }
 }
 
-/* Orb container — 16px for compact visibility */
+/* Orb container â€” 16px for compact visibility */
 .hs-glow-orb {
   position: relative;
   width: 16px;
@@ -2255,7 +2255,7 @@
   position: relative;
   z-index: 2;
 }
-/* Blue — interior: bright royal blue */
+/* Blue â€” interior: bright royal blue */
 .hs-orb-blue .hs-orb-inner {
   background: radial-gradient(circle at 30% 25%, #ffffff, #bfdbfe 30%, #2563eb 65%, #1d4ed8);
   box-shadow:
@@ -2264,7 +2264,7 @@
     0 0 36px 14px rgba(59,130,246,0.7),
     0 0 60px 24px rgba(29,78,216,0.35);
 }
-/* Green — amenities: vivid emerald */
+/* Green â€” amenities: vivid emerald */
 .hs-orb-green .hs-orb-inner {
   background: radial-gradient(circle at 30% 25%, #ffffff, #bbf7d0 30%, #16a34a 65%, #15803d);
   box-shadow:
@@ -2273,7 +2273,7 @@
     0 0 36px 14px rgba(34,197,94,0.7),
     0 0 60px 24px rgba(21,128,61,0.35);
 }
-/* Cyan — aerial / view shortcuts: electric cyan */
+/* Cyan â€” aerial / view shortcuts: electric cyan */
 .hs-orb-cyan .hs-orb-inner {
   background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490);
   box-shadow:
@@ -2283,7 +2283,7 @@
     0 0 60px 24px rgba(14,116,144,0.35);
 }
 
-/* Expanding pulse ring — thicker, more visible */
+/* Expanding pulse ring â€” thicker, more visible */
 .hs-orb-pulse {
   position: absolute;
   top: 50%; left: 50%;
@@ -2302,7 +2302,7 @@
   100% { transform: translate(-50%,-50%) scale(3.2); opacity: 0; }
 }
 
-/* Always-visible label — pill badge for maximum readability */
+/* Always-visible label â€” pill badge for maximum readability */
 .hs-aerial-label {
   position: absolute;
   top: calc(100% + 8px);
@@ -2432,9 +2432,9 @@
 .hs-interior .hs-pin-text { background-color: #3b82f6; color: #fff; }
 .hs-amenities .hs-pin-text { background-color: #22c55e; color: #fff; }
 
-/* ══════════════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    MATTERPORT-STYLE PREMIUM GROUND DOT (Top View Day 1 Only)
-   ══════════════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 .hs-matterport-ground {
   position: relative;
   width: 20px;
@@ -4350,7 +4350,7 @@ body.layout-nexus .minimap-action-btn:hover {
   transform: translateX(-50%) scale(0.74) translateY(0); 
 }
 
-/* 5. Compass Redesign � Luxury Gold */
+/* 5. Compass Redesign ï¿½ Luxury Gold */
 .layout-gradient .compass-widget {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(254, 250, 240, 0.88) 100%);
   backdrop-filter: blur(30px);
@@ -4377,7 +4377,7 @@ body.layout-nexus .minimap-action-btn:hover {
 .layout-gradient .compass-cardinal { color: var(--luxury-gold-dark); text-shadow: 0 0 4px rgba(229, 192, 88, 0.4); }
 .layout-gradient .compass-degree-display { color: #1E293B; background: rgba(255, 252, 240, 0.95); border-color: rgba(229, 192, 88, 0.45); }
 
-/* 6. Minimap Redesign � Luxury Gold */
+/* 6. Minimap Redesign ï¿½ Luxury Gold */
 .layout-gradient .minimap-widget {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(254, 250, 240, 0.88) 100%);
   backdrop-filter: blur(30px);
@@ -4412,7 +4412,7 @@ body.layout-nexus .minimap-action-btn:hover {
   background: conic-gradient(from 0deg, rgba(229,192,88,0) 0%, rgba(229,192,88,0.25) 30%, rgba(229,192,88,0) 40%);
 }
 
-/* 7. Hotspots � Luxury Gold */
+/* 7. Hotspots ï¿½ Luxury Gold */
 .layout-gradient {
   --hotspot-color: #e5c058; /* Gold base */
   --hotspot-hover: #b89020; /* Gold dark hover */
@@ -9225,8 +9225,8 @@ body.region-mode-active #container {
 }}
 
 /* ====================================================
-   LAYOUT 8 — PRISM LAYOUT
-   Creative · Colorful · Modern · Elegant · Premium
+   LAYOUT 8 â€” PRISM LAYOUT
+   Creative Â· Colorful Â· Modern Â· Elegant Â· Premium
    Inspired by: Material You, Adobe CC, Figma, Fluent
    All rules scoped under .layout-prism / body.layout-prism
    ==================================================== */
@@ -9260,7 +9260,7 @@ body.layout-prism {
 }
 
 /* ================================================
-   2. TOP NAVIGATION BAR — Separated Floating Buttons
+   2. TOP NAVIGATION BAR â€” Separated Floating Buttons
    ================================================ */
 .layout-prism .prism-nav-container {
   position: fixed;
@@ -9291,7 +9291,7 @@ body.layout-prism {
   overflow: visible;
 }
 
-/* ---------- NAV ITEMS — Standalone Glassmorphic Buttons ---------- */
+/* ---------- NAV ITEMS â€” Standalone Glassmorphic Buttons ---------- */
 .layout-prism .prism-nav-item {
   position: relative;
   width: 44px;
@@ -9395,7 +9395,7 @@ body.layout-prism {
   transition: stroke 0.2s;
 }
 
-/* ---------- NAV LABEL — slides out horizontally ---------- */
+/* ---------- NAV LABEL â€” slides out horizontally ---------- */
 .layout-prism .prism-nav-label {
   display: block;
   font-family: var(--prism-font);
@@ -9482,7 +9482,7 @@ body.layout-prism {
 }
 
 /* ================================================
-   3. RIGHT TOOLBAR — Separated Floating Buttons
+   3. RIGHT TOOLBAR â€” Separated Floating Buttons
    ================================================ */
 .layout-prism .prism-tool-container {
   position: fixed;
@@ -9504,7 +9504,7 @@ body.layout-prism {
   pointer-events: auto;
 }
 
-/* ---------- TOOLBAR ITEMS — Standalone Glassmorphic Buttons ---------- */
+/* ---------- TOOLBAR ITEMS â€” Standalone Glassmorphic Buttons ---------- */
 .layout-prism .prism-tool-item {
   position: relative;
   width: 44px;
@@ -9591,7 +9591,7 @@ body.layout-prism {
   transition: stroke 0.2s;
 }
 
-/* ---------- TOOL LABEL — slides out horizontally ---------- */
+/* ---------- TOOL LABEL â€” slides out horizontally ---------- */
 .layout-prism .prism-tool-label {
   display: block;
   font-family: var(--prism-font);
@@ -9620,7 +9620,7 @@ body.layout-prism {
 }
 
 /* ================================================
-   4. COMPASS — Bottom Left (Above Switcher)
+   4. COMPASS â€” Bottom Left (Above Switcher)
    ================================================ */
 body.layout-prism .compass-widget {
   bottom: 80px !important;
@@ -9648,7 +9648,7 @@ body.layout-prism .compass-degree-display {
 }
 
 /* ================================================
-   5. MINIMAP — Bottom Right
+   5. MINIMAP â€” Bottom Right
    ================================================ */
 body.layout-prism .minimap-widget {
   border-radius: 16px !important;
@@ -9700,7 +9700,7 @@ body.layout-prism .minimap-legend .dot.cyan {
 }
 
 /* ================================================
-   6. HOTSPOTS — Redesigned Glassmorphic Cards
+   6. HOTSPOTS â€” Redesigned Glassmorphic Cards
    ================================================ */
 body.layout-prism 
 /* =========================================================
@@ -9868,7 +9868,7 @@ body.layout-prism .hologram-marker-container:hover .hotspot-label {
 }
 
 /* ================================================
-   7. LAYOUT SWITCHER — Prism Segment
+   7. LAYOUT SWITCHER â€” Prism Segment
    ================================================ */
 #opt-layout-prism { color: #9CA3AF; }
 #opt-layout-prism.active { color: #fff; }
@@ -9877,7 +9877,7 @@ body.layout-prism .hologram-marker-container:hover .hotspot-label {
 }
 
 /* ================================================
-   8. NOTIFICATION — Prism
+   8. NOTIFICATION â€” Prism
    ================================================ */
 body.layout-prism #ui-notification {
   color: var(--prism-coral) !important;
@@ -9889,7 +9889,7 @@ body.layout-prism #ui-notification {
 }
 
 /* ================================================
-   9. REGION / INTERIOR PAGE — Prism overrides
+   9. REGION / INTERIOR PAGE â€” Prism overrides
    ================================================ */
 body.layout-prism .back-to-360-btn {
   background: linear-gradient(135deg, rgba(255,107,107,0.12), rgba(124,58,237,0.12)) !important;
@@ -10040,7 +10040,7 @@ body.layout-prism .pin-label {
 }
 
 /* ================================================
-   10. MODALS — Prism overrides
+   10. MODALS â€” Prism overrides
    ================================================ */
 body.layout-prism .global-modal-content {
   background: rgba(17, 24, 39, 0.97) !important;
@@ -10107,7 +10107,7 @@ body.layout-nexus {
   --nexus-font-h: 'Sora', sans-serif;
 }
 
-/* ---------- 2. TOP NAVIGATION BAR — Floating Capsules ---------- */
+/* ---------- 2. TOP NAVIGATION BAR â€” Floating Capsules ---------- */
 .layout-nexus .nexus-nav-container {
   position: fixed;
   top: 16px;
@@ -10286,7 +10286,7 @@ body.layout-nexus {
   font-weight: 600;
 }
 
-/* ---------- 3. RIGHT TOOLBAR — Horizontal Expansion ---------- */
+/* ---------- 3. RIGHT TOOLBAR â€” Horizontal Expansion ---------- */
 .layout-nexus .nexus-tool-container {
   position: fixed;
   right: 20px;
@@ -10410,7 +10410,7 @@ body.layout-nexus {
   display: none !important;
 }
 
-/* ---------- 4. COMPASS WIDGET — Minimal Dial ---------- */
+/* ---------- 4. COMPASS WIDGET â€” Minimal Dial ---------- */
 body.layout-nexus .compass-widget {
   position: fixed !important;
   bottom: 90px !important; /* Positioned above layout switcher */
@@ -10465,7 +10465,7 @@ body.layout-nexus .compass-degree-display {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* ---------- 5. MINIMAP WIDGET — Minimalist Card ---------- */
+/* ---------- 5. MINIMAP WIDGET â€” Minimalist Card ---------- */
 body.layout-nexus .minimap-widget {
   border-radius: 8px !important;
   border: 1px solid var(--nexus-border) !important;
@@ -10516,7 +10516,7 @@ body.layout-nexus .minimap-legend {
   font-size: 12px !important;
 }
 
-/* ---------- 6. HOTSPOTS — Premium Glass Capsules ---------- */
+/* ---------- 6. HOTSPOTS â€” Premium Glass Capsules ---------- */
 body.layout-nexus 
 /* =========================================================
    FUTURISTIC LAYOUT HOTSPOT OVERRIDES
@@ -10683,14 +10683,14 @@ body.layout-nexus .hologram-marker-container:hover .hotspot-label {
   transform: translateY(0) !important;
 }
 
-/* ---------- 7. LAYOUT SWITCHER — Nexus Segment ---------- */
+/* ---------- 7. LAYOUT SWITCHER â€” Nexus Segment ---------- */
 #opt-layout-nexus { color: var(--nexus-muted); }
 #opt-layout-nexus.active { color: #fff; }
 .layout-switcher-pill #opt-layout-nexus.active {
   background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(56,189,248,0.2)) !important;
 }
 
-/* ---------- 8. NOTIFICATION — Nexus ---------- */
+/* ---------- 8. NOTIFICATION â€” Nexus ---------- */
 body.layout-nexus #ui-notification {
   color: var(--nexus-mint) !important;
   border-color: rgba(94, 234, 212, 0.35) !important;
@@ -10702,7 +10702,7 @@ body.layout-nexus #ui-notification {
   border-radius: 8px !important;
 }
 
-/* ---------- 9. REGION & INTERIOR PAGES — Nexus Overrides ---------- */
+/* ---------- 9. REGION & INTERIOR PAGES â€” Nexus Overrides ---------- */
 body.layout-nexus .back-to-360-btn {
   background: linear-gradient(135deg, rgba(94,234,212,0.12), rgba(56,189,248,0.12)) !important;
   border: 1px solid rgba(56,189,248,0.3) !important;
@@ -10852,7 +10852,7 @@ body.layout-nexus .pin-label {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
 }
 
-/* ---------- 10. MODALS — Nexus Overrides ---------- */
+/* ---------- 10. MODALS â€” Nexus Overrides ---------- */
 body.layout-nexus .global-modal-content {
   background: rgba(23, 25, 35, 0.97) !important;
   border: 1px solid rgba(56, 189, 248, 0.2) !important;
@@ -10967,7 +10967,7 @@ body.layout-nexus .modal-header h2 {
 }
 
 /* =========================================================
-   GIAO DIỆN MONARCH (LAYOUT #10) - LUXURY REDESIGN
+   GIAO DIá»†N MONARCH (LAYOUT #10) - LUXURY REDESIGN
    ========================================================= */
 
 :root {
@@ -12247,11 +12247,11 @@ body * {
 }
 
 /* ================================================================
-   LAYOUT #11 â€” COMMAND: DIGITAL TWIN CONTROL CENTER
-   Theme: Electric Cyan Â· Neon Purple Â· Deep Indigo Â· Emerald
+   LAYOUT #11 Ă¢â‚¬â€ COMMAND: DIGITAL TWIN CONTROL CENTER
+   Theme: Electric Cyan Ă‚Â· Neon Purple Ă‚Â· Deep Indigo Ă‚Â· Emerald
    ================================================================ */
 
-/* â”€â”€ CSS Variables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ă¢â€â‚¬Ă¢â€â‚¬ CSS Variables Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬ */
 .layout-command {
   --cmd-cyan:     #00e5ff;
   --cmd-cyan-dim: rgba(0, 229, 255, 0.15);
@@ -12275,7 +12275,7 @@ body * {
   --cmd-shadow-glow: 0 0 20px var(--cmd-cyan-glow), 0 8px 32px rgba(0,0,0,0.5);
 }
 
-/* â”€â”€ Background overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* Ă¢â€â‚¬Ă¢â€â‚¬ Background overlay Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬Ă¢â€â‚¬ */
 .layout-command::before {
   content: '';
   position: fixed;
@@ -12824,7 +12824,7 @@ body * {
   filter: drop-shadow(0 0 6px var(--cmd-cyan));
 }
 
-/* Label hidden — shown as tooltip on hover */
+/* Label hidden â€” shown as tooltip on hover */
 .cmd-ctrl-label {
   display: none;
 }
@@ -13019,9 +13019,9 @@ body * {
   100% { transform: scale(1.1); }
 }
 
-/* Aerial node â€” cyan */
+/* Aerial node Ă¢â‚¬â€ cyan */
 .cmd-tl-aerial .cmd-tl-dot { border-color: rgba(0,229,255,0.4); }
-/* Amenity node â€” emerald */
+/* Amenity node Ă¢â‚¬â€ emerald */
 .cmd-tl-amenity .cmd-tl-dot { border-color: rgba(16,255,160,0.35); }
 .cmd-tl-amenity:hover .cmd-tl-dot { border-color: var(--cmd-emerald); }
 .cmd-tl-amenity.active .cmd-tl-dot {
@@ -13029,7 +13029,7 @@ body * {
   box-shadow: 0 0 12px rgba(16,255,160,0.5);
 }
 .cmd-tl-amenity.active .cmd-tl-dot::after { background: var(--cmd-emerald); }
-/* Interior node â€” purple */
+/* Interior node Ă¢â‚¬â€ purple */
 .cmd-tl-interior .cmd-tl-dot { border-color: rgba(168,85,247,0.35); }
 .cmd-tl-interior:hover .cmd-tl-dot { border-color: var(--cmd-purple); }
 .cmd-tl-interior.active .cmd-tl-dot {
@@ -13056,7 +13056,7 @@ body * {
 .cmd-tl-interior.active .cmd-tl-label { color: var(--cmd-purple); }
 
 /* ================================================================
-   MINIMAP & COMPASS â€” COMMAND STYLE OVERRIDES
+   MINIMAP & COMPASS Ă¢â‚¬â€ COMMAND STYLE OVERRIDES
    ================================================================ */
 .layout-command #minimap-widget {
   position: fixed;
@@ -13096,11 +13096,11 @@ body * {
 .layout-command #compass-widget .compass-dial-inner,
 .layout-command #compass-widget .compass-needle { filter: hue-rotate(180deg) saturate(2); }
 
-/* Layout switcher offset â€” command has bottom bar */
+/* Layout switcher offset Ă¢â‚¬â€ command has bottom bar */
 
 
 /* ================================================================
-   RESPONSIVE â€” TABLET
+   RESPONSIVE Ă¢â‚¬â€ TABLET
    ================================================================ */
 @media (max-width: 1024px) {
   .cmd-scene-explorer { width: 200px; }
@@ -13109,7 +13109,7 @@ body * {
 }
 
 /* ================================================================
-   RESPONSIVE â€” MOBILE
+   RESPONSIVE Ă¢â‚¬â€ MOBILE
    ================================================================ */
 @media (max-width: 768px) {
   .cmd-scene-explorer {
@@ -13716,7 +13716,7 @@ body * {
   box-shadow: 0 0 25px var(--rgl-neo-accent-glow), inset 0 0 15px rgba(0, 229, 255, 0.2) !important;
 }
 
-/* 3. Text Running Color Effect (Màu chạy chạy trên chữ) */
+/* 3. Text Running Color Effect (MĂ u cháº¡y cháº¡y trĂªn chá»¯) */
 @keyframes rglTextShine {
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
@@ -13943,7 +13943,7 @@ body * {
 
 
 /* ==========================================================================
-   LAYOUT 10 - SHINE REFLECTION EFFECT (DÒNG SÁNG CHẠY)
+   LAYOUT 10 - SHINE REFLECTION EFFECT (DĂ’NG SĂNG CHáº Y)
    ========================================================================== */
 
 /* The physical light beam animation */
@@ -13983,7 +13983,7 @@ body * {
   filter: none !important;
 }
 
-/* 3. The Shining Light Beam (Dòng sáng chạy) injected into ALL items */
+/* 3. The Shining Light Beam (DĂ²ng sĂ¡ng cháº¡y) injected into ALL items */
 .layout-regal .rgl-neo-nav-module::after,
 .layout-regal .rgl-neo-sub-item::after,
 .layout-regal .rgl-neo-tool-btn::after,
