@@ -4456,29 +4456,34 @@ document.addEventListener('click', (e) => {
       
       if (lastRawPan === null) {
         continuousPan = rawPan;
+        lastRawPan = rawPan;
       } else {
         let dPan = rawPan - lastRawPan;
         if (dPan > 180) dPan -= 360;
         if (dPan < -180) dPan += 360;
-        continuousPan += dPan;
+        
+        // OPTIMIZATION: Only process DOM updates if rotation changed significantly (>0.1 deg)
+        if (Math.abs(dPan) > 0.1) {
+          continuousPan += dPan;
+          lastRawPan = rawPan;
+    
+          const dial = document.getElementById("compass-dial");
+          const degDisplay = document.getElementById("compass-degree");
+    
+          if (dial) {
+            dial.style.transform = `rotate(${-continuousPan}deg) translateZ(0)`;
+          }
+          if (degDisplay) {
+            const normalizedDeg = ((continuousPan % 360) + 360) % 360;
+            degDisplay.textContent = `${Math.round(normalizedDeg)}°`;
+          }
+    
+          syncMinimap(continuousPan);
+    
+          // Premium hotspot depth/visibility (All Layouts)
+          updateHotspotVisibility();
+        }
       }
-      lastRawPan = rawPan;
-
-      const dial = document.getElementById("compass-dial");
-      const degDisplay = document.getElementById("compass-degree");
-
-      if (dial) {
-        dial.style.transform = `rotate(${-continuousPan}deg)`;
-      }
-      if (degDisplay) {
-        const normalizedDeg = ((continuousPan % 360) + 360) % 360;
-        degDisplay.textContent = `${Math.round(normalizedDeg)}°`;
-      }
-
-      syncMinimap(continuousPan);
-
-      // Premium hotspot depth/visibility (All Layouts)
-      updateHotspotVisibility();
     } catch (e) {}
     compassAnimFrame = requestAnimationFrame(syncCompass);
   }
@@ -6594,4 +6599,105 @@ if (document.readyState === "complete" || document.readyState === "interactive")
   });
 }
 
+
+
+
+
+
+
+
+// =========================================================
+// TARGETED MOBILE INTERACTIONS (Toolbar & Navigation)
+// =========================================================
+window.initMobileInteractions = function() {
+  const isMobile = window.matchMedia('(max-width: 991px)').matches;
+  if (!isMobile) {
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(max-width: 991px)').matches && !window._mobileInitialized) {
+        window.initMobileInteractions();
+      }
+    }, { once: true });
+    return;
+  }
+  
+  if (window._mobileInitialized) return;
+  window._mobileInitialized = true;
+
+  console.log("Modern UI: Initializing Mobile Toolbar & Navigation...");
+
+  // 1. Mobile Toolbar 'More' Menu
+  const toolStacks = document.querySelectorAll('.vertical-tool-stack, .rgl-neo-tools-system, .prism-tool-panel, .nexus-tool-panel, .monarch-command-panel');
+  toolStacks.forEach(stack => {
+    const moreBtn = document.createElement('div');
+    moreBtn.className = 'tool-button mobile-more-btn';
+    moreBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" width="24" height="24"><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>';
+    moreBtn.style.minWidth = '44px';
+    moreBtn.style.minHeight = '44px';
+    moreBtn.style.zIndex = '2001';
+    
+    const buttons = stack.querySelectorAll('.tool-button:not(.mobile-more-btn)');
+    buttons.forEach((btn, index) => {
+      if (index >= 2) btn.classList.add('secondary-tool');
+    });
+
+    stack.appendChild(moreBtn);
+
+    moreBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      stack.classList.toggle('mobile-tools-expanded');
+    });
+  });
+
+  // 2. Bottom Sheet Navigation
+  const navContainers = document.querySelectorAll('.bottom-nav-container, .prism-nav-container, .nexus-nav-container, .monarch-nav-container, .regal-nav-wrapper');
+  
+  navContainers.forEach(nav => {
+    const handle = document.createElement('div');
+    handle.className = 'mobile-drag-handle';
+    nav.insertBefore(handle, nav.firstChild);
+
+    handle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nav.classList.toggle('mobile-expanded');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (nav.classList.contains('mobile-expanded') && !nav.contains(e.target)) {
+        nav.classList.remove('mobile-expanded');
+      }
+    });
+
+    let startY = 0;
+    let currentY = 0;
+    
+    handle.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+    
+    handle.addEventListener('touchmove', (e) => {
+      currentY = e.touches[0].clientY;
+      const deltaY = currentY - startY;
+      if (deltaY > 0) {
+        nav.style.transform = `translateY(${deltaY}px)`;
+      }
+    }, { passive: true });
+    
+    handle.addEventListener('touchend', (e) => {
+      const deltaY = currentY - startY;
+      nav.style.transform = '';
+      if (deltaY > 50) {
+        nav.classList.remove('mobile-expanded');
+      } else if (deltaY < -50) {
+        nav.classList.add('mobile-expanded');
+      } else {
+        nav.classList.toggle('mobile-expanded');
+      }
+    });
+  });
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(window.initMobileInteractions, 500);
+});
 })();
+
