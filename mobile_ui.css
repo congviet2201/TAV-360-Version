@@ -21,7 +21,7 @@
 }
 
 /* Allow pointer events only on interactive elements */
-.mob-header, .mob-minimap-panel, .mob-carousel-container, .mob-toolbar, .mob-bottom-sheet {
+.mob-header, .mob-minimap-panel, .mob-carousel-container, .mob-toolbar, .mob-bottom-sheet, .mob-side-panel {
   pointer-events: auto;
 }
 
@@ -32,7 +32,7 @@
 }
 .mob-compass, .mob-minimap {
   width: 44px; height: 44px; border-radius: 50%;
-  background: var(--m-bg-glass); backdrop-filter: var(--m-backdrop);
+  background: rgba(0,0,0,0.6); 
   display: grid; place-items: center; border: 1px solid rgba(255,255,255,0.1);
   box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
 }
@@ -206,3 +206,34 @@
     to { opacity: 1; transform: translateY(0); }
   }
 }
+
+.mob-side-panel {
+  position: absolute; top: 50%; bottom: auto; right: 0; width: 220px;
+  max-height: 380px;
+  background: rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-right: none;
+  border-radius: 16px 0 0 16px;
+  padding: 15px 10px 15px 15px;
+  transform: translate(100%, -50%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 10001; display: flex; flex-direction: column; pointer-events: auto;
+  box-shadow: -4px 0 15px rgba(0,0,0,0.3);
+}
+.mob-side-panel.open { transform: translate(0, -50%); }
+.mob-side-panel .mob-sheet-handle { display: none; }
+.mob-side-panel .mob-menu-item {
+  background: rgba(0,0,0,0.4); margin-bottom: 8px; border-radius: 8px;
+  padding: 12px 15px; border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 3px #000, 0 0 5px #000;
+  color: #fff; font-weight: 600; text-align: left;
+}
+.mob-side-panel .mob-sheet-title { text-align: right; color: var(--m-primary); font-size: 15px; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+.mob-side-panel .mob-menu-list {
+  overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;
+  padding-right: 5px;
+}
+.mob-side-panel .mob-menu-list::-webkit-scrollbar { width: 4px; }
+.mob-side-panel .mob-menu-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 2px; }
+
+.mob-overlay.transparent-bg { background: transparent !important; backdrop-filter: none !important; }

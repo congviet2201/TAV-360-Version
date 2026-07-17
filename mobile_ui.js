@@ -2,7 +2,7 @@
   if (window.innerWidth > 1024) return;
   
   // Hide ALL Desktop UIs
-  const desktopSelectors = ['#ui-wrapper', '#minimap-widget', '#compass-widget', '.layout-switcher-wrapper', '#layout-switcher-wrapper', '.layout-switcher-trigger', '.bottom-nav-container', '.vertical-tool-stack', '.sidebar-container', '.gradient-floating-logo', '.cmd-top-ribbon', '.cmd-scene-explorer', '.cmd-spatial-control', '#cmd-top-ribbon', '#cmd-node-label', '#cmd-scene-name', '#cmd-coord-display', '#cmd-pan-val', '#cmd-tilt-val', '#cmd-scene-explorer', '#cmd-explorer-collapse-header', '#cmd-explorer-collapse', '#cmd-explorer-body', '#cmd-explorer-list', '#cmd-spatial-control', '#cmd-music-tile', '#cmd-hotspot-tile', '.cmd-right-nav', '.cmd-left-tools', '.cmd-bottom-dock', '.horizon-top-nav', '.horizon-bottom-nav', '.aurora-glass-nav', '.aurora-glass-toolbar', '#vision-left-dock', '#vision-right-dock', '.blueprint-floating-gallery-container', '#blueprint-gallery-container', '#blueprint-gallery-panel', '.premium-carousel-container', '.layout-floating-logo', '.gradient-quick-actions', '.quick-nav-panel', '.bottom-nav-bar', '.futuristic-settings-group', '.neo-unified-trigger', '.aurora-nav-pin-btn', '.aurora-tool-pin-btn', '.compass-widget', '.horizon-dock', '.prism-nav-wrapper', '.prism-tool-container', '.nexus-nav-wrapper', '.nexus-tool-container', '.monarch-nav-wrapper', '.monarch-command-panel', '.minimap-widget', '.blueprint-top-ribbon', '.rgl-neo-nav-wrapper', '.rgl-neo-tools-system', '.blueprint-layout-switcher'];
+  const desktopSelectors = ['#ui-wrapper', '#minimap-widget', '#compass-widget', '.layout-switcher-wrapper', '#layout-switcher-wrapper', '.layout-switcher-trigger', '.bottom-nav-container', '.vertical-tool-stack', '.sidebar-container', '.gradient-floating-logo', '.cmd-top-ribbon', '.cmd-scene-explorer', '.cmd-spatial-control', '#cmd-top-ribbon', '#cmd-node-label', '#cmd-scene-name', '#cmd-coord-display', '#cmd-pan-val', '#cmd-tilt-val', '#cmd-scene-explorer', '#cmd-explorer-collapse-header', '#cmd-explorer-collapse', '#cmd-explorer-body', '#cmd-explorer-list', '#cmd-spatial-control', '#cmd-music-tile', '#cmd-hotspot-tile', '.cmd-right-nav', '.cmd-left-tools', '.cmd-bottom-dock', '.horizon-top-nav', '.horizon-bottom-nav', '.aurora-glass-nav', '.aurora-glass-toolbar', '#vision-left-dock', '#vision-right-dock', '.blueprint-floating-gallery-container', '#blueprint-gallery-container', '#blueprint-gallery-panel', '.premium-carousel-container', '.premium-scene-browser', '#premium-scene-browser', '.layout-floating-logo', '.gradient-quick-actions', '.quick-nav-panel', '.bottom-nav-bar', '.futuristic-settings-group', '.neo-unified-trigger', '.aurora-nav-pin-btn', '.aurora-tool-pin-btn', '.compass-widget', '.horizon-dock', '.prism-nav-wrapper', '.prism-tool-container', '.nexus-nav-wrapper', '.nexus-tool-container', '.monarch-nav-wrapper', '.monarch-command-panel', '.minimap-widget', '.blueprint-top-ribbon', '.rgl-neo-nav-wrapper', '.rgl-neo-tools-system', '.blueprint-layout-switcher'];
   
   const cssHide = document.createElement('style');
   cssHide.innerHTML = `@media screen and (max-width: 1024px) { ${desktopSelectors.join(', ')} { display: none !important; } }`;
@@ -102,7 +102,7 @@
     <!-- MORE & NAVIGATION BOTTOM SHEETS -->
     <div class="mob-overlay" id="mob-overlay"></div>
     
-    <div class="mob-bottom-sheet" id="mob-more-sheet">
+    <div class="mob-side-panel" id="mob-more-sheet">
       <div class="mob-sheet-handle"></div>
           <div class="mob-sheet-title">Công Cụ (More)</div>
       <div class="mob-tools-grid">
@@ -114,7 +114,7 @@
       </div>
     </div>
 
-    <div class="mob-bottom-sheet" id="mob-nav-sheet">
+    <div class="mob-side-panel" id="mob-nav-sheet">
       <div class="mob-sheet-handle"></div>
           <div class="mob-sheet-title">Tất cả Cảnh (Navigation)</div>
       <div class="mob-menu-list" id="mob-menu-list"></div>
@@ -157,7 +157,7 @@
       if (activeSheet) activeSheet.classList.remove("open");
       sheet.classList.add("open");
       overlay.classList.add("open");
-      activeSheet = sheet;
+      overlay.classList.add("transparent-bg"); activeSheet = sheet;
     }
   };
 

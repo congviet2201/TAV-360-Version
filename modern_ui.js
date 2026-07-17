@@ -691,18 +691,20 @@ function generateSubmenuHTML(items, itemClass) {
   // ==========================================
 
   // Independent settings gear and vertical tool stack top right (wrapped for smooth hover/dropdown)
+  // Independent settings gear and vertical tool stack top right (wrapped for smooth hover/dropdown)
   const settingsToggleFuturisticHTML = `
     <div class="futuristic-settings-group" id="futuristic-settings-group">
+      <!-- Sub-stack containing real toolbar tools (now ABOVE the gear like layout 1) -->
+      <div class="tool-buttons-sub-stack" id="tool-sub-stack">
+        ${toolbarButtonsHTML}
+      </div>
+
+      <!-- Settings Toggle Button (Primary Trigger at the bottom of the stack) -->
       <div class="settings-toggle-btn" id="btn-settings-toggle" title="Cài đặt hệ thống">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
           <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2"/>
         </svg>
-      </div>
-      <div class="vertical-tool-stack" id="right-tool-stack">
-        <div class="tool-buttons-sub-stack" id="tool-sub-stack">
-          ${toolbarButtonsHTML}
-        </div>
       </div>
     </div>
   `;
@@ -6723,3 +6725,40 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 })();
 
+
+  // Custom: global UI logic
+  setTimeout(() => {
+    window.addEventListener('pointerdown', (e) => {
+        if (!e.target.closest('.nav-item') && !e.target.closest('.nav-submenu')) {
+            document.querySelectorAll('.nav-item.is-open').forEach(n => n.classList.remove('is-open'));
+        }
+        
+        const l1Stack = document.getElementById('right-tool-stack');
+        const l2Group = document.getElementById('futuristic-settings-group');
+        
+        if (l1Stack && l1Stack.classList.contains('expanded') && !l1Stack.contains(e.target)) {
+            l1Stack.classList.remove('expanded');
+        }
+        if (l2Group && l2Group.classList.contains('expanded') && !l2Group.contains(e.target)) {
+            l2Group.classList.remove('expanded');
+        }
+    }, true);
+    
+    const toggleBtns = document.querySelectorAll('.settings-toggle-btn');
+    toggleBtns.forEach(btn => {
+        if(!btn.classList.contains('btn-settings-toggle-global-click')) {
+            btn.classList.add('btn-settings-toggle-global-click');
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const l1Stack = document.getElementById('right-tool-stack');
+                const l2Group = document.getElementById('futuristic-settings-group');
+                
+                if (document.body.classList.contains('layout-classic') && l1Stack) {
+                    l1Stack.classList.toggle('expanded');
+                } else if (document.body.classList.contains('layout-futuristic') && l2Group) {
+                    l2Group.classList.toggle('expanded');
+                }
+            });
+        }
+    });
+  }, 1000);

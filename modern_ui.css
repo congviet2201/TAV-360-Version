@@ -86,7 +86,7 @@
 }
 
 /* Settings Toggle Button - ACCESSIBLE MEDIUM SIZE & SOFT CORNERS */
-.layout-classic .settings-toggle-btn { display: none !important;
+.layout-classic .settings-toggle-btn { /* gear restored */
   position: relative;
   width: 46px; /* Increased from 40px for accessibility */
   height: 46px; /* Increased from 40px for accessibility */
@@ -130,10 +130,7 @@
   transform: rotate(90deg);
 }
 
-.vertical-tool-stack:hover .settings-toggle-btn,
-.layout-classic .vertical-tool-stack.expanded .settings-toggle-btn { display: none !important;
-  border-color: rgba(212, 175, 55, 0.8);
-}
+/* Gear stays visible */
 
 /* Collapsible Sub-Stack (Expanded upwards) */
 .layout-classic .tool-buttons-sub-stack {
@@ -672,7 +669,6 @@
 /* Reveal flyout on hover or active is-open class (Sticky Pinned Mode).
    Scope hover activation strictly to .layout-classic .nav-item to prevent bleed
    into the futuristic layout. */
-.layout-classic .nav-item:hover .nav-submenu,
 .layout-classic .nav-item.is-open .nav-submenu {
   opacity: 1;
   pointer-events: auto;
@@ -844,7 +840,7 @@
   .layout-classic .vertical-tool-stack {
     right: 10px;
   }
-  .layout-classic .settings-toggle-btn { display: none !important;
+  .layout-classic .settings-toggle-btn { /* gear restored */
     width: 38px;
     height: 38px;
     border-radius: 12px;
@@ -934,7 +930,7 @@
 }
 
 /* 1. Settings Toggle Button - Top-Right Corner */
-.layout-futuristic .settings-toggle-btn { display: none !important;
+.layout-futuristic .settings-toggle-btn { /* gear restored */
   position: relative;
   width: 42px;
   height: 42px;
@@ -1377,7 +1373,6 @@
 }
 
 /* Slide out transition when parent has .is-open class or is hovered */
-.layout-futuristic .nav-item:hover .nav-submenu,
 .layout-futuristic .nav-item.is-open .nav-submenu {
   opacity: 1;
   pointer-events: auto;
@@ -1563,7 +1558,6 @@
   .layout-futuristic .nav-submenu::after {
     display: none; /* Hide indicator arrow on mobile to prevent layout disconnect */
   }
-  .layout-futuristic .nav-item:hover .nav-submenu,
   .layout-futuristic .nav-item.is-open .nav-submenu {
     transform: translateY(0) scale(1);
   }
@@ -1585,7 +1579,7 @@
     top: 60px;
     width: 180px;
   }
-  .layout-futuristic .settings-toggle-btn { display: none !important;
+  .layout-futuristic .settings-toggle-btn { /* gear restored */
     top: 12px;
     right: 12px;
   }
@@ -3175,7 +3169,7 @@ body.layout-nexus .minimap-action-btn:hover {
   border-color: var(--nexus-sky) !important;
   color: #ffffff !important;
   box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
-}}}
+}
 
 /* Project Info Panel */
 .project-info-panel {
@@ -9222,7 +9216,7 @@ body.region-mode-active #container {
 .layout-monarch .switcher-slider {
   border-color: #C8A96B !important;
   box-shadow: 0 0 12px rgba(200, 169, 107, 0.8) !important;
-}}
+}
 
 /* ====================================================
    LAYOUT 8 â€” PRISM LAYOUT
@@ -10871,7 +10865,7 @@ body.layout-nexus .modal-header h2 {
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
-}}}}
+}
 
 /* -------------------------------------------------------
    LUXURY LIGHT SWEEP ANIMATION
@@ -10955,15 +10949,11 @@ body.layout-nexus .modal-header h2 {
   align-items: center;
   justify-content: center;
   pointer-events: auto !important;
-}}}}}}}}}
+}
 
 @keyframes monarchCrossfade {
   from { opacity: 0; }
   to { opacity: 1; }
-}}}}}}}}}}}}}}}}}}}}}}}}
-}}}}}}}}}}}
-}}}}}}}}
-}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
 }
 
 /* =========================================================
@@ -10985,8 +10975,8 @@ body.layout-nexus .modal-header h2 {
 
 .layout-command #layout-switcher-wrapper {
   bottom: 65px !important;
-  left: 14px !important;
-  right: auto !important;
+  right: 14px !important;
+  left: auto !important;
   background: rgba(9, 4, 26, 0.85) !important;
   border: 1px solid var(--cmd-border-strong) !important;
   box-shadow: 0 0 20px rgba(0,229,255,0.2), inset 0 0 10px rgba(0,229,255,0.1) !important;
@@ -11006,14 +10996,14 @@ body.layout-regal #layout-switcher-wrapper {
 
 body.layout-command #layout-switcher-wrapper {
   display: flex !important;
-  left: 14px !important;
-  right: auto !important;
+  right: 14px !important;
+  left: auto !important;
   bottom: 65px !important;
 }
 
 body.layout-command #layout-switcher-wrapper .layout-switcher-pill {
-  left: 100% !important;
-  right: auto !important;
+  right: 100% !important;
+  left: auto !important;
   margin-left: 10px !important;
   margin-right: 0 !important;
   transform-origin: left center !important;
@@ -13296,8 +13286,8 @@ body * {
 
 .layout-command #layout-switcher-wrapper {
   bottom: 65px !important;
-  left: 14px !important;
-  right: auto !important;
+  right: 14px !important;
+  left: auto !important;
   background: rgba(9, 4, 26, 0.85) !important;
   border: 1px solid var(--cmd-border-strong) !important;
   box-shadow: 0 0 20px rgba(0,229,255,0.2), inset 0 0 10px rgba(0,229,255,0.1) !important;
@@ -14891,7 +14881,7 @@ body {
   .vertical-tool-stack, .rgl-neo-tools-system, .prism-tool-panel,
   .nexus-tool-panel, .monarch-command-panel {
     transform: scale(0.85) !important;
-    transform-origin: bottom right !important;
+    transform-origin: bottom left !important;
     bottom: calc(75px + var(--sab)) !important; 
   }
   
@@ -14926,8 +14916,7 @@ body {
 .project-info-panel, .bottom-nav-container, .vertical-tool-stack,
 .gg-hotspot, .nexus-hotspot, .prism-hotspot, .monarch-hotspot, .regal-hotspot {
   will-change: transform, opacity;
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  /* transform: translateZ(0) removed */
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   perspective: 1000px;
@@ -14948,4 +14937,223 @@ body {
 /* 4. Improve Tap Highlight on Mobile */
 * {
   -webkit-tap-highlight-color: transparent;
+}
+
+
+
+/* ====================================================================
+   FIX MISALIGNED ELEMENTS AS REQUESTED (BOTTOM/CENTER/TOP ALIGNMENTS)
+   ==================================================================== */
+
+/* Layout 1 (Classic) thanh điều hướng về giữa ở dưới */
+body.layout-classic .bottom-nav-container {
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: bottom center !important;
+}
+
+/* Layout 8 (Nexus) thanh điều hướng về giữa ở trên */
+body.layout-nexus .nexus-nav-container {
+  top: 16px !important;
+  bottom: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: top center !important;
+}
+
+/* Layout 2 (Futuristic) thanh công cụ về giữa bên phải */
+body.layout-futuristic .futuristic-settings-group {
+  top: 50% !important;
+  right: 12px !important;
+  transform: translateY(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: right center !important;
+}
+
+
+/* Layout 11 (Command) nút TAV Version về góc trái trên la bàn, cụm chuyển view về chính giữa */
+body.layout-command #layout-switcher-wrapper {
+  bottom: 65px !important;
+  left: 14px !important;
+  right: auto !important;
+  transform: scale(var(--current-scale, 1)) !important;
+  transform-origin: bottom left !important;
+}
+body.layout-command #layout-switcher-wrapper .layout-switcher-pill {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  margin: 0 !important;
+  transform-origin: bottom center !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+}
+
+
+/* --- ABSOLUTE OVERRIDE FOR LAYOUT 11 SWITCHER (FIX OVERLAP) --- */
+body.layout-command #layout-switcher-wrapper {
+  position: fixed !important;
+  bottom: 75px !important; 
+  left: 14px !important;
+  right: auto !important;
+  top: auto !important;
+  transform: scale(var(--current-scale, 1)) !important;
+  transform-origin: bottom left !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+/* Ensure the pill opens to the RIGHT so it doesn't overlap or go off screen */
+body.layout-command #layout-switcher-wrapper .layout-switcher-pill {
+  position: absolute !important;
+  left: 100% !important;
+  right: auto !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) translateX(-10px) !important;
+  margin: 0 !important;
+  margin-left: 10px !important;
+  transform-origin: left center !important;
+}
+
+body.layout-command #layout-switcher-wrapper:hover .layout-switcher-pill,
+body.layout-command #layout-switcher-wrapper.active .layout-switcher-pill {
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+
+/* --- FIX CAROUSEL CENTERING (OVERRIDING GLOBAL SCALE) --- */
+.premium-carousel-container {
+  left: 50% !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: bottom center !important;
+}
+
+
+}
+
+
+/* ========================================================
+   LAYOUT 1 & 2: TOOLBAR COLLAPSE/EXPAND LOGIC
+   ======================================================== */
+
+/* 1. Ensure Gear Icon is ALWAYS visible */
+.layout-classic .settings-toggle-btn,
+.layout-futuristic .settings-toggle-btn {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  cursor: pointer;
+  z-index: 1002;
+}
+
+/* 2. Hide tools by default (opacity 0, pointer-events none) */
+.layout-classic .tool-buttons-sub-stack,
+.layout-futuristic .tool-buttons-sub-stack {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(15px) scale(0.9) !important;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  visibility: hidden !important;
+  max-height: 0 !important;
+}
+
+/* Layout 2 uses vertical-tool-stack differently, the sub-stack is what expands */
+.layout-futuristic .vertical-tool-stack {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+/* 3. Show tools on Hover OR when .expanded class is active */
+/* Layout 1: Hovering the wrapper OR having .expanded */
+.layout-classic .vertical-tool-stack:hover .tool-buttons-sub-stack,
+.layout-classic .vertical-tool-stack.expanded .tool-buttons-sub-stack {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+  max-height: 500px !important;
+}
+
+/* Layout 2: Hovering the group OR having .expanded */
+.layout-futuristic .futuristic-settings-group:hover .tool-buttons-sub-stack,
+.layout-futuristic .futuristic-settings-group.expanded .tool-buttons-sub-stack {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(0) scale(1) !important;
+  max-height: 500px !important;
+}
+
+/* Ensure Layout 1 & 2 gear rotates gracefully */
+.layout-futuristic .futuristic-settings-group:hover .settings-toggle-btn svg,
+.layout-futuristic .futuristic-settings-group.expanded .settings-toggle-btn svg,
+.layout-classic .vertical-tool-stack:hover .settings-toggle-btn svg,
+.layout-classic .vertical-tool-stack.expanded .settings-toggle-btn svg {
+  transform: rotate(90deg);
+  transition: transform 0.4s ease;
+}
+
+/* Make futuristic group behave EXACTLY like vertical-tool-stack in Layout 1 */
+body.layout-futuristic #futuristic-settings-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+body.layout-futuristic #futuristic-settings-group .tool-buttons-sub-stack {
+  transform: translateY(15px) scale(0.9) !important; /* Slide up from gear */
+  margin-bottom: 0px !important;
+}
+
+body.layout-futuristic #futuristic-settings-group:hover .tool-buttons-sub-stack,
+body.layout-futuristic #futuristic-settings-group.expanded .tool-buttons-sub-stack {
+  transform: translateY(0) scale(1) !important;
+  margin-bottom: 10px !important;
+}
+
+
+/* --- FIX LAYOUT 2 TOOLS VISIBILITY (SVG Icon Restorer) --- */
+body.layout-futuristic .tool-button svg {
+  width: 21px !important;
+  height: 21px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Ensure futuristic group is always visible so it can be hovered */
+body.layout-futuristic #futuristic-settings-group {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* RESTORE HOVER LOGIC FOR NAV SUBMENU */
+.layout-classic .nav-item:hover .nav-submenu,
+.layout-futuristic .nav-item:hover .nav-submenu {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  transform: translateX(-50%) translateY(0) translateZ(20px) scale(1);
+}
+
+.layout-futuristic .nav-item:hover .nav-submenu {
+  transform: translateX(0) scale(1) !important;
+}
+
+/* Ensure futuristic group is always visible so it can be hovered */
+body.layout-futuristic #futuristic-settings-group {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure futuristic group is always visible so it can be hovered */
+body.layout-futuristic #futuristic-settings-group {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
 }
