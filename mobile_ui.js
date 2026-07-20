@@ -10,9 +10,9 @@ function initMobileUI() {
 
   // Data Definition
   window.TAV_SCENES = [
-    { id: "node1", title: "TOP VIEW DAY 1", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
-    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "BIRD VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
-    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "BIRD VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
+    { id: "node1", title: "Top View", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
+    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "TOP VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
+    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "TOP VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
     { id: "node4", title: "TAV PARK", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK.jpg", action: "node4" },
     { id: "node5", title: "TAV STREET", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN STREET.jpg", action: "node5" },
     { id: "node6", title: "TAV PARK 2", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK 02.jpg", action: "node6" },

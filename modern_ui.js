@@ -54,9 +54,9 @@
   tryAutoplay();
 
   window.TAV_SCENES = [
-    { id: "node1", title: "TOP VIEW DAY 1", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
-    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "BIRD VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
-    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "BIRD VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
+    { id: "node1", title: "Top View", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
+    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "TOP VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
+    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "TOP VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
     { id: "node4", title: "TAV PARK", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK.jpg", action: "node4" },
     { id: "node5", title: "TAV STREET", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN STREET.jpg", action: "node5" },
     { id: "node6", title: "TAV PARK 2", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK 02.jpg", action: "node6" },
@@ -193,7 +193,7 @@ function generateSubmenuHTML(items, itemClass) {
       <div class="cmd-ribbon-center">
         <div class="cmd-node-label" id="cmd-node-label">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-          <span id="cmd-scene-name">TOP VIEW DAY 1</span>
+          <span id="cmd-scene-name">Top View</span>
         </div>
       </div>
       <div class="cmd-ribbon-right">
@@ -242,9 +242,15 @@ function generateSubmenuHTML(items, itemClass) {
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
 
-      <button class="premium-carousel-all-views" id="pc-all-views" aria-label="All Views">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
-      </button>
+      <div class="pc-category-selector" id="pc-category-selector">
+        <div class="pc-category-active" id="pc-category-active">
+          <span id="pc-category-label">Category</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="pc-category-dropdown" id="pc-category-dropdown">
+          <!-- Categories injected dynamically -->
+        </div>
+      </div>
     </div>
 
     <!-- Floating Expand Mode (Scene Browser) -->
@@ -560,7 +566,7 @@ function generateSubmenuHTML(items, itemClass) {
             </div>
             <div class="quick-nav-cat-body">
               <div class="quick-nav-item" data-pano-node="node1">
-                <div class="qn-name">Top view day 1</div>
+                <div class="qn-name">Top View</div>
                 <div class="qn-active-indicator"></div>
               </div>
               <div class="quick-nav-item" data-pano-node="node2">
@@ -4126,13 +4132,18 @@ document.addEventListener('click', (e) => {
     });
     // Update scene name in ribbon
     const sceneNameMap = {
-      node1: 'TOP VIEW DAY 1', node2: 'BIRD VIEW 1', node3: 'BIRD VIEW 2',
+      node1: 'Top View', node2: 'BIRD VIEW 1', node3: 'BIRD VIEW 2',
       node4: 'TAV PARK', node5: 'TAV STREET', node6: 'TAV PARK 2',
       node7: 'TAV LIVING 2', node8: 'TAV LIVING 1', node9: 'TAV THÔNG TẦNG',
       node10: 'BALCONY', node11: 'TAV WC'
     };
     const nameEl = document.getElementById('cmd-scene-name');
     if (nameEl && sceneNameMap[nodeId]) nameEl.textContent = sceneNameMap[nodeId];
+    
+    // Sync Premium Carousel if active
+    if (window.premiumCarouselInstance && window.premiumCarouselInstance.syncWithActiveNode) {
+      window.premiumCarouselInstance.syncWithActiveNode(nodeId);
+    }
   }
 
   // ==========================================
@@ -6377,7 +6388,13 @@ function closeGlobalPanoramaGallery() {
 
 class PremiumSceneCarousel {
   constructor() {
-    this.scenes = window.TAV_SCENES || [];
+    this.allScenes = window.TAV_SCENES || [];
+    this.categories = [...new Set(this.allScenes.map(s => s.category).filter(Boolean))];
+    if (this.categories.length === 0) this.categories = ['All'];
+    this.currentCategory = this.categories[0];
+    this.scenes = this.allScenes.filter(s => s.category === this.currentCategory);
+    if (this.scenes.length === 0) this.scenes = this.allScenes;
+    
     this.currentIndex = 0;
     this.isAnimating = false;
     
@@ -6386,7 +6403,11 @@ class PremiumSceneCarousel {
     this.track = document.getElementById('pc-track');
     this.prevBtn = document.getElementById('pc-prev');
     this.nextBtn = document.getElementById('pc-next');
-    this.allViewsBtn = document.getElementById('pc-all-views');
+    
+    this.categorySelector = document.getElementById('pc-category-selector');
+    this.categoryActive = document.getElementById('pc-category-active');
+    this.categoryLabel = document.getElementById('pc-category-label');
+    this.categoryDropdown = document.getElementById('pc-category-dropdown');
     
     // Browser Modal Elements
     this.browserModal = document.getElementById('premium-scene-browser');
@@ -6402,9 +6423,92 @@ class PremiumSceneCarousel {
   }
   
   init() {
+    this.renderCategoryDropdown();
+    this.syncWithActiveNode(typeof activePanoNode !== 'undefined' ? activePanoNode : null);
     this.renderCarousel();
     this.setupEventListeners();
     this.buildBrowser();
+  }
+
+  renderCategoryDropdown() {
+    if (!this.categoryDropdown || !this.categoryLabel) return;
+    this.categoryDropdown.innerHTML = '';
+    this.categories.forEach(cat => {
+      const item = document.createElement('div');
+      item.className = 'pc-category-item';
+      if (cat === this.currentCategory) item.classList.add('selected');
+      item.textContent = cat;
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.setCategory(cat);
+        this.categoryDropdown.classList.remove('open');
+      });
+      this.categoryDropdown.appendChild(item);
+    });
+    this.categoryLabel.textContent = this.currentCategory;
+  }
+
+  setCategory(category) {
+    if (this.currentCategory === category) return;
+    this.currentCategory = category;
+    this.scenes = this.allScenes.filter(s => s.category === category);
+    if (this.scenes.length === 0) this.scenes = this.allScenes;
+    this.currentIndex = 0;
+    
+    if (this.categoryLabel) this.categoryLabel.textContent = category;
+    
+    // Update selected class in dropdown
+    if (this.categoryDropdown) {
+      Array.from(this.categoryDropdown.children).forEach(child => {
+        child.classList.toggle('selected', child.textContent === category);
+      });
+    }
+    
+    // Animate carousel out/in
+    if (this.track) {
+      this.track.style.opacity = '0';
+      this.track.style.transform = 'translateX(20px)';
+      setTimeout(() => {
+        this.renderCarousel();
+        this.track.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+        this.track.style.opacity = '1';
+        this.track.style.transform = 'translateX(0)';
+        
+        // Auto trigger the first scene in this category
+        if (this.scenes.length > 0) {
+          this.triggerScene(this.scenes[this.currentIndex]);
+        }
+      }, 300);
+    }
+  }
+
+  syncWithActiveNode(nodeId) {
+    if (!nodeId) return;
+    const sceneIdx = this.allScenes.findIndex(s => s.action === nodeId || s.id === nodeId);
+    if (sceneIdx !== -1) {
+      const scene = this.allScenes[sceneIdx];
+      if (scene.category && scene.category !== this.currentCategory) {
+        this.currentCategory = scene.category;
+        this.scenes = this.allScenes.filter(s => s.category === this.currentCategory);
+        if (this.categoryLabel) this.categoryLabel.textContent = this.currentCategory;
+        if (this.categoryDropdown) {
+          Array.from(this.categoryDropdown.children).forEach(child => {
+            child.classList.toggle('selected', child.textContent === this.currentCategory);
+          });
+        }
+      }
+      
+      // Find index in current scenes
+      const localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
+      if (localIdx !== -1 && localIdx !== this.currentIndex) {
+        this.currentIndex = localIdx;
+        this.renderCarousel();
+      } else if (localIdx === -1) {
+        // Fallback if not found in category (shouldn't happen)
+        this.currentIndex = 0;
+        this.renderCarousel();
+      }
+    }
   }
   
   getWrappedIndex(index) {
@@ -6484,7 +6588,7 @@ class PremiumSceneCarousel {
     }
     
     // Enable track sliding
-    this.track.style.transition = 'transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)';
+    this.track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
     this.track.classList.add(`sliding-${direction > 0 ? 'next' : 'prev'}`);
     
     setTimeout(() => {
@@ -6502,8 +6606,8 @@ class PremiumSceneCarousel {
       void this.track.offsetWidth;
       this.track.style.transition = ''; // Let CSS handle it
       
-      setTimeout(() => { this.isAnimating = false; }, 20);
-    }, 300); // Wait for transition to complete
+      setTimeout(() => { this.isAnimating = false; }, 50);
+    }, 600); // Wait for transition to complete
   }
   
   triggerScene(scene) {
@@ -6565,12 +6669,26 @@ class PremiumSceneCarousel {
       if (touchEndX - touchStartX > 50) this.navigate(-1);
     });
     
-    // Browser
-    this.allViewsBtn.addEventListener('click', () => this.openBrowser());
-    this.browserClose.addEventListener('click', () => this.closeBrowser());
-    this.browserOverlay.addEventListener('click', () => this.closeBrowser());
+    // Category Dropdown
+    if (this.categoryActive && !this.categoryActive.dataset.bound) {
+      this.categoryActive.dataset.bound = "true";
+      this.categoryActive.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.categoryDropdown.classList.toggle('open');
+      });
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (this.categorySelector && !this.categorySelector.contains(e.target)) {
+          if (this.categoryDropdown) this.categoryDropdown.classList.remove('open');
+        }
+      });
+    }
     
-    this.browserSearch.addEventListener('input', (e) => this.filterBrowser(e.target.value));
+    // Browser Modal events
+    if (this.browserClose) this.browserClose.addEventListener('click', () => this.closeBrowser());
+    if (this.browserOverlay) this.browserOverlay.addEventListener('click', () => this.closeBrowser());
+    
+    if (this.browserSearch) this.browserSearch.addEventListener('input', (e) => this.filterBrowser(e.target.value));
   }
   
   // Browser logic
@@ -6653,7 +6771,11 @@ window.initPremiumCarousel = function() {
       window.premiumCarouselInstance.track = document.getElementById('pc-track');
       window.premiumCarouselInstance.prevBtn = document.getElementById('pc-prev');
       window.premiumCarouselInstance.nextBtn = document.getElementById('pc-next');
-      window.premiumCarouselInstance.allViewsBtn = document.getElementById('pc-all-views');
+      
+      window.premiumCarouselInstance.categorySelector = document.getElementById('pc-category-selector');
+      window.premiumCarouselInstance.categoryActive = document.getElementById('pc-category-active');
+      window.premiumCarouselInstance.categoryLabel = document.getElementById('pc-category-label');
+      window.premiumCarouselInstance.categoryDropdown = document.getElementById('pc-category-dropdown');
       
       window.premiumCarouselInstance.browserModal = document.getElementById('premium-scene-browser');
       window.premiumCarouselInstance.browserOverlay = document.getElementById('psb-overlay');
