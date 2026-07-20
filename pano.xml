@@ -308,7 +308,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -332,7 +332,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -355,7 +355,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -378,7 +378,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -401,7 +401,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -424,7 +424,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -446,7 +446,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -469,7 +469,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -492,7 +492,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -515,7 +515,7 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
@@ -538,14 +538,14 @@
       <polystyle handcursor="1" mode="0" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.25098" borderalpha="1"/>
     </hotspots>
     <media/>
-    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="0" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="0" type="crossdissolve" blendtime="2"/>
+    <transition blendcolor="0x000000" zoomfov="40" zoomafterinfov="140" zoomafteroutfov="40" zoomin="1" enabled="1" zoomspeed="2" zoomoutpause="1" delay="none" softedge="0" zoomout="1" type="crossdissolve" blendtime="1"/>
     <animation syncanimationwithvideo="0" animsequence="Animation01" useinautorotation="0" clipsrandom="0"/>
     <control speedwheel="1" contextprojections="0" lockedkeyboardzoom="0" dblclickfullscreen="0" lockedwheel="0" zoomcentercursor="1" simulatemass="1" invertwheel="0" lockedkeyboard="0" lockedmouse="0" contextfullscreen="1" hideabout="0" sensitivity="8" invertcontrol="1" contextvr="1" rubberband="0"/>
   </panorama>
 
   <masternode>
     <userdata author="" comment="" copyright="" description="" tags="" title="" uuid="{daba5dda-a60f-40e4-b426-e434dbe20b80}" />
-    <transition blendcolor="0x000000" blendtime="2" delay="none" enabled="1" softedge="0" type="crossdissolve" zoomafterinfov="140" zoomafteroutfov="40" zoomfov="40" zoomin="0" zoomout="0" zoomoutpause="1" zoomspeed="2" />
+    <transition blendcolor="0x000000" blendtime="1" delay="none" enabled="1" softedge="0" type="crossdissolve" zoomafterinfov="140" zoomafteroutfov="40" zoomfov="40" zoomin="1" zoomout="1" zoomoutpause="1" zoomspeed="2" />
     <control contextfullscreen="1" contextprojections="0" contextvr="1" dblclickfullscreen="0" hideabout="0" invertcontrol="1" invertwheel="0" lockedkeyboard="0" lockedkeyboardzoom="0" lockedmouse="0" lockedwheel="0" rubberband="0" sensitivity="8" simulatemass="1" speedwheel="1" zoomcentercursor="1" />
     <animationsequences>
       <sequence title="Animation01" />
@@ -555,4 +555,5 @@
       <polystyle backgroundalpha="0.25098" backgroundcolor="0x0000ff" borderalpha="1" bordercolor="0x0000ff" handcursor="1" mode="0" />
     </hotspots>
   </masternode>
+  <autorotate enabled="0" speed="0.001" delay="1.00" startloaded="0" returntohorizon="0.000" />
 </tour>

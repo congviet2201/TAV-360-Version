@@ -206,6 +206,9 @@ function generateSubmenuHTML(items, itemClass) {
         <button class="cmd-ribbon-btn" data-action="fullscreen" title="Fullscreen">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
         </button>
+          <button class="cmd-ribbon-btn" data-action="autorotate" title="Tự động xoay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </button>
       </div>
     </div>
   `;
@@ -304,9 +307,9 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="cmd-ctrl-label">SHARE</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
-      <div class="cmd-ctrl-tile" data-action="fullscreen" title="To\u00e0n m\u00e0n h\u00ecnh">
-        <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg></div>
-        <div class="cmd-ctrl-label">EXPAND</div>
+      <div class="cmd-ctrl-tile" data-action="autorotate" title="Tự động xoay">
+        <div class="cmd-ctrl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg></div>
+        <div class="cmd-ctrl-label">ROTATE</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
       <div class="cmd-ctrl-tile" data-action="call" title="Li\u00ean h\u1ec7">
@@ -336,6 +339,9 @@ function generateSubmenuHTML(items, itemClass) {
       <div class="quick-action-btn" data-action="fullscreen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
       </div>
+        <div class="quick-action-btn" data-action="autorotate" title="Tự động xoay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+        </div>
     </div>
   `;
 
@@ -458,6 +464,16 @@ function generateSubmenuHTML(items, itemClass) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
           </div>
         </div>
+        <div class="vision-icon-wrapper" data-action="autorotate" title="Tự động xoay">
+          <div class="vision-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+        </div>
+        <div class="vision-icon-wrapper" data-action="autorotate" title="Tự động xoay">
+          <div class="vision-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -521,6 +537,18 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.92 1.5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <div class="tool-tooltip">Tư Vấn</div>
+        </div>
+        <div class="tool-button" data-action="autorotate" id="btn-autorotate">
+          <div class="tool-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+          <div class="tool-tooltip">Tự động xoay</div>
+        </div>
+        <div class="tool-button" data-action="autorotate" id="btn-autorotate">
+          <div class="tool-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
+          <div class="tool-tooltip">Tự động xoay</div>
         </div>
         <!-- 7. Social Links (with sub-dropdown) -->
         <div class="tool-button has-dropdown" data-action="social" id="btn-social">
@@ -1009,6 +1037,14 @@ function generateSubmenuHTML(items, itemClass) {
           </svg>
           <div class="neo-tooltip">Toàn Màn Hình</div>
         </div>
+          <div class="neo-dock-item" data-action="autorotate" title="Tự động xoay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+            <div class="neo-tooltip">Tự động xoay</div>
+          </div>
+          <div class="neo-dock-item" data-action="autorotate" title="Tự động xoay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+            <div class="neo-tooltip">Tự động xoay</div>
+          </div>
       </div>
     </div>
   `;
@@ -1225,6 +1261,18 @@ function generateSubmenuHTML(items, itemClass) {
           </div>
           <span class="aurora-tool-label">Toàn Màn Hình</span>
         </div>
+        <div class="aurora-tool-item" data-action="autorotate" title="Tự động xoay" style="--accent-color: var(--aurora-cyan);">
+          <div class="aurora-tool-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+          <span class="aurora-tool-label">Xoay 360</span>
+        </div>
+        <div class="aurora-tool-item" data-action="autorotate" title="Tự động xoay" style="--accent-color: var(--aurora-cyan);">
+          <div class="aurora-tool-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
+          <span class="aurora-tool-label">Xoay 360</span>
+        </div>
       </div>
     </div>
   `;
@@ -1391,6 +1439,12 @@ function generateSubmenuHTML(items, itemClass) {
           <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
         </svg>
       </div>
+        <div class="horizon-tool-item" data-action="autorotate" title="Tự động xoay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+        </div>
+        <div class="horizon-tool-item" data-action="autorotate" title="Tự động xoay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+        </div>
     </div>
   `;
 
@@ -1586,6 +1640,18 @@ function generateSubmenuHTML(items, itemClass) {
             </svg>
           </div>
           <span class="prism-tool-label">Toàn Màn</span>
+        </div>
+        <div class="prism-tool-item" data-action="autorotate">
+          <div class="prism-tool-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+          <span class="prism-tool-label">Xoay 360</span>
+        </div>
+        <div class="prism-tool-item" data-action="autorotate">
+          <div class="prism-tool-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
+          <span class="prism-tool-label">Xoay 360</span>
         </div>
 
 
@@ -1815,6 +1881,20 @@ function generateSubmenuHTML(items, itemClass) {
           <span class="nexus-tool-label">Toàn Màn</span>
           <div class="nexus-tool-tooltip">Toàn màn hình</div>
         </div>
+        <div class="nexus-tool-item" data-action="autorotate">
+          <div class="nexus-tool-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+          <span class="nexus-tool-label">Xoay 360</span>
+          <div class="nexus-tool-tooltip">Tự động xoay</div>
+        </div>
+        <div class="nexus-tool-item" data-action="autorotate">
+          <div class="nexus-tool-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
+          <span class="nexus-tool-label">Xoay 360</span>
+          <div class="nexus-tool-tooltip">Tự động xoay</div>
+        </div>
 
 
       </div>
@@ -1958,6 +2038,18 @@ function generateSubmenuHTML(items, itemClass) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
             </svg>
+          </div>
+        </div>
+        <div class="monarch-command-item monarch-hover-sweep" data-action="autorotate">
+          <span class="monarch-command-label">Tự động xoay</span>
+          <div class="monarch-command-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+        </div>
+        <div class="monarch-command-item monarch-hover-sweep" data-action="autorotate">
+          <span class="monarch-command-label">Tự động xoay</span>
+          <div class="monarch-command-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
           </div>
         </div>
       </div>
@@ -2158,6 +2250,12 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="rgl-neo-tool-btn" data-action="fullscreen" title="Toàn màn hình">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
         </div>
+          <div class="rgl-neo-tool-btn" data-action="autorotate" title="Tự động xoay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          </div>
+          <div class="rgl-neo-tool-btn" data-action="autorotate" title="Tự động xoay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          </div>
       </div>
     </div>
   `;
@@ -3726,7 +3824,15 @@ document.addEventListener('click', (e) => {
     });
 
     // 4. Outside click — close nav dropdowns and unpin toolbar
-    document.addEventListener("click", function(e) {
+    document.addEventListener("fullscreenchange", function() {
+  const isFull = !!document.fullscreenElement;
+  document.querySelectorAll('[data-action="fullscreen"]').forEach(el => {
+    if (isFull) el.classList.add('active');
+    else el.classList.remove('active');
+  });
+});
+
+document.addEventListener("click", function(e) {
       if (!e.target.closest(".prism-nav-item")) {
         navItems.forEach(n => n.classList.remove("open"));
       }
@@ -4995,6 +5101,21 @@ document.addEventListener('click', (e) => {
     const action = element.getAttribute("data-action");
     const panoNode = element.getAttribute("data-pano-node");
 
+    if (action === 'autorotate') {
+      if (typeof window.pano !== 'undefined') {
+        if (typeof window.pano.toggleAutorotate === 'function') {
+          window.pano.toggleAutorotate();
+        } else if (typeof window.pano.getAutorotate === 'function') {
+          if (window.pano.getAutorotate()) {
+             window.pano.stopAutorotate();
+          } else {
+             window.pano.startAutorotate();
+          }
+        }
+      }
+      return;
+    }
+
 
     // 1. Check if it's Region Page
     if (id === "surrounding" || action === "region-page" || element.id === "nav-surrounding" || element.id === "nav-neo-logo") {
@@ -5943,6 +6064,60 @@ document.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("click", function(e) {
     
     // 1. Fullscreen
+        // Autorotate
+    if (e.target.closest('[data-action="autorotate"]')) {
+      if (typeof window.pano !== 'undefined') {
+        // Disable built-in autorotate to avoid conflict
+        if (typeof window.pano.stopAutorotate === 'function') {
+           window.pano.stopAutorotate();
+        }
+
+        window.customAutoRotateActive = !window.customAutoRotateActive;
+
+        if (window.customAutoRotateActive) {
+           if (!window.customRotateFn) {
+              window.customRotateSpeed = 0.08; 
+              window.customRotateFn = () => {
+                 if (!window.customAutoRotateActive) return;
+                 
+                 // Don't rotate if user is interacting
+                 if (!window.isUserInteracting && typeof window.pano.getPan === 'function' && typeof window.pano.setPan === 'function') {
+                    window.pano.setPan(window.pano.getPan() + window.customRotateSpeed);
+                 }
+                 requestAnimationFrame(window.customRotateFn);
+              };
+
+              // Setup interaction detection
+              window.isUserInteracting = false;
+              let interactTimeout;
+              const interactionHandler = () => {
+                 window.isUserInteracting = true;
+                 clearTimeout(interactTimeout);
+                 interactTimeout = setTimeout(() => {
+                    window.isUserInteracting = false;
+                 }, 3000); // Resume after 3s of inactivity
+              };
+
+              document.addEventListener('mousedown', interactionHandler);
+              document.addEventListener('touchstart', interactionHandler);
+              document.addEventListener('wheel', interactionHandler);
+              document.addEventListener('mousemove', (e) => {
+                  if(e.buttons > 0) interactionHandler();
+              });
+           }
+           // Start loop
+           requestAnimationFrame(window.customRotateFn);
+        }
+
+        // Toggle UI classes
+        document.querySelectorAll('[data-action="autorotate"]').forEach(el => {
+          if (window.customAutoRotateActive) el.classList.add('active');
+          else el.classList.remove('active');
+        });
+      }
+      return;
+    }
+
     if (e.target.closest('[data-action="fullscreen"]')) {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
@@ -6519,7 +6694,7 @@ class PremiumSceneCarousel {
   renderCarousel() {
     this.track.innerHTML = '';
     
-    // Render 5 cards to allow smooth sliding from off-screen
+    // Render 5 cards for the 3D stack effect
     const indices = [
       this.getWrappedIndex(this.currentIndex - 2),
       this.getWrappedIndex(this.currentIndex - 1),
@@ -6530,11 +6705,11 @@ class PremiumSceneCarousel {
     
     indices.forEach((sceneIndex, i) => {
       const scene = this.scenes[sceneIndex];
-      // i=0 (far left), i=1 (left), i=2 (center), i=3 (right), i=4 (far right)
-      let positionClass = 'pc-card-hidden';
+      let positionClass = 'pc-card-hidden-left';
       if (i === 1) positionClass = 'pc-card-prev';
       if (i === 2) positionClass = 'pc-card-center';
       if (i === 3) positionClass = 'pc-card-next';
+      if (i === 4) positionClass = 'pc-card-hidden-right';
       
       const card = document.createElement('div');
       card.className = `pc-card ${positionClass}`;
@@ -6554,9 +6729,9 @@ class PremiumSceneCarousel {
       
       card.addEventListener('click', () => {
         if (this.isAnimating) return;
-        if (i === 1) this.navigate(-1);
-        else if (i === 3) this.navigate(1);
-        else if (i === 2) this.triggerScene(scene);
+        if (card.classList.contains('pc-card-prev')) this.navigate(-1);
+        else if (card.classList.contains('pc-card-next')) this.navigate(1);
+        else if (card.classList.contains('pc-card-center')) this.triggerScene(scene);
       });
       
       this.track.appendChild(card);
@@ -6567,47 +6742,34 @@ class PremiumSceneCarousel {
     if (this.isAnimating) return;
     this.isAnimating = true;
     
-    // Smooth class transitions on existing cards
-    const cards = Array.from(this.track.children); // 5 cards
+    const cards = Array.from(this.track.children);
     if (cards.length === 5) {
       if (direction > 0) {
-        // Next: everything shifts left
-        cards[0].className = 'pc-card pc-card-hidden'; // far left stays hidden
-        cards[1].className = 'pc-card pc-card-hidden'; // left becomes far left
-        cards[2].className = 'pc-card pc-card-prev';   // center becomes left
-        cards[3].className = 'pc-card pc-card-center'; // right becomes center
-        cards[4].className = 'pc-card pc-card-next';   // far right becomes right
+        // Next
+        cards[0].className = 'pc-card pc-card-hidden-left'; 
+        cards[1].className = 'pc-card pc-card-hidden-left'; 
+        cards[2].className = 'pc-card pc-card-prev';   
+        cards[3].className = 'pc-card pc-card-center'; 
+        cards[4].className = 'pc-card pc-card-next';   
       } else {
-        // Prev: everything shifts right
-        cards[0].className = 'pc-card pc-card-prev';   // far left becomes left
-        cards[1].className = 'pc-card pc-card-center'; // left becomes center
-        cards[2].className = 'pc-card pc-card-next';   // center becomes right
-        cards[3].className = 'pc-card pc-card-hidden'; // right becomes far right
-        cards[4].className = 'pc-card pc-card-hidden'; // far right stays hidden
+        // Prev
+        cards[0].className = 'pc-card pc-card-prev';   
+        cards[1].className = 'pc-card pc-card-center'; 
+        cards[2].className = 'pc-card pc-card-next';   
+        cards[3].className = 'pc-card pc-card-hidden-right'; 
+        cards[4].className = 'pc-card pc-card-hidden-right'; 
       }
     }
     
-    // Enable track sliding
-    this.track.style.transition = 'transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-    this.track.classList.add(`sliding-${direction > 0 ? 'next' : 'prev'}`);
-    
     setTimeout(() => {
-      // Jump to new state instantly without animation
-      this.track.style.transition = 'none';
       this.currentIndex = this.getWrappedIndex(this.currentIndex + direction);
       this.renderCarousel();
-      this.track.classList.remove('sliding-next', 'sliding-prev');
       
-      // Auto-trigger the panorama if needed
       const scene = this.scenes[this.currentIndex];
       this.triggerScene(scene);
       
-      // Force reflow
-      void this.track.offsetWidth;
-      this.track.style.transition = ''; // Let CSS handle it
-      
       setTimeout(() => { this.isAnimating = false; }, 50);
-    }, 600); // Wait for transition to complete
+    }, 700); // Wait for CSS transition (0.7s) to complete
   }
   
   triggerScene(scene) {

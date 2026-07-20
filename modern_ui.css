@@ -14214,35 +14214,32 @@ body * {
 }
 
 .premium-carousel-track {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 340px; /* Exact width of 3 visible cards (90+10+140+10+90) */
+  display: block;
+  width: 340px;
   height: 90px;
   position: relative;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.premium-carousel-track.sliding-next {
-  transform: translateX(-120px); /* (90+130)/2 + 10 */
-}
-.premium-carousel-track.sliding-prev {
-  transform: translateX(120px);
 }
 
 .pc-card {
-  width: 90px;
-  height: 52px;
+  width: 140px;
+  height: 80px;
   border-radius: 8px;
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              left 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+              filter 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+              border-color 0.3s;
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  flex-shrink: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .pc-card-thumb {
@@ -14303,12 +14300,13 @@ body * {
 
 /* Center Active Card */
 .pc-card-center {
-  width: 140px;
-  height: 80px;
-  transform: scale(1);
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
   z-index: 10;
+  pointer-events: auto;
 }
 
 .pc-card-center .pc-card-title {
@@ -14316,16 +14314,37 @@ body * {
 }
 
 /* Side Cards */
-.pc-card-prev, .pc-card-next {
+.pc-card-prev {
+  left: 15%;
+  transform: translate(-50%, -50%) scale(0.65);
   opacity: 0.5;
   filter: grayscale(20%) brightness(0.8);
+  z-index: 5;
+  pointer-events: auto;
 }
 
-/* Hidden Outer Cards */
-.pc-card-hidden {
+.pc-card-next {
+  left: 85%;
+  transform: translate(-50%, -50%) scale(0.65);
+  opacity: 0.5;
+  filter: grayscale(20%) brightness(0.8);
+  z-index: 5;
+  pointer-events: auto;
+}
+
+/* Hidden Cards (Out of bounds) */
+.pc-card-hidden-left {
+  left: -20%;
+  transform: translate(-50%, -50%) scale(0.4);
   opacity: 0;
-  transform: scale(0.8);
-  pointer-events: none;
+  z-index: 1;
+}
+
+.pc-card-hidden-right {
+  left: 120%;
+  transform: translate(-50%, -50%) scale(0.4);
+  opacity: 0;
+  z-index: 1;
 }
 
 .pc-card:hover {
@@ -15206,4 +15225,11 @@ body.layout-futuristic #futuristic-settings-group {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
+}
+
+
+.cmd-ribbon-btn.active {
+  color: var(--cmd-accent);
+  background: rgba(0, 243, 255, 0.15);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.3), inset 0 0 5px rgba(0, 243, 255, 0.2);
 }
