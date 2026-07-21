@@ -1,0 +1,1010 @@
+/**
+ * mobile_layout2.css — TAV Virtual Tour · Mobile Layout 2
+ * ============================================================
+ * Premium Mobile UI — Inspired by Desktop Layout 5 (Neo)
+ * Namespace: .ml2-*  (never conflicts with .mob-* or Desktop CSS)
+ *
+ * Design Language:
+ *   • Color: Purple/Indigo glass palette from Neo layout
+ *   • Motion: Elastic, smooth, GPU-accelerated
+ *   • Touch: Ripple · Scale · Glow · Press depth
+ *   • UX: One-hand thumb-friendly, 48px+ touch targets
+ * ============================================================
+ */
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --ml2-primary:       #7C3AED;
+  --ml2-primary-dim:   rgba(124, 58, 237, 0.55);
+  --ml2-primary-glow:  rgba(124, 58, 237, 0.35);
+  --ml2-indigo:        #4F46E5;
+  --ml2-indigo-dim:    rgba(79, 70, 229, 0.4);
+  --ml2-emerald:       #059669;
+  --ml2-danger:        #EF4444;
+
+  /* Glass surfaces */
+  --ml2-glass-dark:    rgba(10, 8, 20, 0.75);
+  --ml2-glass-mid:     rgba(20, 15, 40, 0.65);
+  --ml2-glass-light:   rgba(255, 255, 255, 0.08);
+  --ml2-glass-border:  rgba(124, 58, 237, 0.3);
+  --ml2-glass-border-bright: rgba(124, 58, 237, 0.6);
+
+  /* Blur */
+  --ml2-blur:          blur(20px);
+  --ml2-blur-heavy:    blur(32px);
+
+  /* Shadows */
+  --ml2-shadow:        0 8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--ml2-glass-border);
+  --ml2-shadow-glow:   0 8px 32px rgba(124, 58, 237, 0.4), 0 0 0 1px var(--ml2-glass-border-bright);
+  --ml2-shadow-lift:   0 16px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--ml2-glass-border-bright);
+
+  /* Text */
+  --ml2-text:          #FFFFFF;
+  --ml2-text-dim:      rgba(255, 255, 255, 0.6);
+  --ml2-text-muted:    rgba(255, 255, 255, 0.35);
+
+  /* Radius */
+  --ml2-radius-sm:     8px;
+  --ml2-radius-md:     14px;
+  --ml2-radius-lg:     20px;
+  --ml2-radius-pill:   999px;
+
+  /* Timing */
+  --ml2-ease-spring:   cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ml2-ease-smooth:   cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ml2-ease-sharp:    cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Safe areas */
+  --ml2-safe-top:      env(safe-area-inset-top, 12px);
+  --ml2-safe-bottom:   env(safe-area-inset-bottom, 24px);
+  --ml2-safe-left:     env(safe-area-inset-left, 0px);
+  --ml2-safe-right:    env(safe-area-inset-right, 0px);
+
+  /* Dock height */
+  --ml2-dock-height:   72px;
+}
+
+/* ============================================================
+   ROOT OVERLAY — Full-screen pointer-events pass-through
+   ============================================================ */
+#ml2-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: "Inter", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+  color: var(--ml2-text);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Only interactive elements receive pointer events */
+.ml2-interactive {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   TOP STRIP — Logo pill + Compass
+   ============================================================ */
+.ml2-top-strip {
+  position: absolute;
+  top: calc(var(--ml2-safe-top) + 10px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* Logo pill */
+.ml2-logo-pill {
+  pointer-events: auto;
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur);
+  -webkit-backdrop-filter: var(--ml2-blur);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-pill);
+  padding: 8px 18px;
+  box-shadow: var(--ml2-shadow);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: box-shadow 0.3s var(--ml2-ease-smooth);
+}
+
+.ml2-logo-pill:active {
+  box-shadow: var(--ml2-shadow-glow);
+}
+
+.ml2-logo-title {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, var(--ml2-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ml2-logo-sub {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--ml2-text-dim);
+  text-transform: uppercase;
+}
+
+.ml2-logo-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--ml2-glass-border-bright);
+}
+
+/* Layout switcher badge in logo */
+.ml2-layout-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--ml2-primary-glow);
+  border: 1px solid var(--ml2-primary-dim);
+  border-radius: var(--ml2-radius-pill);
+  padding: 3px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #c4b5fd;
+  cursor: pointer;
+  transition: all 0.2s var(--ml2-ease-sharp);
+}
+
+.ml2-layout-badge:active {
+  transform: scale(0.94);
+  background: var(--ml2-primary-dim);
+}
+
+/* ============================================================
+   COMPASS — Floating top-right
+   ============================================================ */
+.ml2-compass {
+  pointer-events: auto;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: var(--ml2-blur);
+  -webkit-backdrop-filter: var(--ml2-blur);
+  border: 1px solid var(--ml2-glass-border-bright);
+  box-shadow: var(--ml2-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s var(--ml2-ease-smooth);
+  position: relative;
+  will-change: transform;
+}
+
+.ml2-compass:active {
+  transform: scale(0.9);
+  box-shadow: var(--ml2-shadow-glow);
+}
+
+.ml2-compass-dial {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.15s linear;
+}
+
+/* Compass needle */
+.ml2-compass-north { fill: var(--ml2-primary); }
+.ml2-compass-south { fill: rgba(30, 41, 59, 0.3); }
+
+/* Degree ring */
+.ml2-compass-ring {
+  stroke: var(--ml2-primary-dim);
+  fill: none;
+  stroke-width: 1.5;
+}
+
+/* ============================================================
+   MINIMAP — Floating collapsible card (bottom-right area,
+   positioned above the dock)
+   ============================================================ */
+.ml2-minimap-card {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml2-dock-height) + var(--ml2-safe-bottom) + 24px);
+  right: 16px;
+  width: 148px;
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur);
+  -webkit-backdrop-filter: var(--ml2-blur);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-md);
+  box-shadow: var(--ml2-shadow);
+  overflow: hidden;
+  transform: scale(0) translateY(10px);
+  transform-origin: bottom right;
+  transition: transform 0.35s var(--ml2-ease-spring), opacity 0.3s;
+  opacity: 0;
+  z-index: 200;
+}
+
+.ml2-minimap-card.ml2-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.ml2-minimap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 6px;
+  border-bottom: 1px solid var(--ml2-glass-border);
+}
+
+.ml2-minimap-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #c4b5fd;
+  text-transform: uppercase;
+}
+
+.ml2-minimap-close-btn {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+.ml2-minimap-close-btn:active { opacity: 1; }
+
+.ml2-minimap-viewport {
+  width: 100%;
+  height: 130px;
+  position: relative;
+  overflow: hidden;
+  background: #0a0814;
+}
+
+.ml2-minimap-img {
+  position: absolute;
+  width: 200%;
+  max-width: none;
+  transition: transform 0.1s linear;
+  transform-origin: top left;
+}
+
+.ml2-minimap-radar {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.ml2-minimap-cone {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 28px solid rgba(124, 58, 237, 0.45);
+  transform-origin: bottom center;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 0 4px var(--ml2-primary));
+}
+
+.ml2-minimap-dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--ml2-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 8px var(--ml2-primary-glow);
+}
+
+.ml2-minimap-zoom {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 10px;
+}
+
+.ml2-minimap-zoom-btn {
+  flex: 1;
+  height: 26px;
+  background: var(--ml2-glass-light);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-sm);
+  color: var(--ml2-text);
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.ml2-minimap-zoom-btn:active {
+  background: var(--ml2-primary-glow);
+  transform: scale(0.9);
+}
+
+/* ============================================================
+   FLOATING BOTTOM DOCK — Primary navigation bar
+   ============================================================ */
+.ml2-dock {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 24px;
+  left: 16px;
+  right: 16px;
+  height: var(--ml2-dock-height);
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur-heavy);
+  -webkit-backdrop-filter: var(--ml2-blur-heavy);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-pill);
+  box-shadow: var(--ml2-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 300;
+  overflow: hidden;
+}
+
+/* Gradient top edge */
+.ml2-dock::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 181, 253, 0.4), transparent);
+}
+
+/* Dock Tab Button */
+.ml2-dock-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  height: 100%;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  color: var(--ml2-text-dim);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-family: inherit;
+  position: relative;
+  transition: color 0.2s var(--ml2-ease-sharp);
+  -webkit-tap-highlight-color: transparent;
+  min-width: 48px;
+  overflow: hidden;
+}
+
+.ml2-dock-tab svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.25s var(--ml2-ease-spring);
+}
+
+.ml2-dock-tab.ml2-active {
+  color: #c4b5fd;
+}
+
+.ml2-dock-tab.ml2-active svg {
+  transform: translateY(-2px) scale(1.1);
+  filter: drop-shadow(0 0 6px var(--ml2-primary-dim));
+}
+
+.ml2-dock-tab:active svg {
+  transform: scale(0.88);
+}
+
+/* Active indicator dot */
+.ml2-dock-tab.ml2-active::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ml2-primary);
+  box-shadow: 0 0 6px var(--ml2-primary-glow);
+}
+
+/* Ripple effect */
+.ml2-ripple-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ml2-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(196, 181, 253, 0.25);
+  transform: scale(0);
+  animation: ml2RippleExpand 0.5s var(--ml2-ease-smooth) forwards;
+  pointer-events: none;
+}
+
+@keyframes ml2RippleExpand {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* Center FAB — Scene button */
+.ml2-dock-fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--ml2-primary) 0%, var(--ml2-indigo) 100%);
+  box-shadow: 0 4px 20px var(--ml2-primary-glow), 0 0 0 3px rgba(124, 58, 237, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  transition: all 0.25s var(--ml2-ease-spring);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.ml2-dock-fab:active {
+  transform: scale(0.9);
+  box-shadow: 0 2px 12px var(--ml2-primary-glow);
+}
+
+.ml2-dock-fab svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s var(--ml2-ease-spring);
+}
+
+.ml2-dock-fab.ml2-open svg {
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   BACKDROP OVERLAY
+   ============================================================ */
+.ml2-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ml2-ease-smooth);
+  z-index: 400;
+}
+
+.ml2-backdrop.ml2-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   SCENE BROWSER — Full bottom sheet
+   ============================================================ */
+.ml2-scene-sheet {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur-heavy);
+  -webkit-backdrop-filter: var(--ml2-blur-heavy);
+  border: 1px solid var(--ml2-glass-border);
+  border-bottom: none;
+  border-radius: var(--ml2-radius-lg) var(--ml2-radius-lg) 0 0;
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.42s var(--ml2-ease-smooth), opacity 0.42s var(--ml2-ease-smooth), visibility 0.42s;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  max-height: 85dvh;
+  overflow: hidden;
+}
+
+.ml2-scene-sheet.ml2-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Drag handle */
+.ml2-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin: 14px auto 0;
+  flex-shrink: 0;
+}
+
+/* Sheet header */
+.ml2-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 10px;
+  flex-shrink: 0;
+}
+
+.ml2-sheet-title {
+  font-size: 17px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ml2-sheet-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--ml2-glass-light);
+  border: 1px solid var(--ml2-glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ml2-text-dim);
+  transition: all 0.2s;
+}
+
+.ml2-sheet-close:active {
+  background: var(--ml2-primary-glow);
+  color: #fff;
+  transform: scale(0.9);
+}
+
+/* Category filter pills */
+.ml2-category-pills {
+  display: flex;
+  gap: 8px;
+  padding: 4px 20px 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-shrink: 0;
+}
+
+.ml2-category-pills::-webkit-scrollbar { display: none; }
+
+.ml2-cat-pill {
+  flex-shrink: 0;
+  padding: 7px 16px;
+  border-radius: var(--ml2-radius-pill);
+  border: 1px solid var(--ml2-glass-border);
+  background: var(--ml2-glass-light);
+  color: var(--ml2-text-dim);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s var(--ml2-ease-sharp);
+  white-space: nowrap;
+}
+
+.ml2-cat-pill.ml2-active {
+  background: linear-gradient(135deg, var(--ml2-primary), var(--ml2-indigo));
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px var(--ml2-primary-glow);
+}
+
+.ml2-cat-pill:active { transform: scale(0.93); }
+
+/* Scene grid */
+.ml2-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 4px 16px calc(16px + var(--ml2-safe-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+.ml2-scene-grid::-webkit-scrollbar { width: 3px; }
+.ml2-scene-grid::-webkit-scrollbar-thumb { background: var(--ml2-glass-border); border-radius: 2px; }
+
+/* Scene card */
+.ml2-scene-card {
+  border-radius: var(--ml2-radius-md);
+  overflow: hidden;
+  background: var(--ml2-glass-mid);
+  border: 1px solid var(--ml2-glass-border);
+  cursor: pointer;
+  transition: all 0.25s var(--ml2-ease-spring);
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.ml2-scene-card.ml2-active-scene {
+  border-color: var(--ml2-primary);
+  box-shadow: 0 0 0 2px var(--ml2-primary-dim), 0 6px 20px var(--ml2-primary-glow);
+}
+
+.ml2-scene-card:active {
+  transform: scale(0.95);
+  box-shadow: var(--ml2-shadow-glow);
+}
+
+.ml2-scene-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: linear-gradient(135deg, #1a0836 0%, #0a0520 100%);
+}
+
+.ml2-scene-thumb-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #2d1b69 0%, #1e1040 100%);
+  font-size: 32px;
+}
+
+.ml2-scene-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 10px 8px;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+}
+
+.ml2-scene-name {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ml2-scene-sub {
+  font-size: 9px;
+  color: var(--ml2-text-dim);
+  margin-top: 1px;
+}
+
+/* Active scene check badge */
+.ml2-scene-card.ml2-active-scene::after {
+  content: '✓';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--ml2-primary);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px var(--ml2-primary-glow);
+}
+
+/* ============================================================
+   COMPACT TOOLS POPUP (Settings)
+   ============================================================ */
+.ml2-tools-popup {
+  pointer-events: none;
+  position: absolute;
+  bottom: calc(var(--ml2-dock-height) + var(--ml2-safe-bottom) + 16px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur-heavy);
+  -webkit-backdrop-filter: var(--ml2-blur-heavy);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-lg);
+  z-index: 500;
+  opacity: 0;
+  transition: all 0.3s var(--ml2-ease-spring);
+  box-shadow: var(--ml2-shadow-heavy);
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  max-width: 340px;
+  padding: 12px;
+}
+
+.ml2-tools-popup.ml2-open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* Tools grid */
+.ml2-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 0 0 12px 0;
+}
+
+.ml2-tool-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 4px 10px;
+  border-radius: 12px;
+  background: var(--ml2-glass-light);
+  border: 1px solid var(--ml2-glass-border);
+  cursor: pointer;
+  transition: all 0.2s var(--ml2-ease-spring);
+  color: var(--ml2-text-dim);
+  position: relative;
+  overflow: hidden;
+}
+
+.ml2-tool-item:active {
+  transform: scale(0.91);
+  background: var(--ml2-primary-glow);
+  border-color: var(--ml2-primary-dim);
+  color: #fff;
+}
+
+.ml2-tool-item.ml2-tool-active {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: var(--ml2-primary-dim);
+  color: #c4b5fd;
+}
+
+.ml2-tool-item svg {
+  width: 20px;
+  height: 20px;
+}
+
+.ml2-tool-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Layout switcher section in tools sheet */
+.ml2-layout-switcher-row {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--ml2-glass-border);
+}
+
+.ml2-layout-switcher-label {
+  font-size: 11px;
+  color: var(--ml2-text-dim);
+  flex-shrink: 0;
+}
+
+.ml2-layout-pills {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+}
+
+.ml2-layout-pill-btn {
+  flex: 1;
+  padding: 8px 10px;
+  border-radius: var(--ml2-radius-pill);
+  border: 1px solid var(--ml2-glass-border);
+  background: var(--ml2-glass-light);
+  color: var(--ml2-text-dim);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.ml2-layout-pill-btn.ml2-active {
+  background: var(--ml2-primary);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 3px 10px var(--ml2-primary-glow);
+}
+
+.ml2-layout-pill-btn:active { transform: scale(0.93); }
+
+/* ============================================================
+   GALLERY CAROUSEL — Horizontal strip above dock
+   ============================================================ */
+.ml2-gallery-strip {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml2-dock-height) + var(--ml2-safe-bottom) + 18px);
+  left: 0;
+  right: 0;
+  height: 74px;
+  overflow: hidden;
+  transform: translateY(calc(100% + 20px));
+  transition: transform 0.38s var(--ml2-ease-spring);
+  z-index: 200;
+}
+
+.ml2-gallery-strip.ml2-open {
+  transform: translateY(0);
+}
+
+.ml2-gallery-track {
+  display: flex;
+  gap: 10px;
+  padding: 0 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  height: 100%;
+  align-items: center;
+}
+
+.ml2-gallery-track::-webkit-scrollbar { display: none; }
+
+.ml2-gallery-item {
+  flex-shrink: 0;
+  width: 110px;
+  height: 66px;
+  border-radius: var(--ml2-radius-sm);
+  overflow: hidden;
+  scroll-snap-align: start;
+  border: 2px solid var(--ml2-glass-border);
+  cursor: pointer;
+  transition: all 0.25s var(--ml2-ease-spring);
+  background: var(--ml2-glass-mid);
+  position: relative;
+}
+
+.ml2-gallery-item:active {
+  transform: scale(0.93);
+  border-color: var(--ml2-primary);
+}
+
+.ml2-gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================================
+   SCENE NOTIFICATION TOAST — Current scene name
+   ============================================================ */
+.ml2-scene-toast {
+  position: absolute;
+  top: calc(var(--ml2-safe-top) + 72px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur);
+  -webkit-backdrop-filter: var(--ml2-blur);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-pill);
+  padding: 8px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #c4b5fd;
+  white-space: nowrap;
+  opacity: 0;
+  transition: all 0.35s var(--ml2-ease-spring);
+  pointer-events: none;
+  z-index: 600;
+  box-shadow: var(--ml2-shadow);
+}
+
+.ml2-scene-toast.ml2-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   INFO / SHARE FLOATING CARD
+   ============================================================ */
+.ml2-info-card {
+  pointer-events: auto;
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  right: 16px;
+  transform: translateY(-50%) scale(0.92);
+  background: var(--ml2-glass-dark);
+  backdrop-filter: var(--ml2-blur-heavy);
+  -webkit-backdrop-filter: var(--ml2-blur-heavy);
+  border: 1px solid var(--ml2-glass-border);
+  border-radius: var(--ml2-radius-lg);
+  padding: 24px 20px;
+  z-index: 700;
+  box-shadow: var(--ml2-shadow-lift);
+  opacity: 0;
+  transition: all 0.35s var(--ml2-ease-spring);
+}
+
+.ml2-info-card.ml2-open {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+/* ============================================================
+   TOUCH FEEDBACK ANIMATIONS
+   ============================================================ */
+@keyframes ml2GlowPulse {
+  0%   { box-shadow: 0 0 0 0 var(--ml2-primary-glow); }
+  50%  { box-shadow: 0 0 0 8px rgba(124, 58, 237, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+}
+
+.ml2-pulse {
+  animation: ml2GlowPulse 0.6s var(--ml2-ease-smooth);
+}
+
+@keyframes ml2ScaleIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.ml2-scale-in {
+  animation: ml2ScaleIn 0.35s var(--ml2-ease-spring) forwards;
+}
+
+/* ============================================================
+   MEDIA — Only visible on mobile (≤1024px)
+   Ensure ml2 overlay is hidden on desktop.
+   ============================================================ */
+@media screen and (min-width: 1025px) {
+  #ml2-overlay {
+    display: none !important;
+  }
+}
+
+/* Safe inner scroll for sheets */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .ml2-scene-grid {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+  .ml2-tools-grid {
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+}

@@ -1,0 +1,632 @@
+.layout-horizon .minimap-action-btn {
+  background: rgba(246, 193, 119, 0.06) !important;
+  border-color: rgba(246, 193, 119, 0.15) !important;
+  color: var(--horizon-gold) !important;
+}
+
+.layout-horizon .minimap-action-btn:hover {
+  background: rgba(246, 193, 119, 0.18) !important;
+  border-color: rgba(246, 193, 119, 0.45) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(246, 193, 119, 0.3) !important;
+}
+
+.horizon-nav-container,
+.horizon-tool-panel {
+  display: none !important;
+}
+
+.layout-horizon .horizon-nav-container {
+  display: flex !important;
+}
+
+.layout-horizon .horizon-tool-panel {
+  display: flex !important;
+}
+
+.layout-horizon .layout-switcher-pill {
+  background: var(--horizon-glass) !important;
+  border: 1px solid var(--horizon-glass-border) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.layout-horizon .switcher-segment {
+  font-family: var(--horizon-font) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--horizon-silver) !important;
+}
+
+.layout-horizon .switcher-segment.active {
+  color: var(--horizon-gold) !important;
+  font-weight: 600 !important;
+}
+
+.layout-horizon .switcher-slider {
+  background: var(--horizon-gold) !important;
+  box-shadow: 0 0 10px rgba(246, 193, 119, 0.4) !important;
+}
+
+.layout-horizon .horizon-nav-container {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2000;
+  pointer-events: auto;
+}
+
+.layout-horizon .horizon-dock {
+  display: flex;
+  background: var(--horizon-glass);
+  border: 1px solid var(--horizon-glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 20px 20px 0 0;
+  /* curved top */
+  padding: 8px 32px;
+  gap: 24px;
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  position: relative;
+  align-items: center;
+}
+
+.layout-horizon .horizon-dock::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--horizon-gold), transparent);
+  opacity: 0.8;
+}
+
+.layout-horizon .horizon-nav-item-wrapper {
+  position: relative;
+}
+
+.layout-horizon .horizon-nav-item {
+  padding: 10px 20px;
+  cursor: pointer;
+  color: var(--horizon-silver);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--horizon-font);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  text-align: center;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+
+.layout-horizon .horizon-nav-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(246, 193, 119, 0.04);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.layout-horizon .horizon-nav-item:hover {
+  color: #fff;
+  text-shadow: 0 0 10px rgba(246, 193, 119, 1);
+}
+
+.layout-horizon .horizon-nav-item:hover::before {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(246, 193, 119, 0.1) 0%, rgba(246, 193, 119, 0.6) 100%);
+  box-shadow: inset 0 -2px 0 var(--horizon-gold), 0 0 15px rgba(246, 193, 119, 0.4);
+}
+
+.layout-horizon .horizon-nav-item.active {
+  color: var(--horizon-gold);
+  font-weight: 600;
+  background: rgba(246, 193, 119, 0.08);
+  box-shadow: inset 0 0 10px rgba(246, 193, 119, 0.1);
+}
+
+.layout-horizon .horizon-nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: var(--horizon-gold);
+  box-shadow: 0 0 8px var(--horizon-gold);
+  border-radius: 2px;
+}
+
+.layout-horizon .horizon-submenu {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px) scale(0.95);
+  background: var(--horizon-glass);
+  border: 1px solid var(--horizon-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(246, 193, 119, 0.05);
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 2100;
+}
+
+.layout-horizon .horizon-submenu::before {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  height: 15px;
+  background: transparent;
+}
+
+.layout-horizon .horizon-submenu.open,
+.layout-horizon .horizon-nav-item-wrapper:hover .horizon-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.layout-horizon .horizon-submenu-item {
+  padding: 8px 16px;
+  color: var(--horizon-silver);
+  font-family: var(--horizon-font);
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.layout-horizon .horizon-submenu-item:hover {
+  background: rgba(246, 193, 119, 0.25);
+  color: #fff;
+  padding-left: 20px;
+  box-shadow: 0 0 12px rgba(246, 193, 119, 0.3);
+  text-shadow: 0 0 8px rgba(246, 193, 119, 0.8);
+}
+
+.layout-horizon .horizon-submenu-item.active {
+  color: var(--horizon-gold);
+  background: rgba(246, 193, 119, 0.08);
+  font-weight: 600;
+}
+
+.layout-horizon .horizon-tool-panel {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex !important;
+  background: var(--horizon-glass);
+  border: 1px solid var(--horizon-glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 30px;
+  /* pill shape */
+  padding: 6px 12px;
+  gap: 8px;
+  align-items: center;
+  z-index: 2000;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.layout-horizon .horizon-tool-item {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--horizon-silver);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(216, 222, 233, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.layout-horizon .horizon-tool-item svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.layout-horizon .horizon-tool-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.08);
+}
+
+.layout-horizon .horizon-tool-item.active-tool,
+.layout-horizon .horizon-tool-item:active {
+  color: var(--horizon-blue);
+  border-color: rgba(142, 216, 255, 0.4);
+  box-shadow: 0 0 12px rgba(142, 216, 255, 0.3);
+  background: rgba(142, 216, 255, 0.08);
+}
+
+.layout-horizon .horizon-tool-submenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  background: var(--horizon-glass);
+  border: 1px solid var(--horizon-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(142, 216, 255, 0.05);
+  padding: 8px;
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.95);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 2100;
+}
+
+.layout-horizon .horizon-tool-submenu::before {
+  content: '';
+  position: absolute;
+  top: -15px;
+  left: 0;
+  right: 0;
+  height: 15px;
+  background: transparent;
+}
+
+.layout-horizon .horizon-tool-submenu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.layout-horizon .horizon-tool-submenu.flex-col {
+  flex-direction: column;
+  min-width: 100px;
+}
+
+.layout-horizon .horizon-pano-card {
+  width: 100px;
+  height: 65px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid rgba(216, 222, 233, 0.1);
+  transition: all 0.3s ease;
+}
+
+.layout-horizon .horizon-pano-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.layout-horizon .horizon-pano-card span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 16, 32, 0.85);
+  color: #fff;
+  font-family: var(--horizon-font);
+  font-size: 11px;
+  text-align: center;
+  padding: 4px 2px;
+  white-space: nowrap;
+}
+
+.layout-horizon .horizon-pano-card:hover {
+  border-color: var(--horizon-gold);
+  box-shadow: 0 0 10px rgba(246, 193, 119, 0.3);
+}
+
+.layout-horizon .horizon-pano-card:hover img {
+  transform: scale(1.1);
+}
+
+.layout-horizon .horizon-share-btn {
+  padding: 6px 12px;
+  font-family: var(--horizon-font);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 6px;
+  color: var(--horizon-silver);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(216, 222, 233, 0.1);
+  transition: all 0.25s ease;
+}
+
+.layout-horizon .horizon-share-btn:hover {
+  color: #fff;
+  border-color: var(--horizon-blue);
+  background: rgba(142, 216, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.layout-horizon .horizon-compass {
+  bottom: 90px !important;
+  /* Above switcher */
+  left: 24px !important;
+  width: 76px !important;
+  height: 76px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.layout-horizon .horizon-compass .compass-dial {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.layout-horizon .horizon-compass .compass-outer-glow {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 1px solid rgba(142, 216, 255, 0.1);
+  pointer-events: none;
+}
+
+.layout-horizon .horizon-compass .compass-cardinal.n {
+  color: var(--horizon-gold) !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  top: 8px !important;
+  text-shadow: 0 0 6px rgba(246, 193, 119, 0.6) !important;
+}
+
+.layout-horizon .horizon-compass .compass-degree-display {
+  display: block !important;
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--horizon-blue);
+  font-family: var(--horizon-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.layout-horizon .minimap-widget {
+  background: var(--horizon-glass) !important;
+  border: 1px solid var(--horizon-glass-border) !important;
+  border-radius: 16px !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow: hidden;
+}
+
+.layout-horizon .minimap-widget:hover {
+  border-color: rgba(246, 193, 119, 0.3) !important;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), 0 0 15px rgba(246, 193, 119, 0.1) !important;
+}
+
+.layout-horizon .minimap-header {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-bottom: 1px solid rgba(216, 222, 233, 0.1) !important;
+  color: #fff !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: 1px !important;
+  padding: 8px 12px !important;
+}
+
+.layout-horizon .minimap-header svg {
+  color: var(--horizon-gold) !important;
+}
+
+.layout-horizon .minimap-body {
+  border-radius: 0 0 16px 16px !important;
+}
+
+.layout-horizon .minimap-canvas {
+  border-radius: 10px !important;
+  border: 1px solid rgba(216, 222, 233, 0.08) !important;
+  margin: 8px !important;
+}
+
+.layout-horizon .minimap-dot {
+  background: var(--horizon-gold) !important;
+  box-shadow: 0 0 10px var(--horizon-gold) !important;
+}
+
+.layout-horizon .minimap-viewcone {
+  border-left-color: rgba(246, 193, 119, 0.15) !important;
+  border-right-color: rgba(246, 193, 119, 0.15) !important;
+}
+
+.layout-horizon .minimap-legend {
+  font-family: var(--horizon-font) !important;
+  font-size: 12px !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  padding: 0 8px 8px !important;
+}
+
+.layout-horizon .minimap-legend .dot.cyan {
+  background: var(--horizon-gold) !important;
+  box-shadow: 0 0 6px var(--horizon-gold) !important;
+}
+
+.layout-horizon .pin-dot {
+  background: transparent !important;
+  border: 2px solid var(--horizon-gold) !important;
+  box-shadow: 0 0 8px rgba(246, 193, 119, 0.3) !important;
+  color: var(--horizon-gold) !important;
+  transition: all 0.3s ease !important;
+}
+
+.layout-horizon .pin-pulse {
+  background: rgba(246, 193, 119, 0.15) !important;
+}
+
+.layout-horizon .map-pin:hover .pin-dot {
+  border-color: #fff !important;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5) !important;
+  transform: scale(1.1) !important;
+}
+
+.layout-horizon .map-pin.active .pin-dot {
+  border-color: var(--horizon-gold) !important;
+  box-shadow: 0 0 15px var(--horizon-gold) !important;
+  animation: horizonActivePulse 1.5s infinite ease-in-out !important;
+}
+
+.layout-horizon .pin-label {
+  background: var(--horizon-glass) !important;
+  border: 1px solid var(--horizon-glass-border) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #fff !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 8px rgba(246, 193, 119, 0.05) !important;
+}
+
+.layout-horizon .back-to-360-btn {
+  background: var(--horizon-glass) !important;
+  border: 1px solid var(--horizon-glass-border) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  color: #fff !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 500 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.layout-horizon .back-to-360-btn svg {
+  color: var(--horizon-gold) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.layout-horizon .back-to-360-btn:hover {
+  border-color: var(--horizon-gold) !important;
+  box-shadow: 0 8px 24px rgba(246, 193, 119, 0.15) !important;
+  color: var(--horizon-gold) !important;
+}
+
+.layout-horizon .back-to-360-btn:hover svg {
+  transform: translateX(-3px) !important;
+}
+
+.layout-horizon .interior-switcher-container {
+  background: var(--horizon-glass) !important;
+  border: 1px solid var(--horizon-glass-border) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  padding: 4px !important;
+}
+
+.layout-horizon .interior-switch-btn {
+  color: var(--horizon-silver) !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+}
+
+.layout-horizon .interior-switch-btn:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+.layout-horizon .interior-switch-btn.active {
+  background: var(--horizon-gold) !important;
+  border-color: transparent !important;
+  color: var(--horizon-bg) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(246, 193, 119, 0.3) !important;
+}
+
+.layout-horizon .region-sidebar {
+  background: rgba(10, 16, 32, 0.95) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border-right: 1px solid rgba(216, 222, 233, 0.1) !important;
+  box-shadow: 5px 0 25px rgba(0,0,0,0.5) !important;
+}
+
+.layout-horizon .region-sidebar .sidebar-header h3 {
+  color: #fff !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px !important;
+  background: linear-gradient(90deg, #fff, var(--horizon-gold));
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.layout-horizon .region-menu-item {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid rgba(216, 222, 233, 0.08) !important;
+  color: var(--horizon-silver) !important;
+  font-family: var(--horizon-font) !important;
+  font-weight: 500 !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+}
+
+.layout-horizon .region-menu-item:hover {
+  background: rgba(246, 193, 119, 0.04) !important;
+  border-color: var(--horizon-gold) !important;
+  color: #fff !important;
+}
+
+.layout-horizon .region-menu-item.active {
+  background: var(--horizon-gold) !important;
+  border-color: transparent !important;
+  color: var(--horizon-bg) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 5px 15px rgba(246, 193, 119, 0.25) !important;
+}
+
+.layout-horizon .switcher-slider {
+  border-color: var(--horizon-gold, #F6C177) !important;
+  box-shadow: 0 0 12px rgba(246, 193, 119, 0.8) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s !important;
+  overflow: hidden !important;
+}

@@ -1,0 +1,1185 @@
+.layout-neo .layout-floating-logo .logo-script-top {
+  font-family: var(--tech-font);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--neo-primary);
+  letter-spacing: 2px;
+}
+
+.layout-neo .layout-floating-logo .logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 11px;
+  color: var(--neo-text);
+  letter-spacing: 3px;
+  opacity: 0.8;
+}
+
+.layout-neo .layout-floating-logo .logo-script-wave {
+  background: var(--neo-indigo);
+}
+
+.layout-neo {
+  --neo-primary: #7C3AED;
+  /* Vivid Purple/Violet accent */
+  --neo-indigo: #4F46E5;
+  /* Royal Indigo */
+  --neo-emerald: #059669;
+  /* Fresh Emerald green */
+  --neo-bg: rgba(255, 255, 255, 0.9);
+  /* Brighter unified frosted glass base */
+  --neo-glass: rgba(255, 255, 255, 0.75);
+  /* Brighter button base */
+  --neo-border: rgba(124, 58, 237, 0.3);
+  /* More visible purple border */
+  --neo-text: #1E293B;
+  /* Slate 800 - dark high contrast text */
+  --neo-shadow: 0 8px 24px rgba(124, 58, 237, 0.1), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --neo-shadow-hover: 0 8px 24px rgba(124, 58, 237, 0.25), 0 2px 6px rgba(0, 0, 0, 0.05);
+  --neo-shadow-active: 0 12px 32px rgba(124, 58, 237, 0.45), 0 4px 10px rgba(124, 58, 237, 0.2);
+  --neo-blur: blur(20px);
+  font-family: var(--ui-font);
+}
+
+.layout-neo .bottom-nav-container,
+.layout-neo .vertical-tool-stack,
+.layout-neo .settings-toggle-btn,
+.layout-neo .modern-ui-sidebar {
+  display: none !important;
+}
+
+.layout-neo .layout-switcher-pill {
+  background: var(--neo-bg) !important;
+  border: 1px solid var(--neo-border) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  box-shadow: var(--neo-shadow) !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .switcher-segment {
+  color: rgba(30, 41, 59, 0.6) !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .switcher-segment.active {
+  color: #fff !important;
+  text-shadow: none !important;
+}
+
+.layout-neo .switcher-slider {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, var(--neo-indigo) 100%) !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3) !important;
+}
+
+.layout-neo .switcher-segment:not(.active):hover {
+  color: var(--neo-primary) !important;
+}
+
+.layout-neo .layout-floating-logo {
+  top: 20px !important;
+  left: 20px !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .layout-floating-logo .logo-script-top {
+  font-family: var(--tech-font);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--neo-primary);
+  letter-spacing: 2px;
+}
+
+.layout-neo .layout-floating-logo .logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 11px;
+  color: var(--neo-text);
+  letter-spacing: 3px;
+  opacity: 0.8;
+}
+
+.layout-neo .layout-floating-logo .logo-script-wave {
+  background: var(--neo-indigo);
+}
+
+.layout-neo .neo-top-panel {
+  position: absolute;
+  top: 20px !important;
+  /* Aligned to 20px */
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--neo-bg) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  padding: 12px 32px !important;
+  /* Unified padding */
+  border-radius: 16px !important;
+  /* Unified border radius */
+  text-align: center;
+  z-index: 1000;
+  box-shadow: var(--neo-shadow) !important;
+  pointer-events: auto;
+  animation: neoFadeDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .neo-title {
+  font-family: var(--tech-font);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--neo-text);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: linear-gradient(90deg, var(--neo-primary), var(--neo-indigo));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.layout-neo .neo-subtitle {
+  font-size: 13px;
+  color: #475569;
+  margin-top: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.layout-neo .compass-widget {
+  background: rgba(255, 255, 255, 0.85) !important;
+  /* Brighter white glass */
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  border-radius: 50% !important;
+  box-shadow: var(--neo-shadow) !important;
+  bottom: 74px !important;
+  /* Positioned perfectly above layout switcher */
+  left: 20px !important;
+  /* Aligned to 20px grid */
+  width: 60px !important;
+  /* Increased from 50px to 60px for better visibility */
+  height: 60px !important;
+  /* Increased from 50px to 60px */
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .compass-outer-ring {
+  display: none !important;
+}
+
+.layout-neo .compass-cardinal.n {
+  color: var(--neo-primary) !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 6px rgba(124, 58, 237, 0.6) !important;
+  font-size: 13px !important;
+  top: 5px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+}
+
+.layout-neo .compass-degree-display {
+  color: var(--neo-text) !important;
+  background: var(--neo-glass) !important;
+  border: 1px solid var(--neo-border) !important;
+  font-size: 12px !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  bottom: -20px !important;
+  box-shadow: var(--neo-shadow) !important;
+}
+
+.layout-neo .compass-widget:hover {
+  background: rgba(124, 58, 237, 0.2) !important;
+  border-color: rgba(124, 58, 237, 0.6) !important;
+  box-shadow: var(--neo-shadow-hover) !important;
+}
+
+.layout-neo .compass-widget .compass-dial svg circle {
+  fill: none !important;
+  stroke: rgba(124, 58, 237, 0.55) !important;
+  /* Brighter purple outline */
+  stroke-width: 1.5px !important;
+}
+
+.layout-neo .compass-dial .needle-north {
+  fill: #7C3AED !important;
+  stroke: none !important;
+  filter: drop-shadow(0 0 4px rgba(124, 58, 237, 0.6)) !important;
+}
+
+.layout-neo .compass-dial .needle-south {
+  fill: rgba(30, 41, 59, 0.25) !important;
+  stroke: none !important;
+}
+
+.layout-neo .compass-dial svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.layout-neo .minimap-widget {
+  bottom: 20px !important;
+  /* Aligned to 20px */
+  right: 20px !important;
+  /* Aligned to 20px */
+  width: 220px !important;
+  /* Compact size for entire mini map */
+  background: var(--neo-bg) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  border-radius: 12px !important;
+  /* Unified corner radius */
+  box-shadow: var(--neo-shadow) !important;
+  transition: all 240ms ease-out !important;
+  overflow: hidden !important;
+  /* Ensures the map body doesn't overflow the rounded corners */
+}
+
+.layout-neo .minimap-widget.collapsed {
+  width: 80px !important;
+  /* Extremely compact collapsed map pill (only icon and chevron) */
+}
+
+.layout-neo .minimap-widget.maximap {
+  width: 500px !important;
+  /* Zoomed map expands horizontally to 500px */
+}
+
+.layout-neo .minimap-canvas {
+  height: 200px !important;
+  /* Perfect 200px x 200px square canvas (220px width - 20px padding) */
+  background: #ffffff !important;
+  /* Brighter white background instead of black */
+  border-color: var(--neo-border) !important;
+}
+
+.layout-neo .minimap-img {
+  opacity: 0.95 !important;
+  /* Brighter map image (up from 0.7) */
+}
+
+.layout-neo .minimap-widget.maximap .minimap-canvas {
+  height: 320px !important;
+  /* Zoomed canvas height */
+}
+
+.layout-neo .minimap-header {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(124, 58, 237, 0.15) !important;
+  /* Subtle separator line */
+  border-radius: 0 !important;
+  padding: 6px 10px !important;
+  /* Reduced padding */
+  gap: 6px !important;
+  color: var(--neo-text) !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .minimap-widget.collapsed .minimap-header {
+  border-bottom: none !important;
+}
+
+.layout-neo .minimap-widget.collapsed .minimap-label,
+.layout-neo .minimap-widget.collapsed #minimap-resize-btn {
+  display: none !important;
+}
+
+.layout-neo .minimap-body {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 10px !important;
+  /* Slightly reduced padding */
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .minimap-dot {
+  background: var(--neo-primary) !important;
+  box-shadow: 0 0 8px var(--neo-primary) !important;
+  z-index: 6 !important;
+  /* Ensure active dot is on top of the viewcone */
+}
+
+.layout-neo .minimap-viewcone {
+  background: conic-gradient(from 330deg, rgba(124, 58, 237, 0.5) 0deg, rgba(124, 58, 237, 0.5) 60deg, transparent 60deg) !important;
+  z-index: 5 !important;
+  /* Ensure viewcone is on top of the map image and visible */
+}
+
+.layout-neo .minimap-marker {
+  background: var(--neo-primary) !important;
+  border-color: #fff !important;
+}
+
+.layout-neo .minimap-marker .marker-pulse-ring {
+  border-color: var(--neo-primary) !important;
+}
+
+.layout-neo .minimap-marker-tooltip {
+  background: rgba(28, 20, 48, 0.95) !important;
+  color: #fff !important;
+  border: 1px solid rgba(124, 58, 237, 0.5) !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2) !important;
+}
+
+.layout-neo .mega-card {
+  width: 110px !important;
+  height: 72px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  cursor: pointer !important;
+  box-shadow: var(--neo-shadow) !important;
+  border: 1px solid var(--neo-border) !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .mega-card-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.5s ease !important;
+}
+
+.layout-neo .mega-card-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent) !important;
+}
+
+.layout-neo .mega-card-title {
+  position: absolute !important;
+  bottom: 6px !important;
+  left: 6px !important;
+  right: 6px !important;
+  color: #fff !important;
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.8) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.layout-neo .mega-card:hover {
+  transform: translateY(-2px) !important;
+  border-color: var(--neo-primary) !important;
+  box-shadow: var(--neo-shadow-hover) !important;
+}
+
+.layout-neo .mega-card:hover .mega-card-img {
+  transform: scale(1.08) !important;
+}
+
+.layout-neo .mega-card.active {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 0 0 2px var(--neo-primary), var(--neo-shadow-active) !important;
+}
+
+.layout-neo {
+  --hotspot-color: #00D9FF;
+  /* Cyan */
+  --hotspot-hover: #8B5CF6;
+  /* Purple */
+  --hotspot-bg: rgba(15, 17, 23, 0.85);
+}
+
+.layout-neo .neo-nav-card:hover {
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: #7C3AED !important;
+  color: #7C3AED !important;
+}
+
+.layout-neo .neo-nav-card.active,
+.layout-neo .neo-nav-card.pinned {
+  background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%) !important;
+  border: 1px solid transparent !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4) !important;
+  border-radius: 10px !important;
+}
+
+.layout-neo .neo-unified-container {
+  position: absolute !important;
+  top: 20px !important;
+  right: 20px !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  pointer-events: none !important;
+}
+
+.layout-neo .neo-unified-trigger {
+  pointer-events: auto !important;
+  width: 30px !important;
+  height: 30px !important;
+  background: var(--neo-glass) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--neo-text) !important;
+  cursor: pointer !important;
+  box-shadow: var(--neo-shadow) !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  /* Unified premium transition */
+  z-index: 10 !important;
+  margin: 0 !important;
+  order: 1 !important;
+}
+
+.layout-neo .neo-unified-trigger svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: var(--neo-primary) !important;
+  stroke-width: 0 !important;
+  fill: currentColor !important;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.layout-neo .neo-unified-trigger:hover {
+  background: rgba(124, 58, 237, 0.2) !important;
+  border-color: rgba(124, 58, 237, 0.6) !important;
+  color: var(--neo-primary) !important;
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-hover) !important;
+}
+
+.layout-neo .neo-unified-trigger:hover svg {
+  transform: scale(1.1) !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-unified-trigger {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-unified-trigger svg {
+  transform: rotate(90deg) !important;
+  color: #FFFFFF !important;
+}
+
+.layout-neo .neo-nav-panel {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 6px !important;
+  margin-right: 12px !important;
+  pointer-events: auto !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.layout-neo .neo-unified-container.collapsed .neo-nav-panel {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateX(30px) !important;
+}
+
+.layout-neo .neo-nav-item-group {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.layout-neo .neo-nav-card {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  background: var(--neo-glass) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  color: var(--neo-text) !important;
+  padding: 0 12px !important;
+  height: 30px !important;
+  width: auto !important;
+  min-width: 0 !important;
+  border-radius: 8px !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  cursor: pointer !important;
+  text-transform: uppercase !important;
+  box-shadow: var(--neo-shadow) !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  transform: translateX(15px) !important;
+  box-sizing: border-box !important;
+}
+
+.layout-neo .neo-nav-card svg {
+  width: 14px !important;
+  height: 14px !important;
+  display: block !important;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.layout-neo .neo-nav-card:not(.active):not(.pinned):hover {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .neo-nav-card:hover svg {
+  transform: scale(1.1) !important;
+}
+
+.layout-neo .neo-nav-card.active:hover,
+.layout-neo .neo-nav-card.pinned:hover {
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .neo-nav-card.active,
+.layout-neo .neo-nav-card.pinned {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: var(--neo-shadow-active) !important;
+  border-radius: 8px !important;
+  transform: translateY(0) scale(1.02) !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-nav-card {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-nav-item-group:nth-child(1) .neo-nav-card {
+  transition-delay: 0.04s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-nav-item-group:nth-child(2) .neo-nav-card {
+  transition-delay: 0.08s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-nav-item-group:nth-child(3) .neo-nav-card {
+  transition-delay: 0.12s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-nav-item-group:nth-child(4) .neo-nav-card {
+  transition-delay: 0.16s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-nav-item-group:nth-child(5) .neo-nav-card {
+  transition-delay: 0.20s !important;
+}
+
+.layout-neo .neo-submenu-tree {
+  position: absolute !important;
+  top: 100% !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(-8px) scale(0.96) !important;
+  transform-origin: top center !important;
+  margin-top: 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  background: var(--neo-bg) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  border-radius: 12px !important;
+  padding: 6px !important;
+  box-shadow: var(--neo-shadow) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  min-width: 110px !important;
+  z-index: 105 !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0) scale(1) !important;
+}
+
+.layout-neo .submenu-item {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  padding: 0 12px !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: var(--neo-text) !important;
+  cursor: pointer !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  white-space: nowrap !important;
+  text-align: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  text-transform: uppercase !important;
+}
+
+.layout-neo .submenu-item:not(.active):hover {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .submenu-item.active:hover {
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .submenu-item.active {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+  transform: translateY(0) scale(1.02) !important;
+}
+
+.layout-neo .neo-submenu-tree .submenu-item,
+.layout-neo .neo-submenu-tree .mega-card {
+  opacity: 0 !important;
+  transform: translateY(6px) !important;
+  transition: opacity 240ms cubic-bezier(0.16, 1, 0.3, 1), transform 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .submenu-item,
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .submenu-item:nth-child(1),
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card:nth-child(1) {
+  transition-delay: 0.03s !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .submenu-item:nth-child(2),
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card:nth-child(2) {
+  transition-delay: 0.06s !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .submenu-item:nth-child(3),
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card:nth-child(3) {
+  transition-delay: 0.09s !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .submenu-item:nth-child(4),
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card:nth-child(4) {
+  transition-delay: 0.12s !important;
+}
+
+.layout-neo .neo-submenu-tree.mega-mode {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 6px !important;
+  padding: 8px !important;
+  min-width: 240px !important;
+  right: 0 !important;
+  left: auto !important;
+  transform: translateY(-8px) scale(0.96) !important;
+  transform-origin: top right !important;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree.mega-mode {
+  transform: translateY(0) scale(1) !important;
+}
+
+.layout-neo .neo-toolbar {
+  position: absolute !important;
+  top: 46px !important;
+  right: 0 !important;
+  left: auto !important;
+  bottom: auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  align-items: center !important;
+  pointer-events: auto !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.layout-neo .neo-unified-container.collapsed .neo-toolbar {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(-30px) !important;
+}
+
+.layout-neo .neo-toolbar .neo-dock-item {
+  background: var(--neo-glass) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--neo-text) !important;
+  cursor: pointer !important;
+  box-shadow: var(--neo-shadow) !important;
+  transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative !important;
+  opacity: 0 !important;
+  transform: translateY(-15px) !important;
+}
+
+.layout-neo .neo-toolbar .neo-dock-item svg {
+  width: 14px !important;
+  height: 14px !important;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: block !important;
+}
+
+.layout-neo .neo-toolbar .neo-dock-item:not(.active-tool):hover {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .neo-toolbar .neo-dock-item:hover svg {
+  transform: scale(1.1) !important;
+}
+
+.layout-neo .neo-toolbar .neo-dock-item.active-tool:hover {
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-active) !important;
+}
+
+.layout-neo .neo-toolbar .neo-dock-item.active-tool {
+  background: linear-gradient(135deg, var(--neo-primary) 0%, #5B21B6 100%) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+  box-shadow: var(--neo-shadow-active) !important;
+  transform: translateY(0) scale(1.02) !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(1) {
+  transition-delay: 0.03s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(2) {
+  transition-delay: 0.06s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(3) {
+  transition-delay: 0.09s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(4) {
+  transition-delay: 0.12s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(5) {
+  transition-delay: 0.15s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(6) {
+  transition-delay: 0.18s !important;
+}
+
+.layout-neo .neo-unified-container.active .neo-toolbar .neo-dock-item:nth-child(7) {
+  transition-delay: 0.21s !important;
+}
+
+.layout-neo .neo-dock-submenu {
+  position: absolute !important;
+  top: 50% !important;
+  right: calc(100% + 10px) !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: translateY(-50%) translateX(8px) scale(0.96) !important;
+  transform-origin: right center !important;
+  background: var(--neo-bg) !important;
+  backdrop-filter: var(--neo-blur) !important;
+  -webkit-backdrop-filter: var(--neo-blur) !important;
+  border: 1px solid var(--neo-border) !important;
+  border-radius: 12px !important;
+  padding: 8px !important;
+  box-shadow: var(--neo-shadow) !important;
+  display: flex !important;
+  gap: 6px !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: all 240ms ease-out !important;
+  z-index: 110 !important;
+}
+
+.layout-neo .neo-dock-submenu.flex-col {
+  flex-direction: column !important;
+}
+
+.layout-neo .neo-dock-item.hover-open .neo-dock-submenu,
+.layout-neo .neo-dock-item.pinned .neo-dock-submenu {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateY(-50%) translateX(0) scale(1) !important;
+}
+
+.layout-neo .neo-dock-item.hover-open .neo-tooltip,
+.layout-neo .neo-dock-item.pinned .neo-tooltip {
+  text-transform: uppercase;
+  display: none !important;
+}
+
+.layout-neo .neo-tooltip {
+  text-transform: uppercase;
+  position: absolute !important;
+  top: 50% !important;
+  right: calc(100% + 10px) !important;
+  left: auto !important;
+  bottom: auto !important;
+  transform: translateY(-50%) translateX(8px) !important;
+  background: rgba(28, 20, 48, 0.95) !important;
+  border: 1px solid rgba(124, 58, 237, 0.5) !important;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  color: #fff !important;
+  font-size: 13px !important;
+  font-family: 'Inter', sans-serif !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: all 240ms ease-out !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2) !important;
+}
+
+.layout-neo .neo-dock-item:hover .neo-tooltip {
+  text-transform: uppercase;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+.layout-neo .dock-pano-card {
+  width: 110px !important;
+  height: 72px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  cursor: pointer !important;
+  border: 1px solid var(--neo-border) !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .dock-pano-card:hover {
+  border-color: var(--neo-primary) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--neo-shadow-hover) !important;
+}
+
+.layout-neo .dock-pano-card img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.5s ease !important;
+}
+
+.layout-neo .dock-pano-card:hover img {
+  transform: scale(1.08) !important;
+}
+
+.layout-neo .dock-pano-card span {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  padding: 4px !important;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85)) !important;
+  color: #fff !important;
+  font-size: 12.5px !important;
+  font-family: 'Inter', sans-serif !important;
+  text-align: center !important;
+}
+
+.layout-neo .dock-share-btn {
+  display: block !important;
+  padding: 8px 16px !important;
+  border-radius: 6px !important;
+  text-decoration: none !important;
+  color: white !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo .dock-share-btn.facebook {
+  background: #1877F2 !important;
+}
+
+.layout-neo .dock-share-btn.facebook:hover {
+  background: #166FE5 !important;
+}
+
+.layout-neo .dock-share-btn.zalo {
+  background: #0068FF !important;
+}
+
+.layout-neo .dock-share-btn.zalo:hover {
+  background: #005AE6 !important;
+}
+
+.layout-neo svg {
+  width: 14px !important;
+  height: 14px !important;
+  transition: all 240ms ease-out !important;
+}
+
+.layout-neo svg path,
+.layout-neo svg rect,
+.layout-neo svg line,
+.layout-neo svg polyline,
+.layout-neo svg polygon {
+  stroke: currentColor !important;
+  stroke-width: 2px !important;
+  fill: none !important;
+}
+
+.layout-neo svg circle:not([fill="currentColor"]) {
+  stroke: currentColor !important;
+  stroke-width: 2px !important;
+  fill: none !important;
+}
+
+.layout-neo .neo-dock-item:hover svg,
+.layout-neo .neo-nav-card:hover svg {
+  transform: scale(1.08) !important;
+}
+
+.layout-neo .minimap-action-btn {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 8px !important;
+  background: var(--neo-glass) !important;
+  border: 1px solid var(--neo-border) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--neo-text) !important;
+  cursor: pointer !important;
+  transition: all 240ms ease-out !important;
+  box-shadow: var(--neo-shadow) !important;
+  padding: 0 !important;
+  outline: none !important;
+}
+
+.layout-neo .minimap-action-btn svg {
+  width: 14px !important;
+  height: 14px !important;
+  color: inherit !important;
+  stroke: currentColor !important;
+}
+
+.layout-neo .minimap-action-btn:hover {
+  background: rgba(124, 58, 237, 0.2) !important;
+  border-color: rgba(124, 58, 237, 0.6) !important;
+  color: var(--neo-primary) !important;
+  transform: translateY(-1.5px) scale(1.02) !important;
+  box-shadow: var(--neo-shadow-hover) !important;
+}
+
+.layout-neo .project-info-panel {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(124, 58, 237, 0.3) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), 0 0 30px rgba(124, 58, 237, 0.1) !important;
+  color: #1E293B !important;
+  border-radius: 16px !important;
+}
+
+.layout-neo .info-panel-header {
+  border-bottom-color: rgba(124, 58, 237, 0.15) !important;
+}
+
+.layout-neo .info-panel-close {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: #1E293B !important;
+}
+
+.layout-neo .info-label {
+  color: #7C3AED !important;
+}
+
+.layout-neo .info-value {
+  color: #1E293B !important;
+}
+
+.layout-neo .back-to-360-btn {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(124, 58, 237, 0.2) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1) !important;
+  color: #1E293B !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  height: 30px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  padding: 0 12px !important;
+  font-size: 13px !important;
+}
+
+.layout-neo .back-to-360-btn:hover {
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: #7C3AED !important;
+  color: #7C3AED !important;
+}
+
+.layout-neo .back-to-360-btn svg {
+  width: 14px !important;
+  height: 14px !important;
+  display: inline-block !important;
+}
+
+.layout-neo .back-to-360-btn svg * {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+.layout-neo .interior-switcher-container {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border: 1px solid rgba(124, 58, 237, 0.2) !important;
+  backdrop-filter: blur(32px) !important;
+  -webkit-backdrop-filter: blur(32px) !important;
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.1) !important;
+  border-radius: 10px !important;
+  bottom: 20px !important;
+  padding: 4px !important;
+}
+
+.layout-neo .interior-switch-btn {
+  color: #475569 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+  height: 28px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 16px !important;
+  box-sizing: border-box !important;
+  font-size: 13px !important;
+}
+
+.layout-neo .interior-switch-btn:hover {
+  color: #7C3AED !important;
+  background: rgba(124, 58, 237, 0.08) !important;
+}
+
+.layout-neo .interior-switch-btn.active {
+  background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%) !important;
+  border: 1px solid transparent !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+.layout-neo .region-sidebar {
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(40px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  border-right: 1px solid rgba(124, 58, 237, 0.15) !important;
+  box-shadow: 4px 0 24px rgba(124, 58, 237, 0.05) !important;
+}
+
+.layout-neo .region-sidebar .sidebar-header h3 {
+  color: #1E293B !important;
+  font-weight: 700 !important;
+}
+
+.layout-neo .region-menu-item {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border: 1px solid rgba(124, 58, 237, 0.1) !important;
+  color: #475569 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 600 !important;
+  height: 36px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+  border-radius: 8px !important;
+  font-size: 13.5px !important;
+  transition: all 0.2s ease !important;
+}
+
+.layout-neo .region-menu-item:hover {
+  background: rgba(124, 58, 237, 0.08) !important;
+  border-color: rgba(124, 58, 237, 0.25) !important;
+  color: #7C3AED !important;
+}
+
+.layout-neo .region-menu-item.active {
+  background: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%) !important;
+  border-color: transparent !important;
+  color: #FFFFFF !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.25) !important;
+}
+
+.layout-neo .pin-dot {
+  background: #ffffff;
+  border-color: #7C3AED;
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+}
+
+.layout-neo .pin-pulse {
+  background: rgba(124, 58, 237, 0.3);
+}
+
+.layout-neo .pin-label {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  color: #1E293B;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+}
+
+.layout-neo .switcher-slider {
+  border-color: #1e293b !important;
+  box-shadow: 0 0 8px rgba(30, 41, 59, 0.3) !important;
+}

@@ -11,8 +11,21 @@
 		<meta name="mobile-web-app-capable" content="yes" />
 		<meta property="og:image" content="preview.jpg">
 		
-		<link rel="stylesheet" type="text/css" href="modern_ui.css?v=77" />
-<link rel="stylesheet" type="text/css" href="mobile_ui.css?v=57" />
+		<link rel="stylesheet" type="text/css" href="modern_ui.css?v=85">
+		<link rel="stylesheet" type="text/css" href="css/components/components_carousel.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_01_classic.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_02_futuristic.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_04_gradient.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_05_neo.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_06_aurora.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_07_prism.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_08_nexus.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_09_horizon.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_10_monarch.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_11_command.css?v=1">
+		<link rel="stylesheet" type="text/css" href="css/components/layout_12_regal.css?v=1">
+<link rel="stylesheet" type="text/css" href="mobile_ui.css?v=59" />
+<link rel="stylesheet" type="text/css" href="css/mobile/mobile_layout2.css?v=5" />
 <link rel="stylesheet" type="text/css" href="css/custom.css?v=1" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +56,8 @@
 	</head>
 	<body>
 <!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - -->
+		<!-- ① Shared Core — must load FIRST (single source of truth for all data) -->
+		<script type="text/javascript" src="shared_core.js?v=2"></script>
 		<script type="text/javascript" src="pano2vr_player.js?ts=16073790">
 		</script>
 		<div id="container" style="width:100%;height:100%;overflow:hidden;">
@@ -73,7 +88,10 @@
 		}
 		var params = {};
 		parseParams(document.location.hash, params);
-		var startNode = params.startNode || 'node2';
+		var startNode = params.startNode || '';
+		if (!startNode && window.innerWidth <= 1024) {
+			startNode = 'node2';
+		}
 		var startView = params.startView;
 		if (("onhashchange" in window) && (!(/MSIE (\d+\.\d+);/.test(navigator.userAgent)))) {
 			window.onhashchange = function () {
@@ -128,9 +146,16 @@
 		<noscript>
 			<p><b>Please enable Javascript!</b></p>
 		</noscript>
-		<script type="text/javascript" src="hotspots.js?v=1"></script>
-<script type="text/javascript" src="modern_ui.js?v=77"></script>
-<script type="text/javascript" src="mobile_ui.js?v=56"></script>
+		<script type="text/javascript" src="hotspots.js?v=1784535813146"></script>
+<script type="text/javascript" src="modern_ui.js?v=83"></script>
+<script type="text/javascript" src="mobile_ui.js?v=66"></script>
+<script type="text/javascript" src="js/mobile/mobile_layout2.js?v=20"></script>
+<style>
+  @media screen and (max-width: 1024px) {
+    .ml2-dock { bottom: 24px !important; }
+    #ml2-overlay { height: 100% !important; height: 100dvh !important; bottom: 0 !important; top: 0 !important; }
+  }
+</style>
 		
 <!-- - - - - - - 8<- - - - - - cut here - - - - - 8<- - - - - - - -->
 	</body>

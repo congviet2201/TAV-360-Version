@@ -19,7 +19,7 @@ const hs_park      = { id: "hs_park",      pan: -10, tilt: -48, category: "ameni
 const hs_park2     = { id: "hs_park2",     pan: -45, tilt: -38, category: "amenities", nodeTarget: "node6",  title: "TAV PARK 2",      desc: "Khu vui chơi & thể thao ngoài trời",  thumb: "image/thumbnails/PIN PARK 02.jpg"    };
 const hs_street    = { id: "hs_street",    pan:  25, tilt: -35, category: "amenities", nodeTarget: "node5",  title: "TAV STREET",      desc: "Phố đi bộ thương mại sầm uất",        thumb: "image/thumbnails/PIN STREET.jpg"     };
 const hs_birdview  = { id: "hs_birdview",  pan:   0, tilt:   8, category: "aerial",    nodeTarget: "node2",  title: "BIRD VIEW 1",     desc: "Toàn cảnh từ trên cao",                thumb: "image/thumbnails/PIN BIRD.jpg"       };
-const hs_top       = { id: "hs_top",       pan:   0, tilt: -10, category: "aerial",    nodeTarget: "node1",  title: "Top View",  desc: "Toàn cảnh dự án",                      thumb: "image/thumbnails/thumb_PIN TOP.jpg"  };
+const hs_top       = { id: "hs_top",       pan:   0, tilt: -10, category: "aerial",    nodeTarget: "node1",  title: "TOP VIEW DAY 1",  desc: "Toàn cảnh dự án",                      thumb: "image/thumbnails/thumb_PIN TOP.jpg"  };
 
 // Extra aerial pin — link to Bird View 2 (formerly Top View Night)
 const hs_topnight = {
@@ -72,11 +72,11 @@ window.hotspotData = {
     { ...hs_living2,   id: "hs_living2_bv",   pan:   5, tilt: -34, title: "TAV LIVING 2"   }, // Left
     // ── Amenity destinations (Parks & Streets) ───────────────────────
     { ...hs_park2,     id: "hs_park2_bv",     pan: -45, tilt: -36, title: "TAV PARK 2"     }, // Right
-    { ...hs_park,      id: "hs_park_bv",      pan:  -5, tilt: -38, title: "TAV PARK"       }, // Center left (lower)
+    { ...hs_park,      id: "hs_park_bv",      pan:  -12.39, tilt: -34.49, title: "TAV PARK"       }, // Center left (lower)
     { ...hs_street,    id: "hs_street_bv",    pan:  15, tilt: -35, title: "TAV STREET"     }, // Far left
     // ── View shortcuts ────────────────────────────────────────────────
     { ...hs_topnight, id: "hs_topnight_bv",   pan: -16.44, tilt: -20, title: "TOP VIEW NIGHT" },
-    { ...hs_top,      id: "hs_top_bv",        pan: 180, tilt: -20, title: "Top View" },
+    { ...hs_top,      id: "hs_top_bv",        pan: 180, tilt: -20, title: "TOP VIEW DAY 1" },
   ],
 
   // ─── Interior nodes (Các không gian bên trong biệt thự) ───────────────

@@ -4076,6 +4076,13 @@ body.layout-nexus .minimap-action-btn:hover {
   left: 150%;
   transition: left 0.5s ease;
 }
+.layout-gradient .quick-action-btn.active,
+.layout-gradient .quick-action-btn.active-tool {
+  background: #fff;
+  color: var(--luxury-gold-dark);
+  box-shadow: 0 6px 18px rgba(229, 192, 88, 0.35);
+  border-color: rgba(229, 192, 88, 0.6);
+}
 
 /* 3. Horizontal Navigation Cards */
 .layout-gradient .gradient-nav-container {
@@ -14595,21 +14602,44 @@ body * {
     bottom: 20px;
     width: 100%;
     justify-content: center;
-    gap: 8px;
-    padding: 0 16px;
+    gap: 6px;
+    padding: 0 8px;
+    /* Remove old padding override so our new block takes over */
   }
+  /* 3-card track: show prev + center + next */
   .premium-carousel-track {
-    width: 160px; /* Only center card is visible */
-    max-width: 240px;
-    height: 80px;
+    width: 300px;
+    max-width: calc(100vw - 96px);
+    height: 90px;
+    overflow: visible;
   }
-  /* Hide side cards on mobile */
+  /* SHOW side cards on mobile (3-card layout) */
   .pc-card-prev, .pc-card-next {
-    display: none;
+    display: block;
   }
+  /* Center card */
   .pc-card-center {
-    width: 160px;
-    height: 80px;
+    width: 130px;
+    height: 78px;
+  }
+  /* Side cards: smaller + dimmed */
+  .pc-card-prev {
+    width: 78px;
+    height: 52px;
+    left: 12%;
+    transform: translate(-50%, -50%) scale(0.72);
+    opacity: 0.42;
+    filter: grayscale(20%) brightness(0.72);
+    z-index: 5;
+  }
+  .pc-card-next {
+    width: 78px;
+    height: 52px;
+    left: 88%;
+    transform: translate(-50%, -50%) scale(0.72);
+    opacity: 0.42;
+    filter: grayscale(20%) brightness(0.72);
+    z-index: 5;
   }
   .premium-carousel-nav {
     width: 32px;
@@ -15232,4 +15262,577 @@ body.layout-futuristic #futuristic-settings-group {
   color: var(--cmd-accent);
   background: rgba(0, 243, 255, 0.15);
   box-shadow: 0 0 10px rgba(0, 243, 255, 0.3), inset 0 0 5px rgba(0, 243, 255, 0.2);
+}
+
+/* Hide hotspots via body class - safe approach */
+body.hide-hotspots .hologram-marker-container,
+body.hide-hotspots .hs-container {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+
+
+/* ============================================================
+   MOBILE: COMMAND LAYOUT 11 — EFFECTS FOR MOBILE
+   Chỉ áp dụng ≤ 768px — KHÔNG ảnh hưởng PC
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ═══════════════════════════════════════════════════════
+     CAROUSEL: HIỆU ỨNG CYAN + LINE CHẠY
+  ═══════════════════════════════════════════════════════ */
+
+  /* Container: nền gradient nhẹ + pseudo cho line effects */
+  .premium-carousel-container {
+    position: relative !important;
+    background: linear-gradient(
+      to top,
+      rgba(0, 229, 255, 0.04) 0%,
+      transparent 100%
+    ) !important;
+  }
+
+  /* Ánh sáng SWEEP quét ngang qua toàn bộ carousel */
+  .premium-carousel-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -90%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 229, 255, 0.22) 50%,
+      transparent 100%
+    );
+    transform: skewX(-18deg);
+    animation: mobileCarouselSweep 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 50;
+    border-radius: 4px;
+  }
+
+  @keyframes mobileCarouselSweep {
+    0%   { left: -90%;  opacity: 0; }
+    6%   { opacity: 1; }
+    44%  { left: 135%;  opacity: 0; }
+    100% { left: 135%;  opacity: 0; }
+  }
+
+  /* Đường LINE NEON chạy phía dưới carousel */
+  .premium-carousel-track::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    height: 2px;
+    width: 35%;
+    background: #00e5ff;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.9),
+                0 0 18px rgba(0, 229, 255, 0.5);
+    animation: mobileTrackLine 3.5s linear infinite alternate;
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  @keyframes mobileTrackLine {
+    0%   { left: 0%;  opacity: 0.5; width: 30%; }
+    50%  { opacity: 1; }
+    100% { left: 65%; opacity: 0.5; width: 30%; }
+  }
+
+  /* Nút prev/next: tông xanh cyan */
+  .premium-carousel-nav {
+    background: rgba(9, 4, 26, 0.88) !important;
+    border: 1px solid rgba(0, 229, 255, 0.4) !important;
+    color: #00e5ff !important;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.18),
+                inset 0 0 6px rgba(0, 229, 255, 0.05) !important;
+  }
+
+  .premium-carousel-nav:active {
+    background: rgba(0, 229, 255, 0.12) !important;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4) !important;
+    transform: scale(0.92) !important;
+  }
+
+  /* ── CAROUSEL 3 CARD: luôn center sáng, 2 bên mờ ── */
+
+  /* Card trung tâm (ĐANG ACTIVE — sáng hơn) */
+  .pc-card-center {
+    border-color: rgba(0, 229, 255, 0.55) !important;
+    box-shadow: 0 0 24px rgba(0, 229, 255, 0.3),
+                0 8px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 15px rgba(0, 229, 255, 0.06) !important;
+    /* Đảm bảo center luôn nổi bật */
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  /* Card trái — mờ hơn */
+  .pc-card-prev {
+    opacity: 0.42 !important;
+    filter: grayscale(20%) brightness(0.72) !important;
+  }
+
+  /* Card phải — mờ hơn */
+  .pc-card-next {
+    opacity: 0.42 !important;
+    filter: grayscale(20%) brightness(0.72) !important;
+  }
+
+  /* Transition mượt đồng bộ cho tất cả card */
+  .pc-card {
+    transition:
+      transform  0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+      left       0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity    0.6s ease,
+      filter     0.6s ease,
+      border-color 0.3s ease,
+      box-shadow   0.3s ease !important;
+  }
+
+  /* Category selector: tông Command */
+  .pc-category-active {
+    background: rgba(9, 4, 26, 0.88) !important;
+    border: 1px solid rgba(0, 229, 255, 0.38) !important;
+    color: #00e5ff !important;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.12) !important;
+  }
+
+  /* Tiêu đề card trung tâm: glow nhẹ */
+  .pc-card-center .pc-card-title {
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     THANH TIMELINE DƯỚI (cmd-timeline):
+     ĐƯỜNG LINE CHẠY GIỐNG BẢN PC
+  ═══════════════════════════════════════════════════════ */
+
+  /* Container timeline: nền tối Command + viền cyan trên */
+  .cmd-timeline {
+    background: rgba(9, 4, 26, 0.9) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(0, 229, 255, 0.28) !important;
+    box-shadow: 0 -4px 28px rgba(0, 229, 255, 0.1) !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Ánh sáng SWEEP quét ngang qua timeline */
+  .cmd-timeline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -85%;
+    width: 42%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 229, 255, 0.15) 50%,
+      transparent 100%
+    );
+    transform: skewX(-12deg);
+    animation: timelineSweep 6.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes timelineSweep {
+    0%   { left: -85%;  opacity: 0; }
+    7%   { opacity: 1; }
+    50%  { left: 135%;  opacity: 0; }
+    100% { left: 135%;  opacity: 0; }
+  }
+
+  /* Đường LINE NEON chạy phía trên timeline (giống PC) */
+  .cmd-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 28%;
+    background: linear-gradient(90deg, #00e5ff 0%, rgba(0, 229, 255, 0) 100%);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.75),
+                0 0 20px rgba(0, 229, 255, 0.4);
+    animation: timelineTopLine 4s linear infinite alternate;
+    border-radius: 1px;
+    z-index: 2;
+  }
+
+  @keyframes timelineTopLine {
+    0%   { left: 0%;  opacity: 0.5; }
+    50%  { opacity: 1; }
+    100% { left: 70%; opacity: 0.5; }
+  }
+
+  /* Đường nối giữa các node: line chạy giống PC */
+  .cmd-tl-line {
+    background: linear-gradient(90deg,
+      rgba(0, 229, 255, 0.12),
+      rgba(0, 229, 255, 0.12)
+    ) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Line flow animation trên dây nối (giống .cmd-tl-line::after trên PC) */
+  .cmd-tl-line::after {
+    background: #00e5ff !important;
+    box-shadow: 0 0 10px #00e5ff, 0 0 20px rgba(0, 229, 255, 0.6) !important;
+    /* animation đã định nghĩa ở PC: cmdLineFlow */
+  }
+
+  /* Node item: nền tối + viền tinh tế */
+  .cmd-tl-node {
+    background: rgba(9, 4, 26, 0.82) !important;
+    border: 1px solid rgba(0, 229, 255, 0.18) !important;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.06) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Node đang active: viền + glow cyan nổi bật */
+  .cmd-tl-node.active {
+    border-color: rgba(0, 229, 255, 0.65) !important;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.3),
+                inset 0 0 8px rgba(0, 229, 255, 0.1) !important;
+    background: rgba(0, 229, 255, 0.06) !important;
+  }
+
+  /* Dot trong node active */
+  .cmd-tl-node.active .cmd-tl-dot {
+    border-color: #00e5ff !important;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.8) !important;
+  }
+
+  .cmd-tl-node.active .cmd-tl-dot::after {
+    background: #00e5ff !important;
+  }
+
+  /* Nhãn node active */
+  .cmd-tl-node.active .cmd-tl-label {
+    color: #00e5ff !important;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.45) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     SPATIAL CONTROL TILES (nút INFO, GALLERY, AUDIO...)
+  ═══════════════════════════════════════════════════════ */
+
+  .cmd-ctrl-tile {
+    background: rgba(9, 4, 26, 0.9) !important;
+    border: 1px solid rgba(0, 229, 255, 0.22) !important;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.07) !important;
+  }
+
+  .cmd-ctrl-tile:hover,
+  .cmd-ctrl-tile.active,
+  .cmd-ctrl-tile.active-tool {
+    border-color: #00e5ff !important;
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.5),
+                inset 0 0 12px rgba(0, 229, 255, 0.22) !important;
+  }
+}
+
+  /* ─────────────────────────────────────────────────────────
+     PHẦN 1: MÀU SẮC CYAN + GLOW cho Carousel
+  ───────────────────────────────────────────────────────── */
+
+  /* Container chính: viền cyan + ánh sáng phát ra từ đáy */
+  .premium-carousel-container {
+    padding-top: 12px;
+    background: linear-gradient(to top, rgba(0, 229, 255, 0.04), transparent) !important;
+    filter: none !important; /* Xóa filter cũ để pseudo-element hoạt động */
+  }
+
+  /* Đường sweep ánh sáng chạy ngang qua carousel container */
+  .premium-carousel-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 229, 255, 0.25) 50%,
+      transparent 100%
+    );
+    transform: skewX(-20deg);
+    animation: mobileSweepLight 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 999;
+    border-radius: 4px;
+  }
+
+  @keyframes mobileSweepLight {
+    0%   { left: -80%;  opacity: 0; }
+    5%   { opacity: 1; }
+    45%  { left: 130%; opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+  }
+
+  /* Đường kẻ cyan chạy ngang phía dưới đáy carousel */
+  .premium-carousel-container::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 35%;
+    background: #00e5ff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.8), 0 0 20px rgba(0, 229, 255, 0.4);
+    animation: mobileLineRunBottom 3.5s linear infinite alternate;
+    border-radius: 1px;
+    z-index: 1001;
+  }
+
+  @keyframes mobileLineRunBottom {
+    0%   { left: 0%;  opacity: 0.5; }
+    50%  { opacity: 1; }
+    100% { left: 65%; opacity: 0.5; }
+  }
+
+  /* Nút điều hướng: tông xanh cyan */
+  .premium-carousel-nav {
+    background: rgba(9, 4, 26, 0.85) !important;
+    border: 1px solid rgba(0, 229, 255, 0.4) !important;
+    color: #00e5ff !important;
+    box-shadow: 0 0 14px rgba(0, 229, 255, 0.2),
+                inset 0 0 8px rgba(0, 229, 255, 0.06) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .premium-carousel-nav:hover {
+    background: rgba(0, 229, 255, 0.12) !important;
+    border-color: rgba(0, 229, 255, 0.75) !important;
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.4) !important;
+    transform: scale(1.08) !important;
+  }
+
+  /* Card trung tâm: viền cyan phát sáng */
+  .pc-card-center {
+    border-color: rgba(0, 229, 255, 0.55) !important;
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.3),
+                0 8px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 15px rgba(0, 229, 255, 0.06) !important;
+  }
+
+  .pc-card-center:hover {
+    border-color: #00e5ff !important;
+    box-shadow: 0 0 32px rgba(0, 229, 255, 0.5) !important;
+  }
+
+  /* Tiêu đề card: glow nhẹ */
+  .pc-card-title {
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.55) !important;
+  }
+
+  /* Category button */
+  .pc-category-active {
+    background: rgba(9, 4, 26, 0.88) !important;
+    border: 1px solid rgba(0, 229, 255, 0.4) !important;
+    color: #00e5ff !important;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.15) !important;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     PHẦN 2: CAROUSEL TRƯỢT ĐỦ 3 CARD (prev + center + next)
+  ───────────────────────────────────────────────────────── */
+
+  /* Mở rộng track hiển thị 3 card */
+  .premium-carousel-track {
+    width: 300px !important;
+    max-width: calc(100vw - 100px) !important;
+    height: 90px !important;
+    overflow: visible !important;
+  }
+
+  /* Hiện lại card bên trái và bên phải (bị ẩn trên mobile cũ) */
+  .pc-card-prev,
+  .pc-card-next {
+    display: block !important;
+  }
+
+  /* Card trung tâm */
+  .pc-card-center {
+    width: 130px !important;
+    height: 78px !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    z-index: 10 !important;
+  }
+
+  /* Card trái */
+  .pc-card-prev {
+    width: 78px !important;
+    height: 52px !important;
+    left: 12% !important;
+    transform: translate(-50%, -50%) scale(0.72) !important;
+    opacity: 0.42 !important;
+    filter: grayscale(20%) brightness(0.72) !important;
+    z-index: 5 !important;
+  }
+
+  /* Card phải */
+  .pc-card-next {
+    width: 78px !important;
+    height: 52px !important;
+    left: 88% !important;
+    transform: translate(-50%, -50%) scale(0.72) !important;
+    opacity: 0.42 !important;
+    filter: grayscale(20%) brightness(0.72) !important;
+    z-index: 5 !important;
+  }
+
+  /* Transition mượt khi chuyển card */
+  .pc-card {
+    transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                left 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                filter 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.3s ease !important;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     PHẦN 3: HIỆU ỨNG ĐƯỜNG LINE cho THANH TIMELINE dưới cùng
+     (cmd-tl-node và cmd-tl-line - thanh công cụ của Layout 11)
+  ───────────────────────────────────────────────────────── */
+
+  /* Timeline container: nền tối + viền cyan trên */
+  .cmd-timeline {
+    background: rgba(9, 4, 26, 0.88) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(0, 229, 255, 0.25) !important;
+    box-shadow: 0 -4px 24px rgba(0, 229, 255, 0.12) !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Hiệu ứng sweep ánh sáng ngang qua thanh timeline */
+  .cmd-timeline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 229, 255, 0.18) 50%,
+      transparent 100%
+    );
+    transform: skewX(-15deg);
+    animation: timelineSweep 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes timelineSweep {
+    0%   { left: -80%;  opacity: 0; }
+    8%   { opacity: 1; }
+    50%  { left: 130%; opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+  }
+
+  /* Đường kẻ cyan chạy dọc theo phía trên timeline */
+  .cmd-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 30%;
+    background: linear-gradient(90deg, #00e5ff, rgba(0, 229, 255, 0));
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.4);
+    animation: timelineTopLine 4s linear infinite alternate;
+    z-index: 2;
+  }
+
+  @keyframes timelineTopLine {
+    0%   { left: 0%;  width: 25%; opacity: 0.5; }
+    50%  { opacity: 1; }
+    100% { left: 70%; width: 25%; opacity: 0.5; }
+  }
+
+  /* Node item trong timeline: viền cyan và glow khi active */
+  .cmd-tl-node {
+    background: rgba(9, 4, 26, 0.82) !important;
+    border: 1px solid rgba(0, 229, 255, 0.2) !important;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.08) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cmd-tl-node:hover,
+  .cmd-tl-node.active {
+    border-color: rgba(0, 229, 255, 0.6) !important;
+    box-shadow: 0 0 18px rgba(0, 229, 255, 0.3) !important;
+    background: rgba(0, 229, 255, 0.06) !important;
+  }
+
+  /* Đường nối giữa các node: giữ hiệu ứng cyan glow */
+  .cmd-tl-line {
+    background: linear-gradient(90deg,
+      rgba(0, 229, 255, 0.15),
+      rgba(0, 229, 255, 0.15)
+    ) !important;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cmd-tl-line::after {
+    background: var(--cmd-cyan, #00e5ff) !important;
+    box-shadow: 0 0 10px #00e5ff, 0 0 20px rgba(0, 229, 255, 0.6) !important;
+  }
+
+  /* Dot giữa node: cyan khi active */
+  .cmd-tl-node.active .cmd-tl-dot {
+    border-color: var(--cmd-cyan, #00e5ff) !important;
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.7) !important;
+  }
+
+  .cmd-tl-node.active .cmd-tl-dot::after {
+    background: var(--cmd-cyan, #00e5ff) !important;
+  }
+
+  /* Tên node: cyan khi active */
+  .cmd-tl-node.active .cmd-tl-label {
+    color: var(--cmd-cyan, #00e5ff) !important;
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+  }
+
+  /* Spatial control tiles on mobile: keep command style */
+  .cmd-ctrl-tile {
+    background: rgba(9, 4, 26, 0.9) !important;
+    border: 1px solid rgba(0, 229, 255, 0.25) !important;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.08) !important;
+  }
+
+  .cmd-ctrl-tile:hover,
+  .cmd-ctrl-tile.active,
+  .cmd-ctrl-tile.active-tool {
+    border-color: var(--cmd-cyan, #00e5ff) !important;
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.5),
+                inset 0 0 12px rgba(0, 229, 255, 0.25) !important;
+  }
+}
+
+/* Fix overlap between command layout tools and premium carousel */
+.layout-command .premium-carousel-container {
+  bottom: 90px !important;
 }

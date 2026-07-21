@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "css": "^3.0.0",
     "jsdom": "^29.1.1"
   }
 }

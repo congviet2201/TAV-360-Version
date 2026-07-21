@@ -1,0 +1,722 @@
+body.layout-prism .minimap-action-btn {
+  background: rgba(124, 58, 237, 0.08) !important;
+  border-color: rgba(124, 58, 237, 0.2) !important;
+  color: var(--prism-muted, #9CA3AF) !important;
+}
+
+body.layout-prism .minimap-action-btn:hover {
+  background: rgba(124, 58, 237, 0.22) !important;
+  border-color: var(--prism-purple) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.3) !important;
+}
+
+.layout-prism .switcher-slider {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.8) !important;
+}
+
+.layout-prism,
+body.layout-prism {
+  --prism-coral: #FF6B6B;
+  --prism-purple: #7C3AED;
+  --prism-blue: #3B82F6;
+  --prism-emerald: #10B981;
+  --prism-amber: #F59E0B;
+  --prism-bg: #111827;
+  --prism-card: #1F2937;
+  --prism-border: rgba(255,255,255,0.07);
+  --prism-text: #F9FAFB;
+  --prism-muted: #9CA3AF;
+  --prism-font: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --prism-font-h: 'Space Grotesk', system-ui, sans-serif;
+}
+
+.layout-prism .prism-nav-container {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 1200;
+  pointer-events: none;
+}
+
+.layout-prism .prism-nav-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  pointer-events: auto;
+}
+
+.layout-prism .prism-nav-list {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  padding: 8px 12px;
+  overflow: visible;
+}
+
+.layout-prism .prism-nav-item {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background: rgba(31, 41, 55, 0.75);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 12px;
+  cursor: pointer;
+  color: var(--prism-muted);
+  user-select: none;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-radius 0.3s,
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    color 0.2s,
+    transform 0.2s;
+  pointer-events: auto;
+}
+
+.layout-prism .prism-nav-item.has-submenu::before {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--prism-purple);
+  opacity: 0.55;
+  transition: background 0.2s, opacity 0.2s, bottom 0.28s ease;
+  z-index: 2;
+}
+
+.layout-prism .prism-nav-item.has-submenu:hover::before,
+.layout-prism .prism-nav-item.has-submenu.open::before {
+  opacity: 0;
+  /* hide when open/hovered */
+}
+
+.layout-prism .prism-nav-item:hover,
+.layout-prism .prism-nav-item.active,
+.layout-prism .prism-nav-item.open {
+  width: 155px;
+  /* expand to show label */
+  border-radius: 16px;
+  color: #fff;
+}
+
+.layout-prism .prism-nav-item:hover,
+.layout-prism .prism-nav-item.active:hover,
+.layout-prism .prism-nav-item.open:hover {
+  transform: scale(1.05);
+  background: linear-gradient(rgba(31, 41, 55, 0.85), rgba(31, 41, 55, 0.85)) padding-box,
+    conic-gradient(from var(--prism-angle), var(--prism-coral), var(--prism-purple), var(--prism-blue), var(--prism-coral)) border-box !important;
+  border-color: transparent !important;
+  animation: prism-border-spin 3s linear infinite !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45), 0 0 12px rgba(124,58,237,0.25) !important;
+  filter: brightness(1.15);
+}
+
+.layout-prism .prism-nav-item.active,
+.layout-prism .prism-nav-item.open {
+  background: rgba(31, 41, 55, 0.95);
+  border: 1.5px solid var(--prism-purple) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.layout-prism .prism-nav-item:active {
+  transform: scale(0.96);
+}
+
+.layout-prism .prism-nav-icon-wrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.layout-prism .prism-nav-icon-wrapper svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: stroke 0.2s;
+}
+
+.layout-prism .prism-nav-label {
+  display: block;
+  font-family: var(--prism-font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: left;
+  line-height: 1;
+  color: inherit;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  transition: opacity 0.15s ease, max-width 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), margin-left 0.2s ease;
+  pointer-events: none;
+}
+
+.layout-prism .prism-nav-item:hover .prism-nav-label,
+.layout-prism .prism-nav-item.active .prism-nav-label,
+.layout-prism .prism-nav-item.open .prism-nav-label {
+  opacity: 1;
+  max-width: 120px;
+  margin-left: 10px;
+}
+
+.layout-prism .prism-submenu {
+  position: absolute;
+  top: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  min-width: 165px;
+  background: rgba(31, 41, 55, 0.95);
+  border: 1.5px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 6px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.55), 0 0 20px rgba(124,58,237,0.15);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 1300;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.layout-prism .prism-nav-item.open .prism-submenu,
+.layout-prism .prism-nav-item.has-submenu:hover .prism-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.layout-prism .prism-submenu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: var(--prism-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--prism-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+  white-space: nowrap;
+  border: 1.5px solid transparent;
+}
+
+.layout-prism .prism-submenu-item:hover {
+  background: linear-gradient(rgba(31, 41, 55, 0.85), rgba(31, 41, 55, 0.85)) padding-box, conic-gradient(from var(--prism-angle), var(--prism-coral), var(--prism-purple), var(--prism-blue), var(--prism-coral)) border-box;
+  color: #fff;
+  transform: translateX(4px);
+  animation: prism-border-spin 3s linear infinite;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3), 0 0 10px rgba(124,58,237,0.25);
+  border-color: transparent;
+}
+
+.layout-prism .prism-submenu-item.active {
+  background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(124,58,237,0.25));
+  color: #fff;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(124,58,237,0.3);
+}
+
+.layout-prism .prism-tool-container {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.layout-prism .prism-tool-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+  pointer-events: auto;
+}
+
+.layout-prism .prism-tool-item {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background: rgba(31, 41, 55, 0.75);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 12px;
+  box-sizing: border-box;
+  color: var(--prism-muted);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-radius 0.3s,
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    color 0.2s,
+    transform 0.2s;
+  flex-shrink: 0;
+}
+
+.layout-prism .prism-tool-item:hover,
+.layout-prism .prism-tool-item.pinned,
+.layout-prism .prism-tool-item.active-tool {
+  width: 140px;
+  /* expand to show label */
+  border-radius: 16px;
+  color: #fff;
+}
+
+.layout-prism .prism-tool-item:hover,
+.layout-prism .prism-tool-item.pinned:hover,
+.layout-prism .prism-tool-item.active-tool:hover {
+  transform: scale(1.05);
+  background: linear-gradient(rgba(31, 41, 55, 0.85), rgba(31, 41, 55, 0.85)) padding-box,
+    conic-gradient(from var(--prism-angle), var(--prism-coral), var(--prism-purple), var(--prism-blue), var(--prism-coral)) border-box !important;
+  border-color: transparent !important;
+  animation: prism-border-spin 3s linear infinite !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45), 0 0 12px rgba(124,58,237,0.25) !important;
+  filter: brightness(1.15);
+}
+
+.layout-prism .prism-tool-item.pinned {
+  background: rgba(31, 41, 55, 0.95);
+  border: 1.5px solid var(--prism-purple) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.layout-prism .prism-tool-item.active-tool {
+  background: rgba(31, 41, 55, 0.95);
+  border: 1.5px solid var(--prism-coral) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.layout-prism .prism-tool-item:active {
+  transform: scale(0.96);
+}
+
+.layout-prism .prism-tool-icon-wrapper {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.layout-prism .prism-tool-icon-wrapper svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: stroke 0.2s;
+}
+
+.layout-prism .prism-tool-label {
+  display: block;
+  font-family: var(--prism-font);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-align: left;
+  line-height: 1;
+  color: inherit;
+  white-space: nowrap;
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
+  transition: opacity 0.15s ease, max-width 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), margin-left 0.2s ease;
+  pointer-events: none;
+}
+
+.layout-prism .prism-tool-item:hover .prism-tool-label,
+.layout-prism .prism-tool-item.pinned .prism-tool-label,
+.layout-prism .prism-tool-item.active-tool .prism-tool-label {
+  opacity: 1;
+  max-width: 100px;
+  margin-left: 10px;
+}
+
+body.layout-prism .compass-widget {
+  bottom: 80px !important;
+  left: 24px !important;
+}
+
+body.layout-prism .prism-compass-n {
+  font-family: var(--prism-font-h, 'Space Grotesk', sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--prism-coral);
+  text-shadow: 0 0 6px rgba(255,107,107,0.6);
+  letter-spacing: 0.08em;
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+body.layout-prism .compass-degree-display {
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--prism-muted, #9CA3AF);
+}
+
+body.layout-prism .minimap-widget {
+  border-radius: 16px !important;
+  border: 1.5px solid transparent !important;
+  background: linear-gradient(#111827, #111827) padding-box,
+    linear-gradient(135deg, var(--prism-coral), var(--prism-purple)) border-box !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 20px rgba(124,58,237,0.1) !important;
+  overflow: hidden;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 1100 !important;
+}
+
+body.layout-prism .minimap-header {
+  background: rgba(31, 41, 55, 0.95);
+  border-bottom: 1px solid var(--prism-border, rgba(255,255,255,0.07));
+  color: var(--prism-muted, #9CA3AF);
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+body.layout-prism .minimap-header svg {
+  stroke: var(--prism-purple) !important;
+}
+
+body.layout-prism .minimap-dot {
+  width: 10px !important;
+  height: 10px !important;
+  background: var(--prism-coral) !important;
+  border: 2px solid #fff !important;
+  box-shadow: 0 0 0 3px rgba(255,107,107,0.35), 0 0 12px rgba(255,107,107,0.5) !important;
+  animation: prism-dot-pulse 2s ease-in-out infinite;
+}
+
+body.layout-prism .minimap-viewcone {
+  border-top-color: rgba(124,58,237,0.7) !important;
+}
+
+body.layout-prism .minimap-legend .dot.cyan {
+  background: var(--prism-coral) !important;
+}
+
+body.layout-prism .hologram-marker-container:hover {
+  transform: translate(-50%, -50%) scale(1.2) !important;
+  /* Slight scale up on hover */
+  background: transparent !important;
+  border: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+body.layout-prism .hologram-marker-container:active {
+  transform: translate(-50%, -50%) scale(0.9) !important;
+  background: transparent !important;
+}
+
+body.layout-prism .hotspot-marker {
+  position: relative !important;
+  width: 10px !important;
+  /* Sleek 10px dot */
+  height: 10px !important;
+  background-color: var(--prism-purple) !important;
+  /* Layout theme purple */
+  border-radius: 50% !important;
+  /* Perfect circle */
+  border: 1.5px solid #ffffff !important;
+  /* White outline to stand out */
+  box-shadow: 0 0 8px var(--prism-purple), 0 0 16px rgba(124, 58, 237, 0.4) !important;
+  /* Purple glowing aura */
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  transition: all 0.2s ease !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
+body.layout-prism .hologram-marker-container:hover .hotspot-marker {
+  background-color: var(--prism-coral) !important;
+  /* Hover changes to coral for dynamic contrast */
+  box-shadow: 0 0 12px var(--prism-coral), 0 0 24px rgba(255, 107, 107, 0.6) !important;
+}
+
+body.layout-prism .hologram-marker-container:hover .hotspot-marker::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--prism-coral);
+  /* Coral ring */
+  transform: translate(-50%, -50%) scale(1);
+  animation: prism-hotspot-ring 1.2s ease-out infinite;
+  pointer-events: none;
+}
+
+body.layout-prism .hotspot-label {
+  font-family: var(--prism-font) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  background: rgba(15, 23, 42, 0.85) !important;
+  /* Glass tooltip background */
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 4px 8px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  opacity: 0 !important;
+  /* Hidden by default */
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(4px) !important;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.layout-prism .hologram-marker-container:hover .hotspot-label {
+  opacity: 1 !important;
+  /* Show on hover */
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+body.layout-prism #ui-notification {
+  color: var(--prism-coral) !important;
+  border-color: rgba(255,107,107,0.35) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 16px rgba(255,107,107,0.15) !important;
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+}
+
+body.layout-prism .back-to-360-btn {
+  background: linear-gradient(135deg, rgba(255,107,107,0.12), rgba(124,58,237,0.12)) !important;
+  border: 1px solid rgba(124,58,237,0.3) !important;
+  color: var(--prism-text) !important;
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif) !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+}
+
+body.layout-prism .back-to-360-btn:hover {
+  background: linear-gradient(135deg, rgba(255,107,107,0.22), rgba(124,58,237,0.22)) !important;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.25) !important;
+}
+
+body.layout-prism .region-sidebar {
+  background: rgba(17, 24, 39, 0.92) !important;
+  backdrop-filter: blur(30px) !important;
+  -webkit-backdrop-filter: blur(30px) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.layout-prism .region-sidebar .sidebar-header h3 {
+  color: #fff !important;
+  font-family: var(--prism-font-h, 'Space Grotesk', sans-serif) !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  background: linear-gradient(135deg, var(--prism-coral), var(--prism-purple)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+body.layout-prism .region-menu-item {
+  background: rgba(31, 41, 55, 0.9) !important;
+  border: 1px solid var(--prism-border, rgba(255,255,255,0.07)) !important;
+  color: var(--prism-muted, #9CA3AF) !important;
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif) !important;
+  border-radius: 12px !important;
+  font-weight: 500 !important;
+}
+
+body.layout-prism .region-menu-item:hover {
+  border-color: rgba(124,58,237,0.4) !important;
+  color: #fff !important;
+  box-shadow: 0 0 12px rgba(124,58,237,0.15) !important;
+}
+
+body.layout-prism .region-menu-item.active {
+  background: linear-gradient(135deg, rgba(255,107,107,0.15), rgba(124,58,237,0.2)) !important;
+  border-color: rgba(124,58,237,0.4) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(124,58,237,0.2) !important;
+}
+
+body.layout-prism .interior-switcher-container {
+  background: rgba(31, 41, 55, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  padding: 4px !important;
+}
+
+body.layout-prism .interior-switch-btn {
+  color: var(--prism-muted) !important;
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif) !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+body.layout-prism .interior-switch-btn:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+body.layout-prism .interior-switch-btn.active {
+  background: linear-gradient(135deg, var(--prism-coral) 0%, var(--prism-purple) 100%) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4) !important;
+}
+
+body.layout-prism .region-map-container {
+  background: #0d0f14 !important;
+}
+
+body.layout-prism .region-map-wrapper {
+  border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 16px !important;
+}
+
+body.layout-prism .pin-dot {
+  background: var(--prism-bg) !important;
+  border: 2px solid var(--prism-coral) !important;
+  box-shadow: 0 0 12px var(--prism-coral) !important;
+  color: #fff !important;
+  transition: all 0.3s ease !important;
+}
+
+body.layout-prism .pin-pulse {
+  background: rgba(255, 107, 107, 0.25) !important;
+  animation: prism-pinPulse 2s infinite ease-out !important;
+}
+
+body.layout-prism .map-pin:hover .pin-dot {
+  border-color: var(--prism-purple) !important;
+  box-shadow: 0 0 20px var(--prism-purple) !important;
+  transform: scale(1.15) !important;
+}
+
+body.layout-prism .map-pin:hover .pin-pulse {
+  background: rgba(124, 58, 237, 0.35) !important;
+}
+
+body.layout-prism .map-pin.active .pin-dot {
+  border-color: var(--prism-emerald) !important;
+  box-shadow: 0 0 25px var(--prism-emerald) !important;
+}
+
+body.layout-prism .map-pin.active .pin-pulse {
+  background: rgba(16, 185, 129, 0.4) !important;
+}
+
+body.layout-prism .pin-label {
+  background: rgba(31, 41, 55, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #fff !important;
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
+  border-radius: 8px !important;
+}
+
+body.layout-prism .global-modal-content {
+  background: rgba(17, 24, 39, 0.97) !important;
+  border: 1px solid rgba(124,58,237,0.2) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 32px rgba(124,58,237,0.08) !important;
+  font-family: var(--prism-font, 'Plus Jakarta Sans', sans-serif) !important;
+}
+
+body.layout-prism .modal-header {
+  border-bottom: 1px solid var(--prism-border, rgba(255,255,255,0.07)) !important;
+}
+
+body.layout-prism .modal-header h2 {
+  font-family: var(--prism-font-h, 'Space Grotesk', sans-serif) !important;
+  background: linear-gradient(135deg, var(--prism-coral), var(--prism-purple)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.layout-prism .prism-submenu-item {
+  position: relative;
+}
+
+.layout-prism .prism-nav-item::after,
+.layout-prism .prism-submenu-item::after,
+.layout-prism .prism-tool-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+  background-size: 200% 100%;
+  animation: prismShineBg 2.5s linear infinite;
+  z-index: 5;
+}

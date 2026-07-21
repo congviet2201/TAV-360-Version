@@ -1,38 +1,71 @@
 function initMobileUI() {
   if (window.innerWidth > 1024) return;
+
+  // ── Retry if TAV_CORE not ready yet (shared_core.js may still be parsing) ──
+  if (!window.TAV_CORE) {
+    var _retries = (window._mobileUIRetries || 0) + 1;
+    window._mobileUIRetries = _retries;
+    if (_retries < 20) {
+      setTimeout(initMobileUI, 150);
+    } else {
+      console.error('[Mobile UI] TAV_CORE never became available after 3s. Aborting.');
+    }
+    return;
+  }
+  window._mobileUIRetries = 0;
   
-  // Hide ALL Desktop UIs
-  const desktopSelectors = ['#ui-wrapper', '#minimap-widget', '#compass-widget', '.layout-switcher-wrapper', '#layout-switcher-wrapper', '.layout-switcher-trigger', '.bottom-nav-container', '.vertical-tool-stack', '.sidebar-container', '.gradient-floating-logo', '.cmd-top-ribbon', '.cmd-scene-explorer', '.cmd-spatial-control', '#cmd-top-ribbon', '#cmd-node-label', '#cmd-scene-name', '#cmd-coord-display', '#cmd-pan-val', '#cmd-tilt-val', '#cmd-scene-explorer', '#cmd-explorer-collapse-header', '#cmd-explorer-collapse', '#cmd-explorer-body', '#cmd-explorer-list', '#cmd-spatial-control', '#cmd-music-tile', '#cmd-hotspot-tile', '.cmd-right-nav', '.cmd-left-tools', '.cmd-bottom-dock', '.horizon-top-nav', '.horizon-bottom-nav', '.aurora-glass-nav', '.aurora-glass-toolbar', '#vision-left-dock', '#vision-right-dock', '.blueprint-floating-gallery-container', '#blueprint-gallery-container', '#blueprint-gallery-panel', '.premium-carousel-container', '.premium-scene-browser', '#premium-scene-browser', '.layout-floating-logo', '.gradient-quick-actions', '.quick-nav-panel', '.bottom-nav-bar', '.futuristic-settings-group', '.neo-unified-trigger', '.aurora-nav-pin-btn', '.aurora-tool-pin-btn', '.compass-widget', '.horizon-dock', '.prism-nav-wrapper', '.prism-tool-container', '.nexus-nav-wrapper', '.nexus-tool-container', '.monarch-nav-wrapper', '.monarch-command-panel', '.minimap-widget', '.blueprint-top-ribbon', '.rgl-neo-nav-wrapper', '.rgl-neo-tools-system', '.blueprint-layout-switcher'];
-  
+  // ── Hide ALL Desktop UIs ──
+  // CRITICAL: #modern-ui-overlay is the outermost Desktop wrapper.
+  // Without hiding it, body.layout-XX classes make desktop CSS fire on mobile.
+  const desktopSelectors = [
+    '#modern-ui-overlay',          // ← THE FIX: hide the entire Desktop wrapper
+    '#ui-wrapper', '#minimap-widget', '#compass-widget',
+    '.layout-switcher-wrapper', '#layout-switcher-wrapper', '.layout-switcher-trigger',
+    '.bottom-nav-container', '.vertical-tool-stack', '.sidebar-container',
+    '.gradient-floating-logo', '.cmd-top-ribbon', '.cmd-scene-explorer', '.cmd-spatial-control',
+    '#cmd-top-ribbon', '#cmd-node-label', '#cmd-scene-name', '#cmd-coord-display',
+    '#cmd-pan-val', '#cmd-tilt-val', '#cmd-scene-explorer', '#cmd-explorer-collapse-header',
+    '#cmd-explorer-collapse', '#cmd-explorer-body', '#cmd-explorer-list',
+    '#cmd-spatial-control', '#cmd-music-tile', '#cmd-hotspot-tile',
+    '.cmd-right-nav', '.cmd-left-tools', '.cmd-bottom-dock',
+    '.horizon-top-nav', '.horizon-bottom-nav', '.aurora-glass-nav', '.aurora-glass-toolbar',
+    '#vision-left-dock', '#vision-right-dock',
+    '.blueprint-floating-gallery-container', '#blueprint-gallery-container', '#blueprint-gallery-panel',
+    '.premium-carousel-container', '.premium-scene-browser', '#premium-scene-browser',
+    '.layout-floating-logo', '.gradient-quick-actions', '.quick-nav-panel', '.bottom-nav-bar',
+    '.futuristic-settings-group', '.neo-unified-trigger',
+    '.aurora-nav-pin-btn', '.aurora-tool-pin-btn', '.compass-widget', '.horizon-dock',
+    '.prism-nav-wrapper', '.prism-tool-container', '.nexus-nav-wrapper', '.nexus-tool-container',
+    '.monarch-nav-wrapper', '.monarch-command-panel', '.minimap-widget',
+    '.blueprint-top-ribbon', '.rgl-neo-nav-wrapper', '.rgl-neo-tools-system', '.blueprint-layout-switcher'
+  ];
+
   const cssHide = document.createElement('style');
-  cssHide.innerHTML = `@media screen and (max-width: 1024px) { ${desktopSelectors.join(', ')} { display: none !important; } }`;
+  cssHide.id = 'ml1-desktop-hide';
+  // 1. Hide all desktop component selectors
+  // 2. Strip layout body classes so desktop CSS rules don't fire on mobile
+  cssHide.innerHTML = `
+    @media screen and (max-width: 1024px) {
+      ${desktopSelectors.join(', ')} { display: none !important; }
+      body.layout-classic, body.layout-futuristic, body.layout-neo, body.layout-gradient,
+      body.layout-aurora, body.layout-horizon, body.layout-prism, body.layout-nexus,
+      body.layout-monarch, body.layout-regal, body.layout-command {
+        /* Reset desktop layout body class visual effects on mobile */
+        background: #000 !important;
+      }
+    }
+  `;
   document.head.appendChild(cssHide);
 
-  // Data Definition
-  window.TAV_SCENES = [
-    { id: "node1", title: "Top View", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
-    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "TOP VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
-    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "TOP VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
-    { id: "node4", title: "TAV PARK", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK.jpg", action: "node4" },
-    { id: "node5", title: "TAV STREET", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN STREET.jpg", action: "node5" },
-    { id: "node6", title: "TAV PARK 2", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK 02.jpg", action: "node6" },
-    { id: "architecture-1", title: "KIẾN TRÚC 1", sub: "Exterior", category: "ARCHITECTURE", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "architecture-1" },
-    { id: "architecture-2", title: "KIẾN TRÚC 2", sub: "Exterior", category: "ARCHITECTURE", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "architecture-2" },
-    { id: "architecture-3", title: "KIẾN TRÚC 3", sub: "Exterior", category: "ARCHITECTURE", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "architecture-3" },
-    { id: "node7", title: "TAV LIVING 2", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN LIVING 2.jpg", action: "node7" },
-    { id: "node8", title: "TAV LIVING 1", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN LIVING.jpg", action: "node8" },
-    { id: "node9", title: "TAV THÔNG TẦNG", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN THONG TANG.jpg", action: "node9" },
-    { id: "node10", title: "BALCONY", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN BALCONY.jpg", action: "node10" },
-    { id: "node11", title: "TAV WC", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN WC.jpg", action: "node11" }
-  ];
+  // ── Scene data from Shared Core ──
+  const scenes = window.TAV_CORE.scenes;
+  window.TAV_SCENES = scenes; // backward-compat alias
+
 
   let isHotspotsHidden = false;
 
-  const mobileUI = document.createElement("div");
-  mobileUI.id = "mobile-ui-overlay";
-
-  // Carousel HTML (Fixed: using data-action instead of data-node)
-  let carouselHTML = window.TAV_SCENES.map(scene => `
+  // Build carousel from Shared Core scenes
+  let carouselHTML = scenes.map(scene => `
     <div class="mob-carousel-item" data-action="${scene.action}" data-node="${scene.action}">
       <img src="${scene.thumb}" alt="${scene.title}" onerror="this.src='preview.jpg'">
       <div class="mob-carousel-text">
@@ -40,6 +73,9 @@ function initMobileUI() {
       </div>
     </div>
   `).join('');
+
+  const mobileUI = document.createElement('div');
+  mobileUI.id = 'mobile-ui-overlay';
 
   mobileUI.innerHTML = `
     <!-- HEADER (Compass & Minimap) -->
@@ -105,11 +141,12 @@ function initMobileUI() {
       <div class="mob-sheet-handle"></div>
           <div class="mob-sheet-title">Công Cụ (More)</div>
       <div class="mob-tools-grid">
-        <button class="mob-grid-tool" data-action="music" id="mob-music-btn"> Âm nhạc </button>
-            <button class="mob-grid-tool" data-action="hotspots" id="mob-hotspot-btn"> Điểm chạm </button>
+        <button class="mob-grid-tool active active-tool" data-action="music" id="mob-music-btn"> Âm nhạc </button>
+        <button class="mob-grid-tool active active-tool" data-action="hotspots" id="mob-hotspot-btn"> Điểm chạm </button>
         <button class="mob-grid-tool" data-action="share"> Chia sẻ </button>
         <button class="mob-grid-tool" data-action="contact"> Liên hệ </button>
         <button class="mob-grid-tool" data-action="info"> Thông tin </button>
+        <button class="mob-grid-tool" style="color: #00f2fe; border-color: rgba(0,242,254,0.4);" onclick="if(window.switchMobileLayout) window.switchMobileLayout('2')"> Giao diện 2 </button>
       </div>
     </div>
 
@@ -122,9 +159,9 @@ function initMobileUI() {
 
   document.body.appendChild(mobileUI);
 
-  // Generate Menu List dynamically
-  const categories = [...new Set(window.TAV_SCENES.map(s => s.category))];
-  const menuList = document.getElementById("mob-menu-list");
+  // Generate Menu List from Shared Core scenes
+  const categories = [...new Set(scenes.map(s => s.category))];
+  const menuList = document.getElementById('mob-menu-list');
   categories.forEach(cat => {
     let groupHTML = `<div class="mob-menu-group"><div class="mob-menu-group-title">${cat}</div>`;
     window.TAV_SCENES.filter(s => s.category === cat).forEach(n => {
@@ -219,7 +256,8 @@ function initMobileUI() {
 
   // Tool Actions
   document.querySelectorAll("[data-action]").forEach(btn => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const action = btn.getAttribute("data-action");
       if (activeSheet) toggleSheet(activeSheet.id);
       
@@ -227,18 +265,62 @@ function initMobileUI() {
         if (window.pano) window.pano.openNext(`{${action}}`);
       } else {
         switch(action) {
-          case "autorotate": if(window.pano) window.pano.startAutorotate(0.1, 2, 1); break;
-          case "gallery": 
-            const galleryBtn = document.querySelector('[data-action="images"]:not(.mob-grid-tool):not(.mob-tool-btn)');
-            if (galleryBtn) galleryBtn.click();
+          case 'autorotate':
+            window.TAV_CORE.navigateTo('autorotate');
             break;
-          case "region": 
+          case 'gallery': {
+            if (typeof window.openGlobalPanoramaGallery === 'function') {
+              window.openGlobalPanoramaGallery();
+            } else {
+              const galleryBtn = document.querySelector('[data-action="images"]:not(.mob-grid-tool):not(.mob-tool-btn)');
+              if (galleryBtn) galleryBtn.click();
+            }
+            break;
+          }
+          case 'region': {
             const regionBtn = document.querySelector('[data-action="region-page"]:not(.mob-grid-tool):not(.mob-tool-btn)');
             if (regionBtn) regionBtn.click();
             break;
-          case "contact": 
-            const contactBtn = document.querySelector('[data-action="call"]:not(.mob-grid-tool):not(.mob-tool-btn)');
-            if (contactBtn) contactBtn.click();
+          }
+          case 'contact': {
+            window.open('https://tav.vn/', '_blank');
+            break;
+          }
+          case 'share': {
+            if (navigator.share) {
+              navigator.share({ title: 'TAV Virtual Tour', url: window.location.href }).catch(() => {});
+            }
+            break;
+          }
+          case 'info': {
+            const infoModal = document.getElementById('project-info-modal');
+            if (infoModal) infoModal.classList.add('active');
+            break;
+          }
+          case 'hotspots': {
+            const hs = document.querySelectorAll(".hologram-marker-container, .hs-container");
+            const isHidden = document.body.classList.contains('hide-hotspots');
+            const newVisible = isHidden;
+            document.body.classList.toggle('hide-hotspots', !newVisible);
+            if (window.pano && typeof window.pano.setPointHotspotsVisible === 'function') {
+              window.pano.setPointHotspotsVisible(newVisible);
+            }
+            hs.forEach(h => {
+              h.style.visibility = newVisible ? "visible" : "hidden";
+              h.style.opacity = newVisible ? "" : "0";
+            });
+            document.querySelectorAll('[data-action="hotspots"]').forEach(b => {
+              b.classList.toggle('active', newVisible);
+              b.classList.toggle('active-tool', newVisible);
+            });
+            break;
+          }
+          case 'music':
+            window.TAV_CORE.toggleMusic();
+            document.querySelectorAll('[data-action="music"]').forEach(b => {
+              b.classList.toggle('active',      !window.TAV_CORE.isMusicMuted);
+              b.classList.toggle('active-tool', !window.TAV_CORE.isMusicMuted);
+            });
             break;
         }
       }
@@ -271,3 +353,103 @@ function initMobileUI() {
 }
 
 if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", initMobileUI); } else { initMobileUI(); }
+
+// ============================================================
+
+// MOBILE LAYOUT ORCHESTRATOR
+// Manages switching between Mobile Layout 1 and Mobile Layout 2.
+// Only active on mobile (≤1024px).
+// ============================================================
+(function () {
+  'use strict';
+
+  // Only run on mobile viewports
+  if (window.innerWidth > 1024) {
+    // Re-check on resize (e.g. developer tools)
+    window.addEventListener('resize', () => {
+      if (window.innerWidth <= 1024 && !window._mobileOrchestratorInit) {
+        initOrchestrator();
+      }
+    }, { once: true });
+    return;
+  }
+
+  function initOrchestrator() {
+    if (window._mobileOrchestratorInit) return;
+    window._mobileOrchestratorInit = true;
+
+    // Read saved preference (default: '1')
+    const savedLayout = localStorage.getItem('tav-mobile-layout') || '1';
+
+    // The orchestrator switches layouts on demand
+    window.switchMobileLayout = function (layoutId) {
+      const id = String(layoutId);
+      if (id === localStorage.getItem('tav-mobile-layout')) return; // already active
+
+      localStorage.setItem('tav-mobile-layout', id);
+
+      // Destroy current active layout
+      if (id === '2') {
+        // Switching TO Layout 2 — destroy Layout 1 overlay if present
+        const l1 = document.getElementById('mobile-ui-overlay');
+        if (l1) l1.remove();
+        const l1hide = document.getElementById('ml1-desktop-hide');
+        if (l1hide) l1hide.remove();
+
+        // Init Layout 2
+        if (window.MobileLayout2) {
+          window.MobileLayout2.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout2 module not loaded yet');
+        }
+      } else {
+        // Switching TO Layout 1 — destroy Layout 2 overlay if present
+        if (window.MobileLayout2) window.MobileLayout2.destroy();
+        const l2hide = document.getElementById('ml2-desktop-hide');
+        if (l2hide) l2hide.remove();
+        const l2hotfix = document.getElementById('ml2-hotspot-fix');
+        if (l2hotfix) l2hotfix.remove();
+
+        // Init Layout 1 (re-run initMobileUI)
+        if (typeof initMobileUI === 'function') initMobileUI();
+      }
+
+      console.log('[Orchestrator] Switched to Mobile Layout', id);
+    };
+
+    // Boot the saved layout
+    if (savedLayout === '2') {
+      // Wait briefly for ML2 module to register
+      const tryBootL2 = (attempts) => {
+        if (window.MobileLayout2) {
+          // Layout 2: don't run initMobileUI, just init ML2
+          window.MobileLayout2.init();
+        } else if (attempts > 0) {
+          setTimeout(() => tryBootL2(attempts - 1), 200);
+        } else {
+          // Fallback to Layout 1
+          console.warn('[Orchestrator] ML2 not found, falling back to Layout 1');
+          localStorage.setItem('tav-mobile-layout', '1');
+        }
+      };
+      // initMobileUI was already called above by the original bootstrap —
+      // destroy its output and switch to L2
+      setTimeout(() => {
+        const l1 = document.getElementById('mobile-ui-overlay');
+        if (l1) l1.remove();
+        tryBootL2(10);
+      }, 300);
+    }
+    // Layout 1: initMobileUI already ran — nothing else needed
+
+    console.log('[Orchestrator] Mobile Layout Orchestrator ready (layout:', savedLayout, ')');
+  }
+
+  // Wait for DOMContentLoaded before orchestrating
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(initOrchestrator, 100));
+  } else {
+    setTimeout(initOrchestrator, 100);
+  }
+
+})();

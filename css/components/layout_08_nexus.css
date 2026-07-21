@@ -1,0 +1,703 @@
+body.layout-nexus .minimap-action-btn {
+  background: rgba(56, 189, 248, 0.08) !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
+  color: var(--nexus-text) !important;
+}
+
+body.layout-nexus .minimap-action-btn:hover {
+  background: rgba(56, 189, 248, 0.22) !important;
+  border-color: var(--nexus-sky) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
+}
+
+.layout-nexus .switcher-slider {
+  border-color: #818CF8 !important;
+  box-shadow: 0 0 12px rgba(129, 140, 248, 0.8) !important;
+}
+
+.layout-nexus,
+body.layout-nexus {
+  --nexus-bg: #0F1117;
+  --nexus-panel: #171923;
+  --nexus-panel-glow: rgba(56, 189, 248, 0.08);
+  --nexus-mint: #5EEAD4;
+  --nexus-sky: #38BDF8;
+  --nexus-lavender: #A78BFA;
+  --nexus-amber: #FBBF24;
+  --nexus-neutral: #CBD5E1;
+  --nexus-text: #F8FAFC;
+  --nexus-muted: #94A3B8;
+  --nexus-border: rgba(255, 255, 255, 0.06);
+  --nexus-font: 'Outfit', sans-serif;
+  --nexus-font-h: 'Sora', sans-serif;
+}
+
+.layout-nexus .nexus-nav-container {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.layout-nexus .nexus-nav-wrapper {
+  padding: 4px;
+}
+
+.layout-nexus .nexus-nav-list {
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.layout-nexus .nexus-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(23, 25, 35, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--nexus-border);
+  border-radius: 9999px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    color 0.3s;
+  color: var(--nexus-muted);
+  font-family: var(--nexus-font);
+  font-size: 15px;
+  font-weight: 500;
+  user-select: none;
+}
+
+.layout-nexus .nexus-nav-item:hover,
+.layout-nexus .nexus-nav-item.active:hover {
+  transform: scale(1.03);
+  background: linear-gradient(#171923, #171923) padding-box,
+    conic-gradient(from var(--nexus-angle), var(--nexus-sky), var(--nexus-mint), var(--nexus-sky)) border-box !important;
+  border: 1px solid transparent !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25) !important;
+  animation: nexus-border-spin 4s linear infinite, nexus-active-pulse 2s ease-in-out infinite !important;
+  color: var(--nexus-text);
+}
+
+.layout-nexus .nexus-nav-item.active {
+  color: var(--nexus-text) !important;
+  background: rgba(23, 25, 35, 0.95);
+  border: 1px solid var(--nexus-mint) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+.layout-nexus .nexus-nav-item.open {
+  background: rgba(23, 25, 35, 0.95);
+  border-color: var(--nexus-sky) !important;
+  color: var(--nexus-text);
+}
+
+.layout-nexus .nexus-nav-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.layout-nexus .nexus-nav-icon-wrapper svg {
+  width: 100%;
+  height: 100%;
+  stroke-width: 1.5;
+  stroke: currentColor;
+  transition: stroke 0.3s ease;
+}
+
+.layout-nexus .nexus-nav-item:hover .nexus-nav-icon-wrapper {
+  transform: scale(1.05);
+}
+
+.layout-nexus .nexus-nav-item.active .nexus-nav-icon-wrapper svg {
+  stroke: var(--nexus-mint);
+}
+
+.layout-nexus .nexus-nav-label {
+  font-family: var(--nexus-font);
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.layout-nexus .nexus-active-line {
+  position: absolute;
+  bottom: 6px;
+  left: 16px;
+  right: 16px;
+  height: 2px;
+  background: var(--nexus-mint);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.layout-nexus .nexus-nav-item:hover .nexus-active-line {
+  transform: scaleX(1);
+}
+
+.layout-nexus .nexus-nav-item.active .nexus-active-line {
+  transform: scaleX(1);
+  background: var(--nexus-sky);
+}
+
+.layout-nexus .nexus-submenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(23, 25, 35, 0.95);
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  z-index: 1001;
+}
+
+.layout-nexus .nexus-nav-item.open .nexus-submenu,
+.layout-nexus .nexus-nav-item.has-submenu:hover .nexus-submenu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.layout-nexus .nexus-submenu-item {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: var(--nexus-font);
+  color: var(--nexus-muted);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.layout-nexus .nexus-submenu-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--nexus-text);
+  padding-left: 14px;
+}
+
+.layout-nexus .nexus-submenu-item.active {
+  background: rgba(94, 234, 212, 0.1);
+  color: var(--nexus-mint) !important;
+  font-weight: 600;
+}
+
+.layout-nexus .nexus-tool-container {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.layout-nexus .nexus-tool-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+  align-items: flex-end;
+}
+
+.layout-nexus .nexus-tool-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 42px;
+  height: 42px;
+  background: rgba(23, 25, 35, 0.75);
+  border: 1px solid var(--nexus-border);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  color: var(--nexus-muted);
+  font-family: var(--nexus-font);
+  font-size: 15px;
+  font-weight: 500;
+  transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s,
+    color 0.3s;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  user-select: none;
+}
+
+.layout-nexus .nexus-tool-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+}
+
+.layout-nexus .nexus-tool-icon-wrapper svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.5;
+  stroke: currentColor;
+  transition: stroke 0.3s, transform 0.3s;
+}
+
+.layout-nexus .nexus-tool-label {
+  margin-left: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-family: var(--nexus-font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nexus-text);
+}
+
+.layout-nexus .nexus-tool-item.pinned,
+.layout-nexus .nexus-tool-item.active-tool {
+  width: 135px;
+  color: var(--nexus-text);
+  background: rgba(23, 25, 35, 0.95);
+  border-color: var(--nexus-sky);
+  box-shadow: none;
+}
+
+.layout-nexus .nexus-tool-item.active-tool {
+  border-color: var(--nexus-mint) !important;
+}
+
+.layout-nexus .nexus-tool-item:hover,
+.layout-nexus .nexus-tool-item.pinned:hover,
+.layout-nexus .nexus-tool-item.active-tool:hover {
+  width: 135px;
+  color: var(--nexus-text);
+  background: rgba(23, 25, 35, 0.95);
+  border-color: var(--nexus-sky);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 8px rgba(56, 189, 248, 0.15);
+}
+
+.layout-nexus .nexus-tool-item.active-tool:hover {
+  border-color: var(--nexus-mint) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 0 8px rgba(94, 234, 212, 0.15) !important;
+}
+
+.layout-nexus .nexus-tool-item:hover .nexus-tool-label,
+.layout-nexus .nexus-tool-item.pinned .nexus-tool-label,
+.layout-nexus .nexus-tool-item.active-tool .nexus-tool-label {
+  opacity: 1;
+  transition-delay: 0.05s;
+}
+
+.layout-nexus .nexus-tool-item:hover .nexus-tool-icon-wrapper svg,
+.layout-nexus .nexus-tool-item.pinned .nexus-tool-icon-wrapper svg,
+.layout-nexus .nexus-tool-item.active-tool .nexus-tool-icon-wrapper svg {
+  stroke: var(--nexus-sky);
+  transform: scale(1.05);
+}
+
+.layout-nexus .nexus-tool-item.active-tool .nexus-tool-icon-wrapper svg {
+  stroke: var(--nexus-mint) !important;
+}
+
+.layout-nexus .nexus-tool-tooltip {
+  display: none !important;
+}
+
+body.layout-nexus .compass-widget {
+  position: fixed !important;
+  bottom: 90px !important;
+  /* Positioned above layout switcher */
+  left: 20px !important;
+  width: 72px !important;
+  height: 72px !important;
+  background: rgba(23, 25, 35, 0.75) !important;
+  border: 1px solid var(--nexus-border) !important;
+  border-radius: 50% !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  z-index: 1000 !important;
+}
+
+body.layout-nexus .compass-dial {
+  width: 100% !important;
+  height: 100% !important;
+  transition: transform 0.1s ease-out !important;
+}
+
+body.layout-nexus .compass-cardinal.nexus-n {
+  position: absolute !important;
+  top: 4px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-family: var(--nexus-font-h) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: var(--nexus-mint) !important;
+  letter-spacing: 0.05em !important;
+  text-shadow: 0 0 4px rgba(94, 234, 212, 0.5) !important;
+}
+
+body.layout-nexus .compass-degree-display {
+  position: absolute !important;
+  bottom: -22px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  font-family: var(--nexus-font) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--nexus-muted) !important;
+  background: rgba(23, 25, 35, 0.8) !important;
+  border: 1px solid var(--nexus-border) !important;
+  padding: 2px 6px !important;
+  border-radius: 4px !important;
+  white-space: nowrap !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.layout-nexus .minimap-widget {
+  border-radius: 8px !important;
+  border: 1px solid var(--nexus-border) !important;
+  background: rgba(23, 25, 35, 0.75) !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  z-index: 1000 !important;
+  overflow: hidden !important;
+}
+
+body.layout-nexus .minimap-header {
+  background: rgba(23, 25, 35, 0.9) !important;
+  border-bottom: 1px solid var(--nexus-border) !important;
+  color: var(--nexus-text) !important;
+  font-family: var(--nexus-font-h) !important;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+body.layout-nexus .minimap-header svg {
+  stroke: var(--nexus-sky) !important;
+}
+
+body.layout-nexus .minimap-dot {
+  width: 8px !important;
+  height: 8px !important;
+  background: var(--nexus-mint) !important;
+  border: 1.5px solid #fff !important;
+  box-shadow: 0 0 0 2px rgba(94, 234, 212, 0.35), 0 0 8px rgba(94, 234, 212, 0.6) !important;
+  animation: nexus-dot-pulse 2s ease-in-out infinite !important;
+}
+
+body.layout-nexus .minimap-viewcone {
+  border-top-color: rgba(56, 189, 248, 0.5) !important;
+}
+
+body.layout-nexus .minimap-legend .dot.cyan {
+  background: var(--nexus-mint) !important;
+}
+
+body.layout-nexus .minimap-legend {
+  color: var(--nexus-muted) !important;
+  font-family: var(--nexus-font) !important;
+  font-size: 12px !important;
+}
+
+body.layout-nexus .hologram-marker-container:hover {
+  transform: translate(-50%, -50%) scale(1.2) !important;
+  /* Slight scale up on hover */
+  background: transparent !important;
+  border: none !important;
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+body.layout-nexus .hologram-marker-container:active {
+  transform: translate(-50%, -50%) scale(0.9) !important;
+  background: transparent !important;
+}
+
+body.layout-nexus .hotspot-marker {
+  position: relative !important;
+  width: 10px !important;
+  /* Sleek 10px dot */
+  height: 10px !important;
+  background-color: var(--nexus-mint) !important;
+  /* Layout theme mint green */
+  border-radius: 50% !important;
+  /* Perfect circle */
+  border: 1.5px solid #ffffff !important;
+  /* White outline to stand out */
+  box-shadow: 0 0 8px var(--nexus-mint), 0 0 16px rgba(52, 211, 153, 0.4) !important;
+  /* Mint glowing aura */
+  flex-shrink: 0 !important;
+  margin: 0 !important;
+  transition: all 0.2s ease !important;
+  mask: none !important;
+  -webkit-mask: none !important;
+}
+
+body.layout-nexus .hologram-marker-container:hover .hotspot-marker {
+  background-color: var(--nexus-sky) !important;
+  /* Hover changes to sky blue for dynamic contrast */
+  box-shadow: 0 0 12px var(--nexus-sky), 0 0 24px rgba(56, 189, 248, 0.6) !important;
+}
+
+body.layout-nexus .hologram-marker-container:hover .hotspot-marker::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--nexus-sky);
+  /* Sky blue ring */
+  transform: translate(-50%, -50%) scale(1);
+  animation: nexus-hotspot-ring 1.2s ease-out infinite;
+  pointer-events: none;
+}
+
+body.layout-nexus .hotspot-label {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  font-family: var(--nexus-font) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: var(--nexus-text) !important;
+  background: rgba(23, 25, 35, 0.85) !important;
+  /* Glass tooltip background */
+  border: 1px solid var(--nexus-border) !important;
+  padding: 4px 8px !important;
+  margin: 0 !important;
+  border-radius: 6px !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  text-shadow: none !important;
+  white-space: nowrap !important;
+  opacity: 0 !important;
+  /* Hidden by default */
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transform: translateY(4px) !important;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+body.layout-nexus .hologram-marker-container:hover .hotspot-label {
+  opacity: 1 !important;
+  /* Show on hover */
+  visibility: visible !important;
+  transform: translateY(0) !important;
+}
+
+body.layout-nexus #ui-notification {
+  color: var(--nexus-mint) !important;
+  border-color: rgba(94, 234, 212, 0.35) !important;
+  background: rgba(23, 25, 35, 0.95) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 16px rgba(94, 234, 212, 0.15) !important;
+  font-family: var(--nexus-font) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  border-radius: 8px !important;
+}
+
+body.layout-nexus .back-to-360-btn {
+  background: linear-gradient(135deg, rgba(94,234,212,0.12), rgba(56,189,248,0.12)) !important;
+  border: 1px solid rgba(56,189,248,0.3) !important;
+  color: var(--nexus-text) !important;
+  font-family: var(--nexus-font) !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+}
+
+body.layout-nexus .back-to-360-btn:hover {
+  background: linear-gradient(135deg, rgba(94,234,212,0.22), rgba(56,189,248,0.22)) !important;
+  box-shadow: 0 4px 16px rgba(56,189,248,0.25) !important;
+  transform: scale(1.02) !important;
+}
+
+body.layout-nexus .region-sidebar {
+  background: rgba(23, 25, 35, 0.95) !important;
+  border-right: 1px solid var(--nexus-border) !important;
+  box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5) !important;
+  font-family: var(--nexus-font) !important;
+}
+
+body.layout-nexus .region-sidebar .sidebar-header h3 {
+  font-family: var(--nexus-font-h, 'Sora', sans-serif) !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  background: linear-gradient(135deg, var(--nexus-sky), var(--nexus-mint)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+body.layout-nexus .region-menu-item {
+  background: rgba(23, 25, 35, 0.9) !important;
+  border: 1px solid var(--nexus-border) !important;
+  color: var(--nexus-muted) !important;
+  font-family: var(--nexus-font) !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+}
+
+body.layout-nexus .region-menu-item:hover {
+  border-color: rgba(56,189,248,0.4) !important;
+  color: #fff !important;
+  box-shadow: 0 0 12px rgba(56,189,248,0.15) !important;
+}
+
+body.layout-nexus .region-menu-item.active {
+  background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(56,189,248,0.2)) !important;
+  border-color: rgba(56,189,248,0.4) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 16px rgba(56,189,248,0.2) !important;
+}
+
+body.layout-nexus .interior-switcher-container {
+  background: rgba(23, 25, 35, 0.9) !important;
+  border: 1px solid var(--nexus-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  padding: 4px !important;
+}
+
+body.layout-nexus .interior-switch-btn {
+  color: var(--nexus-muted) !important;
+  font-family: var(--nexus-font) !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
+}
+
+body.layout-nexus .interior-switch-btn:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+body.layout-nexus .interior-switch-btn.active {
+  background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(56,189,248,0.2)) !important;
+  border: 1px solid rgba(56,189,248,0.4) !important;
+  color: var(--nexus-mint) !important;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.25) !important;
+}
+
+body.layout-nexus .region-map-container {
+  background: #0a0b0e !important;
+}
+
+body.layout-nexus .region-map-wrapper {
+  border: 1px solid var(--nexus-border) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 12px !important;
+}
+
+body.layout-nexus .pin-dot {
+  background: var(--nexus-panel) !important;
+  border: 2px solid var(--nexus-mint) !important;
+  box-shadow: 0 0 12px rgba(94, 234, 212, 0.4) !important;
+  color: #fff !important;
+  transition: all 0.3s ease !important;
+  border-radius: 8px !important;
+}
+
+body.layout-nexus .pin-pulse {
+  background: rgba(94, 234, 212, 0.2) !important;
+  animation: nexus-pinPulse 2s infinite ease-out !important;
+  border-radius: 8px !important;
+}
+
+body.layout-nexus .map-pin:hover .pin-dot {
+  border-color: var(--nexus-sky) !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6) !important;
+  transform: scale(1.15) !important;
+}
+
+body.layout-nexus .map-pin:hover .pin-pulse {
+  background: rgba(56, 189, 248, 0.3) !important;
+}
+
+body.layout-nexus .map-pin.active .pin-dot {
+  border-color: var(--nexus-lavender) !important;
+  box-shadow: 0 0 25px rgba(167, 139, 250, 0.6) !important;
+}
+
+body.layout-nexus .map-pin.active .pin-pulse {
+  background: rgba(167, 139, 250, 0.35) !important;
+}
+
+body.layout-nexus .pin-label {
+  background: var(--nexus-panel) !important;
+  border: 1px solid var(--nexus-border) !important;
+  border-radius: 6px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: var(--nexus-text) !important;
+  font-family: var(--nexus-font) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.layout-nexus .global-modal-content {
+  background: rgba(23, 25, 35, 0.97) !important;
+  border: 1px solid rgba(56, 189, 248, 0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 32px rgba(56, 189, 248, 0.08) !important;
+  font-family: var(--nexus-font) !important;
+}
+
+body.layout-nexus .modal-header {
+  border-bottom: 1px solid var(--nexus-border) !important;
+}
+
+body.layout-nexus .modal-header h2 {
+  font-family: var(--nexus-font-h) !important;
+  background: linear-gradient(135deg, var(--nexus-sky), var(--nexus-mint)) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+body.layout-nexus .nexus-nav-container {
+  top: 16px !important;
+  bottom: auto !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: top center !important;
+}

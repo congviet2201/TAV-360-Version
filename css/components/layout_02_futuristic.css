@@ -1,0 +1,1086 @@
+.layout-futuristic .modern-ui-overlay {
+  font-family: var(--ui-font);
+  color: var(--text-primary);
+  user-select: none;
+  /* pointer-events: none allows panorama canvas to receive mouse events by default.
+     Individual interactive elements below re-enable pointer-events explicitly. */
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.layout-futuristic .futuristic-settings-group,
+.layout-futuristic .settings-toggle-btn,
+.layout-futuristic .vertical-tool-stack.expanded,
+.layout-futuristic .sidebar-toggle-btn,
+.layout-futuristic .sidebar-content,
+.layout-futuristic .nav-submenu,
+.layout-futuristic .mega-card,
+.layout-futuristic .layout-switcher-pill {
+  pointer-events: auto;
+}
+
+.layout-futuristic .futuristic-settings-group {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1002;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: auto;
+}
+
+.layout-futuristic .settings-toggle-btn {
+  /* gear restored */
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--text-primary);
+}
+
+.layout-futuristic .settings-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.3s ease;
+}
+
+.layout-futuristic .settings-toggle-btn:hover {
+  background: rgba(8, 14, 24, 0.9);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3), 0 0 10px rgba(0, 242, 254, 0.15);
+  color: var(--neon-cyan);
+}
+
+.layout-futuristic .settings-toggle-btn:hover svg {
+  transform: rotate(90deg);
+}
+
+.layout-futuristic .vertical-tool-stack {
+  position: relative;
+  transform: translateY(-10px) scale(0.9);
+  transform-origin: top center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 4px 0;
+  margin-top: 8px;
+}
+
+.layout-futuristic .futuristic-settings-group:hover .vertical-tool-stack,
+.layout-futuristic .vertical-tool-stack.expanded {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.layout-futuristic .tool-stack-header {
+  font-family: var(--tech-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--neon-cyan);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.15);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
+}
+
+.layout-futuristic .tool-buttons-sub-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.layout-futuristic .tool-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  margin: 5px 0;
+  box-sizing: border-box;
+  border-radius: 12px;
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--neon-cyan);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: inset 0 0 10px rgba(0, 242, 254, 0.05);
+}
+
+.layout-futuristic .tool-button svg {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+}
+
+.layout-futuristic .tool-button svg * {
+  stroke: currentColor;
+  transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.layout-futuristic .tool-button svg *[fill="currentColor"] {
+  fill: currentColor;
+}
+
+.layout-futuristic .tool-tooltip {
+  text-transform: uppercase;
+  position: absolute;
+  right: calc(100% + 12px);
+  background: rgba(10, 12, 16, 0.9);
+  color: #fff;
+  font-family: var(--ui-font);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(8px);
+  pointer-events: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+}
+
+.layout-futuristic .tool-button:hover {
+  background: rgba(0, 242, 254, 0.07);
+  border-color: rgba(0, 242, 254, 0.35);
+  color: var(--text-primary);
+  transform: scale(1.05);
+  /* Removed translateX(-4px) which caused a hover loop/flickering */
+  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.15);
+}
+
+.layout-futuristic .tool-button:hover svg * {
+  stroke: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .tool-button:hover svg *[fill="currentColor"] {
+  fill: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .tool-button:hover .tool-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.layout-futuristic .sidebar-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  /* Let clicks pass through when collapsed */
+  z-index: 1001;
+  pointer-events: none;
+}
+
+.layout-futuristic .sidebar-container * {
+  pointer-events: auto;
+}
+
+.layout-futuristic .sidebar-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 220px;
+  /* Thinner sidebar */
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--cyber-bg);
+  border-right: 1px solid var(--cyber-border);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  padding: 30px 16px;
+  /* Compact padding */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 10px 0 45px rgba(0, 0, 0, 0.5);
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1005;
+  /* Establish higher stacking context so submenus render over toggle button */
+}
+
+.layout-futuristic .sidebar-container.expanded .sidebar-content {
+  transform: translateX(0);
+}
+
+.layout-futuristic .sidebar-toggle-btn {
+  position: absolute;
+  left: 12px;
+  /* Float on screen when collapsed */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  /* Compact width */
+  height: 36px;
+  /* Compact height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  /* Refined corner */
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(15px);
+  color: var(--neon-cyan);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1000;
+  /* Stacked below .sidebar-content stacking context */
+}
+
+.layout-futuristic .sidebar-container.expanded .sidebar-toggle-btn {
+  left: 232px;
+  /* Sidebar width (220px) + offset (12px) */
+}
+
+.layout-futuristic .sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
+  left: 390px;
+  /* 220px (sidebar) + 150px (submenu) + 8px (gap) + 12px (offset) */
+}
+
+.layout-futuristic .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+  left: 410px;
+  /* 220px (sidebar) + 170px (mega menu) + 8px (gap) + 12px (offset) */
+}
+
+.layout-futuristic .sidebar-toggle-btn svg {
+  width: 14px;
+  /* Slimmer icon */
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  transition: transform 0.3s ease;
+}
+
+.layout-futuristic .sidebar-toggle-btn:hover {
+  color: var(--text-primary);
+  background: rgba(0, 242, 254, 0.12);
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.3), 0 4px 15px rgba(0, 0, 0, 0.4);
+  border-color: var(--neon-cyan);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.layout-futuristic .sidebar-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
+}
+
+.layout-futuristic .logo-script-top {
+  font-family: var(--ui-font);
+  font-size: 16px;
+  /* Thinner logo */
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--neon-cyan);
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+}
+
+.layout-futuristic .logo-script-wave {
+  width: 50px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+  margin: 4px 0;
+  opacity: 0.8;
+}
+
+.layout-futuristic .logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.layout-futuristic .sidebar-nav-list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  /* Reduced gap */
+  margin-top: 10px;
+}
+
+.layout-futuristic .active-nav-glow {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  /* matches item height (40px) */
+  background: linear-gradient(90deg, rgba(0, 242, 254, 0.08) 0%, rgba(0, 85, 255, 0.02) 100%);
+  border-left: 3px solid var(--neon-cyan);
+  border-radius: 10px;
+  z-index: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+}
+
+.layout-futuristic .nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  /* Compact height */
+  box-sizing: border-box;
+  padding: 8px 12px;
+  /* Thinner padding */
+  border-radius: 10px;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+}
+
+.layout-futuristic .nav-item svg {
+  width: 16px;
+  /* Slimmer icons */
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.layout-futuristic .nav-item span {
+  font-family: var(--ui-font);
+  font-size: 13px;
+  /* Smaller typography */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-left: 10px;
+  /* Adjusted spacing */
+  text-transform: uppercase;
+  color: currentColor;
+  transition: all 0.3s ease;
+}
+
+.layout-futuristic .nav-item:hover {
+  color: var(--neon-cyan);
+  border-color: rgba(0, 242, 254, 0.3);
+  background: rgba(0, 242, 254, 0.05);
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.15);
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+}
+
+.layout-futuristic .nav-item:hover svg {
+  transform: translateX(2px);
+  stroke: var(--neon-cyan);
+  filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4));
+}
+
+.layout-futuristic .nav-item.active {
+  color: var(--neon-cyan);
+}
+
+.layout-futuristic .nav-item.active svg {
+  stroke: var(--neon-cyan);
+  filter: drop-shadow(0 0 5px rgba(0, 242, 254, 0.4));
+  stroke-width: 2.2;
+}
+
+.layout-futuristic .nav-item.active span {
+  font-weight: 600;
+}
+
+.layout-futuristic .nav-submenu {
+  position: absolute;
+  left: calc(100% + 24px);
+  /* 100% of nav-item (188px) + 24px = 212px + 16px padding = 228px (8px gap next to 220px sidebar) */
+  top: 0;
+  transform: translateX(-10px) scale(0.95);
+  background: rgba(8, 14, 24, 0.85);
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border-radius: 12px;
+  /* Smoother corner */
+  padding: 6px;
+  /* Reduced padding */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* Reduced gap */
+  width: 150px;
+  /* Thinner submenu */
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  z-index: 1050;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.layout-futuristic .nav-submenu::before {
+  content: '';
+  position: absolute;
+  left: -32px;
+  /* A bit larger than the gap to be safe */
+  top: -20px;
+  width: 40px;
+  height: calc(100% + 40px);
+  background: transparent;
+  pointer-events: auto;
+}
+
+.layout-futuristic .nav-submenu::after {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 24px;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: rgba(8, 14, 24, 0.85);
+  border-left: 1px solid rgba(0, 242, 254, 0.25);
+  border-bottom: 1px solid rgba(0, 242, 254, 0.25);
+  z-index: -1;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.layout-futuristic .nav-item.active .nav-submenu::after {
+  background: var(--neon-cyan);
+  border-left-color: var(--neon-cyan);
+  border-bottom-color: var(--neon-cyan);
+  box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.layout-futuristic .nav-item.is-open .nav-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  /* Make interactive when open */
+  transform: translateX(0) scale(1);
+}
+
+.layout-futuristic .sidebar-container:not(.expanded) .nav-submenu {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
+
+.layout-futuristic .submenu-item {
+  padding: 6px 12px;
+  /* Thinner padding */
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  /* Lighter font size */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+  background: transparent;
+}
+
+.layout-futuristic .submenu-item:hover {
+  background: rgba(0, 242, 254, 0.08);
+  color: var(--neon-cyan);
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.3);
+}
+
+.layout-futuristic .submenu-item.active {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0, 242, 254, 0.25);
+}
+
+.layout-futuristic .sidebar-container .nav-submenu.mega-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Thinner gap */
+  padding: 10px;
+  /* Thinner padding */
+  width: 170px;
+  /* More compact width */
+  box-sizing: border-box;
+}
+
+.layout-futuristic .mega-card {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  /* Slimmer height */
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--cyber-bg-solid);
+}
+
+.layout-futuristic .mega-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.layout-futuristic .mega-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 14, 24, 0.85) 0%, rgba(8, 14, 24, 0.25) 60%, transparent 100%);
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+.layout-futuristic .mega-card-title {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  right: 8px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  z-index: 2;
+  text-transform: uppercase;
+  text-align: left;
+  transition: color 0.3s ease;
+}
+
+.layout-futuristic .mega-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 5px 15px rgba(0, 242, 254, 0.25);
+}
+
+.layout-futuristic .mega-card:hover .mega-card-img {
+  transform: scale(1.06);
+}
+
+.layout-futuristic .mega-card:hover .mega-card-title {
+  color: var(--neon-cyan);
+}
+
+.layout-futuristic .mega-card.active {
+  border-color: var(--neon-cyan);
+  border-width: 1.5px;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.45);
+}
+
+.layout-futuristic .mega-card.active .mega-card-title {
+  color: var(--neon-cyan);
+  font-weight: 700;
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.4);
+}
+
+@media (max-width: 1024px) {
+  .layout-futuristic .sidebar-content {
+    width: 200px;
+    /* Compact on tablets */
+    padding: 24px 12px;
+  }
+
+  .layout-futuristic .sidebar-container.expanded .sidebar-toggle-btn {
+    left: 212px;
+    /* 200px (sidebar) + 12px (offset) */
+  }
+
+  .layout-futuristic .sidebar-container.expanded.submenu-open .sidebar-toggle-btn {
+    left: 370px;
+    /* 200px (sidebar) + 150px (submenu) + 8px (gap) + 12px (offset) */
+  }
+
+  .layout-futuristic .sidebar-container.expanded.mega-open .sidebar-toggle-btn {
+    left: 380px;
+    /* 200px (sidebar) + 160px (mega menu) + 8px (gap) + 12px (offset) */
+  }
+
+  .layout-futuristic .nav-submenu {
+    left: calc(100% + 20px);
+  }
+
+  .layout-futuristic .sidebar-container .nav-submenu.mega-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px;
+    width: 160px;
+    box-sizing: border-box;
+  }
+
+  .layout-futuristic .mega-card {
+    width: 100%;
+    height: 48px;
+  }
+}
+
+.layout-futuristic .layout-switcher-pill {
+  background: var(--cyber-bg);
+  border: 1px solid var(--cyber-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.layout-futuristic .switcher-segment {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.layout-futuristic .switcher-segment.active {
+  color: #ffffff;
+  text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+}
+
+.layout-futuristic .switcher-slider {
+  background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-blue) 100%);
+  box-shadow: 0 2px 8px rgba(0, 242, 254, 0.4);
+}
+
+.layout-futuristic .switcher-segment:not(.active):hover {
+  color: var(--neon-cyan);
+}
+
+.layout-futuristic .minimap-action-btn {
+  background: rgba(0, 242, 254, 0.06) !important;
+  border-color: rgba(0, 242, 254, 0.15) !important;
+  color: rgba(0, 242, 254, 0.75) !important;
+}
+
+.layout-futuristic .minimap-action-btn:hover {
+  background: rgba(0, 242, 254, 0.18) !important;
+  border-color: rgba(0, 242, 254, 0.45) !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.35) !important;
+}
+
+.layout-futuristic .layout-floating-logo .logo-script-top {
+  font-family: var(--tech-font);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--neon-cyan);
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+}
+
+.layout-futuristic .layout-floating-logo .logo-script-sub {
+  font-family: var(--ui-font);
+  font-size: 11px;
+  color: #fff;
+  letter-spacing: 3px;
+  opacity: 0.7;
+}
+
+.layout-futuristic .layout-floating-logo .logo-script-wave {
+  background: var(--neon-blue);
+}
+
+.layout-futuristic {
+  --hotspot-color: #00F2FE;
+  /* Neon Cyan */
+  --hotspot-hover: #4FACFE;
+  /* Neon Blue */
+  --hotspot-bg: rgba(8, 14, 24, 0.85);
+}
+
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+
+.layout-futuristic .sidebar-logo {
+  display: none !important;
+}
+
+.layout-futuristic .back-to-360-btn {
+  background: rgba(8, 14, 24, 0.8);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  color: #00f2fe;
+  font-family: 'Share Tech Mono', monospace;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+}
+
+.layout-futuristic .back-to-360-btn svg {
+  color: #00f2fe;
+}
+
+.layout-futuristic .back-to-360-btn:hover {
+  background: rgba(0, 242, 254, 0.15);
+  box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+  color: #fff;
+}
+
+.layout-futuristic .interior-switcher-container {
+  background: rgba(8, 14, 24, 0.8);
+  border: 1px solid rgba(0, 242, 254, 0.4);
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+}
+
+.layout-futuristic .interior-switch-btn {
+  color: rgba(0, 242, 254, 0.6);
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.layout-futuristic .interior-switch-btn.active {
+  background: #00f2fe;
+  color: #080e18;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+}
+
+.layout-futuristic .region-sidebar {
+  background: rgba(8, 14, 24, 0.9);
+  border-right: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+.layout-futuristic .region-sidebar .sidebar-header h3 {
+  color: #00f2fe;
+  font-family: 'Share Tech Mono', monospace;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.5);
+}
+
+.layout-futuristic .region-menu-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(0, 242, 254, 0.15);
+  color: rgba(0, 242, 254, 0.7);
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 1px;
+}
+
+.layout-futuristic .region-menu-item:hover,
+.layout-futuristic .region-menu-item.active {
+  background: rgba(0, 242, 254, 0.12);
+  border-color: #00f2fe;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+}
+
+.layout-futuristic .pin-dot {
+  background: #080e18;
+  border-color: #00f2fe;
+  box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+}
+
+.layout-futuristic .pin-pulse {
+  background: rgba(0, 242, 254, 0.25);
+}
+
+.layout-futuristic .pin-label {
+  background: rgba(8, 14, 24, 0.95);
+  border-color: rgba(0, 242, 254, 0.3);
+  color: #00f2fe;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.layout-futuristic .switcher-slider {
+  border-color: #00f2fe !important;
+  box-shadow: 0 0 10px rgba(0, 242, 254, 0.8) !important;
+}
+
+body.layout-prism 
+
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+
+body.layout-nexus 
+
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-text {
+  border-left-color: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-icon svg {
+  stroke: var(--neon-cyan) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-line {
+  background: linear-gradient(to bottom, var(--neon-cyan), rgba(0,242,254,0.1)) !important;
+}
+
+.layout-futuristic .hs-beacon .hs-pin-dot {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-inner {
+  background: radial-gradient(circle at 30% 25%, #ffffff, #a5f3fc 30%, #0891b2 65%, #0e7490) !important;
+  box-shadow: 0 0 0 3px rgba(8,145,178,0.35), 0 0 14px 6px rgba(103,232,249,1), 0 0 36px 14px rgba(6,182,212,0.7), 0 0 60px 24px rgba(14,116,144,0.35) !important;
+}
+
+.layout-futuristic .hs-glow-orb .hs-orb-pulse {
+  border-color: rgba(103,232,249,0.75) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-pulse {
+  background: rgba(0,242,254,0.3) !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-inner {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.8) !important;
+  border-color: #fff !important;
+}
+
+.layout-futuristic .hs-matterport-ground .hs-mp-ring {
+  border-color: rgba(0,242,254,0.6) !important;
+}
+
+.layout-futuristic .hs-subtle::after {
+  background: var(--neon-cyan) !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.7) !important;
+}
+
+.layout-futuristic .hs-subtle.hs-hovered::after {
+  box-shadow: 0 0 12px 5px rgba(0,242,254,0.9) !important;
+}
+
+.layout-futuristic .hs-subtle-hover {
+  border-color: rgba(0,242,254,0.4) !important;
+  box-shadow: 0 4px 15px rgba(0,242,254,0.15) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active {
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 10px rgba(0,242,254,0.4) !important;
+}
+
+.layout-futuristic .mm-luxury-hotspot.is-active::after {
+  background: #e0ffff !important;
+  box-shadow: 0 0 8px 3px rgba(0,242,254,0.8) !important;
+  animation: mm-cyan-pulse 2s infinite ease-out !important;
+}
+
+body.layout-futuristic .futuristic-settings-group {
+  top: 50% !important;
+  right: 12px !important;
+  transform: translateY(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: right center !important;
+}

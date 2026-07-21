@@ -3,72 +3,21 @@
 (function () {
   console.log("Modern UI Script: Initializing dual-layout switching system...");
 
-  window.bgmAudio = new Audio('Music/music.mp3');
-  window.bgmAudio.loop = true;
-  window.isMusicMuted = false;
+  // ── Shared Core audio references (managed by shared_core.js) ──
+  // Audio is initialized once in TAV_CORE — alias for backward compat.
+  window.bgmAudio           = window.TAV_CORE ? window.TAV_CORE.audio : new Audio('Music/music.mp3');
+  window.isMusicMuted       = window.TAV_CORE ? window.TAV_CORE.isMusicMuted : false;
+  window.toggleGlobalMusic  = window.TAV_CORE ? window.TAV_CORE.toggleMusic : function() {};
 
-  window.toggleGlobalMusic = function() {
-    window.isMusicMuted = !window.isMusicMuted;
-    if (window.isMusicMuted) {
-      window.bgmAudio.pause();
-    } else {
-      window.bgmAudio.play().catch(e => {
-        console.warn("Audio play blocked:", e);
-      });
-    }
-    // Sync hotspots initially to ON (visible)
-    document.querySelectorAll('[data-action="hotspots"]').forEach(btn => {
-      btn.classList.add("active", "active-tool");
-    });
-    
-    document.querySelectorAll('[data-action="music"]').forEach(btn => {
-      btn.classList.toggle('active', !window.isMusicMuted);
-      btn.classList.toggle('active-tool', !window.isMusicMuted);
-    });
-    return window.isMusicMuted;
-  };
+  // tryAutoplay() is now handled by shared_core.js — no-op here.
 
-  function tryAutoplay() {
-    if (!window.isMusicMuted) {
-      window.bgmAudio.play().then(() => {
-        document.removeEventListener('click', tryAutoplay);
-        document.removeEventListener('touchstart', tryAutoplay);
-      }).catch(e => {
-        console.warn("Autoplay blocked, falling back to muted state");
-        window.isMusicMuted = true;
-        // Sync hotspots initially to ON (visible)
-    document.querySelectorAll('[data-action="hotspots"]').forEach(btn => {
-      btn.classList.add("active", "active-tool");
-    });
-    
-    document.querySelectorAll('[data-action="music"]').forEach(btn => {
-          btn.classList.toggle('active', false);
-          btn.classList.toggle('active-tool', false);
-        });
-        document.removeEventListener('click', tryAutoplay);
-        document.removeEventListener('touchstart', tryAutoplay);
-      });
-    }
+  // ── Scene data from Shared Core (shared_core.js) — no duplication ──
+  // window.TAV_SCENES is set by shared_core.js. Desktop layouts read from it directly.
+  // If shared_core.js failed to load, fall back to prevent breakage.
+  if (!window.TAV_SCENES) {
+    console.error('[modern_ui] CRITICAL: TAV_CORE/shared_core.js not loaded. Scene data unavailable.');
+    window.TAV_SCENES = [];
   }
-
-  tryAutoplay();
-
-  window.TAV_SCENES = [
-    { id: "node1", title: "Top View", sub: "Aerial · Day", category: "TOP VIEW", thumb: "image/thumbnails/thumb_PIN TOP.jpg", action: "node1" },
-    { id: "node2", title: "BIRD VIEW 1", sub: "Drone · 80m", category: "TOP VIEW", thumb: "image/thumbnails/PIN BIRD.jpg", action: "node2" },
-    { id: "node3", title: "BIRD VIEW 2", sub: "Aerial · Dusk", category: "TOP VIEW", thumb: "image/thumbnails/PIN TOP NIGHT.jpg", action: "node3" },
-    { id: "node4", title: "TAV PARK", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK.jpg", action: "node4" },
-    { id: "node5", title: "TAV STREET", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN STREET.jpg", action: "node5" },
-    { id: "node6", title: "TAV PARK 2", sub: "Amenity", category: "AMENITIES", thumb: "image/thumbnails/PIN PARK 02.jpg", action: "node6" },
-    { id: "architecture-1", title: "KIẾN TRÚC 1", sub: "Exterior", category: "ARCHITECTURE", thumb: "", color: "#10ffa0", action: "architecture-1" },
-    { id: "architecture-2", title: "KIẾN TRÚC 2", sub: "Exterior", category: "ARCHITECTURE", thumb: "", color: "#10ffa0", action: "architecture-2" },
-    { id: "architecture-3", title: "KIẾN TRÚC 3", sub: "Exterior", category: "ARCHITECTURE", thumb: "", color: "#10ffa0", action: "architecture-3" },
-    { id: "node7", title: "TAV LIVING 2", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN LIVING 2.jpg", action: "node7" },
-    { id: "node8", title: "TAV LIVING 1", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN LIVING.jpg", action: "node8" },
-    { id: "node9", title: "TAV THÔNG TẦNG", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN THONG TANG.jpg", action: "node9" },
-    { id: "node10", title: "BALCONY", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN BALCONY.jpg", action: "node10" },
-    { id: "node11", title: "TAV WC", sub: "Interior", category: "INTERIOR", thumb: "image/thumbnails/PIN WC.jpg", action: "node11" }
-  ];
 
   // 1. Shared SVG Gradients definitions to inject
   const gradientDefs = `
@@ -292,12 +241,12 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="cmd-ctrl-label">GALLERY</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
-      <div class="cmd-ctrl-tile active" data-action="music" id="cmd-music-tile" title="Nh\u1ea1c n\u1ec1n">
+      <div class="cmd-ctrl-tile active active-tool" data-action="music" id="cmd-music-tile" title="Nh\u1ea1c n\u1ec1n">
         <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div>
         <div class="cmd-ctrl-label">AUDIO</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
-      <div class="cmd-ctrl-tile active" data-action="hotspots" id="cmd-hotspot-tile" title="Hi\u1ec7n/\u1ea8n Hotspot">
+      <div class="cmd-ctrl-tile active active-tool" data-action="hotspots" id="cmd-hotspot-tile" title="Hi\u1ec7n/\u1ea8n Hotspot">
         <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
         <div class="cmd-ctrl-label">NODES</div>
         <div class="cmd-ctrl-glow"></div>
@@ -305,11 +254,6 @@ function generateSubmenuHTML(items, itemClass) {
       <div class="cmd-ctrl-tile" data-action="share" title="Chia s\u1ebb">
         <div class="cmd-ctrl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
         <div class="cmd-ctrl-label">SHARE</div>
-        <div class="cmd-ctrl-glow"></div>
-      </div>
-      <div class="cmd-ctrl-tile" data-action="autorotate" title="Tự động xoay">
-        <div class="cmd-ctrl-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg></div>
-        <div class="cmd-ctrl-label">ROTATE</div>
         <div class="cmd-ctrl-glow"></div>
       </div>
       <div class="cmd-ctrl-tile" data-action="call" title="Li\u00ean h\u1ec7">
@@ -336,13 +280,13 @@ function generateSubmenuHTML(items, itemClass) {
 
   const gradientQuickActionsHTML = `
     <div class="gradient-quick-actions">
+            <div class="quick-action-btn" data-action="call" title="Liên hệ tư vấn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.63a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .91h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 15.92z"/></svg>
+      </div>
       <div class="quick-action-btn" data-action="fullscreen">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
       </div>
-        <div class="quick-action-btn" data-action="autorotate" title="Tự động xoay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
         </div>
-    </div>
   `;
 
   const gradientRightNavHTML = `<div class="v-rail-container left-rail" id="gradient-left-rail">
@@ -464,17 +408,7 @@ function generateSubmenuHTML(items, itemClass) {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
           </div>
         </div>
-        <div class="vision-icon-wrapper" data-action="autorotate" title="Tự động xoay">
-          <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-          </div>
         </div>
-        <div class="vision-icon-wrapper" data-action="autorotate" title="Tự động xoay">
-          <div class="vision-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-        </div>
-      </div>
     </div>
   `;
 
@@ -537,18 +471,6 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015 12a19.79 19.79 0 01-3.07-8.67A2 2 0 013.92 1.5h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <div class="tool-tooltip">Tư Vấn</div>
-        </div>
-        <div class="tool-button" data-action="autorotate" id="btn-autorotate">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-          </div>
-          <div class="tool-tooltip">Tự động xoay</div>
-        </div>
-        <div class="tool-button" data-action="autorotate" id="btn-autorotate">
-          <div class="tool-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-          <div class="tool-tooltip">Tự động xoay</div>
         </div>
         <!-- 7. Social Links (with sub-dropdown) -->
         <div class="tool-button has-dropdown" data-action="social" id="btn-social">
@@ -1037,15 +959,7 @@ function generateSubmenuHTML(items, itemClass) {
           </svg>
           <div class="neo-tooltip">Toàn Màn Hình</div>
         </div>
-          <div class="neo-dock-item" data-action="autorotate" title="Tự động xoay">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-            <div class="neo-tooltip">Tự động xoay</div>
           </div>
-          <div class="neo-dock-item" data-action="autorotate" title="Tự động xoay">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-            <div class="neo-tooltip">Tự động xoay</div>
-          </div>
-      </div>
     </div>
   `;
 
@@ -1261,19 +1175,7 @@ function generateSubmenuHTML(items, itemClass) {
           </div>
           <span class="aurora-tool-label">Toàn Màn Hình</span>
         </div>
-        <div class="aurora-tool-item" data-action="autorotate" title="Tự động xoay" style="--accent-color: var(--aurora-cyan);">
-          <div class="aurora-tool-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-          </div>
-          <span class="aurora-tool-label">Xoay 360</span>
         </div>
-        <div class="aurora-tool-item" data-action="autorotate" title="Tự động xoay" style="--accent-color: var(--aurora-cyan);">
-          <div class="aurora-tool-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-          <span class="aurora-tool-label">Xoay 360</span>
-        </div>
-      </div>
     </div>
   `;
 
@@ -1439,13 +1341,7 @@ function generateSubmenuHTML(items, itemClass) {
           <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
         </svg>
       </div>
-        <div class="horizon-tool-item" data-action="autorotate" title="Tự động xoay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
         </div>
-        <div class="horizon-tool-item" data-action="autorotate" title="Tự động xoay">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-        </div>
-    </div>
   `;
 
   // Horizon Compass Widget
@@ -1641,21 +1537,7 @@ function generateSubmenuHTML(items, itemClass) {
           </div>
           <span class="prism-tool-label">Toàn Màn</span>
         </div>
-        <div class="prism-tool-item" data-action="autorotate">
-          <div class="prism-tool-icon-wrapper">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-          </div>
-          <span class="prism-tool-label">Xoay 360</span>
         </div>
-        <div class="prism-tool-item" data-action="autorotate">
-          <div class="prism-tool-icon-wrapper">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-          <span class="prism-tool-label">Xoay 360</span>
-        </div>
-
-
-      </div>
     </div>
   `;
 
@@ -1881,23 +1763,7 @@ function generateSubmenuHTML(items, itemClass) {
           <span class="nexus-tool-label">Toàn Màn</span>
           <div class="nexus-tool-tooltip">Toàn màn hình</div>
         </div>
-        <div class="nexus-tool-item" data-action="autorotate">
-          <div class="nexus-tool-icon-wrapper">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-          </div>
-          <span class="nexus-tool-label">Xoay 360</span>
-          <div class="nexus-tool-tooltip">Tự động xoay</div>
         </div>
-        <div class="nexus-tool-item" data-action="autorotate">
-          <div class="nexus-tool-icon-wrapper">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-          <span class="nexus-tool-label">Xoay 360</span>
-          <div class="nexus-tool-tooltip">Tự động xoay</div>
-        </div>
-
-
-      </div>
     </div>
   `;
 
@@ -2040,19 +1906,7 @@ function generateSubmenuHTML(items, itemClass) {
             </svg>
           </div>
         </div>
-        <div class="monarch-command-item monarch-hover-sweep" data-action="autorotate">
-          <span class="monarch-command-label">Tự động xoay</span>
-          <div class="monarch-command-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-          </div>
         </div>
-        <div class="monarch-command-item monarch-hover-sweep" data-action="autorotate">
-          <span class="monarch-command-label">Tự động xoay</span>
-          <div class="monarch-command-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-        </div>
-      </div>
     </div>
   `;
 
@@ -2250,13 +2104,7 @@ function generateSubmenuHTML(items, itemClass) {
         <div class="rgl-neo-tool-btn" data-action="fullscreen" title="Toàn màn hình">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" /></svg>
         </div>
-          <div class="rgl-neo-tool-btn" data-action="autorotate" title="Tự động xoay">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
           </div>
-          <div class="rgl-neo-tool-btn" data-action="autorotate" title="Tự động xoay">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
-          </div>
-      </div>
     </div>
   `;
 
@@ -2730,7 +2578,7 @@ function generateSubmenuHTML(items, itemClass) {
       setupNexusListeners();
     } else if (layoutMode === "monarch") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = globalFloatingLogoHTML + monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML;
+      tempDiv.innerHTML = globalFloatingLogoHTML + monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML + premiumCarouselHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -3828,7 +3676,7 @@ document.addEventListener('click', (e) => {
   const isFull = !!document.fullscreenElement;
   document.querySelectorAll('[data-action="fullscreen"]').forEach(el => {
     if (isFull) el.classList.add('active');
-    else el.classList.remove('active');
+    else el.classList.remove('active', 'active-tool');
   });
 });
 
@@ -4493,6 +4341,14 @@ document.addEventListener("click", function(e) {
     btn.style.transform = "scale(0.88)";
     setTimeout(() => { btn.style.transform = ""; }, 150);
 
+    // Helper: sync active/active-tool for ALL buttons with same data-action
+    function syncAllButtons(actionName, isActive) {
+      document.querySelectorAll('[data-action="' + actionName + '"]').forEach(b => {
+        b.classList.toggle('active', isActive);
+        b.classList.toggle('active-tool', isActive);
+      });
+    }
+
     switch (action) {
       case "music":
         if (typeof window.toggleGlobalMusic === 'function') {
@@ -4501,40 +4357,82 @@ document.addEventListener("click", function(e) {
         }
         break;
 
-      case "images":
-        if (typeof window.openGlobalPanoramaGallery === "function") {
-          window.openGlobalPanoramaGallery();
+      case "images": {
+        const overlay = document.getElementById('global-pano-gallery');
+        if (overlay && overlay.classList.contains('active')) {
+          if (typeof window.closeGlobalPanoramaGallery === "function") {
+            window.closeGlobalPanoramaGallery();
+          }
+        } else {
+          if (typeof window.openGlobalPanoramaGallery === "function") {
+            window.openGlobalPanoramaGallery();
+          }
+          syncAllButtons('images', true);
         }
         break;
+      }
 
-      case "hotspots":
-        isHotspotsHidden = !isHotspotsHidden;
-        const hotspots = document.querySelectorAll(".hologram-marker-container, [class*='hotspot'], .hs-container");
+      case "hotspots": {
+        const isNowVisible = btn.classList.contains('active') || btn.classList.contains('active-tool');
+        const newVisible = !isNowVisible;
+        
+        // Sync ALL hotspot buttons
+        syncAllButtons('hotspots', newVisible);
+        
+        // CSS approach
+        document.body.classList.toggle('hide-hotspots', !newVisible);
+        
+        // Pano2VR API approach
+        if (window.pano && typeof window.pano.setPointHotspotsVisible === 'function') {
+          window.pano.setPointHotspotsVisible(newVisible);
+        }
+        
+        // Target only actual hotspot containers, NOT UI elements
+        const hotspots = document.querySelectorAll(".hologram-marker-container, .hs-container");
         hotspots.forEach(hs => {
-          hs.style.visibility = isHotspotsHidden ? "hidden" : "visible";
-          hs.style.opacity = isHotspotsHidden ? "0" : "";
+          hs.style.visibility = newVisible ? "visible" : "hidden";
+          hs.style.opacity = newVisible ? "" : "0";
         });
-        btn.classList.toggle("active", !isHotspotsHidden);
-        showNotification(isHotspotsHidden ? "Điểm điều hướng đã ẩn" : "Điểm điều hướng đã hiện");
+        
+        showNotification(newVisible ? "Điểm điều hướng đã hiện" : "Điểm điều hướng đã ẩn");
         break;
+      }
 
-      case "share":
+      case "share": {
         const menu = document.getElementById('social-share-menu');
         if (menu) {
-          const rect = btn.getBoundingClientRect();
-          menu.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
-          menu.style.left = rect.left + 'px';
-          menu.classList.toggle('active');
+          const isNowActive = !menu.classList.contains('active');
+          if (isNowActive) {
+            const rect = btn.getBoundingClientRect();
+            menu.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+            menu.style.left = rect.left + 'px';
+            menu.classList.add('active');
+          } else {
+            menu.classList.remove('active');
+          }
+          syncAllButtons('share', isNowActive);
         }
         break;
+      }
 
       case "call":
+        syncAllButtons('call', true);
+        setTimeout(() => { syncAllButtons('call', false); }, 300);
         window.open('https://tav.vn/', '_blank');
         break;
 
-      case "info":
-        showProjectInfoPanel();
+      case "info": {
+        // Try the global modal first, fallback to info panel
+        const modal = document.getElementById('project-info-modal');
+        if (modal) {
+          const isNowActive = !modal.classList.contains('active');
+          modal.classList.toggle('active', isNowActive);
+          syncAllButtons('info', isNowActive);
+        } else {
+          showProjectInfoPanel();
+        }
         break;
+      }
 
       case "facebook":
         window.open("https://www.facebook.com/profile.php?id=100068490675716", "_blank");
@@ -4616,6 +4514,7 @@ document.addEventListener("click", function(e) {
     document.getElementById("info-panel-close").addEventListener("click", (e) => {
       e.stopPropagation();
       panel.classList.remove("visible");
+      document.querySelectorAll('[data-action="info"]').forEach(b => b.classList.remove('active', 'active-tool'));
     });
   }
 
@@ -5405,11 +5304,6 @@ document.addEventListener("click", function(e) {
       if (activeItem) updateActiveGlow(activeItem);
       updateSwitcherUI();
     });
-
-    // Inject global modals ONLY ONCE if not already present
-    if (!document.getElementById("image-gallery-modal")) {
-      document.body.insertAdjacentHTML("beforeend", globalModalsHTML);
-    }
   }
 
   // ==========================================
@@ -5620,8 +5514,8 @@ document.addEventListener("click", function(e) {
     console.log(`[PremiumHotspot] Found ${defs.length} hotspots for node ${nodeId}`);
 
     defs.forEach(pin => {
-      let finalPan = pin.pan;
-      let finalTilt = pin.tilt;
+      let finalPan = parseFloat(pin.pan);
+      let finalTilt = parseFloat(pin.tilt);
       const currentLayoutMode = lsGet("latien_layout_mode", "futuristic");
       if (currentLayoutMode === "classic") {
         if (pin.pan_classic !== undefined) finalPan = pin.pan_classic;
@@ -5968,11 +5862,11 @@ document.addEventListener("click", function(e) {
 const globalModalsHTML = `
   <!-- 1. Project Information Modal -->
   
-  <div class="global-modal-overlay" id="project-info-modal">
+  <div class="global-modal-overlay" id="project-info-modal" onclick="if(event.target===this){this.classList.remove(\'active\'); document.querySelectorAll(\'[data-action=&quot;info&quot;]\').forEach(b=>b.classList.remove(\'active\', \'active-tool\'))}">
     <div class="global-modal-content project-info-expanded">
       <div class="modal-header">
         <h2>Thông Tin Dự Án TAV</h2>
-        <div class="modal-close-btn" onclick="document.getElementById('project-info-modal').classList.remove('active')">&times;</div>
+        <div class="modal-close-btn" onclick="document.getElementById('project-info-modal').classList.remove('active'); document.querySelectorAll('[data-action=&quot;info&quot;]').forEach(b=>b.classList.remove('active', 'active-tool'))">&times;</div>
       </div>
       <div class="modal-body scrollable-modal-body">
         <section>
@@ -6058,6 +5952,38 @@ const globalModalsHTML = `
 `;
 
 document.addEventListener("DOMContentLoaded", function() {
+  // Inject global modals ONLY ONCE if not already present
+  if (!document.getElementById("image-gallery-modal")) {
+    document.body.insertAdjacentHTML("beforeend", globalModalsHTML);
+  }
+
+  // ESC key closes modals and syncs button states
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      const infoModal = document.getElementById('project-info-modal');
+      if (infoModal && infoModal.classList.contains('active')) {
+        infoModal.classList.remove('active');
+        document.querySelectorAll('[data-action="info"]').forEach(b => b.classList.remove('active', 'active-tool'));
+      }
+      const shareMenu = document.getElementById('social-share-menu');
+      if (shareMenu && shareMenu.classList.contains('active')) {
+        shareMenu.classList.remove('active');
+        document.querySelectorAll('[data-action="share"]').forEach(b => b.classList.remove('active', 'active-tool'));
+      }
+      const gallery = document.getElementById('global-pano-gallery');
+      if (gallery && gallery.classList.contains('active')) {
+        if (typeof window.closeGlobalPanoramaGallery === 'function') {
+          window.closeGlobalPanoramaGallery();
+        }
+      }
+      const infoPanel = document.getElementById('project-info-panel');
+      if (infoPanel && infoPanel.classList.contains('visible')) {
+        infoPanel.classList.remove('visible');
+        document.querySelectorAll('[data-action="info"]').forEach(b => b.classList.remove('active', 'active-tool'));
+      }
+    }
+  });
+
   // Global modals are already injected by injectUI() during initialization.
 
   // Global Click Event Delegation
@@ -6076,7 +6002,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (window.customAutoRotateActive) {
            if (!window.customRotateFn) {
-              window.customRotateSpeed = 0.08; 
+              window.customRotateSpeed = -0.08; // Changed for clockwise rotation 
               window.customRotateFn = () => {
                  if (!window.customAutoRotateActive) return;
                  
@@ -6112,7 +6038,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Toggle UI classes
         document.querySelectorAll('[data-action="autorotate"]').forEach(el => {
           if (window.customAutoRotateActive) el.classList.add('active');
-          else el.classList.remove('active');
+          else el.classList.remove('active', 'active-tool');
         });
       }
       return;
@@ -6133,13 +6059,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 2. Project Info
     if (e.target.closest('[data-action="info"]')) {
-      const btn = e.target.closest('[data-action="info"]');
-      if (btn) {
-        btn.classList.add('active-tool');
-        setTimeout(() => btn.classList.remove('active-tool'), 300);
-      }
       const modal = document.getElementById('project-info-modal');
-      if (modal) modal.classList.add('active');
+      if (modal) {
+        const isNowActive = !modal.classList.contains('active');
+        modal.classList.toggle('active', isNowActive);
+        document.querySelectorAll('[data-action="info"]').forEach(b => {
+          b.classList.toggle('active', isNowActive);
+          b.classList.toggle('active-tool', isNowActive);
+        });
+      }
       return;
     }
 
@@ -6147,7 +6075,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (e.target.closest('[data-action="hotspots"]')) {
       const btn = e.target.closest('[data-action="hotspots"]');
       // Determine new state based on the clicked button's CURRENT state
-      const isVisible = !btn.classList.contains('active-tool');
+      const isVisible = !btn.classList.contains('active');
       
       // Sync ALL hotspot buttons
       document.querySelectorAll('[data-action="hotspots"]').forEach(b => {
@@ -6178,8 +6106,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 3. Image Gallery
     if (e.target.closest('[data-action="images"]')) {
-      if (typeof window.openGlobalPanoramaGallery === "function") {
-        window.openGlobalPanoramaGallery();
+      const overlay = document.getElementById('global-pano-gallery');
+      if (overlay && overlay.classList.contains('active')) {
+        if (typeof window.closeGlobalPanoramaGallery === "function") {
+          window.closeGlobalPanoramaGallery();
+        }
+      } else {
+        if (typeof window.openGlobalPanoramaGallery === "function") {
+          window.openGlobalPanoramaGallery();
+        }
+        document.querySelectorAll('[data-action="images"]').forEach(b => {
+          b.classList.add('active', 'active-tool');
+        });
       }
       return;
     }
@@ -6188,21 +6126,35 @@ document.addEventListener("DOMContentLoaded", function() {
     if (e.target.closest('[data-action="share"]')) {
       e.stopPropagation();
       const menu = document.getElementById('social-share-menu');
-      if (menu) {
-        const btn = e.target.closest('[data-action="share"]');
-        const rect = btn.getBoundingClientRect();
-        
-        // Position menu near the button
-        menu.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
-        menu.style.left = rect.left + 'px';
-        
-        menu.classList.toggle('active');
+      const btn = e.target.closest('[data-action="share"]');
+      if (menu && btn) {
+        const isNowActive = !menu.classList.contains('active');
+        if (isNowActive) {
+          const rect = btn.getBoundingClientRect();
+          menu.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+          menu.style.left = rect.left + 'px';
+          menu.classList.add('active');
+        } else {
+          menu.classList.remove('active');
+        }
+        document.querySelectorAll('[data-action="share"]').forEach(b => {
+          b.classList.toggle('active', isNowActive);
+          b.classList.toggle('active-tool', isNowActive);
+        });
       }
       return;
     }
 
     // 7. Contact Info Call
     if (e.target.closest('[data-action="call"]')) {
+      document.querySelectorAll('[data-action="call"]').forEach(b => {
+        b.classList.add('active', 'active-tool');
+      });
+      setTimeout(() => {
+        document.querySelectorAll('[data-action="call"]').forEach(b => {
+          b.classList.remove('active', 'active-tool');
+        });
+      }, 300);
       window.open('https://tav.vn/', '_blank');
       return;
     }
@@ -6211,6 +6163,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const shareMenu = document.getElementById('social-share-menu');
     if (shareMenu && shareMenu.classList.contains('active')) {
       shareMenu.classList.remove('active');
+      document.querySelectorAll('[data-action="share"]').forEach(b => b.classList.remove('active', 'active-tool'));
     }
 
     const qnPanel = document.getElementById("quick-nav-panel");
@@ -6554,6 +6507,7 @@ function closeGlobalPanoramaGallery() {
   if (overlay) {
     overlay.classList.remove('active');
     stopGpgAutoSlide();
+    document.querySelectorAll('[data-action="images"]').forEach(b => b.classList.remove('active', 'active-tool'));
   }
 }
 

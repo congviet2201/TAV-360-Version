@@ -1,4 +1,4 @@
-﻿/* mobile_ui.css - Premium Mobile UI (Matterport/3DVista Style) */
+/* mobile_ui.css - Premium Mobile UI (Matterport/3DVista Style) */
 
 :root {
   --m-primary: #00f2fe;
@@ -59,6 +59,17 @@
   position: absolute; bottom: 90px; left: 15px; right: 15px;
   height: 60px; display: flex; align-items: center; gap: 8px;
 }
+.mob-carousel-container::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 20%;
+  right: 20%;
+  height: 2px;
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+  border-radius: 2px;
+}
 .mob-carousel {
   flex: 1; display: flex; gap: 10px; overflow-x: auto;
   scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
@@ -70,13 +81,23 @@
   scroll-snap-align: start; opacity: 0.6; transition: 0.3s;
   border: 2px solid transparent; background: #000;
 }
-.mob-carousel-item.active { opacity: 1; border-color: var(--m-primary); transform: scale(1.02); }
+.mob-carousel-item.active {
+  opacity: 1;
+  border-color: rgba(0, 229, 255, 0.55) !important;
+  box-shadow: 0 0 22px rgba(0, 229, 255, 0.3), 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(0, 229, 255, 0.06) !important;
+  transform: scale(1.05);
+  z-index: 10;
+}
 .mob-carousel-item img { width: 100%; height: 100%; object-fit: cover; }
 .mob-carousel-text {
   position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,0.7);
   padding: 4px; text-align: center;
 }
 .mob-carousel-title { font-size: 9px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mob-carousel-item.active .mob-carousel-title {
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.55) !important;
+  color: #00e5ff !important;
+}
 
 .mob-carousel-btn, .mob-carousel-expand {
   width: 36px; height: 36px; border-radius: 50%; border: none;
