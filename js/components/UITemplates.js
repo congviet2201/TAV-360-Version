@@ -287,6 +287,15 @@ window.TAVTemplates = window.TAVTemplates || {};
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"></path><circle cx="12" cy="9" r="2.5"></circle></svg>
           </div>
         </div>
+        <!-- Tool Autorotate -->
+        <div class="vision-icon-wrapper" data-action="autorotate">
+          <div class="vision-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
         <!-- Tool Share -->
         <div class="vision-icon-wrapper has-children">
           <div class="vision-icon">
@@ -358,7 +367,15 @@ window.TAVTemplates = window.TAVTemplates || {};
             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
             <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <div class="tool-tooltip">Điểm Điều Hướng</div>
+          <div class="tool-tooltip">\u0110i\u1ec3m \u0110i\u1ec1u H\u01b0\u1edbng</div>
+        </div>
+        <!-- 4b. Autorotate -->
+        <div class="tool-button" data-action="autorotate" id="btn-autorotate">
+          <svg class="tool-icon" viewBox="0 0 24 24" fill="none">
+            <polyline points="23 4 23 10 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="tool-tooltip">T\u1ef1 \u0110\u1ed9ng Xoay</div>
         </div>
         <!-- 5. Share -->
         <div class="tool-button" data-action="share" id="btn-share">
@@ -843,7 +860,15 @@ window.TAVTemplates = window.TAVTemplates || {};
         <!-- Hotspots -->
         <div class="neo-dock-item" data-action="hotspots">
           <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"></circle><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"></circle></svg>
-          <div class="neo-tooltip">Ẩn/Hiện Hotspots</div>
+          <div class="neo-tooltip">\u1ea8n/Hi\u1ec7n Hotspots</div>
+        </div>
+        <!-- Autorotate -->
+        <div class="neo-dock-item" data-action="autorotate">
+          <svg viewBox="0 0 24 24" fill="none">
+            <polyline points="23 4 23 10 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="neo-tooltip">T\u1ef1 \u0110\u1ed9ng Xoay</div>
         </div>
         <!-- Share -->
         <div class="neo-dock-item has-children" id="neo-share-parent">
@@ -1042,7 +1067,7 @@ window.TAVTemplates = window.TAVTemplates || {};
           <span class="aurora-tool-label">Hình Ảnh</span>
         </div>
         <!-- Hotspots (Emerald) -->
-        <div class="aurora-tool-item" data-action="hotspots" title="Ẩn/Hiện Hotspots" style="--accent-color: var(--aurora-emerald);">
+        <div class="aurora-tool-item" data-action="hotspots" title="\u1ea8n/Hi\u1ec7n Hotspots" style="--accent-color: var(--aurora-emerald);">
           <div class="aurora-tool-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10" stroke-dasharray="4 4"></circle>
@@ -1050,6 +1075,16 @@ window.TAVTemplates = window.TAVTemplates || {};
             </svg>
           </div>
           <span class="aurora-tool-label">Hotspots</span>
+        </div>
+        <!-- Autorotate (Emerald) -->
+        <div class="aurora-tool-item" data-action="autorotate" title="T\u1ef1 \u0110\u1ed9ng Xoay" style="--accent-color: var(--aurora-emerald);">
+          <div class="aurora-tool-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </div>
+          <span class="aurora-tool-label">T\u1ef1 Xoay</span>
         </div>
         <!-- Share (Orange) -->
         <div class="aurora-tool-item has-submenu" id="aurora-tool-share" title="Chia Sẻ" style="--accent-color: var(--aurora-orange);">
@@ -1226,10 +1261,17 @@ window.TAVTemplates = window.TAVTemplates || {};
         </svg>
       </div>
       <!-- Hotspots -->
-      <div class="horizon-tool-item" data-action="hotspots" title="Ẩn/Hiện Hotspots">
+      <div class="horizon-tool-item" data-action="hotspots" title="\u1ea8n/Hi\u1ec7n Hotspots">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10" stroke-dasharray="3 3"></circle>
           <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+      </div>
+      <!-- Autorotate -->
+      <div class="horizon-tool-item" data-action="autorotate" title="T\u1ef1 \u0110\u1ed9ng Xoay">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
         </svg>
       </div>
       <!-- Share -->
@@ -1423,6 +1465,16 @@ window.TAVTemplates = window.TAVTemplates || {};
             </svg>
           </div>
           <span class="prism-tool-label">Hotspot</span>
+        </div>
+
+        <div class="prism-tool-item" data-action="autorotate">
+          <div class="prism-tool-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+            </svg>
+          </div>
+          <span class="prism-tool-label">T\u1ef1 Xoay</span>
         </div>
 
         <div class="prism-tool-item" data-action="share">
@@ -1648,7 +1700,18 @@ window.TAVTemplates = window.TAVTemplates || {};
             </svg>
           </div>
           <span class="nexus-tool-label">Hotspot</span>
-          <div class="nexus-tool-tooltip">Bật/tắt điểm nóng</div>
+          <div class="nexus-tool-tooltip">B\u1eadt/t\u1eaft \u0111i\u1ec3m n\u00f3ng</div>
+        </div>
+
+        <div class="nexus-tool-item" data-action="autorotate">
+          <div class="nexus-tool-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
+            </svg>
+          </div>
+          <span class="nexus-tool-label">T\u1ef1 xoay</span>
+          <div class="nexus-tool-tooltip">T\u1ef1 \u0111\u1ed9ng xoay</div>
         </div>
 
         <div class="nexus-tool-item" data-action="share">
@@ -1800,11 +1863,21 @@ window.TAVTemplates = window.TAVTemplates || {};
         </div>
         
         <div class="monarch-command-item monarch-hover-sweep" data-action="hotspots">
-          <span class="monarch-command-label">Điểm điều hướng</span>
+          <span class="monarch-command-label">\u0110i\u1ec3m \u0111i\u1ec1u h\u01b0\u1edbng</span>
           <div class="monarch-command-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
               <circle cx="12" cy="12" r="10" />
               <path d="m12 8-4 4 4 4 4-4-4-4Z" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="monarch-command-item monarch-hover-sweep" data-action="autorotate">
+          <span class="monarch-command-label">T\u1ef1 \u0111\u1ed9ng xoay</span>
+          <div class="monarch-command-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+              <polyline points="23 4 23 10 17 10" />
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
             </svg>
           </div>
         </div>
@@ -2024,11 +2097,17 @@ window.TAVTemplates = window.TAVTemplates || {};
 
       <!-- Module 2: Interactivity -->
       <div class="rgl-neo-tool-module">
-        <div class="rgl-neo-tool-btn" data-action="hotspots" title="Điểm neo">
+        <div class="rgl-neo-tool-btn" data-action="hotspots" title="\u0110i\u1ec3m neo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10" /><path d="m12 8-4 4 4 4 4-4-4-4Z" /></svg>
         </div>
-        <div class="rgl-neo-tool-btn" data-action="music" title="Cài đặt / Nhạc">
+        <div class="rgl-neo-tool-btn" data-action="music" title="C\u00e0i \u0111\u1eb7t / Nh\u1ea1c">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" /></svg>
+        </div>
+        <div class="rgl-neo-tool-btn" data-action="autorotate" title="T\u1ef1 \u0111\u1ed9ng xoay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="23 4 23 10 17 10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
       </div>
 
@@ -2293,7 +2372,10 @@ window.TAVTemplates = window.TAVTemplates || {};
   let layoutMode = lsGet("latien_layout_mode", "futuristic");
   let activeNavItemId = "";
   let activeSubmenuAction = "";
-  let activePanoNode = lsGet("latien_active_node", "node1");
+  
+  // Force reset active node to node2 (Bird view 1) on fresh reload
+  lsSet("latien_active_node", "node2");
+  let activePanoNode = "node2";
   let isSidebarExpanded = false; // state for collapsed sidebar in futuristic layout
 
   // Notification helper
@@ -2443,11 +2525,11 @@ window.TAVTemplates = window.TAVTemplates || {};
 window.globalModalsHTML = `
   <!-- 1. Project Information Modal -->
   
-  <div class="global-modal-overlay" id="project-info-modal">
+  <div class="global-modal-overlay" id="project-info-modal" onclick="if(event.target===this){this.classList.remove(\'active\'); document.querySelectorAll(\'[data-action=&quot;info&quot;]\').forEach(b=>b.classList.remove(\'active\', \'active-tool\'))}">
     <div class="global-modal-content project-info-expanded">
       <div class="modal-header">
         <h2>Thông Tin Dự Án TAV</h2>
-        <div class="modal-close-btn" onclick="document.getElementById('project-info-modal').classList.remove('active')">&times;</div>
+        <div class="modal-close-btn" onclick="document.getElementById('project-info-modal').classList.remove('active'); document.querySelectorAll('[data-action=&quot;info&quot;]').forEach(b=>b.classList.remove('active', 'active-tool'))">&times;</div>
       </div>
       <div class="modal-body scrollable-modal-body">
         <section>

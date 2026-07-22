@@ -423,7 +423,11 @@
 
     switch (action) {
       case 'autorotate':
-        core.navigateTo('autorotate');
+        if (typeof window.toggleCustomAutorotate === 'function') {
+          window.toggleCustomAutorotate();
+        } else {
+          core.navigateTo('autorotate');
+        }
         closeAllSheets();
         break;
 

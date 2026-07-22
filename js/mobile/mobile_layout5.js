@@ -552,8 +552,12 @@
           showToast(toastB);
 
         } else if (action === 'autorotate') {
-          window.TAV_CORE.navigateTo('autorotate');
-          const toastR = "\u0110ang xoay t\u1ef1 \u0111ộng";
+          if (typeof window.toggleCustomAutorotate === 'function') {
+            window.toggleCustomAutorotate();
+          } else {
+            window.TAV_CORE.navigateTo('autorotate');
+          }
+          const toastR = "\u0110ang xoay t\u1ef1 \u0111\u1ed9ng";
           showToast(toastR);
 
         } else if (action === 'fullscreen') {

@@ -92,7 +92,7 @@
 		var params = {};
 		parseParams(document.location.hash, params);
 		var startNode = params.startNode || '';
-		if (!startNode && window.innerWidth <= 1024) {
+		if (!startNode) {
 			startNode = 'node2';
 		}
 		var startView = params.startView;

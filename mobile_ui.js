@@ -275,7 +275,11 @@ function initMobileUI() {
       } else {
         switch(action) {
           case 'autorotate':
-            window.TAV_CORE.navigateTo('autorotate');
+            if (typeof window.toggleCustomAutorotate === 'function') {
+              window.toggleCustomAutorotate();
+            } else {
+              window.TAV_CORE.navigateTo('autorotate');
+            }
             break;
           case 'gallery': {
             if (typeof window.openGlobalPanoramaGallery === 'function') {
@@ -303,7 +307,18 @@ function initMobileUI() {
           }
           case 'info': {
             const infoModal = document.getElementById('project-info-modal');
-            if (infoModal) infoModal.classList.add('active');
+            if (infoModal) {
+              const isNowActive = !infoModal.classList.contains('active');
+              infoModal.classList.toggle('active', isNowActive);
+              if (typeof window.syncAllButtons === 'function') {
+                window.syncAllButtons('info', isNowActive);
+              } else {
+                document.querySelectorAll('[data-action="info"]').forEach(b => {
+                  b.classList.toggle('active', isNowActive);
+                  b.classList.toggle('active-tool', isNowActive);
+                });
+              }
+            }
             break;
           }
           case 'hotspots': {
