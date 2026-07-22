@@ -139,15 +139,23 @@ function initMobileUI() {
     
     <div class="mob-side-panel" id="mob-more-sheet">
       <div class="mob-sheet-handle"></div>
-          <div class="mob-sheet-title">Công Cụ (More)</div>
+      <div class="mob-sheet-title">C\u00f4ng C\u1ee5</div>
       <div class="mob-tools-grid">
-        <button class="mob-grid-tool active active-tool" data-action="music" id="mob-music-btn"> Âm nhạc </button>
-        <button class="mob-grid-tool active active-tool" data-action="hotspots" id="mob-hotspot-btn"> Điểm chạm </button>
-        <button class="mob-grid-tool" data-action="share"> Chia sẻ </button>
-        <button class="mob-grid-tool" data-action="contact"> Liên hệ </button>
-        <button class="mob-grid-tool" data-action="info"> Thông tin </button>
-        <button class="mob-grid-tool" style="color: #00f2fe; border-color: rgba(0,242,254,0.4);" onclick="if(window.switchMobileLayout) window.switchMobileLayout('2')"> Giao diện 2 </button>
-        <button class="mob-grid-tool" style="color: #d4af37; border-color: rgba(212,175,55,0.4);" onclick="if(window.switchMobileLayout) window.switchMobileLayout('3')"> Giao diện 3 </button>
+        <button class="mob-grid-tool active active-tool" data-action="music" id="mob-music-btn"> \u00c2m nh\u1ea1c </button>
+        <button class="mob-grid-tool active active-tool" data-action="hotspots" id="mob-hotspot-btn"> \u0110i\u1ec3m ch\u1ea1m </button>
+        <button class="mob-grid-tool" data-action="share"> Chia s\u1ebb </button>
+        <button class="mob-grid-tool" data-action="contact"> Li\u00ean h\u1ec7 </button>
+        <button class="mob-grid-tool" data-action="info"> Th\u00f4ng tin </button>
+      </div>
+      <div class="mob-switcher-row">
+        <span class="mob-switcher-label">Giao di\u1ec7n:</span>
+        <div class="mob-switcher-pills">
+          <button class="mob-sw-pill active" onclick="if(window.switchMobileLayout) window.switchMobileLayout('1')">L1</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('2')">L2</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('3')">L3</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('4')">L4</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('5')">L5</button>
+        </div>
       </div>
     </div>
 
@@ -407,6 +415,16 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
       const l3hide = document.getElementById('ml3-desktop-hide');
       if (l3hide) l3hide.remove();
 
+      // Destroy Layout 4 overlay if present
+      if (window.MobileLayout4) window.MobileLayout4.destroy();
+      const l4hide = document.getElementById('ml4-desktop-hide');
+      if (l4hide) l4hide.remove();
+
+      // Destroy Layout 5 overlay if present
+      if (window.MobileLayout5) window.MobileLayout5.destroy();
+      const l5hide = document.getElementById('ml5-desktop-hide');
+      if (l5hide) l5hide.remove();
+
       // Initialize the chosen layout
       if (id === '2') {
         if (window.MobileLayout2) {
@@ -420,6 +438,18 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
         } else {
           console.warn('[Orchestrator] MobileLayout3 module not loaded yet');
         }
+      } else if (id === '4') {
+        if (window.MobileLayout4) {
+          window.MobileLayout4.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout4 module not loaded yet');
+        }
+      } else if (id === '5') {
+        if (window.MobileLayout5) {
+          window.MobileLayout5.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout5 module not loaded yet');
+        }
       } else {
         // Fallback to Layout 1 (re-run initMobileUI)
         if (typeof initMobileUI === 'function') initMobileUI();
@@ -429,9 +459,14 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
     };
 
     // Boot the saved layout
-    if (savedLayout === '2' || savedLayout === '3') {
+    if (savedLayout === '2' || savedLayout === '3' || savedLayout === '4' || savedLayout === '5') {
       const tryBootLayout = (attempts) => {
-        const layoutModule = savedLayout === '2' ? window.MobileLayout2 : window.MobileLayout3;
+        let layoutModule = null;
+        if (savedLayout === '2') layoutModule = window.MobileLayout2;
+        else if (savedLayout === '3') layoutModule = window.MobileLayout3;
+        else if (savedLayout === '4') layoutModule = window.MobileLayout4;
+        else if (savedLayout === '5') layoutModule = window.MobileLayout5;
+
         if (layoutModule) {
           window.scrollTo(0, 0);
           layoutModule.init();

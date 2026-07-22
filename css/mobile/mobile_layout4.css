@@ -1,0 +1,1076 @@
+/* css/mobile/mobile_layout4.css — TAV Virtual Tour · Mobile Layout 4 */
+/* ====================================================================
+   DESIGN DNA — Futuristic / Cyberpunk Space Theme (Inspired by L2)
+   ==================================================================== */
+
+:root {
+  /* ── Backgrounds ─────────────────────────────────────────────────── */
+  --ml4-bg-solid:      #080c14;
+  --ml4-bg-glass:      rgba(10, 15, 26, 0.82);
+  --ml4-bg-card:       rgba(14, 20, 36, 0.80);
+  --ml4-bg-dim:        rgba(0, 0, 0, 0.28);
+
+  /* ── Accent colors (desaturated, dimmer) ─────────────────────────── */
+  /* Was #00f2fe (100% sat) → now #5ec8d8 (softer teal-blue)          */
+  --ml4-neon-cyan:     #5ec8d8;
+  /* Was #ff007f (100% sat) → now #c45b8a (muted rose-violet)         */
+  --ml4-neon-magenta:  #c45b8a;
+  --ml4-neon-blue:     #2a6adf;
+
+  /* ── Borders (very subtle, low opacity) ─────────────────────────── */
+  --ml4-border-cyan:   rgba(94, 200, 216, 0.18);
+  --ml4-border-magenta:rgba(196, 91, 138, 0.18);
+
+  /* ── Text ────────────────────────────────────────────────────────── */
+  --ml4-text:          rgba(230, 238, 248, 0.95);
+  --ml4-text-dim:      rgba(180, 200, 220, 0.65);
+  --ml4-text-muted:    rgba(150, 175, 200, 0.40);
+
+  /* ── Glows (reduced radius, lower alpha) ────────────────────────── */
+  /* Was 12px/0.45 + 20px/0.25 → now 6px/0.20 + 14px/0.10            */
+  --ml4-glow-cyan:     0 0 6px rgba(94, 200, 216, 0.20), 0 0 14px rgba(42, 106, 223, 0.10);
+  --ml4-glow-magenta:  0 0 6px rgba(196, 91, 138, 0.20), 0 0 14px rgba(196, 91, 138, 0.10);
+
+  /* ── Misc ────────────────────────────────────────────────────────── */
+  --ml4-blur:          18px;
+  --ml4-radius-sm:     10px;
+  --ml4-radius-md:     14px;
+  --ml4-radius-lg:     24px;
+  --ml4-radius-pill:   999px;
+  --ml4-ease:          cubic-bezier(0.16, 1, 0.3, 1);
+  --ml4-tech-font:     'Share Tech Mono', monospace;
+  --ml4-safe-top:      env(safe-area-inset-top, 12px);
+  --ml4-safe-bottom:   env(safe-area-inset-bottom, 24px);
+  --ml4-dock-height:   66px;
+}
+
+/* ============================================================
+   ROOT OVERLAY — Viewport boundary
+   ============================================================ */
+#ml4-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  overflow: hidden;
+  color: var(--ml4-text);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#ml4-overlay, #ml4-overlay * {
+  text-transform: uppercase !important;
+  box-sizing: border-box;
+}
+
+.ml4-interactive {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   TOP STRIP — Logo + Compass
+   ============================================================ */
+.ml4-top-strip {
+  position: absolute;
+  top: calc(var(--ml4-safe-top) + 12px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.ml4-logo-pill {
+  pointer-events: auto;
+  background: var(--ml4-bg-glass);
+  backdrop-filter: blur(var(--ml4-blur));
+  -webkit-backdrop-filter: blur(var(--ml4-blur));
+  border: 1.5px solid var(--ml4-border-cyan);
+  border-left: 4px solid var(--ml4-neon-cyan);
+  border-radius: var(--ml4-radius-sm);
+  padding: 6px 12px;
+  box-shadow: var(--ml4-glow-cyan);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s var(--ml4-ease);
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.ml4-logo-pill:active {
+  transform: translateX(-50%) scale(0.96);
+  box-shadow: 0 0 16px var(--ml4-neon-cyan);
+}
+
+.ml4-logo-title {
+  font-family: var(--ml4-tech-font);
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--ml4-text);
+  text-shadow: 0 0 8px var(--ml4-neon-cyan);
+}
+
+.ml4-logo-sub {
+  font-size: 7.5px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--ml4-neon-magenta);
+}
+
+.ml4-layout-badge {
+  font-family: var(--ml4-tech-font);
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(196, 91, 138, 0.10);
+  border: 1px solid var(--ml4-border-magenta);
+  color: var(--ml4-neon-magenta);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ml4-layout-badge svg {
+  width: 10px;
+  height: 10px;
+}
+
+/* Compass widget */
+.ml4-compass {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  background: var(--ml4-bg-glass);
+  backdrop-filter: blur(var(--ml4-blur));
+  -webkit-backdrop-filter: blur(var(--ml4-blur));
+  border: 1.5px solid var(--ml4-border-cyan);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--ml4-glow-cyan);
+  transition: all 0.25s var(--ml4-ease);
+}
+
+.ml4-compass:active {
+  transform: scale(0.92);
+}
+
+.ml4-compass-dial {
+  width: 32px;
+  height: 32px;
+}
+
+.ml4-compass-north { fill: var(--ml4-neon-magenta); }
+.ml4-compass-south { fill: rgba(255,255,255,0.15); }
+.ml4-compass-ring {
+  stroke: var(--ml4-border-cyan);
+  fill: none;
+  stroke-width: 1.2;
+}
+
+@keyframes ml4-pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(94, 200, 216, 0.25); }
+  70% { box-shadow: 0 0 0 8px rgba(94, 200, 216, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(94, 200, 216, 0); }
+}
+
+.ml4-pulse {
+  animation: ml4-pulse-glow 0.8s ease-out;
+}
+
+/* ============================================================
+   FLOATING LEFT SIDEBAR DOCK — Main Navigation Bar (Vertical HUD)
+   ============================================================ */
+.ml4-left-dock {
+  pointer-events: auto;
+  position: absolute;
+  left: 16px;
+  top: 55%;
+  transform: translateY(-50%);
+  width: 56px;
+  background: var(--ml4-bg-glass);
+  backdrop-filter: blur(var(--ml4-blur));
+  -webkit-backdrop-filter: blur(var(--ml4-blur));
+  border: 1.5px solid var(--ml4-border-cyan);
+  border-left: 3px solid var(--ml4-neon-cyan);
+  border-radius: var(--ml4-radius-sm);
+  box-shadow: var(--ml4-glow-cyan);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 0;
+  z-index: 300;
+}
+
+.ml4-dock-tab {
+  border: none;
+  background: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 48px;
+  color: var(--ml4-text-dim);
+  font-size: 7.5px;
+  font-weight: 700;
+  gap: 3px;
+  position: relative;
+  transition: all 0.22s var(--ml4-ease);
+}
+
+.ml4-dock-tab svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8;
+  transition: transform 0.22s var(--ml4-ease);
+}
+
+.ml4-dock-tab span {
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transform: scale(0.9);
+}
+
+.ml4-dock-tab.ml4-active {
+  color: var(--ml4-neon-cyan);
+  text-shadow: 0 0 5px rgba(94, 200, 216, 0.30);
+}
+
+.ml4-dock-tab.ml4-active svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px var(--ml4-neon-cyan));
+}
+
+.ml4-dock-tab.ml4-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 16px;
+  background: var(--ml4-neon-cyan);
+  box-shadow: 0 0 6px var(--ml4-neon-cyan);
+}
+
+/* Specific styling for settings tab button if active */
+.ml4-dock-tab#ml4-tab-settings.ml4-active {
+  color: var(--ml4-neon-magenta);
+  text-shadow: 0 0 5px rgba(196, 91, 138, 0.30);
+}
+
+.ml4-dock-tab#ml4-tab-settings.ml4-active svg {
+  filter: drop-shadow(0 0 6px var(--ml4-neon-magenta));
+}
+
+.ml4-dock-tab#ml4-tab-settings.ml4-active::after {
+  background: var(--ml4-neon-magenta);
+  box-shadow: 0 0 6px var(--ml4-neon-magenta);
+}
+
+/* ============================================================
+   BOTTOM CAROUSEL — Scene Swipe Strip
+   ============================================================ */
+.ml4-carousel-strip {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml4-safe-bottom) + 8px);
+  left: 88px; /* Offset to clear the vertical dock on the left */
+  right: 16px;
+  height: 96px;
+  z-index: 200;
+  transform: translateY(120px);
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  perspective: 600px; /* 3D context for child items */
+  transition: transform 0.4s var(--ml4-ease), opacity 0.35s, visibility 0.4s;
+}
+
+.ml4-carousel-strip.ml4-visible {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml4-carousel-track {
+  display: flex;
+  gap: 12px;
+  /* No overflow — virtual drag JS controls all positioning */
+  overflow: visible;
+  height: 100%;
+  align-items: center;
+  /* perspective set on parent strip for 3D context */
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none; /* Let JS handle all touch */
+}
+
+.ml4-carousel-track.is-dragging {
+  cursor: grabbing;
+}
+
+.ml4-carousel-item {
+  flex: 0 0 68px;
+  height: 78px;
+  background: none;
+  border: none;
+  overflow: visible;
+  position: relative;
+  opacity: 0.5;
+  /* NO CSS transition — JS animates every frame */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform, opacity;
+}
+
+.ml4-carousel-item img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--ml4-border-cyan);
+  box-shadow: var(--ml4-glow-cyan);
+  /* NO transition — JS handles frame-by-frame */
+  will-change: transform, opacity, filter;
+  display: block;
+  pointer-events: auto; /* allow tap detection to reach the image */
+}
+
+.ml4-carousel-item-info {
+  position: relative;
+  background: none;
+  padding: 4px 0 0;
+  text-align: center;
+  width: 100%;
+}
+
+.ml4-carousel-item-title {
+  color: #fff;
+  font-family: var(--ml4-tech-font);
+  font-size: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.ml4-carousel-item.ml4-active-card {
+  opacity: 1;
+}
+
+.ml4-carousel-item.ml4-active-card img {
+  border-color: var(--ml4-neon-magenta);
+}
+
+/* ============================================================
+   BOTTOM DRAWERS & SHEETS (Menu & Settings)
+   ============================================================ */
+.ml4-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: background 0.3s, backdrop-filter 0.3s, opacity 0.3s, visibility 0.3s;
+  z-index: 400;
+  pointer-events: none;
+}
+
+.ml4-backdrop.ml4-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.ml4-backdrop.ml4-dim {
+  background: rgba(4, 8, 15, 0.65);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* General left sidebar sheet style */
+.ml4-sheet {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 290px;
+  background: var(--ml4-bg-glass);
+  backdrop-filter: blur(var(--ml4-blur));
+  -webkit-backdrop-filter: blur(var(--ml4-blur));
+  border: 1.5px solid var(--ml4-border-cyan);
+  border-right: 3px solid var(--ml4-neon-cyan);
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  border-radius: 0 var(--ml4-radius-md) var(--ml4-radius-md) 0;
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.38s var(--ml4-ease), opacity 0.38s, visibility 0.38s;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  max-height: 100dvh;
+  box-shadow: var(--ml4-glow-cyan);
+}
+
+#ml4-settings-sheet {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: auto;
+  width: 290px;
+  border-radius: 0 var(--ml4-radius-md) var(--ml4-radius-md) 0;
+  border: 1.5px solid var(--ml4-border-magenta);
+  border-right: 3px solid var(--ml4-neon-magenta);
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.38s var(--ml4-ease), opacity 0.38s, visibility 0.38s;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  max-height: 100dvh;
+  box-shadow: var(--ml4-glow-magenta);
+}
+
+.ml4-sheet.ml4-open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+#ml4-settings-sheet.ml4-open {
+  transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml4-sheet-handle {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 40px;
+  background: var(--ml4-border-cyan);
+  border-radius: var(--ml4-radius-pill);
+  flex-shrink: 0;
+}
+
+#ml4-settings-sheet .ml4-sheet-handle {
+  background: var(--ml4-border-magenta);
+}
+
+.ml4-sheet-header {
+  padding: 12px 20px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.ml4-sheet-title {
+  font-family: var(--ml4-tech-font);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--ml4-text);
+  text-shadow: 0 0 6px var(--ml4-neon-cyan);
+}
+
+#ml4-settings-sheet .ml4-sheet-title {
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 6px var(--ml4-neon-magenta);
+}
+
+.ml4-sheet-close {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml4-text-dim);
+}
+
+.ml4-sheet-close svg {
+  width: 12px;
+  height: 12px;
+}
+
+/* ============================================================
+   A. NAVIGATION SHEET (DANH MỤC)
+   ============================================================ */
+.ml4-nav-scroll {
+  overflow-y: auto;
+  padding: 8px 20px calc(var(--ml4-safe-bottom) + 20px);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Accordion Group Style */
+.ml4-accordion-group {
+  margin-bottom: 12px;
+  border-radius: var(--ml4-radius-sm);
+  border: 1px solid var(--ml4-border-cyan);
+  background: rgba(12, 22, 38, 0.4);
+  overflow: hidden;
+  transition: all 0.25s;
+}
+
+.ml4-accordion-group.ml4-expanded {
+  border-color: var(--ml4-neon-cyan);
+  background: rgba(12, 22, 38, 0.65);
+  box-shadow: inset 0 0 8px rgba(94, 200, 216, 0.07);
+}
+
+.ml4-accordion-header {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--ml4-tech-font);
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: var(--ml4-text);
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.ml4-accordion-header svg {
+  width: 14px;
+  height: 14px;
+  color: var(--ml4-text-muted);
+  transition: transform 0.28s var(--ml4-ease);
+}
+
+.ml4-accordion-group.ml4-expanded .ml4-accordion-header svg {
+  transform: rotate(180deg);
+  color: var(--ml4-neon-cyan);
+}
+
+.ml4-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s var(--ml4-ease);
+}
+
+.ml4-accordion-group.ml4-expanded .ml4-accordion-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Scene Grid inside accordion */
+.ml4-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 4px 16px 16px;
+}
+
+.ml4-card {
+  height: 64px;
+  background: rgba(8, 14, 24, 0.6);
+  border-radius: 4px;
+  border: 1px solid var(--ml4-border-cyan);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s var(--ml4-ease);
+}
+
+.ml4-card img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.ml4-card-placeholder {
+  width: 52px;
+  height: 52px;
+  background: rgba(94, 200, 216, 0.08);
+  color: var(--ml4-neon-cyan);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.ml4-card-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ml4-card-title {
+  font-family: var(--ml4-tech-font);
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ml4-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.ml4-card-subtitle {
+  font-size: 7.5px;
+  font-weight: 500;
+  color: var(--ml4-text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ml4-card.ml4-active-scene {
+  border-color: var(--ml4-neon-magenta);
+  background: rgba(196, 91, 138, 0.07);
+}
+
+.ml4-card.ml4-active-scene::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: var(--ml4-neon-magenta);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* ============================================================
+   B. SYSTEM SETTINGS SHEET (CÀI ĐẶT)
+   ============================================================ */
+#ml4-settings-sheet .ml4-sheet-handle {
+  display: none; /* Clean floating look */
+}
+
+#ml4-settings-sheet .ml4-sheet-header {
+  padding: 12px 16px 4px;
+}
+
+#ml4-settings-sheet .ml4-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 10px 14px 14px;
+}
+
+.ml4-setting-btn {
+  background: rgba(12, 22, 38, 0.6);
+  border: 1px solid var(--ml4-border-magenta);
+  border-radius: var(--ml4-radius-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  color: var(--ml4-text-dim);
+  transition: all 0.25s var(--ml4-ease);
+}
+
+.ml4-setting-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.6;
+  transition: transform 0.25s;
+}
+
+.ml4-setting-btn span {
+  font-family: var(--ml4-tech-font);
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+.ml4-setting-btn:active {
+  transform: scale(0.93);
+}
+
+.ml4-setting-btn.ml4-active-tool {
+  border-color: var(--ml4-neon-magenta);
+  background: rgba(196, 91, 138, 0.08);
+  color: var(--ml4-neon-magenta);
+  box-shadow: 0 0 7px rgba(196, 91, 138, 0.18);
+}
+
+.ml4-setting-btn.ml4-active-tool svg {
+  filter: drop-shadow(0 0 4px var(--ml4-neon-magenta));
+}
+
+/* Social links row */
+.ml4-social-row {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--ml4-border-magenta);
+  margin-top: 4px;
+}
+
+.ml4-social-btn {
+  flex: 1;
+  background: rgba(8, 14, 24, 0.4);
+  border: 1px solid var(--ml4-border-magenta);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 4px;
+  font-family: var(--ml4-tech-font);
+  font-size: 7.5px;
+  font-weight: 700;
+  color: var(--ml4-text-dim);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.ml4-social-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+.ml4-social-btn:active {
+  transform: scale(0.96);
+  background: rgba(196, 91, 138, 0.07);
+}
+
+/* Switcher row */
+.ml4-switcher-row {
+  grid-column: span 2;
+  background: rgba(0,0,0,0.15);
+  border-radius: var(--ml4-radius-pill);
+  border: 1px solid var(--ml4-border-magenta);
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.ml4-switcher-label {
+  font-family: var(--ml4-tech-font);
+  font-size: 7.5px;
+  font-weight: 800;
+  color: var(--ml4-text-dim);
+  padding-left: 8px;
+  letter-spacing: 0.5px;
+}
+
+.ml4-switcher-pills {
+  display: flex;
+  background: rgba(0,0,0,0.1);
+  border-radius: var(--ml4-radius-pill);
+  padding: 1px;
+}
+
+.ml4-switcher-pill {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 4px 8px;
+  border-radius: var(--ml4-radius-pill);
+  font-family: var(--ml4-tech-font);
+  font-size: 7.5px;
+  font-weight: 700;
+  color: var(--ml4-text-dim);
+  transition: all 0.22s var(--ml4-ease);
+}
+
+.ml4-switcher-pill.ml4-active {
+  background: var(--ml4-neon-magenta);
+  color: #fff;
+  box-shadow: 0 0 8px var(--ml4-neon-magenta);
+}
+
+/* ============================================================
+   C. REGION MAP SHEET (LIÊN KẾT VÙNG)
+   ============================================================ */
+.ml4-region-scroll {
+  overflow-y: auto;
+  padding: 12px 20px calc(var(--ml4-safe-bottom) + 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ml4-region-map-container {
+  width: 100%;
+  border-radius: var(--ml4-radius-sm);
+  border: 1.5px solid var(--ml4-border-cyan);
+  overflow: hidden;
+  box-shadow: var(--ml4-glow-cyan);
+  background: #000;
+}
+
+.ml4-region-map {
+  width: 100%;
+  display: block;
+}
+
+/* ============================================================
+   D. MINI MAP PANEL
+   ============================================================ */
+.ml4-minimap-card {
+  pointer-events: auto;
+  position: absolute;
+  top: calc(var(--ml4-safe-top) + 68px);
+  right: 16px;
+  width: 144px;
+  background: var(--ml4-bg-glass);
+  backdrop-filter: blur(var(--ml4-blur));
+  -webkit-backdrop-filter: blur(var(--ml4-blur));
+  border: 1.5px solid var(--ml4-border-cyan);
+  border-top: 3px solid var(--ml4-neon-cyan);
+  border-radius: var(--ml4-radius-sm);
+  box-shadow: var(--ml4-glow-cyan);
+  overflow: hidden;
+  transform: scale(0) translateY(-12px);
+  transform-origin: top right;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2), opacity 0.3s;
+  opacity: 0;
+  z-index: 250;
+}
+
+.ml4-minimap-card.ml4-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.ml4-minimap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ml4-border-cyan);
+}
+
+.ml4-minimap-label {
+  font-family: var(--ml4-tech-font);
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--ml4-text);
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 4px var(--ml4-neon-cyan);
+}
+
+.ml4-minimap-close-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml4-text-dim);
+}
+
+.ml4-minimap-close-btn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.ml4-minimap-viewport {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  overflow: hidden;
+  background: #02060e;
+}
+
+.ml4-minimap-img {
+  position: absolute;
+  width: 250%;
+  max-width: none;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  transition: transform 0.1s linear;
+  filter: brightness(0.6) blue-shift; /* Sci fi radar appearance */
+}
+
+.ml4-minimap-radar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 10;
+}
+
+.ml4-minimap-cone {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 36px solid rgba(94, 200, 216, 0.22);
+  transform-origin: bottom center;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.ml4-minimap-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ml4-neon-cyan);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px var(--ml4-neon-cyan);
+}
+
+.ml4-minimap-zoom {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml4-minimap-zoom-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid var(--ml4-border-cyan);
+  background: rgba(8, 14, 24, 0.85);
+  font-family: var(--ml4-tech-font);
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml4-neon-cyan);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.ml4-minimap-zoom-btn:active {
+  transform: scale(0.9);
+  background: rgba(94, 200, 216, 0.10);
+}
+
+/* ============================================================
+   E. RIPPLE ANIMATION (TOUCH FEEDBACK)
+   ============================================================ */
+.ml4-ripple-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ml4-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(94, 200, 216, 0.14);
+  transform: scale(0);
+  animation: ml4-ripple-anim 0.55s ease-out;
+  pointer-events: none;
+}
+
+.ml4-dock-fab .ml4-ripple {
+  background: rgba(196, 91, 138, 0.14);
+}
+
+@keyframes ml4-ripple-anim {
+  to {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   F. GENERAL SYSTEM OVERLAYS (INFO, TOAST)
+   ============================================================ */
+.ml4-toast {
+  position: absolute;
+  top: calc(var(--ml4-safe-top) + 68px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--ml4-bg-solid);
+  color: #fff;
+  border: 1px solid var(--ml4-border-cyan);
+  box-shadow: var(--ml4-glow-cyan);
+  border-radius: var(--ml4-radius-sm);
+  padding: 8px 16px;
+  font-family: var(--ml4-tech-font);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+  transition: all 0.3s var(--ml4-ease);
+}
+
+.ml4-toast.ml4-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================================
+   MEDIA — Hide desktop controls on mobile
+   ============================================================ */
+@media screen and (min-width: 1025px) {
+  #ml4-overlay {
+    display: none !important;
+  }
+}

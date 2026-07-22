@@ -1,15 +1,15 @@
 /**
- * js/mobile/mobile_layout3.js — TAV Virtual Tour · Mobile Layout 3 Controller
+ * js/mobile/mobile_layout4.js — TAV Virtual Tour · Mobile Layout 4 Controller
  * ============================================================
  * World-Class Mobile UX Architect design.
- * Premium mobile-first UI inspired by Desktop Layout 1 (Classic)
+ * Premium mobile-first UI inspired by Desktop Layout 2 (Futuristic/Neon)
  * Features:
- *   - Glassmorphic Warm Pearl & Gold color scheme
- *   - Bottom Drawer Navigation with Desktop Layout 1 category hierarchy
- *   - Swipeable Horizontal Scene Navigation Strip above the dock
- *   - Floating collapsible Minimap with dynamic radar alignment
- *   - Expanding Action Sheet for System Controls (Hotspots, Music, Autorotate, Info, Share, Call, Social)
- *   - Independent, standalone controller inheriting from TAV_CORE.
+ *   - Cyberpunk space dark & neon theme
+ *   - Bottom Drawer Navigation with Desktop Layout 2 hierarchy
+ *   - Swipeable Centered Horizontal Scene Navigation Strip (dynamic array rotation)
+ *   - Floating collapsible Minimap with tech crosshair & radar cone sync
+ *   - Branded magenta settings FAB opening compact systems toolkit popover
+ *   - Standalone module matching TAV_CORE bindings.
  * ============================================================
  */
 
@@ -30,6 +30,7 @@
   let _mapDragging    = false;
   let _mapDragStartX  = 0;
   let _mapDragStartY  = 0;
+  let _stopCarouselLoop = null;
 
   // ── SVG icons ─────────────────────────────────────────────
   const ICONS = {
@@ -51,7 +52,7 @@
     arrowDown: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>`
   };
 
-  // ── Force absolute height to fix mobile viewport bugs ──────────────────────
+  // ── Force height on orientation resize ─────────────────────────────────────
   function _fixHeight() {
     if (_overlay) {
       _overlay.style.height = '100%';
@@ -65,34 +66,31 @@
     const config = core.config;
     const scenes = core.scenes;
 
-    // ─ Compass SVG
+    // ─ Compass SVG Dial
     const compassSVG = `
-      <svg class="ml3-compass-dial" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="44" class="ml3-compass-ring"/>
-        <g id="ml3-compass-needle" style="transform-origin:50px 50px; transition:transform 0.12s linear;">
-          <polygon class="ml3-compass-north" points="50,15 57,50 50,55 43,50"/>
-          <polygon class="ml3-compass-south" points="50,85 57,50 50,55 43,50"/>
+      <svg class="ml4-compass-dial" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="44" class="ml4-compass-ring"/>
+        <g id="ml4-compass-needle" style="transform-origin:50px 50px; transition:transform 0.12s linear;">
+          <polygon class="ml4-compass-north" points="50,15 57,50 50,55 43,50"/>
+          <polygon class="ml4-compass-south" points="50,85 57,50 50,55 43,50"/>
         </g>
-        <text x="50" y="10" text-anchor="middle" fill="#d4af37" font-size="10" font-weight="900" font-family="Inter,sans-serif">N</text>
+        <text x="50" y="9" text-anchor="middle" fill="#00f2fe" font-size="9" font-weight="900" font-family="'Share Tech Mono',sans-serif">N</text>
       </svg>`;
 
-    // ─ Classic Category List with scene tree
+    // ─ Navigation list with scenes accordion
     const categoryKeys = Object.keys(config.navItems);
     let accordionHTML = '';
 
     categoryKeys.forEach((key, index) => {
       const item = config.navItems[key];
-      // Skip surrounding/region page from scene list as it links directly
-      if (key === 'surrounding') return;
+      if (key === 'surrounding') return; // skipped, loaded as region map sheet directly
 
       let subScenes = [];
       if (item.submenu) {
-        // Multi-scene category
         subScenes = item.submenu.map(sub => {
           return scenes.find(s => s.action === sub.node || s.action === sub.action);
         }).filter(Boolean);
       } else if (item.node) {
-        // Single-scene category
         const scene = scenes.find(s => s.id === item.node);
         if (scene) subScenes.push(scene);
       }
@@ -101,26 +99,26 @@
 
       const categoryLabel = item.label || key;
       const gridItemsHTML = subScenes.map(s => `
-        <div class="ml3-card ml3-interactive" data-action="${s.action}" data-node="${s.action}">
+        <div class="ml4-card ml4-interactive" data-action="${s.action}" data-node="${s.action}">
           ${s.thumb
             ? `<img src="${s.thumb}" alt="${s.title}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
             : ''}
-          <div class="ml3-card-placeholder" style="${s.thumb ? 'display:none' : ''}">🏠</div>
-          <div class="ml3-card-details">
-            <span class="ml3-card-title">${s.title}</span>
-            <span class="ml3-card-subtitle">${s.sub}</span>
+          <div class="ml4-card-placeholder" style="${s.thumb ? 'display:none' : ''}">🏠</div>
+          <div class="ml4-card-details">
+            <span class="ml4-card-title">${s.title}</span>
+            <span class="ml4-card-subtitle">${s.sub}</span>
           </div>
         </div>
       `).join('');
 
       accordionHTML += `
-        <div class="ml3-accordion-group ${index === 0 ? 'ml3-expanded' : ''}" data-cat-id="${key}">
-          <div class="ml3-accordion-header ml3-interactive">
+        <div class="ml4-accordion-group ${index === 0 ? 'ml4-expanded' : ''}" data-cat-id="${key}">
+          <div class="ml4-accordion-header ml4-interactive">
             <span>${categoryLabel}</span>
             ${ICONS.arrowDown}
           </div>
-          <div class="ml3-accordion-body">
-            <div class="ml3-grid">
+          <div class="ml4-accordion-body">
+            <div class="ml4-grid">
               ${gridItemsHTML}
             </div>
           </div>
@@ -128,165 +126,164 @@
       `;
     });
 
-    // ─ Settings / Action Sheet Items (Toolbar functions of L1)
+    // ─ Settings / Action grid list (Cyber Theme)
     const settingsGridHTML = `
-      <button class="ml3-setting-btn ml3-interactive ${ _isHotspotsVisible ? 'ml3-active-tool' : '' }" data-action="hotspots">
+      <button class="ml4-setting-btn ml4-interactive ${ _isHotspotsVisible ? 'ml4-active-tool' : '' }" data-action="hotspots">
         ${ICONS.hotspot}
         <span>Điểm Chạm</span>
       </button>
-      <button class="ml3-setting-btn ml3-interactive" data-action="autorotate">
+      <button class="ml4-setting-btn ml4-interactive" data-action="autorotate">
         ${ICONS.autorotate}
         <span>Tự Xoay</span>
       </button>
-      <button class="ml3-setting-btn ml3-interactive" data-action="fullscreen">
+      <button class="ml4-setting-btn ml4-interactive" data-action="fullscreen">
         ${ICONS.fullscreen}
         <span>Toàn Màn</span>
       </button>
-      <button class="ml3-setting-btn ml3-interactive" data-action="share">
+      <button class="ml4-setting-btn ml4-interactive" data-action="share">
         ${ICONS.share}
         <span>Chia Sẻ</span>
       </button>
-      <button class="ml3-setting-btn ml3-interactive" data-action="info">
+      <button class="ml4-setting-btn ml4-interactive" data-action="info">
         ${ICONS.info}
         <span>Thông Tin</span>
       </button>
-      <button class="ml3-setting-btn ml3-interactive" data-action="region-page">
+      <button class="ml4-setting-btn ml4-interactive" data-action="region-page">
         ${ICONS.region}
         <span>L.Kết Vùng</span>
       </button>
 
-      <!-- Social Row Dropdown from Layout 1 -->
-      <div class="ml3-social-row">
-        <a href="${config.social.facebook}" target="_blank" class="ml3-social-btn ml3-interactive">
+      <!-- Social Row Dropdown -->
+      <div class="ml4-social-row">
+        <a href="${config.social.facebook}" target="_blank" class="ml4-social-btn ml4-interactive">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           Facebook
         </a>
-        <a href="${config.social.instagram}" target="_blank" class="ml3-social-btn ml3-interactive">
+        <a href="${config.social.instagram}" target="_blank" class="ml4-social-btn ml4-interactive">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12c0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           Instagram
         </a>
-        <a href="${config.social.zalo}" target="_blank" class="ml3-social-btn ml3-interactive">
+        <a href="${config.social.zalo}" target="_blank" class="ml4-social-btn ml4-interactive">
           <svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 0C8.955 0 0 8.954 0 20c0 11.045 8.955 20 20 20s20-8.955 20-20C40 8.954 31.045 0 20 0zm9.09 28.182c-1.091 1.09-2.273 1.636-3.636 1.636-.727 0-1.454-.182-2.09-.455l-5.91 2.364.91-5.273c-1.636-1.454-2.637-3.545-2.637-5.818 0-4.364 3.546-7.909 7.91-7.909 4.363 0 7.909 3.545 7.909 7.909 0 2.909-1.546 5.454-4 6.909l1.544 .637z"/></svg>
           Zalo
         </a>
       </div>
 
-      <!-- Mobile Layout Switcher -->
-      <div class="ml3-switcher-row">
-        <span class="ml3-switcher-label">Giao Diện:</span>
-        <div class="ml3-switcher-pills">
-          <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="1">L1</button>
-          <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="2">L2</button>
-          <button class="ml3-switcher-pill ml3-active ml3-interactive" data-layout-switch="3">L3</button>
-          <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="4">L4</button>
-          <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="5">L5</button>
+      <!-- Mobile layout switcher -->
+      <div class="ml4-switcher-row">
+        <span class="ml4-switcher-label">Giao Diện:</span>
+        <div class="ml4-switcher-pills">
+          <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="1">L1</button>
+          <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="2">L2</button>
+          <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="3">L3</button>
+          <button class="ml4-switcher-pill ml4-active ml4-interactive" data-layout-switch="4">L4</button>
+          <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="5">L5</button>
         </div>
       </div>
     `;
 
     return `
       <!-- ① Top Strip (Branding & Compass) -->
-      <div class="ml3-top-strip">
-        <div class="ml3-logo-pill ml3-interactive" id="ml3-logo-btn">
+      <div class="ml4-top-strip">
+        <div class="ml4-logo-pill ml4-interactive" id="ml4-logo-btn">
           <div>
-            <div class="ml3-logo-title">${config.projectTitle.top}</div>
-            <div class="ml3-logo-sub">${config.projectTitle.sub}</div>
+            <div class="ml4-logo-title">${config.projectTitle.top}</div>
+            <div class="ml4-logo-sub">${config.projectTitle.sub}</div>
           </div>
-          <div class="ml3-layout-badge">
+          <div class="ml4-layout-badge">
             ${ICONS.layout}
-            <span>ML3</span>
+            <span>ML4</span>
           </div>
         </div>
-        <div class="ml3-compass ml3-interactive" id="ml3-compass" title="Đặt lại hướng nhìn">
+        <div class="ml4-compass ml4-interactive" id="ml4-compass" title="Đặt lại hướng nhìn">
           ${compassSVG}
         </div>
       </div>
 
-      <!-- ② Scene Change Toast Notifications -->
-      <div class="ml3-toast" id="ml3-toast"></div>
+      <!-- ② Scene change toast notification -->
+      <div class="ml4-toast" id="ml4-toast"></div>
 
-      <!-- ③ Minimap Card (Collapsible, Floating) -->
-      <div class="ml3-minimap-card" id="ml3-minimap-card">
-        <div class="ml3-minimap-header">
-          <span class="ml3-minimap-label">Bản đồ</span>
-          <div class="ml3-minimap-close-btn ml3-interactive" id="ml3-minimap-close">${ICONS.close}</div>
+      <!-- ③ Floating Minimap Card -->
+      <div class="ml4-minimap-card" id="ml4-minimap-card">
+        <div class="ml4-minimap-header">
+          <span class="ml4-minimap-label">Bản đồ</span>
+          <div class="ml4-minimap-close-btn ml4-interactive" id="ml4-minimap-close">${ICONS.close}</div>
         </div>
-        <div class="ml3-minimap-viewport" id="ml3-minimap-viewport">
-          <img src="image/Map_optimized.jpg" id="ml3-minimap-img" class="ml3-minimap-img" alt="Map">
-          <div class="ml3-minimap-radar" id="ml3-minimap-radar">
-            <div class="ml3-minimap-cone" id="ml3-minimap-cone"></div>
-            <div class="ml3-minimap Dot" style="position: absolute; width: 8px; height: 8px; background: var(--ml3-primary); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 6px var(--ml3-primary);"></div>
+        <div class="ml4-minimap-viewport" id="ml4-minimap-viewport">
+          <img src="image/Map_optimized.jpg" id="ml4-minimap-img" class="ml4-minimap-img" alt="Map">
+          <div class="ml4-minimap-radar" id="ml4-minimap-radar">
+            <div class="ml4-minimap-cone" id="ml4-minimap-cone"></div>
+            <div class="ml4-minimap-dot" style="position: absolute; width: 8px; height: 8px; background: var(--ml4-neon-cyan); border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 6px var(--ml4-neon-cyan);"></div>
           </div>
         </div>
-        <div class="ml3-minimap-zoom">
-          <button class="ml3-minimap-zoom-btn ml3-interactive" id="ml3-zoom-in">+</button>
-          <button class="ml3-minimap-zoom-btn ml3-interactive" id="ml3-zoom-out">−</button>
+        <div class="ml4-minimap-zoom">
+          <button class="ml4-minimap-zoom-btn ml4-interactive" id="ml4-zoom-in">+</button>
+          <button class="ml4-minimap-zoom-btn ml4-interactive" id="ml4-zoom-out">−</button>
         </div>
       </div>
 
-      <!-- ④ Horizontal Scene Carousel Swipe Strip -->
-      <div class="ml3-carousel-strip" id="ml3-carousel-strip">
-        <div class="ml3-carousel-track" id="ml3-carousel-track"></div>
+      <!-- ④ Horizontal Scene Swipe Carousel -->
+      <div class="ml4-carousel-strip" id="ml4-carousel-strip">
+        <div class="ml4-carousel-track" id="ml4-carousel-track"></div>
       </div>
 
-      <!-- ⑤ Floating Bottom Nav Bar (Dock) -->
-      <nav class="ml3-dock ml3-interactive" id="ml3-dock" role="navigation" aria-label="Main Navigation">
+      <!-- ⑤ Floating Left Sidebar Dock -->
+      <nav class="ml4-left-dock ml4-interactive" id="ml4-dock" role="navigation" aria-label="Main Navigation">
         <!-- Tab 1: Menu Sheets -->
-        <button class="ml3-dock-tab ml3-interactive" id="ml3-tab-menu" aria-label="Danh Mục Cảnh">
-          <div class="ml3-ripple-container"></div>
+        <button class="ml4-dock-tab ml4-interactive" id="ml4-tab-menu" aria-label="Danh Mục Cảnh">
+          <div class="ml4-ripple-container"></div>
           ${ICONS.menu}
           <span>Cảnh</span>
         </button>
         <!-- Tab 2: Minimap Toggle -->
-        <button class="ml3-dock-tab ml3-interactive" id="ml3-tab-map" aria-label="Bản Đồ">
-          <div class="ml3-ripple-container"></div>
+        <button class="ml4-dock-tab ml4-interactive" id="ml4-tab-map" aria-label="Bản Đồ">
+          <div class="ml4-ripple-container"></div>
           ${ICONS.map}
           <span>Bản Đồ</span>
         </button>
-        
-        <!-- Center FAB (Settings/Toolbar Actions) -->
-        <button class="ml3-dock-fab ml3-interactive" id="ml3-fab-btn" aria-label="Cài Đặt">
-          <div class="ml3-ripple-container"></div>
-          ${ICONS.settings}
-        </button>
-
-        <!-- Tab 4: Gallery Toggle -->
-        <button class="ml3-dock-tab ml3-interactive" id="ml3-tab-gallery" aria-label="Hình Ảnh Thư Viện">
-          <div class="ml3-ripple-container"></div>
+        <!-- Tab 3: Gallery Toggle -->
+        <button class="ml4-dock-tab ml4-interactive" id="ml4-tab-gallery" aria-label="Hình Ảnh Thư Viện">
+          <div class="ml4-ripple-container"></div>
           ${ICONS.gallery}
           <span>Thư Viện</span>
         </button>
+        <!-- Tab 4: Settings Toggle -->
+        <button class="ml4-dock-tab ml4-interactive" id="ml4-tab-settings" aria-label="Cài Đặt Hệ Thống">
+          <div class="ml4-ripple-container"></div>
+          ${ICONS.settings}
+          <span>Cài Đặt</span>
+        </button>
         <!-- Tab 5: Music Toggle -->
-        <button class="ml3-dock-tab ml3-interactive" id="ml3-tab-audio" aria-label="Âm Nhạc Nền">
-          <div class="ml3-ripple-container"></div>
-          <span id="ml3-audio-icon">${ICONS.audio}</span>
-          <span id="ml3-audio-label">Âm Nhạc</span>
+        <button class="ml4-dock-tab ml4-interactive" id="ml4-tab-audio" aria-label="Âm Nhạc Nền">
+          <div class="ml4-ripple-container"></div>
+          <span id="ml4-audio-icon">${ICONS.audio}</span>
+          <span id="ml4-audio-label">Nhạc</span>
         </button>
       </nav>
 
-      <!-- ⑥ Backdrop for Sheets -->
-      <div class="ml3-backdrop" id="ml3-backdrop"></div>
+      <!-- ⑥ Backdrop -->
+      <div class="ml4-backdrop" id="ml4-backdrop"></div>
 
       <!-- ⑦ Menu Sheet Drawer (DANH MỤC) -->
-      <div class="ml3-sheet" id="ml3-nav-sheet" role="dialog" aria-label="Danh Mục Cảnh">
-        <div class="ml3-sheet-handle" id="ml3-nav-handle"></div>
-        <div class="ml3-sheet-header">
-          <span class="ml3-sheet-title">Danh Mục Cảnh</span>
-          <div class="ml3-sheet-close ml3-interactive" id="ml3-nav-close">${ICONS.close}</div>
+      <div class="ml4-sheet" id="ml4-nav-sheet" role="dialog" aria-label="Danh Mục Cảnh">
+        <div class="ml4-sheet-handle" id="ml4-nav-handle"></div>
+        <div class="ml4-sheet-header">
+          <span class="ml4-sheet-title">Danh Mục Cảnh</span>
+          <div class="ml4-sheet-close ml4-interactive" id="ml4-nav-close">${ICONS.close}</div>
         </div>
-        <div class="ml3-nav-scroll">
+        <div class="ml4-nav-scroll">
           ${accordionHTML}
         </div>
       </div>
 
       <!-- ⑧ Settings Sheet (CÀI ĐẶT) -->
-      <div class="ml3-sheet" id="ml3-settings-sheet" role="dialog" aria-label="Cài Đặt Hệ Thống">
-        <div class="ml3-sheet-handle" id="ml3-settings-handle"></div>
-        <div class="ml3-sheet-header">
-          <span class="ml3-sheet-title">Cài Đặt Hệ Thống</span>
-          <div class="ml3-sheet-close ml3-interactive" id="ml3-settings-close">${ICONS.close}</div>
+      <div class="ml4-sheet" id="ml4-settings-sheet" role="dialog" aria-label="Cài Đặt Hệ Thống">
+        <div class="ml4-sheet-handle" id="ml4-settings-handle"></div>
+        <div class="ml4-sheet-header">
+          <span class="ml4-sheet-title">Cài Đặt Hệ Thống</span>
+          <div class="ml4-sheet-close ml4-interactive" id="ml4-settings-close">${ICONS.close}</div>
         </div>
-        <div class="ml3-settings-grid">
+        <div class="ml4-settings-grid">
           ${settingsGridHTML}
         </div>
       </div>
@@ -295,13 +292,13 @@
 
   // ── Touch Feedback: Ripple Effect ──────────────────────────────────
   function addRipple(el, e) {
-    const container = el.querySelector('.ml3-ripple-container');
+    const container = el.querySelector('.ml4-ripple-container');
     if (!container) return;
     const rect = container.getBoundingClientRect();
     const x = (e.clientX || (e.touches && e.touches[0].clientX) || rect.left + rect.width / 2) - rect.left;
     const y = (e.clientY || (e.touches && e.touches[0].clientY) || rect.top + rect.height / 2) - rect.top;
     const ripple = document.createElement('div');
-    ripple.className = 'ml3-ripple';
+    ripple.className = 'ml4-ripple';
     ripple.style.cssText = `left:${x}px;top:${y}px;width:${rect.width}px;height:${rect.width}px;margin-left:-${rect.width/2}px;margin-top:-${rect.width/2}px`;
     container.appendChild(ripple);
     setTimeout(() => ripple.remove(), 550);
@@ -312,26 +309,32 @@
     closeAllSheets();
     const sheet = document.getElementById(sheetId);
     if (!sheet) return;
-    sheet.classList.add('ml3-open');
+    sheet.classList.add('ml4-open');
     
-    const backdrop = document.getElementById('ml3-backdrop');
+    const backdrop = document.getElementById('ml4-backdrop');
     if (backdrop) {
-      backdrop.classList.add('ml3-open');
-      if (sheetId === 'ml3-nav-sheet') {
-        backdrop.classList.add('ml3-dim');
+      backdrop.classList.add('ml4-open');
+      if (sheetId === 'ml4-nav-sheet') {
+        backdrop.classList.add('ml4-dim');
       } else {
-        backdrop.classList.remove('ml3-dim');
+        backdrop.classList.remove('ml4-dim');
       }
     }
     _activeSheet = sheetId;
 
+    // Highlight active tab/FAB indicators
+    if (sheetId === 'ml4-nav-sheet') {
+      document.getElementById('ml4-tab-menu')?.classList.add('ml4-active');
+    } else if (sheetId === 'ml4-settings-sheet') {
+      document.getElementById('ml4-tab-settings')?.classList.add('ml4-active');
+    }
+
     // Scroll active scene card into view if opening the navigation sheet
-    if (sheetId === 'ml3-nav-sheet') {
-      // Ensure the accordion group containing active scene is expanded
-      const activeCard = sheet.querySelector('.ml3-active-scene');
+    if (sheetId === 'ml4-nav-sheet') {
+      const activeCard = sheet.querySelector('.ml4-active-scene');
       if (activeCard) {
-        const group = activeCard.closest('.ml3-accordion-group');
-        if (group && !group.classList.contains('ml3-expanded')) {
+        const group = activeCard.closest('.ml4-accordion-group');
+        if (group && !group.classList.contains('ml4-expanded')) {
           _expandAccordion(group);
         }
         setTimeout(() => {
@@ -341,34 +344,35 @@
     }
 
     // Drag-to-close handler
-    const handle = sheet.querySelector('.ml3-sheet-handle');
+    const handle = sheet.querySelector('.ml4-sheet-handle');
     if (handle) _attachDragClose(sheet, handle);
   }
 
   function closeAllSheets() {
-    ['ml3-nav-sheet', 'ml3-settings-sheet'].forEach(id => {
+    ['ml4-nav-sheet', 'ml4-settings-sheet'].forEach(id => {
       const el = document.getElementById(id);
-      if (el) el.classList.remove('ml3-open');
+      if (el) el.classList.remove('ml4-open');
     });
-    const backdrop = document.getElementById('ml3-backdrop');
+    const backdrop = document.getElementById('ml4-backdrop');
     if (backdrop) {
-      backdrop.classList.remove('ml3-open');
-      backdrop.classList.remove('ml3-dim');
+      backdrop.classList.remove('ml4-open');
+      backdrop.classList.remove('ml4-dim');
     }
-    document.getElementById('ml3-fab-btn').classList.remove('ml3-open');
+    document.getElementById('ml4-tab-menu')?.classList.remove('ml4-active');
+    document.getElementById('ml4-tab-settings')?.classList.remove('ml4-active');
     _activeSheet = null;
   }
 
   function _attachDragClose(sheet, handle) {
-    let startY = 0;
-    const onTouchStart = e => { startY = e.touches[0].clientY; };
+    let startX = 0;
+    const onTouchStart = e => { startX = e.touches[0].clientX; };
     const onTouchMove  = e => {
-      const delta = e.touches[0].clientY - startY;
-      if (delta > 0) sheet.style.transform = `translateY(${delta}px)`;
+      const delta = e.touches[0].clientX - startX;
+      if (delta < 0) sheet.style.transform = `translateX(${delta}px)`;
     };
     const onTouchEnd   = e => {
       sheet.style.transform = '';
-      if (e.changedTouches[0].clientY - startY > 75) closeAllSheets();
+      if (startX - e.changedTouches[0].clientX > 60) closeAllSheets();
       handle.removeEventListener('touchstart', onTouchStart);
       handle.removeEventListener('touchmove', onTouchMove);
       handle.removeEventListener('touchend', onTouchEnd);
@@ -380,109 +384,314 @@
 
   // ── Accordion Toggle ───────────────────────────────────────────────
   function _expandAccordion(group) {
-    // Collapse others
-    document.querySelectorAll('.ml3-accordion-group').forEach(g => {
+    document.querySelectorAll('.ml4-accordion-group').forEach(g => {
       if (g !== group) {
-        g.classList.remove('ml3-expanded');
-        g.querySelector('.ml3-accordion-body').style.maxHeight = '0px';
+        g.classList.remove('ml4-expanded');
+        g.querySelector('.ml4-accordion-body').style.maxHeight = '0px';
       }
     });
-    // Expand target
-    group.classList.add('ml3-expanded');
-    const body = group.querySelector('.ml3-accordion-body');
+    group.classList.add('ml4-expanded');
+    const body = group.querySelector('.ml4-accordion-body');
     body.style.maxHeight = '500px';
   }
 
   function toggleAccordion(group) {
-    const isExpanded = group.classList.contains('ml3-expanded');
+    const isExpanded = group.classList.contains('ml4-expanded');
     if (isExpanded) {
-      group.classList.remove('ml3-expanded');
-      group.querySelector('.ml3-accordion-body').style.maxHeight = '0px';
+      group.classList.remove('ml4-expanded');
+      group.querySelector('.ml4-accordion-body').style.maxHeight = '0px';
     } else {
       _expandAccordion(group);
     }
   }
 
-  // ── Swipe Carousel Builder ─────────────────────────────────────────
+  // ── Swipe Carousel Builder — Custom Virtual Drag + Spring Physics ──────────────────
   function buildCarousel(category, activeNodeId) {
     if (!category) return;
     _activeCategory = category;
 
     const core = window.TAV_CORE;
     const catScenes = core.getScenesByCategory(category);
-    const track = document.getElementById('ml3-carousel-track');
-    if (!track) return;
+    const track = document.getElementById('ml4-carousel-track');
+    const strip = document.getElementById('ml4-carousel-strip');
+    if (!track || !strip) return;
 
     if (catScenes.length <= 1) {
-      document.getElementById('ml3-carousel-strip').classList.remove('ml3-visible');
+      strip.classList.remove('ml4-visible');
       return;
     }
 
-    // Find index of the active scene
-    let activeIdx = catScenes.findIndex(s => s.id === activeNodeId);
-    if (activeIdx === -1) activeIdx = 0;
+    // Stop any previous animation loop
+    if (_stopCarouselLoop) { _stopCarouselLoop(); _stopCarouselLoop = null; }
 
     // Rotate the scenes array so the active scene is always exactly in the center
+    let activeIdx = catScenes.findIndex(s => s.id === activeNodeId);
+    if (activeIdx === -1) activeIdx = 0;
     const N = catScenes.length;
     const mid = Math.floor(N / 2);
     const rotatedScenes = [];
     for (let i = 0; i < N; i++) {
-      const targetIdx = (activeIdx - mid + i + N) % N;
-      rotatedScenes.push(catScenes[targetIdx]);
+      rotatedScenes.push(catScenes[(activeIdx - mid + i + N) % N]);
     }
 
     track.innerHTML = rotatedScenes.map(s => `
-      <div class="ml3-carousel-item ml3-interactive ${s.id === activeNodeId ? 'ml3-active-card' : ''}" data-action="${s.action}" data-node="${s.action}">
+      <div class="ml4-carousel-item ml4-interactive ${s.id === activeNodeId ? 'ml4-active-card' : ''}" data-action="${s.action}" data-node="${s.action}">
         <img src="${s.thumb}" alt="${s.title}" onerror="this.src='preview.jpg'">
-        <div class="ml3-carousel-item-info">
-          <div class="ml3-carousel-item-title">${s.title}</div>
+        <div class="ml4-carousel-item-info">
+          <div class="ml4-carousel-item-title">${s.title}</div>
         </div>
       </div>
     `).join('');
 
-    document.getElementById('ml3-carousel-strip').classList.add('ml3-visible');
+    strip.classList.add('ml4-visible');
 
-    // Smoothly scroll the middle card (the active one) to the center of the track
-    setTimeout(() => {
-      const activeCard = track.querySelector('.ml3-active-card');
-      if (activeCard) {
-        track.style.scrollSnapType = 'none';
-        const targetScrollLeft = activeCard.offsetLeft - (track.clientWidth / 2) + (activeCard.clientWidth / 2);
-        track.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
-        setTimeout(() => {
-          if (track) track.style.scrollSnapType = 'x mandatory';
-        }, 300);
-      }
-    }, 100);
+    // ── Wait one frame for items to lay out, then boot physics engine ──────
+    requestAnimationFrame(() => {
+      const items      = Array.from(track.querySelectorAll('.ml4-carousel-item'));
+      const ITEM_W     = 68;
+      const GAP        = 12;
+      const STEP       = ITEM_W + GAP;           // distance between item centers
+      const stripW     = strip.clientWidth;
+      const PADDING    = stripW / 2 - ITEM_W / 2; // centers first item
+      const totalW     = PADDING * 2 + N * STEP - GAP;
+
+      // Precompute each item's natural center X (layout positions)
+      const itemCenters = items.map((_, i) => PADDING + i * STEP + ITEM_W / 2);
+
+      // Position the track items absolutely so CSS flex isn't fighting us
+      track.style.position = 'relative';
+      track.style.width    = totalW + 'px';
+      items.forEach((item, i) => {
+        item.style.position = 'absolute';
+        item.style.left     = (PADDING + i * STEP) + 'px';
+        item.style.top      = '50%';
+        item.style.transform = 'translateY(-50%)';
+      });
+
+      // ── Virtual scroll state ─────────────────────────────────────────────
+      const maxOffset = PADDING + (N - 1) * STEP; // max virtual X of center item
+      let offset    = PADDING + mid * STEP;        // start centered on active card
+      let velX      = 0;
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartOffset = 0;
+      let lastX    = 0;
+      let lastTime = 0;
+      let snapTarget = offset;
+      let isSnapping = false;
+      let rafId    = null;
+      let killed   = false;
+
+      // ── Render: apply 3D cylinder transforms to every item ───────────────
+      const render = () => {
+        const halfView = stripW / 2;
+        items.forEach((item, i) => {
+          const itemX    = itemCenters[i];        // item natural center in track space
+          const dist     = itemX - offset;        // distance from camera focal point
+          const absDist  = Math.abs(dist);
+          const horizon  = stripW * 0.6;          // falloff range
+
+          let t = 1 - Math.min(absDist / horizon, 1);
+          t = t * t * (3 - 2 * t);               // smoothstep — S-curve, no harsh edges
+
+          const scale    = 0.75 + t * 0.45;      // 0.75 → 1.20
+          const rotY     = -(dist / horizon) * 52; // tilt towards center
+          const transZ   = -(absDist / horizon) * 50;
+          const transY   = (absDist / horizon) * 10;
+          const opacity  = 0.35 + t * 0.65;
+          const bright   = 0.55 + t * 0.6;
+
+          // Screenspace X: offset the item so it stays in the strip viewport
+          const screenX  = halfView + dist - ITEM_W / 2;
+
+          item.style.left      = screenX + 'px';
+          item.style.opacity   = opacity;
+          item.style.zIndex    = Math.round(t * 10);
+          item.style.transform = `translateY(-50%) scale(${scale}) rotateY(${rotY}deg) translate3d(0,${transY}px,${transZ}px)`;
+
+          const img = item.querySelector('img');
+          if (img) {
+            img.style.filter = `brightness(${bright})`;
+            if (item.classList.contains('ml4-active-card')) {
+              img.style.borderColor = 'var(--ml4-neon-magenta)';
+              img.style.boxShadow   = `0 0 ${Math.round(t * 10)}px rgba(196,91,138,0.35)`;
+            } else {
+              img.style.borderColor = `rgba(94,200,216,${(0.08 + t * 0.35).toFixed(2)})`;
+              img.style.boxShadow   = `0 0 ${Math.round(t * 7)}px rgba(94,200,216,0.18)`;
+            }
+          }
+        });
+      };
+
+      // ── Physics loop ─────────────────────────────────────────────────────
+      const physicsLoop = () => {
+        if (killed) return;
+        rafId = requestAnimationFrame(physicsLoop);
+
+        if (!isDragging) {
+          if (isSnapping) {
+            // Spring snap to nearest slot
+            const diff = snapTarget - offset;
+            if (Math.abs(diff) < 0.3 && Math.abs(velX) < 0.3) {
+              offset = snapTarget;
+              velX   = 0;
+              isSnapping = false;
+            } else {
+              const spring = diff * 0.18;   // spring stiffness
+              const damp   = -velX * 0.72;  // damping
+              velX  += spring + damp;
+              offset += velX;
+            }
+          } else {
+            // Momentum glide after finger lifts
+            velX *= 0.88;                   // friction — higher = more glide
+            offset += velX;
+
+            // Clamp to valid range
+            offset = Math.min(Math.max(offset, PADDING), maxOffset);
+
+            if (Math.abs(velX) < 0.4) {
+              // Find nearest snap slot (nearest item center)
+              let closest = itemCenters[0];
+              let minD    = Infinity;
+              itemCenters.forEach(c => {
+                const d = Math.abs(c - offset);
+                if (d < minD) { minD = d; closest = c; }
+              });
+              snapTarget = closest;
+              isSnapping = true;
+              velX = 0;
+            }
+          }
+        }
+
+        render();
+      };
+
+      physicsLoop();
+
+      // ── Touch / Pointer handlers — tap vs drag detection ────────────────
+      const TAP_THRESHOLD = 8; // px — less than this = tap, more = drag
+      let touchMoved = false;
+
+      const onPointerDown = (e) => {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        isDragging      = false;   // becomes true only when threshold exceeded
+        touchMoved      = false;
+        isSnapping      = false;
+        dragStartX      = clientX;
+        dragStartOffset = offset;
+        lastX           = clientX;
+        lastTime        = performance.now();
+        velX            = 0;
+        // NOTE: do NOT preventDefault here — lets tap / click events through
+      };
+
+      const onPointerMove = (e) => {
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const movedPx = Math.abs(clientX - dragStartX);
+
+        // Promote to drag only once threshold exceeded
+        if (!isDragging && movedPx > TAP_THRESHOLD) {
+          isDragging = true;
+          touchMoved = true;
+          track.classList.add('is-dragging');
+        }
+        if (!isDragging) return;
+
+        const now = performance.now();
+        const dt  = Math.max(now - lastTime, 1);
+
+        const deltaX = clientX - dragStartX;
+        offset = dragStartOffset - deltaX;
+
+        // Rubber-band resistance at edges
+        const clampedOffset = Math.min(Math.max(offset, PADDING), maxOffset);
+        const excess = offset - clampedOffset;
+        offset = clampedOffset + excess * 0.25;
+
+        // Track velocity for momentum
+        velX     = (clientX - lastX) / dt * -14;
+        lastX    = clientX;
+        lastTime = now;
+        e.preventDefault(); // only block scroll when we know it's a drag
+      };
+
+      const onPointerUp = (e) => {
+        const wasDragging = isDragging;
+        isDragging = false;
+        track.classList.remove('is-dragging');
+
+        // ── TAP: finger lifted without significant movement ────────────────
+        if (!wasDragging && !touchMoved) {
+          const touch = e.changedTouches ? e.changedTouches[0] : e;
+          const el = document.elementFromPoint(touch.clientX, touch.clientY);
+          const card = el ? el.closest('.ml4-carousel-item') : null;
+          if (card) {
+            const action = card.dataset.action;
+            if (action && window.TAV_CORE) {
+              window.TAV_CORE.goToScene(action);
+            }
+          }
+        }
+        // else: let physics loop handle momentum glide
+      };
+
+      // Bind touch events — move is non-passive so we can preventDefault on drag
+      track.addEventListener('touchstart',  onPointerDown,  { passive: true  });
+      track.addEventListener('touchmove',   onPointerMove,  { passive: false });
+      track.addEventListener('touchend',    onPointerUp,    { passive: true  });
+      track.addEventListener('touchcancel', onPointerUp,    { passive: true  });
+      // Mouse fallback for desktop testing
+      track.addEventListener('mousedown',   onPointerDown,  { passive: true  });
+      window.addEventListener('mousemove',  onPointerMove,  { passive: false });
+      window.addEventListener('mouseup',    onPointerUp,    { passive: true  });
+
+      // ── Store cleanup function ────────────────────────────────────────────
+      _stopCarouselLoop = () => {
+        killed = true;
+        if (rafId) cancelAnimationFrame(rafId);
+        track.removeEventListener('touchstart',  onPointerDown);
+        track.removeEventListener('touchmove',   onPointerMove);
+        track.removeEventListener('touchend',    onPointerUp);
+        track.removeEventListener('touchcancel', onPointerUp);
+        track.removeEventListener('mousedown',   onPointerDown);
+        window.removeEventListener('mousemove',  onPointerMove);
+        window.removeEventListener('mouseup',    onPointerUp);
+      };
+
+      // Initial render
+      render();
+    });
   }
 
   // ── Toast Notifications ────────────────────────────────────────────
   let _toastTimer = null;
   function showSceneToast(title) {
-    const toast = document.getElementById('ml3-toast');
+    const toast = document.getElementById('ml4-toast');
     if (!toast) return;
     toast.textContent = title;
-    toast.classList.add('ml3-visible');
+    toast.classList.add('ml4-visible');
     clearTimeout(_toastTimer);
-    _toastTimer = setTimeout(() => toast.classList.remove('ml3-visible'), 2400);
+    _toastTimer = setTimeout(() => toast.classList.remove('ml4-visible'), 2400);
   }
 
   // ── Minimap ────────────────────────────────────────────────────────
   function toggleMinimap() {
     _minimapOpen = !_minimapOpen;
-    const card = document.getElementById('ml3-minimap-card');
-    if (card) card.classList.toggle('ml3-open', _minimapOpen);
-    const tab = document.getElementById('ml3-tab-map');
-    if (tab) tab.classList.toggle('ml3-active', _minimapOpen);
+    const card = document.getElementById('ml4-minimap-card');
+    if (card) card.classList.toggle('ml4-open', _minimapOpen);
+    const tab = document.getElementById('ml4-tab-map');
+    if (tab) tab.classList.toggle('ml4-active', _minimapOpen);
   }
 
   function updateMinimapTransform() {
-    const img = document.getElementById('ml3-minimap-img');
+    const img = document.getElementById('ml4-minimap-img');
     if (img) img.style.transform = `translate(${_mapX}px, ${_mapY}px) scale(${_mapZoom})`;
   }
 
   function initMinimapDrag() {
-    const vp = document.getElementById('ml3-minimap-viewport');
+    const vp = document.getElementById('ml4-minimap-viewport');
     if (!vp) return;
 
     vp.addEventListener('touchstart', e => {
@@ -494,7 +703,7 @@
     vp.addEventListener('touchmove', e => {
       if (!_mapDragging) return;
       _mapX = e.touches[0].clientX - _mapDragStartX;
-      _mapY = e.touches[0].clientY - _mapDragStartY;
+      _mapY = e.touches[0].clientY - _mapY;
       updateMinimapTransform();
     }, { passive: true });
 
@@ -504,10 +713,10 @@
   // ── Audio Toggle Synchronization ───────────────────────────────────
   function syncAudioButton() {
     const isMuted = window.TAV_CORE.isMusicMuted;
-    const iconEl  = document.getElementById('ml3-audio-icon');
-    const tab     = document.getElementById('ml3-tab-audio');
+    const iconEl  = document.getElementById('ml4-audio-icon');
+    const tab     = document.getElementById('ml4-tab-audio');
     if (iconEl)  iconEl.innerHTML   = isMuted ? ICONS.audioMute : ICONS.audio;
-    if (tab)     tab.classList.toggle('ml3-active', !isMuted);
+    if (tab)     tab.classList.toggle('ml4-active', !isMuted);
   }
 
   // ── Scene Sync ─────────────────────────────────────────────────────
@@ -519,23 +728,23 @@
     const scene = core.getSceneById(nodeId);
 
     // Update Category Accordion selection grid
-    document.querySelectorAll('#ml3-nav-sheet .ml3-card').forEach(card => {
+    document.querySelectorAll('#ml4-nav-sheet .ml4-card').forEach(card => {
       const isActive = card.dataset.node === nodeId;
-      card.classList.toggle('ml3-active-scene', isActive);
+      card.classList.toggle('ml4-active-scene', isActive);
     });
 
     if (scene) {
       showSceneToast(scene.title);
-      // Synchronize horizontal swipe carousel (always pass active node to center it)
+      // Synchronize horizontal swipe carousel
       buildCarousel(scene.category, nodeId);
     }
   }
 
   // ── Compass & Pano Sync ────────────────────────────────────────────
   function syncCompass(pan) {
-    const needle = document.getElementById('ml3-compass-needle');
+    const needle = document.getElementById('ml4-compass-needle');
     if (needle) needle.style.transform = `rotate(${-pan}deg)`;
-    const cone = document.getElementById('ml3-minimap-cone');
+    const cone = document.getElementById('ml4-minimap-cone');
     if (cone) cone.style.transform = `translate(-50%, -100%) rotate(${pan}deg)`;
   }
 
@@ -552,7 +761,6 @@
   function dispatch(action, el, event) {
     const core = window.TAV_CORE;
 
-    // Node navigation
     if (action.startsWith('node') || action.startsWith('architecture-')) {
       core.navigateTo(action);
       closeAllSheets();
@@ -596,9 +804,8 @@
         });
 
         _isHotspotsVisible = newVisible;
-        if (el) el.classList.toggle('ml3-active-tool', newVisible);
+        if (el) el.classList.toggle('ml4-active-tool', newVisible);
 
-        // Sync other hotspot buttons
         document.querySelectorAll('[data-action="hotspots"]').forEach(b => {
           if (b !== el) {
             b.classList.toggle('active', newVisible);
@@ -662,89 +869,90 @@
   function bindEvents() {
     const core = window.TAV_CORE;
 
-    // Backdrop Click
-    document.getElementById('ml3-backdrop').addEventListener('click', closeAllSheets);
+    // Backdrop
+    document.getElementById('ml4-backdrop').addEventListener('click', closeAllSheets);
 
     // Compass click -> Reset view
-    document.getElementById('ml3-compass').addEventListener('click', () => {
+    document.getElementById('ml4-compass').addEventListener('click', () => {
       const pano = core.getPano();
       if (pano && typeof pano.setPan === 'function') pano.setPan(0);
-      document.getElementById('ml3-compass').classList.add('ml3-pulse');
-      setTimeout(() => document.getElementById('ml3-compass').classList.remove('ml3-pulse'), 800);
+      document.getElementById('ml4-compass').classList.add('ml4-pulse');
+      setTimeout(() => document.getElementById('ml4-compass').classList.remove('ml4-pulse'), 800);
     });
 
-    // Top Brand Logo Badge -> opens Settings Sheet
-    document.getElementById('ml3-logo-btn').addEventListener('click', () => {
-      openSheet('ml3-settings-sheet');
+    // Top Brand Logo (now toggles settings for accessibility)
+    document.getElementById('ml4-logo-btn').addEventListener('click', () => {
+      openSheet('ml4-settings-sheet');
     });
 
-    // Tab: Menu
-    const tabMenu = document.getElementById('ml3-tab-menu');
-    tabMenu.addEventListener('click', e => {
-      addRipple(tabMenu, e);
-      if (_activeSheet === 'ml3-nav-sheet') closeAllSheets();
-      else openSheet('ml3-nav-sheet');
-    });
-
-    // Tab: Map
-    const tabMap = document.getElementById('ml3-tab-map');
+    // Tab Map
+    const tabMap = document.getElementById('ml4-tab-map');
     tabMap.addEventListener('click', e => {
       addRipple(tabMap, e);
       toggleMinimap();
     });
 
-    // Tab: FAB Settings
-    const fabBtn = document.getElementById('ml3-fab-btn');
-    fabBtn.addEventListener('click', e => {
-      addRipple(fabBtn, e);
-      fabBtn.classList.toggle('ml3-open');
-      if (_activeSheet === 'ml3-settings-sheet') closeAllSheets();
-      else openSheet('ml3-settings-sheet');
-    });
-
-    // Tab: Gallery
-    const tabGallery = document.getElementById('ml3-tab-gallery');
+    // Tab Gallery
+    const tabGallery = document.getElementById('ml4-tab-gallery');
     tabGallery.addEventListener('click', e => {
       addRipple(tabGallery, e);
       dispatch('gallery', tabGallery, e);
     });
 
-    // Tab: Audio
-    const tabAudio = document.getElementById('ml3-tab-audio');
+    // Tab Menu (Scene list trigger in vertical sidebar)
+    const tabMenu = document.getElementById('ml4-tab-menu');
+    if (tabMenu) {
+      tabMenu.addEventListener('click', e => {
+        addRipple(tabMenu, e);
+        if (_activeSheet === 'ml4-nav-sheet') closeAllSheets();
+        else openSheet('ml4-nav-sheet');
+      });
+    }
+
+    // Tab Settings
+    const tabSettings = document.getElementById('ml4-tab-settings');
+    tabSettings.addEventListener('click', e => {
+      addRipple(tabSettings, e);
+      if (_activeSheet === 'ml4-settings-sheet') closeAllSheets();
+      else openSheet('ml4-settings-sheet');
+    });
+
+    // Tab Audio
+    const tabAudio = document.getElementById('ml4-tab-audio');
     tabAudio.addEventListener('click', e => {
       addRipple(tabAudio, e);
       dispatch('audio', tabAudio, e);
     });
 
     // Sheet close buttons
-    document.getElementById('ml3-nav-close').addEventListener('click', closeAllSheets);
-    document.getElementById('ml3-settings-close').addEventListener('click', closeAllSheets);
+    document.getElementById('ml4-nav-close').addEventListener('click', closeAllSheets);
+    document.getElementById('ml4-settings-close').addEventListener('click', closeAllSheets);
 
-    // Accordion group headers
-    document.querySelectorAll('.ml3-accordion-header').forEach(header => {
+    // Accordions
+    document.querySelectorAll('.ml4-accordion-header').forEach(header => {
       header.addEventListener('click', () => {
-        const group = header.closest('.ml3-accordion-group');
+        const group = header.closest('.ml4-accordion-group');
         toggleAccordion(group);
       });
     });
 
-    // Navigation Menu Scene Cards Click
-    document.getElementById('ml3-nav-sheet').addEventListener('click', e => {
-      const card = e.target.closest('.ml3-card');
+    // Scene Grid click
+    document.getElementById('ml4-nav-sheet').addEventListener('click', e => {
+      const card = e.target.closest('.ml4-card');
       if (!card) return;
       addRipple(card, e);
       dispatch(card.dataset.action, card, e);
     });
 
-    // Swipe Carousel Cards Click
-    document.getElementById('ml3-carousel-track').addEventListener('click', e => {
-      const card = e.target.closest('.ml3-carousel-item');
+    // Swipe Carousel click
+    document.getElementById('ml4-carousel-track').addEventListener('click', e => {
+      const card = e.target.closest('.ml4-carousel-item');
       if (!card) return;
       dispatch(card.dataset.action, card, e);
     });
 
-    // Action sheet settings items
-    document.querySelectorAll('.ml3-setting-btn').forEach(btn => {
+    // Action Settings buttons
+    document.querySelectorAll('.ml4-setting-btn').forEach(btn => {
       btn.addEventListener('click', e => {
         e.stopPropagation();
         addRipple(btn, e);
@@ -752,22 +960,22 @@
       });
     });
 
-    // Minimap close zoom
-    document.getElementById('ml3-minimap-close').addEventListener('click', () => {
+    // Minimap buttons
+    document.getElementById('ml4-minimap-close').addEventListener('click', () => {
       _minimapOpen = false;
-      document.getElementById('ml3-minimap-card').classList.remove('ml3-open');
-      document.getElementById('ml3-tab-map').classList.remove('ml3-active');
+      document.getElementById('ml4-minimap-card').classList.remove('ml4-open');
+      document.getElementById('ml4-tab-map').classList.remove('ml4-active');
     });
-    document.getElementById('ml3-zoom-in').addEventListener('click', () => {
+    document.getElementById('ml4-zoom-in').addEventListener('click', () => {
       _mapZoom = Math.min(3, _mapZoom + 0.25);
       updateMinimapTransform();
     });
-    document.getElementById('ml3-zoom-out').addEventListener('click', () => {
+    document.getElementById('ml4-zoom-out').addEventListener('click', () => {
       _mapZoom = Math.max(0.5, _mapZoom - 0.25);
       updateMinimapTransform();
     });
 
-    // Mobile layout switcher segment clicks
+    // Switcher segment click listeners
     document.querySelectorAll('[data-layout-switch]').forEach(btn => {
       btn.addEventListener('click', () => {
         const layoutId = btn.dataset.layoutSwitch;
@@ -777,11 +985,11 @@
       });
     });
 
-    // TAV_CORE scene change callback
+    // Core scene change listener
     core.onSceneChange(nodeId => syncActiveScene(nodeId));
   }
 
-  // ── Hide Desktop UI elements on mobile ────────────────────────────
+  // ── Hide Desktop elements ─────────────────────────────────────────
   function _hideDesktopUI() {
     const selectors = [
       '#modern-ui-overlay',
@@ -807,7 +1015,7 @@
       '.rgl-neo-tools-system','.blueprint-layout-switcher'
     ];
     const style    = document.createElement('style');
-    style.id       = 'ml3-desktop-hide';
+    style.id       = 'ml4-desktop-hide';
     style.innerHTML = `
       @media screen and (max-width: 1024px) {
         ${selectors.join(', ')} { display: none !important; }
@@ -822,18 +1030,17 @@
   }
 
   // ── Public API ────────────────────────────────────────────
-  const MobileLayout3 = {
+  const MobileLayout4 = {
 
     init() {
-      if (_overlay) { console.warn('[ML3] Already initialized'); return; }
-      if (!window.TAV_CORE) { console.error('[ML3] TAV_CORE not loaded — aborting'); return; }
+      if (_overlay) { console.warn('[ML4] Already initialized'); return; }
+      if (!window.TAV_CORE) { console.error('[ML4] TAV_CORE not loaded — aborting'); return; }
 
-      // Reset scroll to top to prevent layout shifting
       window.scrollTo(0, 0);
 
-      // Build and mount overlay
+      // Build and mount
       _overlay    = document.createElement('div');
-      _overlay.id = 'ml3-overlay';
+      _overlay.id = 'ml4-overlay';
       _overlay.innerHTML = buildDOM();
       document.body.appendChild(_overlay);
 
@@ -841,20 +1048,20 @@
       window.addEventListener('resize', _fixHeight);
       window.addEventListener('orientationchange', _fixHeight);
 
-      // Initialize subsystems
+      // Initialize
       initMinimapDrag();
       bindEvents();
       startSync();
       syncAudioButton();
 
-      // Hide desktop UI on mobile
+      // Hide Desktop elements
       _hideDesktopUI();
 
-      // Trigger active scene display immediately
+      // Trigger initial scene setup
       const current = window.TAV_CORE.currentScene;
       if (current) syncActiveScene(current);
 
-      console.log('[ML3] Mobile Layout 3 initialized ✓');
+      console.log('[ML4] Mobile Layout 4 initialized ✓');
     },
 
     destroy() {
@@ -862,7 +1069,12 @@
       clearInterval(_syncInterval);
       _syncInterval = null;
 
-      const hide = document.getElementById('ml3-desktop-hide');
+      if (_stopCarouselLoop) {
+        _stopCarouselLoop();
+        _stopCarouselLoop = null;
+      }
+
+      const hide = document.getElementById('ml4-desktop-hide');
       if (hide) hide.remove();
 
       _overlay.remove();
@@ -875,12 +1087,12 @@
       _minimapOpen  = false;
       _mapZoom = 1; _mapX = -20; _mapY = -20;
 
-      console.log('[ML3] Mobile Layout 3 destroyed');
+      console.log('[ML4] Mobile Layout 4 destroyed');
     }
   };
 
   // ── Export ────────────────────────────────────────────────
-  window.MobileLayout3 = MobileLayout3;
-  console.log('[ML3] Mobile Layout 3 module loaded');
+  window.MobileLayout4 = MobileLayout4;
+  console.log('[ML4] Mobile Layout 4 module loaded');
 
 })();

@@ -1,0 +1,1013 @@
+/* css/mobile/mobile_layout5.css — TAV Virtual Tour · Mobile Layout 5 */
+/* ====================================================================
+   DESIGN DNA: Desktop Layout 3 "Neo"
+   Theme: Frosted Light Glass · Purple Violet · Indigo · Emerald
+   Unique trait: The only LIGHT-themed mobile layout — white glass panels,
+   dark slate text, purple accents — contrasts all 4 dark mobile layouts.
+   ==================================================================== */
+
+:root {
+  /* ── Accent palette (from Neo Desktop) ─────────────────────────────── */
+  --ml5-primary:      #7C3AED;   /* vivid violet */
+  --ml5-primary-dk:   #6D28D9;   /* pressed state */
+  --ml5-indigo:       #4F46E5;   /* secondary royal indigo */
+  --ml5-emerald:      #059669;   /* active / success */
+  --ml5-rose:         #E11D48;   /* danger / audio off */
+  --ml5-amber:        #D97706;   /* warning */
+
+  /* ── Gradients ──────────────────────────────────────────────────────── */
+  --ml5-grad-primary: linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%);
+  --ml5-grad-emerald: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  --ml5-grad-glass:   linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,246,255,0.90) 100%);
+
+  /* ── Glass backgrounds ──────────────────────────────────────────────── */
+  --ml5-bg-glass:   rgba(255, 255, 255, 0.85);
+  --ml5-bg-card:    rgba(255, 255, 255, 0.96);
+  --ml5-bg-sheet:   rgba(250, 249, 254, 0.98);
+  --ml5-bg-chip:    rgba(124, 58, 237, 0.07);
+  --ml5-bg-dim:     rgba(15, 23, 42, 0.38);
+
+  /* ── Borders ────────────────────────────────────────────────────────── */
+  --ml5-border:      rgba(124, 58, 237, 0.15);
+  --ml5-border-soft: rgba(148, 163, 184, 0.16);
+  --ml5-border-em:   rgba(5, 150, 105, 0.22);
+
+  /* ── Text ───────────────────────────────────────────────────────────── */
+  --ml5-text:       #1E293B;
+  --ml5-text-dim:   rgba(30, 41, 59, 0.60);
+  --ml5-text-muted: rgba(30, 41, 59, 0.36);
+  --ml5-text-inv:   #ffffff;
+
+  /* ── Shadows ────────────────────────────────────────────────────────── */
+  --ml5-shadow-xs: 0 1px 4px rgba(124,58,237,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --ml5-shadow-sm: 0 4px 12px rgba(124,58,237,0.10), 0 1px 4px rgba(0,0,0,0.05);
+  --ml5-shadow-md: 0 8px 28px rgba(124,58,237,0.14), 0 2px 8px rgba(0,0,0,0.06);
+  --ml5-shadow-lg: 0 16px 44px rgba(124,58,237,0.18), 0 4px 14px rgba(0,0,0,0.08);
+
+  /* ── Blur ───────────────────────────────────────────────────────────── */
+  --ml5-blur: 24px;
+
+  /* ── Radius ─────────────────────────────────────────────────────────── */
+  --ml5-r-xs:   8px;
+  --ml5-r-sm:   12px;
+  --ml5-r-md:   16px;
+  --ml5-r-lg:   22px;
+  --ml5-r-xl:   32px;
+  --ml5-r-pill: 999px;
+
+  /* ── Motion ─────────────────────────────────────────────────────────── */
+  --ml5-ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --ml5-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ml5-ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
+
+  /* ── Layout ─────────────────────────────────────────────────────────── */
+  --ml5-safe-top:    env(safe-area-inset-top,    12px);
+  --ml5-safe-bottom: env(safe-area-inset-bottom, 20px);
+  --ml5-dock-h:      72px;
+  --ml5-carousel-h:  74px;
+
+  /* ── Font ───────────────────────────────────────────────────────────── */
+  --ml5-font:   'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --ml5-font-h: 'Space Grotesk', 'Outfit', system-ui, sans-serif;
+}
+
+/* ============================================================
+   ROOT OVERLAY
+   ============================================================ */
+#ml5-overlay {
+  position: fixed;
+  inset: 0;
+  height: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: var(--ml5-font);
+  overflow: hidden;
+  color: var(--ml5-text);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#ml5-overlay, #ml5-overlay * {
+  box-sizing: border-box;
+}
+
+.ml5-interactive { pointer-events: auto; }
+
+/* ============================================================
+   TOP STRIP — Logo + Compass row
+   ============================================================ */
+.ml5-top-strip {
+  position: absolute;
+  top: calc(var(--ml5-safe-top) + 10px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* ── Brand Logo Pill ──────────────────────────────────────── */
+.ml5-logo-pill {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ml5-bg-glass);
+  backdrop-filter: blur(var(--ml5-blur));
+  -webkit-backdrop-filter: blur(var(--ml5-blur));
+  border: 1px solid var(--ml5-border);
+  border-radius: var(--ml5-r-pill);
+  padding: 8px 14px;
+  box-shadow: var(--ml5-shadow-sm);
+  transition: transform 0.2s var(--ml5-ease), box-shadow 0.2s;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.ml5-logo-pill:active {
+  transform: translateX(-50%) scale(0.96);
+}
+
+.ml5-logo-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ml5-grad-primary);
+  flex-shrink: 0;
+}
+
+.ml5-logo-text {
+  font-family: var(--ml5-font-h);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--ml5-primary);
+}
+
+.ml5-logo-sub {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: var(--ml5-text-dim);
+}
+
+.ml5-layout-badge {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: var(--ml5-bg-chip);
+  border: 1px solid var(--ml5-border);
+  color: var(--ml5-primary);
+  padding: 2px 7px;
+  border-radius: var(--ml5-r-pill);
+}
+
+/* ── Compass ──────────────────────────────────────────────── */
+.ml5-compass {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  background: var(--ml5-bg-glass);
+  backdrop-filter: blur(var(--ml5-blur));
+  -webkit-backdrop-filter: blur(var(--ml5-blur));
+  border: 1px solid var(--ml5-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--ml5-shadow-sm);
+  transition: transform 0.2s var(--ml5-ease), box-shadow 0.2s;
+}
+
+.ml5-compass:active {
+  transform: scale(0.92);
+  box-shadow: var(--ml5-shadow-xs);
+}
+
+.ml5-compass-dial { width: 28px; height: 28px; }
+.ml5-compass-north { fill: var(--ml5-rose); }
+.ml5-compass-south { fill: rgba(30,41,59,0.12); }
+.ml5-compass-ring  { stroke: var(--ml5-border); fill: none; stroke-width: 1.5; }
+
+/* ============================================================
+   MINI MAP CARD — Collapsible floating card (top-right)
+   ============================================================ */
+.ml5-minimap-card {
+  pointer-events: auto;
+  position: absolute;
+  top: calc(var(--ml5-safe-top) + 64px);
+  right: 16px;
+  width: 148px;
+  background: var(--ml5-bg-card);
+  backdrop-filter: blur(var(--ml5-blur));
+  -webkit-backdrop-filter: blur(var(--ml5-blur));
+  border: 1px solid var(--ml5-border);
+  border-top: 3px solid var(--ml5-primary);
+  border-radius: var(--ml5-r-md);
+  box-shadow: var(--ml5-shadow-md);
+  overflow: hidden;
+  transform: scale(0) translateY(-8px);
+  transform-origin: top right;
+  transition: transform 0.32s var(--ml5-ease-spring), opacity 0.28s;
+  opacity: 0;
+  z-index: 250;
+}
+
+.ml5-minimap-card.ml5-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.ml5-minimap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px 6px;
+  border-bottom: 1px solid var(--ml5-border-soft);
+}
+
+.ml5-minimap-title {
+  font-family: var(--ml5-font-h);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ml5-primary);
+  text-transform: uppercase;
+}
+
+.ml5-minimap-close {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: rgba(124,58,237,0.06);
+  border-radius: 50%;
+  color: var(--ml5-text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.ml5-minimap-close:active { transform: scale(0.88); }
+
+.ml5-minimap-viewport {
+  width: 100%;
+  height: 108px;
+  position: relative;
+  overflow: hidden;
+  background: #f1f5f9;
+}
+
+.ml5-minimap-img {
+  position: absolute;
+  width: 200%;
+  max-width: none;
+  transition: transform 0.12s linear;
+  transform-origin: top left;
+}
+
+.ml5-minimap-radar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 5;
+}
+
+.ml5-minimap-cone {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 28px solid rgba(124, 58, 237, 0.35);
+  transform-origin: bottom center;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.ml5-minimap-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ml5-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px rgba(124,58,237,0.5);
+}
+
+.ml5-minimap-zoom {
+  display: flex;
+  gap: 6px;
+  padding: 6px 10px;
+  border-top: 1px solid var(--ml5-border-soft);
+}
+
+.ml5-minimap-zoom-btn {
+  flex: 1;
+  height: 22px;
+  background: var(--ml5-bg-chip);
+  border: 1px solid var(--ml5-border);
+  border-radius: var(--ml5-r-xs);
+  color: var(--ml5-primary);
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.ml5-minimap-zoom-btn:active {
+  background: rgba(124,58,237,0.14);
+  transform: scale(0.94);
+}
+
+/* ============================================================
+   SCENE CAROUSEL STRIP
+   ============================================================ */
+.ml5-carousel-strip {
+  position: absolute;
+  bottom: calc(var(--ml5-dock-h) + var(--ml5-safe-bottom) + 10px);
+  left: 0;
+  right: 0;
+  height: var(--ml5-carousel-h);
+  z-index: 200;
+  transform: translateY(16px);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.38s var(--ml5-ease), opacity 0.32s, visibility 0.38s;
+  /* Allow scaled items to render outside the strip height */
+  overflow: visible;
+}
+
+.ml5-carousel-strip.ml5-visible {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml5-carousel-track {
+  display: flex;
+  gap: 8px;
+  /* Side padding = 50% - half-item-width (36px) so first/last can center */
+  padding: 4px calc(50% - 36px) 6px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: calc(50% - 36px);
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  align-items: center;
+  scrollbar-width: none;
+}
+
+.ml5-carousel-track::-webkit-scrollbar { display: none; }
+
+.ml5-carousel-item {
+  flex: 0 0 72px;
+  height: 58px;
+  background: var(--ml5-bg-glass);
+  backdrop-filter: blur(var(--ml5-blur));
+  -webkit-backdrop-filter: blur(var(--ml5-blur));
+  border: 1.5px solid var(--ml5-border-soft);
+  border-radius: var(--ml5-r-sm);
+  scroll-snap-align: center;
+  overflow: hidden;  /* clips image + title within rounded corners */
+  position: relative;
+  cursor: pointer;
+  /* JS controls transform+opacity — CSS handles border/shadow only */
+  transition: border-color 0.22s var(--ml5-ease), box-shadow 0.22s;
+  box-shadow: var(--ml5-shadow-xs);
+  /* GPU compositing layer for smooth JS-driven scale */
+  will-change: transform, opacity;
+  /* Ensure scale doesn't clip to parent — set on a wrapper in JS if needed */
+  transform-origin: center center;
+}
+
+/* Active: purple ring + shadow — JS handles scale separately */
+.ml5-carousel-item.ml5-active {
+  border-color: var(--ml5-primary);
+  box-shadow: var(--ml5-shadow-sm), 0 0 0 2px rgba(124,58,237,0.18);
+}
+
+/* tap feedback — blend with JS transform */
+.ml5-carousel-item:active {
+  filter: brightness(0.92);
+}
+
+.ml5-carousel-item img {
+  width: 100%;
+  height: 40px;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--ml5-r-sm) var(--ml5-r-sm) 0 0;
+  pointer-events: none;
+}
+
+.ml5-carousel-item-title {
+  font-size: 7.5px;
+  font-weight: 600;
+  color: var(--ml5-text);
+  text-align: center;
+  padding: 3px 2px 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+.ml5-carousel-item.ml5-active .ml5-carousel-item-title {
+  color: var(--ml5-primary);
+  font-weight: 700;
+}
+
+/* Active indicator pip (top-right corner) */
+.ml5-carousel-active-pip {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ml5-grad-primary);
+  display: none;
+  z-index: 2;
+}
+
+.ml5-carousel-item.ml5-active .ml5-carousel-active-pip { display: block; }
+
+/* ============================================================
+   FLOATING BOTTOM DOCK
+   ============================================================ */
+.ml5-dock {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml5-safe-bottom) + 12px);
+  left: 20px;
+  right: 20px;
+  height: var(--ml5-dock-h);
+  background: var(--ml5-bg-glass);
+  backdrop-filter: blur(var(--ml5-blur));
+  -webkit-backdrop-filter: blur(var(--ml5-blur));
+  border: 1px solid var(--ml5-border-soft);
+  border-radius: var(--ml5-r-xl);
+  box-shadow: var(--ml5-shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px;
+  z-index: 300;
+}
+
+/* ── Tab buttons ────────────────────────────────────────────── */
+.ml5-tab {
+  border: none;
+  background: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 52px;
+  min-width: 44px;
+  padding: 0 4px;
+  color: var(--ml5-text-muted);
+  cursor: pointer;
+  transition: color 0.22s var(--ml5-ease), transform 0.2s var(--ml5-ease-spring);
+  position: relative;
+}
+
+.ml5-tab svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.8;
+  transition: transform 0.2s var(--ml5-ease-spring);
+}
+
+.ml5-tab span {
+  font-size: 7px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.ml5-tab:active {
+  transform: scale(0.90);
+}
+
+.ml5-tab.ml5-active {
+  color: var(--ml5-primary);
+}
+
+.ml5-tab.ml5-active svg {
+  transform: scale(1.12);
+}
+
+.ml5-tab.ml5-active::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background: var(--ml5-grad-primary);
+  border-radius: var(--ml5-r-pill);
+}
+
+/* ── Center FAB ─────────────────────────────────────────────── */
+.ml5-fab {
+  border: none;
+  outline: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--ml5-grad-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 6px 18px rgba(124,58,237,0.35), 0 2px 6px rgba(0,0,0,0.10);
+  transition: transform 0.22s var(--ml5-ease-spring), box-shadow 0.22s;
+  position: relative;
+  margin: 0 4px;
+}
+
+.ml5-fab svg { width: 22px; height: 22px; stroke-width: 2; }
+
+.ml5-fab:active {
+  transform: scale(0.90);
+  box-shadow: 0 3px 10px rgba(124,58,237,0.25);
+}
+
+.ml5-fab.ml5-active {
+  background: var(--ml5-grad-emerald);
+  box-shadow: 0 6px 18px rgba(5,150,105,0.35), 0 2px 6px rgba(0,0,0,0.10);
+}
+
+/* ── Audio active indicator ─────────────────────────────────── */
+.ml5-tab#ml5-tab-audio.ml5-active {
+  color: var(--ml5-emerald);
+}
+
+.ml5-tab#ml5-tab-audio.ml5-active::after {
+  background: var(--ml5-grad-emerald);
+}
+
+/* ============================================================
+   BACKDROP
+   ============================================================ */
+.ml5-backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--ml5-bg-dim);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 380;
+  transition: opacity 0.3s, visibility 0.3s;
+  pointer-events: none;
+}
+
+.ml5-backdrop.ml5-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   BOTTOM SHEETS
+   ============================================================ */
+.ml5-sheet {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ml5-bg-sheet);
+  border-radius: var(--ml5-r-xl) var(--ml5-r-xl) 0 0;
+  box-shadow: var(--ml5-shadow-lg);
+  border-top: 1px solid var(--ml5-border-soft);
+  transform: translateY(105%);
+  transition: transform 0.42s var(--ml5-ease);
+  z-index: 400;
+  max-height: 78vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.ml5-sheet.ml5-open {
+  transform: translateY(0);
+}
+
+.ml5-sheet-handle {
+  width: 36px;
+  height: 4px;
+  background: rgba(124,58,237,0.18);
+  border-radius: var(--ml5-r-pill);
+  margin: 10px auto 0;
+  flex-shrink: 0;
+}
+
+.ml5-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px 10px;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--ml5-border-soft);
+}
+
+.ml5-sheet-title {
+  font-family: var(--ml5-font-h);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ml5-text);
+  letter-spacing: 0.3px;
+}
+
+.ml5-sheet-close {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: rgba(124,58,237,0.06);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ml5-text-dim);
+  font-size: 18px;
+  line-height: 1;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.ml5-sheet-close:active { transform: scale(0.88); background: rgba(124,58,237,0.12); }
+
+.ml5-sheet-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   NAVIGATION SHEET — Category tabs + Scene grid
+   ============================================================ */
+.ml5-cat-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px 8px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.ml5-cat-tabs::-webkit-scrollbar { display: none; }
+
+.ml5-cat-tab {
+  border: 1.5px solid var(--ml5-border);
+  background: transparent;
+  border-radius: var(--ml5-r-pill);
+  padding: 7px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ml5-text-dim);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s var(--ml5-ease);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.ml5-cat-tab.ml5-active {
+  background: var(--ml5-grad-primary);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.28);
+}
+
+.ml5-cat-tab:active { transform: scale(0.94); }
+
+/* ── Scene cards grid ────────────────────────────────────────── */
+.ml5-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 10px 16px 24px;
+}
+
+.ml5-scene-card {
+  background: var(--ml5-bg-card);
+  border: 1.5px solid var(--ml5-border-soft);
+  border-radius: var(--ml5-r-md);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.22s var(--ml5-ease);
+  box-shadow: var(--ml5-shadow-xs);
+  position: relative;
+}
+
+.ml5-scene-card img {
+  width: 100%;
+  height: 72px;
+  object-fit: cover;
+  display: block;
+}
+
+.ml5-scene-card-body {
+  padding: 6px 8px;
+}
+
+.ml5-scene-card-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ml5-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.ml5-scene-card-sub {
+  font-size: 8px;
+  color: var(--ml5-text-muted);
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ml5-scene-card.ml5-active-scene {
+  border-color: var(--ml5-primary);
+  box-shadow: var(--ml5-shadow-sm), 0 0 0 2px rgba(124,58,237,0.18);
+}
+
+.ml5-scene-card.ml5-active-scene .ml5-scene-card-title {
+  color: var(--ml5-primary);
+}
+
+.ml5-scene-card.ml5-active-scene::before {
+  content: '●';
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  font-size: 8px;
+  color: var(--ml5-primary);
+  line-height: 1;
+}
+
+.ml5-scene-card:active { transform: scale(0.97); }
+
+/* ============================================================
+   COMPACT FLOATING TOOL PANEL (L5 Redesign)
+   ============================================================ */
+.ml5-tool-panel {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml5-dock-h) + var(--ml5-safe-bottom) + 12px);
+  left: 50%;
+  width: 250px;
+  background: var(--ml5-bg-sheet);
+  border-radius: var(--ml5-r-md);
+  box-shadow: var(--ml5-shadow-lg);
+  border: 1.5px solid var(--ml5-border-soft);
+  backdrop-filter: blur(var(--ml5-blur));
+  -webkit-backdrop-filter: blur(var(--ml5-blur));
+  padding: 12px;
+  z-index: 450;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateX(-50%) translateY(10px) scale(0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.28s var(--ml5-ease), opacity 0.24s, visibility 0.28s;
+  transform-origin: bottom center;
+}
+
+.ml5-tool-panel.ml5-open {
+  transform: translateX(-50%) translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml5-tp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.ml5-tp-btn {
+  background: rgba(124, 58, 237, 0.03);
+  border: 1px solid var(--ml5-border-soft);
+  border-radius: var(--ml5-r-sm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 4px;
+  color: var(--ml5-text-dim);
+  cursor: pointer;
+  transition: all 0.2s var(--ml5-ease);
+  box-shadow: var(--ml5-shadow-xs);
+  position: relative;
+  overflow: hidden;
+}
+
+.ml5-tp-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8;
+}
+
+.ml5-tp-btn span {
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ml5-tp-btn:active {
+  transform: scale(0.94);
+}
+
+.ml5-tp-btn.ml5-active-tool {
+  background: var(--ml5-bg-chip);
+  border-color: var(--ml5-primary);
+  color: var(--ml5-primary);
+  box-shadow: var(--ml5-shadow-xs), 0 0 0 2px rgba(124,58,237,0.08);
+}
+
+.ml5-tp-divider {
+  height: 1px;
+  background: var(--ml5-border-soft);
+  margin: 2px 0;
+}
+
+.ml5-tp-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ml5-tp-socials {
+  display: flex;
+  gap: 6px;
+}
+
+.ml5-tp-social {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.04);
+  border: 1px solid var(--ml5-border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml5-text-dim);
+  text-decoration: none;
+  transition: all 0.2s var(--ml5-ease);
+}
+
+.ml5-tp-social svg {
+  width: 11px;
+  height: 11px;
+}
+
+.ml5-tp-social:active {
+  background: rgba(124, 58, 237, 0.08);
+  transform: scale(0.92);
+}
+
+.ml5-tp-sep {
+  width: 1px;
+  height: 16px;
+  background: var(--ml5-border-soft);
+}
+
+.ml5-tp-switch-row {
+  display: flex;
+  gap: 2px;
+  background: rgba(124, 58, 237, 0.04);
+  border: 1px solid var(--ml5-border-soft);
+  border-radius: var(--ml5-r-pill);
+  padding: 2px;
+}
+
+.ml5-tp-sw {
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--ml5-text-muted);
+  cursor: pointer;
+  transition: all 0.18s var(--ml5-ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ml5-tp-sw.ml5-tp-sw-active {
+  background: var(--ml5-grad-primary);
+  color: #fff;
+  box-shadow: 0 1px 4px rgba(124,58,237,0.2);
+}
+
+/* ============================================================
+   REGION MAP SHEET
+   ============================================================ */
+.ml5-region-img {
+  width: 100%;
+  display: block;
+  border-radius: 0 0 var(--ml5-r-xl) var(--ml5-r-xl);
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+.ml5-toast {
+  position: absolute;
+  bottom: calc(var(--ml5-dock-h) + var(--ml5-safe-bottom) + var(--ml5-carousel-h) + 20px);
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--ml5-text);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: var(--ml5-r-pill);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+  transition: all 0.3s var(--ml5-ease);
+  box-shadow: var(--ml5-shadow-md);
+  pointer-events: none;
+}
+
+.ml5-toast.ml5-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   RIPPLE EFFECT
+   ============================================================ */
+.ml5-ripple-host { position: relative; overflow: hidden; }
+
+.ml5-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(124, 58, 237, 0.18);
+  transform: scale(0);
+  animation: ml5-ripple-anim 0.50s ease-out forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes ml5-ripple-anim {
+  to { transform: scale(3.5); opacity: 0; }
+}
+
+/* Pulse on activate */
+@keyframes ml5-glow-pulse {
+  0%   { box-shadow: var(--ml5-shadow-sm); }
+  50%  { box-shadow: var(--ml5-shadow-md), 0 0 0 4px rgba(124,58,237,0.15); }
+  100% { box-shadow: var(--ml5-shadow-sm); }
+}
+
+.ml5-pulse { animation: ml5-glow-pulse 0.55s var(--ml5-ease) both; }
+
+/* ============================================================
+   HIDE ON DESKTOP
+   ============================================================ */
+@media screen and (min-width: 1025px) {
+  #ml5-overlay { display: none !important; }
+}

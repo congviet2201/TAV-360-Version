@@ -218,11 +218,13 @@
           ${toolItems}
         </div>
         <div class="ml2-layout-switcher-row">
-          <span class="ml2-layout-switcher-label">Giao diện:</span>
+          <span class="ml2-layout-switcher-label">Giao di\u1ec7n:</span>
           <div class="ml2-layout-pills">
-            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l1">Layout 1</button>
-            <button class="ml2-layout-pill-btn ml2-active ml2-interactive" id="ml2-switch-to-l2">Layout 2</button>
-            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l3">Layout 3</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l1">L1</button>
+            <button class="ml2-layout-pill-btn ml2-active ml2-interactive" id="ml2-switch-to-l2">L2</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l3">L3</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l4">L4</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l5">L5</button>
           </div>
         </div>
       </div>
@@ -646,6 +648,12 @@
     });
     document.getElementById('ml2-switch-to-l3')?.addEventListener('click', () => {
       if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('3');
+    });
+    document.getElementById('ml2-switch-to-l4')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('4');
+    });
+    document.getElementById('ml2-switch-to-l5')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('5');
     });
 
     // TAV_CORE scene change subscription
