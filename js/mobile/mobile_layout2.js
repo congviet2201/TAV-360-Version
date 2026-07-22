@@ -28,7 +28,8 @@
   // Force absolute height to fix mobile viewport bugs
   function _fixHeight() {
     if (_overlay) {
-      _overlay.style.height = window.innerHeight + 'px';
+      _overlay.style.height = '100%';
+      _overlay.style.height = '100dvh';
     }
   }
   let _activeSheet  = null;
@@ -221,6 +222,7 @@
           <div class="ml2-layout-pills">
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l1">Layout 1</button>
             <button class="ml2-layout-pill-btn ml2-active ml2-interactive" id="ml2-switch-to-l2">Layout 2</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l3">Layout 3</button>
           </div>
         </div>
       </div>
@@ -257,6 +259,16 @@
     // Drag-to-close
     const handle = sheet.querySelector('.ml2-sheet-handle');
     if (handle) _attachDragClose(sheet, handle);
+
+    // Scroll active scene card into view if opening the scene sheet
+    if (sheetId === 'ml2-scene-sheet') {
+      setTimeout(() => {
+        const activeCard = sheet.querySelector('.ml2-active-scene');
+        if (activeCard) {
+          activeCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        }
+      }, 150);
+    }
   }
 
   function closeAllSheets() {
@@ -367,7 +379,11 @@
       const isActive = card.dataset.node === nodeId;
       card.classList.toggle('ml2-active-scene', isActive);
       if (isActive) {
-        card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        // Only scroll into view if the scene sheet is open to prevent page layout shifting/scrolling on load
+        const sheet = document.getElementById('ml2-scene-sheet');
+        if (sheet && sheet.classList.contains('ml2-open')) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+        }
         const scene = window.TAV_CORE.getSceneById(nodeId);
         if (scene) showSceneToast(scene.title);
       }
@@ -628,6 +644,9 @@
       btn.style.animation = 'none';
       setTimeout(() => { btn.style.animation = ''; }, 10);
     });
+    document.getElementById('ml2-switch-to-l3')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('3');
+    });
 
     // TAV_CORE scene change subscription
     core.onSceneChange(nodeId => syncActiveScene(nodeId));
@@ -645,6 +664,9 @@
     init() {
       if (_overlay) { console.warn('[ML2] Already initialized'); return; }
       if (!window.TAV_CORE) { console.error('[ML2] TAV_CORE not loaded — aborting'); return; }
+
+      // Reset scroll to top to prevent layout shifting
+      window.scrollTo(0, 0);
 
       // Build and mount overlay
       _overlay    = document.createElement('div');

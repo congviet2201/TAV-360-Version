@@ -1,0 +1,1105 @@
+/* css/mobile/mobile_layout3.css — TAV Virtual Tour · Mobile Layout 3 */
+/* ====================================================================
+   DESIGN DNA — Classic Pearl & Gold Glassmorphism Theme (Inspired by L1)
+   ==================================================================== */
+
+:root {
+  --ml3-primary:        #d4af37; /* Gold */
+  --ml3-primary-glow:   rgba(212, 175, 55, 0.45);
+  --ml3-primary-dim:    rgba(212, 175, 55, 0.15);
+  --ml3-gold-dark:      #b89020;
+  --ml3-text:           #1a1a17; /* Deep charcoal warm text */
+  --ml3-text-dim:       #5c5c54;
+  --ml3-text-light:     #ffffff;
+  --ml3-bg-pearl:       rgba(248, 247, 243, 0.95);
+  --ml3-bg-pearl-solid: #f8f7f3;
+  --ml3-bg-glass:       rgba(248, 247, 243, 0.88);
+  --ml3-bg-dark:        rgba(26, 26, 23, 0.88);
+  --ml3-border-gold:    rgba(212, 175, 55, 0.45);
+  --ml3-border-pearl:   rgba(180, 175, 160, 0.4);
+  --ml3-shadow:         0 8px 30px rgba(30, 28, 24, 0.16);
+  --ml3-shadow-glow:    0 0 16px rgba(212, 175, 55, 0.35);
+  --ml3-blur:           20px;
+  --ml3-radius-sm:      10px;
+  --ml3-radius-md:      16px;
+  --ml3-radius-lg:      28px;
+  --ml3-radius-pill:    999px;
+  --ml3-ease:           cubic-bezier(0.16, 1, 0.3, 1);
+  --ml3-safe-top:       env(safe-area-inset-top, 12px);
+  --ml3-safe-bottom:    env(safe-area-inset-bottom, 24px);
+  --ml3-safe-left:      env(safe-area-inset-left, 0px);
+  --ml3-safe-right:     env(safe-area-inset-right, 0px);
+  --ml3-dock-height:    68px;
+}
+
+/* ============================================================
+   ROOT OVERLAY — Fixed full-screen viewport boundary
+   ============================================================ */
+#ml3-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  height: 100dvh;
+  pointer-events: none;
+  z-index: 9999;
+  font-family: "Inter", "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+  color: var(--ml3-text);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Ensure ALL texts in ML3 inherit uppercase transform */
+#ml3-overlay, #ml3-overlay * {
+  text-transform: uppercase !important;
+  box-sizing: border-box;
+}
+
+.ml3-interactive {
+  pointer-events: auto;
+}
+
+/* ============================================================
+   TOP STRIP — Logo pill + Compass Widget
+   ============================================================ */
+.ml3-top-strip {
+  position: absolute;
+  top: calc(var(--ml3-safe-top) + 12px);
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 100;
+}
+
+.ml3-logo-pill {
+  pointer-events: auto;
+  background: var(--ml3-bg-pearl);
+  backdrop-filter: blur(var(--ml3-blur));
+  -webkit-backdrop-filter: blur(var(--ml3-blur));
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-radius: var(--ml3-radius-pill);
+  padding: 8px 18px;
+  box-shadow: var(--ml3-shadow);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.25s var(--ml3-ease);
+}
+
+.ml3-logo-pill:active {
+  transform: scale(0.96);
+  box-shadow: var(--ml3-shadow-glow);
+}
+
+.ml3-logo-title {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--ml3-text) 0%, var(--ml3-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ml3-logo-sub {
+  font-size: 8px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: var(--ml3-text-dim);
+  line-height: 1;
+}
+
+.ml3-layout-badge {
+  font-size: 8px;
+  font-weight: 700;
+  background: var(--ml3-primary-dim);
+  border: 1px solid var(--ml3-border-gold);
+  color: var(--ml3-gold-dark);
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.ml3-layout-badge svg {
+  width: 9px;
+  height: 9px;
+}
+
+/* Compass Widget */
+.ml3-compass {
+  pointer-events: auto;
+  width: 44px;
+  height: 44px;
+  background: var(--ml3-bg-pearl);
+  backdrop-filter: blur(var(--ml3-blur));
+  -webkit-backdrop-filter: blur(var(--ml3-blur));
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--ml3-shadow);
+  transition: all 0.25s var(--ml3-ease);
+}
+
+.ml3-compass:active {
+  transform: scale(0.92);
+}
+
+.ml3-compass-dial {
+  width: 32px;
+  height: 32px;
+}
+
+.ml3-compass-north { fill: var(--ml3-primary); }
+.ml3-compass-south { fill: rgba(30, 28, 24, 0.2); }
+.ml3-compass-ring {
+  stroke: var(--ml3-border-pearl);
+  fill: none;
+  stroke-width: 1.2;
+}
+
+@keyframes ml3-pulse-glow {
+  0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(212, 175, 55, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+}
+
+.ml3-pulse {
+  animation: ml3-pulse-glow 0.8s ease-out;
+}
+
+/* ============================================================
+   FLOATING BOTTOM DOCK — Main Navigation Bar
+   ============================================================ */
+.ml3-dock {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml3-safe-bottom) + 12px);
+  left: 16px;
+  right: 16px;
+  height: var(--ml3-dock-height);
+  background: var(--ml3-bg-glass);
+  backdrop-filter: blur(var(--ml3-blur));
+  -webkit-backdrop-filter: blur(var(--ml3-blur));
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-radius: var(--ml3-radius-pill);
+  box-shadow: var(--ml3-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 300;
+  overflow: visible;
+  padding: 0 8px;
+}
+
+/* Left/Right active back glows */
+.ml3-dock-tab {
+  border: none;
+  background: none;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  color: var(--ml3-text-dim);
+  font-size: 8px;
+  font-weight: 700;
+  gap: 3px;
+  position: relative;
+  transition: color 0.25s var(--ml3-ease);
+}
+
+.ml3-dock-tab svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.8;
+  transition: transform 0.22s var(--ml3-ease);
+}
+
+.ml3-dock-tab span {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.ml3-dock-tab.ml3-active {
+  color: var(--ml3-gold-dark);
+}
+
+.ml3-dock-tab.ml3-active svg {
+  transform: scale(1.1);
+  filter: drop-shadow(0 2px 4px var(--ml3-primary-glow));
+}
+
+.ml3-dock-tab.ml3-active::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  width: 4px;
+  height: 4px;
+  background: var(--ml3-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--ml3-primary);
+}
+
+/* Center FAB Button */
+.ml3-dock-fab {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ml3-border-gold);
+  background: linear-gradient(135deg, var(--ml3-bg-pearl-solid) 0%, var(--ml3-bg-pearl) 100%);
+  box-shadow: var(--ml3-shadow), var(--ml3-shadow-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: 0;
+  z-index: 310;
+  color: var(--ml3-gold-dark);
+  transition: all 0.22s var(--ml3-ease);
+  flex-shrink: 0;
+}
+
+.ml3-dock-fab svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 2;
+  transition: transform 0.25s var(--ml3-ease);
+}
+
+.ml3-dock-fab:active {
+  transform: scale(0.92);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15), 0 0 8px var(--ml3-primary-glow);
+}
+
+.ml3-dock-fab.ml3-open svg {
+  transform: rotate(45deg);
+}
+
+/* ============================================================
+   BOTTOM CAROUSEL — Horizontal Scene Swipe Strip
+   ============================================================ */
+.ml3-carousel-strip {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml3-dock-height) + var(--ml3-safe-bottom) + 16px);
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 200;
+  transform: translateY(120px);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.4s var(--ml3-ease), opacity 0.35s, visibility 0.4s;
+}
+
+.ml3-carousel-strip.ml3-visible {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml3-carousel-track {
+  display: flex;
+  gap: 12px;
+  padding: 0 calc(50% - 45px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+  align-items: center;
+}
+
+.ml3-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.ml3-carousel-item {
+  flex: 0 0 90px;
+  height: 62px;
+  background: var(--ml3-bg-dark);
+  border-radius: var(--ml3-radius-sm);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  overflow: hidden;
+  position: relative;
+  scroll-snap-align: center;
+  opacity: 0.55;
+  filter: brightness(0.7) grayscale(20%);
+  transition: all 0.3s var(--ml3-ease);
+}
+
+.ml3-carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.ml3-carousel-item-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  padding: 5px 6px;
+  text-align: center;
+}
+
+.ml3-carousel-item-title {
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.ml3-carousel-item.ml3-active-card {
+  opacity: 1;
+  filter: brightness(1.15) grayscale(0%);
+  border-color: var(--ml3-primary);
+  box-shadow: var(--ml3-shadow-glow), 0 0 10px var(--ml3-primary-glow);
+  transform: scale(1.08);
+}
+
+.ml3-carousel-item.ml3-active-card img {
+  transform: scale(1.08);
+}
+
+/* ============================================================
+   BOTTOM DRAWERS & SHEETS (Menu & Settings)
+   ============================================================ */
+.ml3-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: background 0.3s, backdrop-filter 0.3s, opacity 0.3s, visibility 0.3s;
+  z-index: 400;
+  pointer-events: none;
+}
+
+.ml3-backdrop.ml3-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.ml3-backdrop.ml3-dim {
+  background: rgba(15, 15, 12, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* General bottom sheet style */
+.ml3-sheet {
+  pointer-events: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--ml3-bg-pearl);
+  backdrop-filter: blur(var(--ml3-blur));
+  -webkit-backdrop-filter: blur(var(--ml3-blur));
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-bottom: none;
+  border-radius: var(--ml3-radius-lg) var(--ml3-radius-lg) 0 0;
+  transform: translateY(100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.38s var(--ml3-ease), opacity 0.38s, visibility 0.38s;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  max-height: 80dvh;
+}
+
+#ml3-settings-sheet {
+  position: absolute;
+  bottom: calc(var(--ml3-dock-height) + var(--ml3-safe-bottom) + 20px);
+  left: 16px;
+  right: 16px;
+  max-width: 360px;
+  margin: 0 auto;
+  border-radius: var(--ml3-radius-md);
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-bottom: 1.5px solid var(--ml3-border-pearl);
+  transform: translateY(40px);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.32s var(--ml3-ease), opacity 0.32s, visibility 0.32s;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  max-height: 80dvh;
+}
+
+.ml3-sheet.ml3-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+#ml3-settings-sheet.ml3-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml3-sheet-handle {
+  width: 40px;
+  height: 4.5px;
+  background: var(--ml3-border-pearl);
+  border-radius: var(--ml3-radius-pill);
+  margin: 12px auto 0;
+  flex-shrink: 0;
+}
+
+.ml3-sheet-header {
+  padding: 16px 20px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.ml3-sheet-title {
+  font-family: "Space Grotesk", "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--ml3-text);
+  background: linear-gradient(135deg, var(--ml3-text) 0%, var(--ml3-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ml3-sheet-close {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml3-text-dim);
+}
+
+.ml3-sheet-close svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================================================
+   A. NAVIGATION SHEET (DANH MỤC)
+   ============================================================ */
+.ml3-nav-scroll {
+  overflow-y: auto;
+  padding: 8px 20px calc(var(--ml3-safe-bottom) + 20px);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Collapsible Accordion sections */
+.ml3-accordion-group {
+  margin-bottom: 12px;
+  border-radius: var(--ml3-radius-md);
+  border: 1px solid var(--ml3-border-pearl);
+  background: rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  transition: border-color 0.25s;
+}
+
+.ml3-accordion-group.ml3-expanded {
+  border-color: var(--ml3-border-gold);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.ml3-accordion-header {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--ml3-text);
+}
+
+.ml3-accordion-header svg {
+  width: 14px;
+  height: 14px;
+  color: var(--ml3-text-dim);
+  transition: transform 0.28s var(--ml3-ease);
+}
+
+.ml3-accordion-group.ml3-expanded .ml3-accordion-header svg {
+  transform: rotate(180deg);
+  color: var(--ml3-gold-dark);
+}
+
+.ml3-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s var(--ml3-ease);
+}
+
+.ml3-accordion-group.ml3-expanded .ml3-accordion-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Scene Grid list inside accordion */
+.ml3-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 4px 16px 16px;
+}
+
+.ml3-card {
+  height: 64px;
+  background: #fff;
+  border-radius: var(--ml3-radius-sm);
+  border: 1px solid var(--ml3-border-pearl);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s var(--ml3-ease);
+}
+
+.ml3-card img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.ml3-card-placeholder {
+  width: 52px;
+  height: 52px;
+  background: var(--ml3-primary-dim);
+  color: var(--ml3-gold-dark);
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.ml3-card-details {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ml3-card-title {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--ml3-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.5px;
+}
+
+.ml3-card-subtitle {
+  font-size: 7.5px;
+  font-weight: 500;
+  color: var(--ml3-text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ml3-card.ml3-active-scene {
+  border-color: var(--ml3-primary);
+  background: var(--ml3-bg-pearl-solid);
+  box-shadow: inset 0 0 8px var(--ml3-primary-dim);
+}
+
+.ml3-card.ml3-active-scene::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: var(--ml3-primary);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+}
+
+/* ============================================================
+   B. SYSTEM SETTINGS SHEET (CÀI ĐẶT)
+   ============================================================ */
+.ml3-settings-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px 20px 24px;
+}
+
+.ml3-setting-btn {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-radius: var(--ml3-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 8px;
+  color: var(--ml3-text-dim);
+  transition: all 0.25s var(--ml3-ease);
+}
+
+.ml3-setting-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke-width: 1.8;
+  transition: transform 0.25s;
+}
+
+.ml3-setting-btn span {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.ml3-setting-btn:active {
+  transform: scale(0.93);
+}
+
+.ml3-setting-btn.ml3-active-tool {
+  border-color: var(--ml3-primary);
+  background: #fff;
+  color: var(--ml3-gold-dark);
+  box-shadow: 0 4px 12px var(--ml3-primary-dim);
+}
+
+.ml3-setting-btn.ml3-active-tool svg {
+  filter: drop-shadow(0 2px 4px var(--ml3-primary-glow));
+}
+
+/* Social link sub-row */
+.ml3-social-row {
+  grid-column: span 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--ml3-border-pearl);
+  margin-top: 4px;
+}
+
+.ml3-social-btn {
+  flex: 1;
+  background: rgba(255,255,255,0.4);
+  border: 1px solid var(--ml3-border-pearl);
+  border-radius: var(--ml3-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  font-size: 8px;
+  font-weight: 700;
+  color: var(--ml3-text-dim);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.ml3-social-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ml3-social-btn:active {
+  transform: scale(0.96);
+  background: #fff;
+}
+
+/* Switcher row */
+.ml3-switcher-row {
+  grid-column: span 3;
+  background: rgba(0,0,0,0.03);
+  border-radius: var(--ml3-radius-pill);
+  border: 1px solid var(--ml3-border-pearl);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.ml3-switcher-label {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: var(--ml3-text-dim);
+  padding-left: 14px;
+  letter-spacing: 0.5px;
+}
+
+.ml3-switcher-pills {
+  display: flex;
+  background: rgba(0,0,0,0.03);
+  border-radius: var(--ml3-radius-pill);
+  padding: 2px;
+}
+
+.ml3-switcher-pill {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 6px 12px;
+  border-radius: var(--ml3-radius-pill);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--ml3-text-dim);
+  transition: all 0.22s var(--ml3-ease);
+}
+
+.ml3-switcher-pill.ml3-active {
+  background: var(--ml3-primary);
+  color: #fff;
+  box-shadow: 0 2px 8px var(--ml3-primary-glow);
+}
+
+/* ============================================================
+   C. REGION DETAIL SHEET (LIÊN KẾT VÙNG)
+   ============================================================ */
+.ml3-region-scroll {
+  overflow-y: auto;
+  padding: 12px 20px calc(var(--ml3-safe-bottom) + 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ml3-region-map-container {
+  width: 100%;
+  border-radius: var(--ml3-radius-md);
+  border: 1.5px solid var(--ml3-border-gold);
+  overflow: hidden;
+  box-shadow: var(--ml3-shadow);
+  background: #000;
+}
+
+.ml3-region-map {
+  width: 100%;
+  display: block;
+}
+
+/* ============================================================
+   D. MINI MAP PANEL
+   ============================================================ */
+.ml3-minimap-card {
+  pointer-events: auto;
+  position: absolute;
+  bottom: calc(var(--ml3-dock-height) + var(--ml3-safe-bottom) + 28px);
+  right: 16px;
+  width: 144px;
+  background: var(--ml3-bg-pearl);
+  backdrop-filter: blur(var(--ml3-blur));
+  -webkit-backdrop-filter: blur(var(--ml3-blur));
+  border: 1.5px solid var(--ml3-border-pearl);
+  border-radius: var(--ml3-radius-md);
+  box-shadow: var(--ml3-shadow);
+  overflow: hidden;
+  transform: scale(0) translateY(12px);
+  transform-origin: bottom right;
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.2), opacity 0.3s;
+  opacity: 0;
+  z-index: 250;
+}
+
+.ml3-minimap-card.ml3-open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.ml3-minimap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--ml3-border-pearl);
+}
+
+.ml3-minimap-label {
+  font-size: 8px;
+  font-weight: 800;
+  color: var(--ml3-text);
+  letter-spacing: 1px;
+}
+
+.ml3-minimap-close-btn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml3-text-dim);
+}
+
+.ml3-minimap-close-btn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.ml3-minimap-viewport {
+  position: relative;
+  width: 100%;
+  height: 110px;
+  overflow: hidden;
+  background: #fdfdfc;
+}
+
+.ml3-minimap-img {
+  position: absolute;
+  width: 250%; /* Large enough to drag */
+  max-width: none;
+  top: 0;
+  left: 0;
+  transform-origin: center center;
+  transition: transform 0.1s linear;
+}
+
+.ml3-minimap-radar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  z-index: 10;
+}
+
+.ml3-minimap-cone {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 36px solid rgba(212, 175, 55, 0.4);
+  transform-origin: bottom center;
+  transform: translate(-50%, -100%) rotate(0deg);
+}
+
+.ml3-minimap-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--ml3-primary);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px var(--ml3-primary);
+}
+
+.ml3-minimap-zoom {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml3-minimap-zoom-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
+  border: 1px solid var(--ml3-border-pearl);
+  background: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ml3-text);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ml3-minimap-zoom-btn:active {
+  transform: scale(0.9);
+  background: var(--ml3-primary-dim);
+}
+
+/* ============================================================
+   E. RIPPLE ANIMATION (TOUCH FEEDBACK)
+   ============================================================ */
+.ml3-ripple-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ml3-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.22);
+  transform: scale(0);
+  animation: ml3-ripple-anim 0.55s ease-out;
+  pointer-events: none;
+}
+
+@keyframes ml3-ripple-anim {
+  to {
+    transform: scale(3.5);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   F. GENERAL SYSTEM OVERLAYS (INFO, TOAST)
+   ============================================================ */
+.ml3-toast {
+  position: absolute;
+  top: calc(var(--ml3-safe-top) + 68px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  background: var(--ml3-bg-dark);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: var(--ml3-shadow);
+  border-radius: var(--ml3-radius-pill);
+  padding: 8px 16px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999;
+  transition: all 0.3s var(--ml3-ease);
+}
+
+.ml3-toast.ml3-visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ============================================================
+   G. SLEEK & COMPACT OVERRIDES FOR FLOATING SETTINGS TOOLKIT
+   ============================================================ */
+#ml3-settings-sheet .ml3-sheet-handle {
+  display: none; /* Hide drag handle on the floating popover card */
+}
+
+#ml3-settings-sheet .ml3-sheet-header {
+  padding: 12px 16px 4px;
+}
+
+#ml3-settings-sheet .ml3-sheet-title {
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}
+
+#ml3-settings-sheet .ml3-sheet-close {
+  width: 24px;
+  height: 24px;
+  background: rgba(0,0,0,0.04);
+}
+
+#ml3-settings-sheet .ml3-sheet-close svg {
+  width: 12px;
+  height: 12px;
+}
+
+#ml3-settings-sheet .ml3-settings-grid {
+  gap: 8px;
+  padding: 10px 14px 14px;
+}
+
+#ml3-settings-sheet .ml3-setting-btn {
+  padding: 10px 4px;
+  gap: 6px;
+  border-radius: var(--ml3-radius-sm);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+#ml3-settings-sheet .ml3-setting-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.6;
+}
+
+#ml3-settings-sheet .ml3-setting-btn span {
+  font-size: 7.5px;
+  letter-spacing: 0.3px;
+}
+
+#ml3-settings-sheet .ml3-social-row {
+  gap: 8px;
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+#ml3-settings-sheet .ml3-social-btn {
+  padding: 7px 4px;
+  font-size: 7.5px;
+  border-radius: 6px;
+}
+
+#ml3-settings-sheet .ml3-social-btn svg {
+  width: 12px;
+  height: 12px;
+}
+
+#ml3-settings-sheet .ml3-switcher-row {
+  padding: 3px;
+  margin-top: 4px;
+  border-radius: var(--ml3-radius-pill);
+}
+
+#ml3-settings-sheet .ml3-switcher-label {
+  font-size: 7.5px;
+  padding-left: 8px;
+}
+
+#ml3-settings-sheet .ml3-switcher-pill {
+  padding: 4px 8px;
+  font-size: 7.5px;
+}
+
+/* ============================================================
+   MEDIA — Hide desktop controls on mobile
+   ============================================================ */
+@media screen and (min-width: 1025px) {
+  #ml3-overlay {
+    display: none !important;
+  }
+}

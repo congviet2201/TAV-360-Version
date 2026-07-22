@@ -147,6 +147,7 @@ function initMobileUI() {
         <button class="mob-grid-tool" data-action="contact"> Liên hệ </button>
         <button class="mob-grid-tool" data-action="info"> Thông tin </button>
         <button class="mob-grid-tool" style="color: #00f2fe; border-color: rgba(0,242,254,0.4);" onclick="if(window.switchMobileLayout) window.switchMobileLayout('2')"> Giao diện 2 </button>
+        <button class="mob-grid-tool" style="color: #d4af37; border-color: rgba(212,175,55,0.4);" onclick="if(window.switchMobileLayout) window.switchMobileLayout('3')"> Giao diện 3 </button>
       </div>
     </div>
 
@@ -388,29 +389,39 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
 
       localStorage.setItem('tav-mobile-layout', id);
 
-      // Destroy current active layout
-      if (id === '2') {
-        // Switching TO Layout 2 — destroy Layout 1 overlay if present
-        const l1 = document.getElementById('mobile-ui-overlay');
-        if (l1) l1.remove();
-        const l1hide = document.getElementById('ml1-desktop-hide');
-        if (l1hide) l1hide.remove();
+      // Destroy Layout 1 overlay if present
+      const l1 = document.getElementById('mobile-ui-overlay');
+      if (l1) l1.remove();
+      const l1hide = document.getElementById('ml1-desktop-hide');
+      if (l1hide) l1hide.remove();
 
-        // Init Layout 2
+      // Destroy Layout 2 overlay if present
+      if (window.MobileLayout2) window.MobileLayout2.destroy();
+      const l2hide = document.getElementById('ml2-desktop-hide');
+      if (l2hide) l2hide.remove();
+      const l2hotfix = document.getElementById('ml2-hotspot-fix');
+      if (l2hotfix) l2hotfix.remove();
+
+      // Destroy Layout 3 overlay if present
+      if (window.MobileLayout3) window.MobileLayout3.destroy();
+      const l3hide = document.getElementById('ml3-desktop-hide');
+      if (l3hide) l3hide.remove();
+
+      // Initialize the chosen layout
+      if (id === '2') {
         if (window.MobileLayout2) {
           window.MobileLayout2.init();
         } else {
           console.warn('[Orchestrator] MobileLayout2 module not loaded yet');
         }
+      } else if (id === '3') {
+        if (window.MobileLayout3) {
+          window.MobileLayout3.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout3 module not loaded yet');
+        }
       } else {
-        // Switching TO Layout 1 — destroy Layout 2 overlay if present
-        if (window.MobileLayout2) window.MobileLayout2.destroy();
-        const l2hide = document.getElementById('ml2-desktop-hide');
-        if (l2hide) l2hide.remove();
-        const l2hotfix = document.getElementById('ml2-hotspot-fix');
-        if (l2hotfix) l2hotfix.remove();
-
-        // Init Layout 1 (re-run initMobileUI)
+        // Fallback to Layout 1 (re-run initMobileUI)
         if (typeof initMobileUI === 'function') initMobileUI();
       }
 
@@ -418,26 +429,26 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
     };
 
     // Boot the saved layout
-    if (savedLayout === '2') {
-      // Wait briefly for ML2 module to register
-      const tryBootL2 = (attempts) => {
-        if (window.MobileLayout2) {
-          // Layout 2: don't run initMobileUI, just init ML2
-          window.MobileLayout2.init();
+    if (savedLayout === '2' || savedLayout === '3') {
+      const tryBootLayout = (attempts) => {
+        const layoutModule = savedLayout === '2' ? window.MobileLayout2 : window.MobileLayout3;
+        if (layoutModule) {
+          window.scrollTo(0, 0);
+          layoutModule.init();
         } else if (attempts > 0) {
-          setTimeout(() => tryBootL2(attempts - 1), 200);
+          setTimeout(() => tryBootLayout(attempts - 1), 200);
         } else {
-          // Fallback to Layout 1
-          console.warn('[Orchestrator] ML2 not found, falling back to Layout 1');
+          console.warn('[Orchestrator] Layout module not found, falling back to Layout 1');
           localStorage.setItem('tav-mobile-layout', '1');
+          if (typeof initMobileUI === 'function') initMobileUI();
         }
       };
       // initMobileUI was already called above by the original bootstrap —
-      // destroy its output and switch to L2
+      // destroy its output and switch to the target layout
       setTimeout(() => {
         const l1 = document.getElementById('mobile-ui-overlay');
         if (l1) l1.remove();
-        tryBootL2(10);
+        tryBootLayout(10);
       }, 300);
     }
     // Layout 1: initMobileUI already ran — nothing else needed
