@@ -362,12 +362,17 @@
   /* Side padding = 50% - half-item-width (36px) so first/last can center */
   padding: 4px calc(50% - 36px) 6px;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   scroll-padding-inline: calc(50% - 36px);
   -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  scroll-behavior: smooth;
   height: 100%;
   align-items: center;
   scrollbar-width: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .ml5-carousel-track::-webkit-scrollbar { display: none; }
@@ -389,6 +394,9 @@
   box-shadow: var(--ml5-shadow-xs);
   /* GPU compositing layer for smooth JS-driven scale */
   will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  contain: layout style paint;
   /* Ensure scale doesn't clip to parent — set on a wrapper in JS if needed */
   transform-origin: center center;
 }

@@ -4119,11 +4119,15 @@ document.addEventListener("click", function(e) {
       setTimeout(updateScrollBtns, 200);
 
       btnLeft.addEventListener('click', () => {
-        tlTrack.scrollBy({ left: -300, behavior: 'smooth' });
+        const firstNode = tlTrack.querySelector('.cmd-tl-node');
+        const step = firstNode ? firstNode.offsetWidth + 12 : 120;
+        tlTrack.scrollBy({ left: -step, behavior: 'smooth' });
       });
 
       btnRight.addEventListener('click', () => {
-        tlTrack.scrollBy({ left: 300, behavior: 'smooth' });
+        const firstNode = tlTrack.querySelector('.cmd-tl-node');
+        const step = firstNode ? firstNode.offsetWidth + 12 : 120;
+        tlTrack.scrollBy({ left: step, behavior: 'smooth' });
       });
     }
 
@@ -4424,59 +4428,52 @@ document.addEventListener("click", function(e) {
   let isHotspotsHidden = false;
 
   function toggleCustomAutorotate() {
-    window.toggleCustomAutorotate = toggleCustomAutorotate;
-    if (typeof window.pano !== 'undefined') {
-      // Disable built-in autorotate to avoid conflict
-      if (typeof window.pano.stopAutorotate === 'function') {
-         window.pano.stopAutorotate();
-      }
+    const getPano = () => window.pano || (window.TAV_CORE ? window.TAV_CORE.getPano() : null);
+    const p = getPano();
 
-      window.customAutoRotateActive = !window.customAutoRotateActive;
+    window.customAutoRotateActive = !window.customAutoRotateActive;
 
+    // 1. Native Pano2VR autorotate call
+    if (p) {
       if (window.customAutoRotateActive) {
-         window.isUserInteracting = false; // Reset interaction state immediately
-         if (!window.customRotateFn) {
-            window.customRotateSpeed = -0.08; // Clockwise rotation 
-            window.customRotateFn = () => {
-               if (!window.customAutoRotateActive) return;
-               
-               // Don't rotate if user is interacting
-               if (!window.isUserInteracting && typeof window.pano.getPan === 'function' && typeof window.pano.setPan === 'function') {
-                  window.pano.setPan(window.pano.getPan() + window.customRotateSpeed);
-               }
-               requestAnimationFrame(window.customRotateFn);
-            };
-
-            // Setup interaction detection
-            let interactTimeout;
-            const interactionHandler = (e) => {
-               if (e && e.target && e.target.closest('[data-action="autorotate"]')) {
-                  return; // Don't delay rotation when clicking the rotate button itself
-               }
-               window.isUserInteracting = true;
-               clearTimeout(interactTimeout);
-               interactTimeout = setTimeout(() => {
-                  window.isUserInteracting = false;
-               }, 3000); // Resume after 3s of inactivity
-            };
-
-            document.addEventListener('mousedown', interactionHandler, true);
-            document.addEventListener('touchstart', interactionHandler, true);
-            document.addEventListener('wheel', interactionHandler, true);
-            document.addEventListener('mousemove', (e) => {
-                if (e.buttons > 0) interactionHandler(e);
-            }, true);
-         }
-         // Start loop
-         requestAnimationFrame(window.customRotateFn);
+        if (typeof p.startAutorotate === 'function') p.startAutorotate(0.4, 0, 0);
+        else if (typeof p.toggleAutorotate === 'function') p.toggleAutorotate();
+      } else {
+        if (typeof p.stopAutorotate === 'function') p.stopAutorotate();
       }
-
-      // Toggle UI classes
-      document.querySelectorAll('[data-action="autorotate"]').forEach(el => {
-        if (window.customAutoRotateActive) el.classList.add('active', 'active-tool');
-        else el.classList.remove('active', 'active-tool');
-      });
     }
+
+    // 2. Guaranteed fallback rotation interval (50 FPS, 0.25deg/step = ~12.5deg/sec)
+    if (window.customAutoRotateInterval) {
+      clearInterval(window.customAutoRotateInterval);
+      window.customAutoRotateInterval = null;
+    }
+
+    if (window.customAutoRotateActive) {
+      window.customAutoRotateInterval = setInterval(() => {
+        if (!window.customAutoRotateActive) {
+          if (window.customAutoRotateInterval) {
+            clearInterval(window.customAutoRotateInterval);
+            window.customAutoRotateInterval = null;
+          }
+          return;
+        }
+        const activePano = getPano();
+        if (activePano && typeof activePano.getPan === 'function' && typeof activePano.setPan === 'function') {
+          const currentPan = activePano.getPan();
+          activePano.setPan((currentPan + 0.25) % 360);
+        }
+      }, 20);
+    }
+
+    // 3. Highlight all autorotate buttons across all mobile & desktop layouts
+    document.querySelectorAll('[data-action="autorotate"]').forEach(el => {
+      el.classList.toggle('active', !!window.customAutoRotateActive);
+      el.classList.toggle('active-tool', !!window.customAutoRotateActive);
+      el.classList.toggle('ml6-active-tool', !!window.customAutoRotateActive);
+    });
+
+    return window.customAutoRotateActive;
   }
   window.toggleCustomAutorotate = toggleCustomAutorotate;
 
@@ -6471,19 +6468,32 @@ function initGlobalPanoramaGallery() {
   document.getElementById('gpg-lightbox-close').addEventListener('click', () => lightbox.classList.remove('active'));
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) lightbox.classList.remove('active'); });
   
-  document.getElementById('gpg-prev').addEventListener('click', () => {
-    navigateGlobalGallery(-1);
-    resetGpgInactivity();
-  });
-  
-  document.getElementById('gpg-next').addEventListener('click', () => {
-    navigateGlobalGallery(1);
-    resetGpgInactivity();
-  });
+  const gpgPrevBtn = document.getElementById('gpg-prev');
+  if (gpgPrevBtn) {
+    gpgPrevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      navigateGlobalGallery(-1);
+      resetGpgInactivity();
+    });
+    gpgPrevBtn.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+  }
+
+  const gpgNextBtn = document.getElementById('gpg-next');
+  if (gpgNextBtn) {
+    gpgNextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      navigateGlobalGallery(1);
+      resetGpgInactivity();
+    });
+    gpgNextBtn.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+  }
   
   const thumbs = overlay.querySelectorAll('.gpg-thumb');
   thumbs.forEach(thumb => {
-    thumb.addEventListener('click', () => {
+    thumb.addEventListener('click', (e) => {
+      e.stopPropagation();
       goToGlobalGallerySlide(parseInt(thumb.getAttribute('data-index')));
       resetGpgInactivity();
     });
@@ -6503,40 +6513,44 @@ function initGlobalPanoramaGallery() {
     });
   });
   
-  // Swipe & Drag support
+  // Swipe & Drag support — strict 1-slide navigation
   const mainView = document.getElementById('gpg-main-view');
   let startX = 0;
   let currentX = 0;
   let isDragging = false;
   
   const touchStart = (e) => {
-    startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    startX = x;
+    currentX = x; // Properly initialize currentX to avoid false diff on tap
     isDragging = true;
     resetGpgInactivity();
   };
   
   const touchMove = (e) => {
     if (!isDragging) return;
-    currentX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+    currentX = e.touches ? e.touches[0].clientX : e.clientX;
   };
   
   const touchEnd = () => {
     if (!isDragging) return;
     isDragging = false;
     const diff = startX - currentX;
-    if (Math.abs(diff) > 50) {
+    if (Math.abs(diff) > 40 && currentX !== 0) {
       if (diff > 0) navigateGlobalGallery(1);
       else navigateGlobalGallery(-1);
     }
+    startX = 0;
+    currentX = 0;
   };
   
-  mainView.addEventListener('touchstart', touchStart, {passive: true});
-  mainView.addEventListener('touchmove', touchMove, {passive: true});
-  mainView.addEventListener('touchend', touchEnd);
+  mainView.addEventListener('touchstart', touchStart, { passive: true });
+  mainView.addEventListener('touchmove', touchMove, { passive: true });
+  mainView.addEventListener('touchend', touchEnd, { passive: true });
   
   mainView.addEventListener('mousedown', touchStart);
-  window.addEventListener('mousemove', touchMove);
-  window.addEventListener('mouseup', touchEnd);
+  mainView.addEventListener('mousemove', touchMove);
+  mainView.addEventListener('mouseup', touchEnd);
   
   document.addEventListener('keydown', handleGpgKeyboard);
 }
@@ -6587,11 +6601,8 @@ function updateGlobalGalleryUI() {
   document.querySelectorAll('.gpg-thumb').forEach((thumb, idx) => {
     thumb.classList.toggle('active', idx === gpgCurrentIndex);
     if (idx === gpgCurrentIndex && thumbsContainer) {
-      const thumbRect = thumb.getBoundingClientRect();
-      const containerRect = thumbsContainer.getBoundingClientRect();
-      if (thumbRect.left < containerRect.left || thumbRect.right > containerRect.right) {
-        thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
+      const targetLeft = thumb.offsetLeft - (thumbsContainer.clientWidth / 2) + (thumb.offsetWidth / 2);
+      thumbsContainer.scrollTo({ left: targetLeft, behavior: 'smooth' });
     }
   });
 }

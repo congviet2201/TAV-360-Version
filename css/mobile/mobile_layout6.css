@@ -1,0 +1,936 @@
+/* css/mobile/mobile_layout6.css — TAV Virtual Tour · Mobile Layout 6 "Aurora Glass" */
+/* =========================================================================================
+   Design DNA  : Desktop Layout 5 "Aurora" (Neon Glow, Dynamic Glassmorphism, Deep Space Navy)
+   Accents     : Electric Cyan (#00D9FF), Neon Purple (#A855F7), Aurora Pink (#EC4899), Emerald (#00E676)
+   Module      : Mobile Layout 6 CSS System
+   ========================================================================================= */
+
+:root {
+  --ml6-bg-glass: rgba(8, 17, 31, 0.84);
+  --ml6-bg-glass-solid: rgba(12, 22, 40, 0.94);
+  --ml6-bg-card: rgba(15, 27, 48, 0.88);
+  --ml6-border: rgba(0, 217, 255, 0.22);
+  --ml6-border-soft: rgba(255, 255, 255, 0.12);
+  --ml6-border-active: rgba(168, 85, 247, 0.55);
+  
+  --ml6-cyan: #00D9FF;
+  --ml6-purple: #A855F7;
+  --ml6-pink: #EC4899;
+  --ml6-emerald: #00E676;
+  
+  --ml6-text: #FFFFFF;
+  --ml6-text-dim: rgba(255, 255, 255, 0.72);
+  --ml6-text-muted: rgba(255, 255, 255, 0.45);
+  
+  --ml6-glow-cyan: 0 0 16px rgba(0, 217, 255, 0.45);
+  --ml6-glow-purple: 0 0 20px rgba(168, 85, 247, 0.5);
+  --ml6-glow-emerald: 0 0 16px rgba(0, 230, 118, 0.45);
+  
+  --ml6-grad-aurora: linear-gradient(135deg, #00D9FF 0%, #A855F7 50%, #EC4899 100%);
+  --ml6-grad-cyan-purple: linear-gradient(135deg, #00D9FF 0%, #A855F7 100%);
+  --ml6-grad-card: linear-gradient(135deg, rgba(0, 217, 255, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+  
+  --ml6-shadow-glass: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 217, 255, 0.15);
+  --ml6-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
+  
+  --ml6-r-xl: 24px;
+  --ml6-r-lg: 16px;
+  --ml6-r-md: 12px;
+  --ml6-r-sm: 8px;
+  --ml6-r-full: 9999px;
+  
+  --ml6-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ml6-ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Overlay Reset ─────────────────────────────────────────────────── */
+#ml6-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ml6-text);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+#ml6-overlay *, #ml6-overlay *::before, #ml6-overlay *::after {
+  box-sizing: border-box;
+}
+
+.ml6-interactive {
+  pointer-events: auto !important;
+}
+
+/* ── Ripple Effect ─────────────────────────────────────────────────── */
+.ml6-ripple-host {
+  position: relative;
+  overflow: hidden;
+}
+
+.ml6-ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ml6-ripple-anim 0.5s linear;
+  background: radial-gradient(circle, rgba(0, 217, 255, 0.6) 0%, rgba(168, 85, 247, 0.3) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+@keyframes ml6-ripple-anim {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ── Top Strip Header ───────────────────────────────────────────────── */
+.ml6-top-strip {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 12px) + 10px);
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 100;
+}
+
+.ml6-compass {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ml6-bg-glass);
+  border: 1px solid var(--ml6-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--ml6-shadow-glass);
+  cursor: pointer;
+  transition: transform 0.2s var(--ml6-ease-bounce), border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ml6-compass:active {
+  transform: scale(0.92);
+  border-color: var(--ml6-cyan);
+  box-shadow: var(--ml6-glow-cyan);
+}
+
+.ml6-compass-dial {
+  width: 26px;
+  height: 26px;
+  transition: transform 0.1s linear;
+}
+
+.ml6-compass-ring {
+  stroke: rgba(0, 217, 255, 0.3);
+  stroke-width: 3;
+  fill: none;
+}
+
+.ml6-compass-north {
+  fill: var(--ml6-pink);
+}
+
+.ml6-compass-south {
+  fill: rgba(255, 255, 255, 0.35);
+}
+
+.ml6-logo-pill {
+  flex: 1;
+  max-width: 240px;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: var(--ml6-r-full);
+  background: var(--ml6-bg-glass);
+  border: 1px solid var(--ml6-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--ml6-shadow-glass);
+  cursor: pointer;
+  transition: all 0.2s var(--ml6-ease-spring);
+}
+
+.ml6-logo-pill:active {
+  transform: scale(0.97);
+  border-color: var(--ml6-purple);
+  box-shadow: var(--ml6-glow-purple);
+}
+
+.ml6-logo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ml6-cyan);
+  box-shadow: 0 0 10px var(--ml6-cyan);
+  animation: ml6-pulse-glow 2s infinite alternate;
+}
+
+@keyframes ml6-pulse-glow {
+  0% { transform: scale(0.85); box-shadow: 0 0 6px var(--ml6-cyan); }
+  100% { transform: scale(1.15); box-shadow: 0 0 14px var(--ml6-cyan), 0 0 20px var(--ml6-purple); }
+}
+
+.ml6-logo-text {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ml6-logo-sub {
+  font-size: 9.5px;
+  color: var(--ml6-text-dim);
+  font-weight: 500;
+}
+
+.ml6-layout-badge {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--ml6-r-full);
+  background: var(--ml6-grad-aurora);
+  color: #fff;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+/* ── Scene Carousel Strip (Hidden to prevent horizontal expansion) ───── */
+.ml6-carousel-strip {
+  display: none !important;
+}
+
+.ml6-carousel-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  padding: 6px 4px 8px 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.ml6-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.ml6-carousel-item {
+  flex: 0 0 calc(33.333% - 7px);
+  height: 64px;
+  border-radius: var(--ml6-r-md);
+  background: var(--ml6-bg-glass);
+  border: 1.5px solid var(--ml6-border-soft);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: transform 0.25s var(--ml6-ease-spring), border-color 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--ml6-shadow-card);
+}
+
+.ml6-carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.ml6-carousel-item-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 6px 4px;
+  background: linear-gradient(to top, rgba(8, 17, 31, 0.95), transparent);
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.ml6-carousel-active-pip {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ml6-cyan);
+  box-shadow: 0 0 8px var(--ml6-cyan);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.25s var(--ml6-ease-spring);
+}
+
+.ml6-carousel-item.active {
+  opacity: 1;
+  border-color: var(--ml6-cyan);
+  box-shadow: var(--ml6-glow-cyan);
+  transform: scale(1.03);
+}
+
+.ml6-carousel-item.active .ml6-carousel-active-pip {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ml6-carousel-item:active {
+  transform: scale(0.95);
+}
+
+/* ── Floating Bottom Dock (Fixed Width & No Horizontal Expansion) ───── */
+.ml6-dock {
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom, 12px) + 8px);
+  left: 10px;
+  right: 10px;
+  height: 54px;
+  border-radius: var(--ml6-r-full);
+  background: var(--ml6-bg-glass);
+  border: 1px solid var(--ml6-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 4px;
+  box-shadow: var(--ml6-shadow-glass);
+  z-index: 100;
+  overflow: hidden;
+  max-width: calc(100% - 20px);
+}
+
+.ml6-dock-tab {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  border: none;
+  background: transparent;
+  color: var(--ml6-text-dim);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s var(--ml6-ease-spring), color 0.2s ease;
+}
+
+.ml6-dock-tab svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8;
+  transition: transform 0.25s var(--ml6-ease-bounce), stroke 0.25s ease;
+}
+
+.ml6-dock-tab span {
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.ml6-dock-tab.ml6-active {
+  color: var(--ml6-cyan);
+}
+
+.ml6-dock-tab.ml6-active svg {
+  transform: translateY(-2px) scale(1.1);
+  stroke: var(--ml6-cyan);
+  filter: drop-shadow(0 0 6px rgba(0, 217, 255, 0.6));
+}
+
+.ml6-dock-tab:active {
+  transform: scale(0.9);
+}
+
+/* Center Primary FAB Button */
+.ml6-fab {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--ml6-grad-aurora);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.6), 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s var(--ml6-ease-bounce), box-shadow 0.25s ease;
+  margin: 0 2px;
+  flex-shrink: 0;
+}
+
+.ml6-fab svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
+
+.ml6-fab:active {
+  transform: scale(0.88);
+  box-shadow: 0 0 30px rgba(0, 217, 255, 0.8);
+}
+
+.ml6-fab.ml6-pulse {
+  animation: ml6-fab-pulse 0.4s ease;
+}
+
+@keyframes ml6-fab-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); box-shadow: 0 0 35px var(--ml6-cyan); }
+  100% { transform: scale(1); }
+}
+
+/* ── Collapsible Mini-Map Floating Card ─────────────────────────────── */
+.ml6-minimap-card {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 12px) + 54px);
+  right: 12px;
+  width: 220px;
+  max-width: calc(100vw - 24px);
+  border-radius: var(--ml6-r-lg);
+  background: rgba(12, 22, 38, 0.94);
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.65), 0 0 18px rgba(0,217,255,0.15);
+  overflow: hidden;
+  z-index: 120 !important;
+  transform: translateY(-10px) scale(0.95);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.35s var(--ml6-ease-spring), opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ml6-minimap-card.ml6-open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+  z-index: 120 !important;
+}
+
+.ml6-minimap-header {
+  height: 34px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0, 217, 255, 0.12);
+  border-bottom: 1px solid var(--ml6-border-soft);
+}
+
+.ml6-minimap-title {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  color: var(--ml6-cyan);
+  text-transform: uppercase;
+}
+
+.ml6-minimap-close {
+  background: transparent;
+  border: none;
+  color: var(--ml6-text-dim);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.ml6-minimap-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ml6-minimap-viewport {
+  width: 100%;
+  height: 140px;
+  position: relative;
+  overflow: hidden;
+  background: #080f1a;
+  touch-action: none;
+}
+
+.ml6-minimap-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: center center;
+  transition: transform 0.1s linear;
+}
+
+.ml6-minimap-radar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.ml6-minimap-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ml6-cyan);
+  box-shadow: 0 0 12px var(--ml6-cyan);
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.ml6-minimap-cone {
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  background: radial-gradient(circle, rgba(0, 217, 255, 0.5) 0%, rgba(168, 85, 247, 0.1) 70%, transparent 100%);
+  clip-path: polygon(50% 50%, 20% 0%, 80% 0%);
+  transform-origin: 50% 50%;
+  pointer-events: none;
+}
+
+.ml6-minimap-zoom {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ml6-minimap-zoom-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(8, 17, 31, 0.85);
+  border: 1px solid var(--ml6-border);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ── Tool Panel / Action Sheet (Opens Upwards) ─────────────────────── */
+.ml6-settings-sheet {
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom, 12px) + 68px);
+  left: 10px;
+  right: 10px;
+  max-height: calc(100vh - 130px);
+  max-height: calc(100dvh - 130px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-radius: var(--ml6-r-xl);
+  background: var(--ml6-bg-glass);
+  border: 1px solid var(--ml6-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  padding: 12px 10px;
+  box-shadow: var(--ml6-shadow-glass);
+  z-index: 110;
+  transform: translateY(100%) scale(0.92);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
+}
+
+.ml6-settings-sheet::-webkit-scrollbar {
+  display: none;
+}
+
+.ml6-settings-sheet.ml6-open {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  visibility: visible;
+}
+
+.ml6-tp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.ml6-tp-btn {
+  background: var(--ml6-grad-card);
+  border: 1px solid var(--ml6-border-soft);
+  border-radius: var(--ml6-r-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 2px;
+  color: var(--ml6-text-dim);
+  cursor: pointer;
+  transition: all 0.2s var(--ml6-ease-spring);
+  box-shadow: var(--ml6-shadow-card);
+  min-width: 0;
+}
+
+.ml6-tp-btn svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8;
+}
+
+.ml6-tp-btn span {
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.1px;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.ml6-tp-btn.ml6-active-tool {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+  border-color: var(--ml6-cyan);
+  color: #fff;
+  box-shadow: var(--ml6-glow-cyan);
+}
+
+.ml6-tp-btn:active {
+  transform: scale(0.92);
+}
+
+.ml6-tp-divider {
+  height: 1px;
+  background: var(--ml6-border-soft);
+  margin: 10px 0;
+}
+
+.ml6-tp-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+
+@media screen and (min-width: 380px) {
+  .ml6-tp-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.ml6-tp-socials {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ml6-tp-social {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ml6-border-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+}
+
+.ml6-tp-social svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ml6-tp-switch-row {
+  display: flex;
+  flex: 1;
+  gap: 2px;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 3px;
+  border-radius: var(--ml6-r-full);
+  border: 1px solid var(--ml6-border-soft);
+  justify-content: space-between;
+}
+
+.ml6-tp-sw {
+  flex: 1;
+  min-width: 0;
+  padding: 5px 2px;
+  border-radius: var(--ml6-r-full);
+  border: none;
+  background: transparent;
+  color: var(--ml6-text-muted);
+  font-size: 8.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.ml6-tp-sw-active {
+  background: var(--ml6-grad-aurora);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+/* ── Backdrop Overlay ───────────────────────────────────────────────── */
+.ml6-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 101;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.ml6-backdrop.ml6-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ── Bottom Sheet Drawer (Category & Scene Grid) ───────────────────── */
+.ml6-sheet {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 75vh;
+  border-radius: 28px 28px 0 0;
+  background: var(--ml6-bg-glass-solid);
+  border-top: 1px solid var(--ml6-border);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.7);
+  z-index: 105;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.38s var(--ml6-ease-spring);
+}
+
+.ml6-sheet.ml6-open {
+  transform: translateY(0);
+}
+
+.ml6-sheet-handle {
+  width: 38px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  margin: 10px auto 4px;
+}
+
+.ml6-sheet-header {
+  padding: 6px 18px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--ml6-border-soft);
+}
+
+.ml6-sheet-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--ml6-cyan);
+  text-transform: uppercase;
+}
+
+.ml6-sheet-close {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--ml6-border-soft);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ml6-sheet-body {
+  padding: 14px 16px 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ml6-cat-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 14px;
+  padding-bottom: 4px;
+}
+
+.ml6-cat-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.ml6-cat-tab {
+  padding: 6px 14px;
+  border-radius: var(--ml6-r-full);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ml6-border-soft);
+  color: var(--ml6-text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ml6-cat-tab.ml6-active {
+  background: var(--ml6-grad-aurora);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
+}
+
+.ml6-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.ml6-scene-card {
+  height: 100px;
+  border-radius: var(--ml6-r-md);
+  overflow: hidden;
+  position: relative;
+  background: #000;
+  border: 1.5px solid var(--ml6-border-soft);
+  cursor: pointer;
+  transition: all 0.25s var(--ml6-ease-spring);
+}
+
+.ml6-scene-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.ml6-scene-card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 8px 6px;
+  background: linear-gradient(to top, rgba(8, 17, 31, 0.95), transparent);
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.ml6-scene-card.active {
+  border-color: var(--ml6-cyan);
+  box-shadow: var(--ml6-glow-cyan);
+}
+
+.ml6-scene-card:active {
+  transform: scale(0.96);
+}
+
+/* ── Toast Notification ─────────────────────────────────────────────── */
+.ml6-toast {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 12px) + 62px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  padding: 8px 16px;
+  border-radius: var(--ml6-r-full);
+  background: var(--ml6-bg-glass);
+  border: 1px solid var(--ml6-cyan);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  box-shadow: var(--ml6-glow-cyan);
+  z-index: 120;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s var(--ml6-ease-spring);
+}
+
+.ml6-toast.ml6-show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* ── Desktop Hide Class for Mobile Layout 6 ───────────────────────── */
+#ml6-desktop-hide {
+  display: none !important;
+}
+
+/* ── Regional Links (Liên Kết Vùng) Fixes for Mobile Layout 6 ───── */
+body.region-mode-active .ml6-top-strip {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body.region-mode-active #region-page,
+body.region-mode-active .region-controls-panel {
+  z-index: 120 !important;
+}
+
+/* ── Info & Media Modals Priority ───────────────────────────── */
+#infoModal, #contactModal, #galleryModal, #shareModal, #image-gallery-modal,
+.info-modal, .contact-modal, .gallery-modal, .share-modal, .modern-modal, .custom-modal, .modal-overlay {
+  z-index: 10000 !important;
+}
+
+/* ── Safe Area Insets Overrides & Desktop UI Hiding ─────────────────── */
+@media screen and (max-width: 1024px) {
+  .ml6-dock {
+    bottom: calc(env(safe-area-inset-bottom, 16px) + 10px) !important;
+  }
+  html body #modern-ui-container, html body #modern-ui-overlay, html body .prism-nav-container, html body .prism-dock, html body .prism-header-pill,
+  html body .prism-bottom-dock, html body .modern-header-pill, html body #modern-dock-container,
+  html body .prism-dock-container, html body .prism-nav-wrapper, html body .prism-tool-container,
+  html body .prism-dock-item, html body .prism-nav-item, html body #sidebar-container, html body #horizontal-nav-bar,
+  html body #command-bottom-ribbon, html body .modern-ui-sidebar, html body .v-rail-container, html body .bottom-nav-container,
+  html body .aurora-nav-container, html body .aurora-tool-panel, html body .pc-container {
+    display: none !important;
+  }
+}

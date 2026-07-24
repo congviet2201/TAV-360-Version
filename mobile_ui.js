@@ -124,10 +124,6 @@ function initMobileUI() {
         <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg>
           <span>L.Kết Vùng</span>
       </button>
-      <button class="mob-tool-btn" data-action="autorotate">
-        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
-          <span>Tự xoay</span>
-      </button>
       <button class="mob-tool-btn" id="mob-more-btn">
         <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
           <span>Công Cụ</span>
@@ -155,6 +151,7 @@ function initMobileUI() {
           <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('3')">L3</button>
           <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('4')">L4</button>
           <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('5')">L5</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('6')">L6</button>
         </div>
       </div>
     </div>
@@ -258,10 +255,69 @@ function initMobileUI() {
     mapImg.style.transform = `translate(${mapX}px, ${mapY}px) scale(${mapZoom})`;
   }
 
-  // Carousel Controls
+  // Carousel Controls — move exactly 1 item per click (< and >)
   const carousel = document.getElementById("mob-carousel");
-  document.getElementById("mob-carousel-prev").addEventListener("click", () => carousel.scrollBy({ left: -100, behavior: 'smooth' }));
-  document.getElementById("mob-carousel-next").addEventListener("click", () => carousel.scrollBy({ left: 100, behavior: 'smooth' }));
+
+  function getMobCarouselCurrentIndex() {
+    if (!carousel) return 0;
+    const items = Array.from(carousel.querySelectorAll(".mob-carousel-item"));
+    if (!items.length) return 0;
+
+    // 1. Try finding currently active item
+    const activeIdx = items.findIndex(item => item.classList.contains("active"));
+    if (activeIdx !== -1) return activeIdx;
+
+    // 2. Fallback to item closest to scrollLeft
+    const scrollLeft = carousel.scrollLeft;
+    let closestIdx = 0;
+    let minDiff = Infinity;
+    items.forEach((item, idx) => {
+      const diff = Math.abs(item.offsetLeft - scrollLeft);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = idx;
+      }
+    });
+    return closestIdx;
+  }
+
+  function stepMobCarousel(dir) {
+    if (!carousel) return;
+    const items = Array.from(carousel.querySelectorAll(".mob-carousel-item"));
+    if (!items.length) return;
+    const currentIdx = getMobCarouselCurrentIndex();
+    const targetIdx = Math.max(0, Math.min(currentIdx + dir, items.length - 1));
+    const targetItem = items[targetIdx];
+    if (targetItem) {
+      // Optimistically set active state on target item for immediate next click
+      items.forEach(i => i.classList.remove("active"));
+      targetItem.classList.add("active");
+
+      // Scroll smoothly to target item
+      carousel.scrollTo({ left: targetItem.offsetLeft, behavior: 'smooth' });
+
+      const action = targetItem.getAttribute("data-action");
+      if (action && window.TAV_CORE) {
+        window.TAV_CORE.navigateTo(action);
+      }
+    }
+  }
+
+  const prevBtn = document.getElementById("mob-carousel-prev");
+  if (prevBtn) {
+    prevBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      stepMobCarousel(-1);
+    });
+  }
+
+  const nextBtn = document.getElementById("mob-carousel-next");
+  if (nextBtn) {
+    nextBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      stepMobCarousel(1);
+    });
+  }
 
   // Tool Actions
   document.querySelectorAll("[data-action]").forEach(btn => {
@@ -274,13 +330,17 @@ function initMobileUI() {
         if (window.pano) window.pano.openNext(`{${action}}`);
       } else {
         switch(action) {
-          case 'autorotate':
+          case 'autorotate': {
+            let isAct = false;
             if (typeof window.toggleCustomAutorotate === 'function') {
-              window.toggleCustomAutorotate();
-            } else {
+              isAct = window.toggleCustomAutorotate();
+            } else if (window.TAV_CORE) {
               window.TAV_CORE.navigateTo('autorotate');
+              isAct = !!window.customAutoRotateActive;
             }
+            if (typeof showToast === 'function') showToast(isAct ? "Xoay tự động: Bật" : "Xoay tự động: Tắt");
             break;
+          }
           case 'gallery': {
             if (typeof window.openGlobalPanoramaGallery === 'function') {
               window.openGlobalPanoramaGallery();
@@ -408,37 +468,22 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
     // The orchestrator switches layouts on demand
     window.switchMobileLayout = function (layoutId) {
       const id = String(layoutId);
-      if (id === localStorage.getItem('tav-mobile-layout')) return; // already active
+      const isAlreadyMounted = id === '1' ? !!document.getElementById('mobile-ui-overlay') : !!document.getElementById('ml' + id + '-overlay');
+      if (id === localStorage.getItem('tav-mobile-layout') && isAlreadyMounted) return;
 
       localStorage.setItem('tav-mobile-layout', id);
 
-      // Destroy Layout 1 overlay if present
-      const l1 = document.getElementById('mobile-ui-overlay');
-      if (l1) l1.remove();
-      const l1hide = document.getElementById('ml1-desktop-hide');
-      if (l1hide) l1hide.remove();
+      // 1. Destroy all mobile layout modules
+      if (window.MobileLayout2 && typeof window.MobileLayout2.destroy === 'function') window.MobileLayout2.destroy();
+      if (window.MobileLayout3 && typeof window.MobileLayout3.destroy === 'function') window.MobileLayout3.destroy();
+      if (window.MobileLayout4 && typeof window.MobileLayout4.destroy === 'function') window.MobileLayout4.destroy();
+      if (window.MobileLayout5 && typeof window.MobileLayout5.destroy === 'function') window.MobileLayout5.destroy();
+      if (window.MobileLayout6 && typeof window.MobileLayout6.destroy === 'function') window.MobileLayout6.destroy();
 
-      // Destroy Layout 2 overlay if present
-      if (window.MobileLayout2) window.MobileLayout2.destroy();
-      const l2hide = document.getElementById('ml2-desktop-hide');
-      if (l2hide) l2hide.remove();
-      const l2hotfix = document.getElementById('ml2-hotspot-fix');
-      if (l2hotfix) l2hotfix.remove();
-
-      // Destroy Layout 3 overlay if present
-      if (window.MobileLayout3) window.MobileLayout3.destroy();
-      const l3hide = document.getElementById('ml3-desktop-hide');
-      if (l3hide) l3hide.remove();
-
-      // Destroy Layout 4 overlay if present
-      if (window.MobileLayout4) window.MobileLayout4.destroy();
-      const l4hide = document.getElementById('ml4-desktop-hide');
-      if (l4hide) l4hide.remove();
-
-      // Destroy Layout 5 overlay if present
-      if (window.MobileLayout5) window.MobileLayout5.destroy();
-      const l5hide = document.getElementById('ml5-desktop-hide');
-      if (l5hide) l5hide.remove();
+      // 2. Unconditionally remove all mobile overlays and injected styles from DOM
+      document.querySelectorAll('#mobile-ui-overlay, #ml2-overlay, #ml3-overlay, #ml4-overlay, #ml5-overlay, #ml6-overlay').forEach(el => el.remove());
+      document.querySelectorAll('#ml1-desktop-hide, #ml2-desktop-hide, #ml3-desktop-hide, #ml4-desktop-hide, #ml5-desktop-hide, #ml6-desktop-hide, #ml2-hotspot-fix').forEach(el => el.remove());
+      document.body.classList.remove('region-mode-active', 'hide-hotspots');
 
       // Initialize the chosen layout
       if (id === '2') {
@@ -465,6 +510,12 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
         } else {
           console.warn('[Orchestrator] MobileLayout5 module not loaded yet');
         }
+      } else if (id === '6') {
+        if (window.MobileLayout6) {
+          window.MobileLayout6.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout6 module not loaded yet');
+        }
       } else {
         // Fallback to Layout 1 (re-run initMobileUI)
         if (typeof initMobileUI === 'function') initMobileUI();
@@ -474,13 +525,14 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
     };
 
     // Boot the saved layout
-    if (savedLayout === '2' || savedLayout === '3' || savedLayout === '4' || savedLayout === '5') {
+    if (savedLayout === '2' || savedLayout === '3' || savedLayout === '4' || savedLayout === '5' || savedLayout === '6') {
       const tryBootLayout = (attempts) => {
         let layoutModule = null;
         if (savedLayout === '2') layoutModule = window.MobileLayout2;
         else if (savedLayout === '3') layoutModule = window.MobileLayout3;
         else if (savedLayout === '4') layoutModule = window.MobileLayout4;
         else if (savedLayout === '5') layoutModule = window.MobileLayout5;
+        else if (savedLayout === '6') layoutModule = window.MobileLayout6;
 
         if (layoutModule) {
           window.scrollTo(0, 0);
@@ -513,4 +565,169 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
     setTimeout(initOrchestrator, 100);
   }
 
+})();
+
+// ============================================================
+// UNIVERSAL MOBILE MINI-MAP ENGINE (Desktop-Identical Logic)
+// Uses Desktop mm-luxury-hotspot pins, position dot, viewcone, & Touch Drag/Pan
+// ============================================================
+window.MobileMinimapEngine = (function () {
+  'use strict';
+
+  const DESKTOP_MAP_HOTSPOTS = [
+    { id: 'hs_street',    x: 34.5, y: 45.0, title: 'Đường Phố', target: 'node8' },
+    { id: 'hs_living2',   x: 43.5, y: 45.5, title: 'Phòng Khách 2', target: 'node5' },
+    { id: 'hs_park',      x: 48.5, y: 56.5, title: 'Công Viên', target: 'node9' },
+    { id: 'hs_wc',        x: 59.0, y: 45.5, title: 'TAV WC', target: 'node11' },
+    { id: 'hs_living',    x: 62.0, y: 57.0, title: 'Phòng Khách', target: 'node4' },
+    { id: 'hs_park2',     x: 74.0, y: 42.5, title: 'Sân Vườn', target: 'node6' },
+    { id: 'hs_thongtang', x: 86.5, y: 41.5, title: 'Thông Tầng', target: 'node7' },
+    { id: 'hs_balcony',   x: 78.0, y: 52.0, title: 'Ban Công', target: 'node10' },
+    { id: 'hs_birdview',  x: 50.0, y: 22.0, title: 'Bird View', target: 'node2' }
+  ];
+
+  function setupMapInteractive(viewportEl) {
+    if (!viewportEl) return null;
+
+    let zoom = 1.0;
+    let panX = 0;
+    let panY = 0;
+    let isDragging = false;
+    let startX = 0, startY = 0;
+    let initialPanX = 0, initialPanY = 0;
+
+    viewportEl.style.cursor = 'grab';
+    viewportEl.style.userSelect = 'none';
+    viewportEl.style.webkitUserSelect = 'none';
+
+    // Remove old mobile & desktop markers inside container
+    const oldHotspots = viewportEl.querySelectorAll('.mm-luxury-hotspot, .mm-mobile-pin');
+    oldHotspots.forEach(el => el.remove());
+
+    // 1. Inject Desktop mm-luxury-hotspot Pins
+    DESKTOP_MAP_HOTSPOTS.forEach(pin => {
+      const pinEl = document.createElement('div');
+      pinEl.className = 'mm-luxury-hotspot';
+      pinEl.dataset.target = pin.target;
+      pinEl.title = pin.title;
+
+      pinEl.innerHTML = `<div class="mm-tooltip">${pin.title}</div>`;
+
+      pinEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (window.TAV_CORE && typeof window.TAV_CORE.navigateTo === 'function') {
+          window.TAV_CORE.navigateTo(pin.target);
+        } else if (window.pano) {
+          window.pano.openNext(`{${pin.target}}`);
+        }
+        syncMinimapState(pin.target);
+      });
+
+      viewportEl.appendChild(pinEl);
+    });
+
+    // 2. Sync Active Hotspot & Position Dot & Viewcone
+    function syncMinimapState(targetNode) {
+      const activeNode = targetNode || (window.TAV_CORE && window.TAV_CORE.currentScene ? window.TAV_CORE.currentScene.action : 'node2');
+      
+      let activePos = { x: 50, y: 50 };
+      viewportEl.querySelectorAll('.mm-luxury-hotspot').forEach(pin => {
+        const target = pin.dataset.target;
+        const isCurrent = target === activeNode;
+        pin.classList.toggle('is-active', isCurrent);
+
+        const pinData = DESKTOP_MAP_HOTSPOTS.find(h => h.target === target) || { x: 50, y: 50 };
+        if (isCurrent) activePos = pinData;
+
+        // Position offset with current pan
+        pin.style.left = `calc(${pinData.x}% + ${panX}px)`;
+        pin.style.top = `calc(${pinData.y}% + ${panY}px)`;
+      });
+
+      // Position Radar Dot / Viewcone if present
+      const dot = viewportEl.querySelector('.ml6-minimap-radar, #minimap-radar, .minimap-dot, #minimap-dot');
+      if (dot) {
+        dot.style.left = `calc(${activePos.x}% + ${panX}px)`;
+        dot.style.top = `calc(${activePos.y}% + ${panY}px)`;
+      }
+    }
+
+    syncMinimapState();
+
+    // 3. Touch Drag & Mouse Pan Events (100% PC Mechanics)
+    const imgEl = viewportEl.querySelector('img');
+    function updateTransform() {
+      if (imgEl) {
+        imgEl.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+      }
+      syncMinimapState();
+    }
+
+    function clampPan() {
+      const rect = viewportEl.getBoundingClientRect();
+      const minPanX = rect.width * (1 - zoom);
+      const minPanY = rect.height * (1 - zoom);
+      panX = Math.max(minPanX, Math.min(0, panX));
+      panY = Math.max(minPanY, Math.min(0, panY));
+    }
+
+    // Touch events for mobile dragging
+    viewportEl.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        initialPanX = panX;
+        initialPanY = panY;
+      }
+    }, { passive: true });
+
+    viewportEl.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - startX;
+      const dy = e.touches[0].clientY - startY;
+      panX = initialPanX + dx;
+      panY = initialPanY + dy;
+      clampPan();
+      updateTransform();
+    }, { passive: true });
+
+    viewportEl.addEventListener('touchend', () => { isDragging = false; }, { passive: true });
+
+    // Mouse events for desktop/emulator testing
+    viewportEl.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      initialPanX = panX;
+      initialPanY = panY;
+      viewportEl.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      panX = initialPanX + dx;
+      panY = initialPanY + dy;
+      clampPan();
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      if (viewportEl) viewportEl.style.cursor = 'grab';
+    });
+
+    return {
+      zoomIn: () => { zoom = Math.min(3.0, zoom + 0.4); clampPan(); updateTransform(); },
+      zoomOut: () => { zoom = Math.max(1.0, zoom - 0.4); clampPan(); updateTransform(); },
+      reset: () => { zoom = 1.0; panX = 0; panY = 0; updateTransform(); },
+      highlightPin: syncMinimapState
+    };
+  }
+
+  return {
+    setupMap: setupMapInteractive
+  };
 })();

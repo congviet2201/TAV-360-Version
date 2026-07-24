@@ -134,10 +134,6 @@
         ${ICONS.hotspot}
         <span>Điểm Chạm</span>
       </button>
-      <button class="ml3-setting-btn ml3-interactive" data-action="autorotate">
-        ${ICONS.autorotate}
-        <span>Tự Xoay</span>
-      </button>
       <button class="ml3-setting-btn ml3-interactive" data-action="fullscreen">
         ${ICONS.fullscreen}
         <span>Toàn Màn</span>
@@ -180,6 +176,7 @@
           <button class="ml3-switcher-pill ml3-active ml3-interactive" data-layout-switch="3">L3</button>
           <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="4">L4</button>
           <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="5">L5</button>
+          <button class="ml3-switcher-pill ml3-interactive" data-layout-switch="6">L6</button>
         </div>
       </div>
     `;
@@ -450,7 +447,7 @@
         const targetScrollLeft = activeCard.offsetLeft - (track.clientWidth / 2) + (activeCard.clientWidth / 2);
         track.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
         setTimeout(() => {
-          if (track) track.style.scrollSnapType = 'x mandatory';
+          if (track) track.style.scrollSnapType = 'x proximity';
         }, 300);
       }
     }, 100);
@@ -560,14 +557,18 @@
     }
 
     switch (action) {
-      case 'autorotate':
+      case 'autorotate': {
+        let isAct = false;
         if (typeof window.toggleCustomAutorotate === 'function') {
-          window.toggleCustomAutorotate();
-        } else {
+          isAct = window.toggleCustomAutorotate();
+        } else if (core) {
           core.navigateTo('autorotate');
+          isAct = !!window.customAutoRotateActive;
         }
+        showToast(isAct ? "Xoay tự động: Bật" : "Xoay tự động: Tắt");
         closeAllSheets();
         break;
+      }
 
       case 'fullscreen':
         core.navigateTo('fullscreen');

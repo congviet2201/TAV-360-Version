@@ -121,7 +121,13 @@
     if (action.startsWith('node') || action.startsWith('architecture-')) {
       pano.openNext('{' + action + '}');
     } else if (action === 'autorotate') {
-      pano.startAutorotate(0.1, 2, 1);
+      if (typeof window.toggleCustomAutorotate === 'function') {
+        window.toggleCustomAutorotate();
+      } else if (typeof pano.toggleAutorotate === 'function') {
+        pano.toggleAutorotate();
+      } else {
+        pano.startAutorotate(0.15, 0, 0);
+      }
     } else if (action === 'fullscreen') {
       if (!document.fullscreenElement) {
         (document.documentElement.requestFullscreen || document.documentElement.webkitRequestFullscreen || function(){}).call(document.documentElement);

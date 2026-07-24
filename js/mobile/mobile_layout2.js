@@ -107,7 +107,6 @@
       { action: 'info',       icon: ICONS.info,       label: 'Thông tin',   id: 'ml2-tool-info' },
       { action: 'region',     icon: ICONS.region,     label: 'L.Kết Vùng',  id: 'ml2-tool-region' },
       { action: 'contact',    icon: ICONS.contact,    label: 'Liên hệ',     id: 'ml2-tool-contact' },
-      { action: 'autorotate', icon: ICONS.autorotate, label: 'Tự xoay',     id: 'ml2-tool-autorotate' },
       { action: 'fullscreen', icon: ICONS.fullscreen, label: 'Toàn màn',    id: 'ml2-tool-fullscreen' },
     ].map(t => `
       <div class="ml2-tool-item ml2-interactive ${t.action === 'hotspots' ? 'ml2-tool-active active active-tool' : ''}" data-action="${t.action}" id="${t.id}">
@@ -225,6 +224,7 @@
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l3">L3</button>
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l4">L4</button>
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l5">L5</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l6">L6</button>
           </div>
         </div>
       </div>
@@ -422,14 +422,18 @@
     }
 
     switch (action) {
-      case 'autorotate':
+      case 'autorotate': {
+        let isAct = false;
         if (typeof window.toggleCustomAutorotate === 'function') {
-          window.toggleCustomAutorotate();
-        } else {
+          isAct = window.toggleCustomAutorotate();
+        } else if (core) {
           core.navigateTo('autorotate');
+          isAct = !!window.customAutoRotateActive;
         }
+        showToast(isAct ? "Xoay tự động: Bật" : "Xoay tự động: Tắt");
         closeAllSheets();
         break;
+      }
 
       case 'fullscreen':
         core.navigateTo('fullscreen');
@@ -658,6 +662,9 @@
     });
     document.getElementById('ml2-switch-to-l5')?.addEventListener('click', () => {
       if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('5');
+    });
+    document.getElementById('ml2-switch-to-l6')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('6');
     });
 
     // TAV_CORE scene change subscription

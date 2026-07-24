@@ -96,9 +96,9 @@ window.hotspotData = {
   // Node 7: TAV LIVING 2 (Phòng khách 2)
   "node7":  [ 
     // Hướng đi Thông tầng (pan_classic: đặt gần hoặc trên cầu thang)
-    { ...hs_thongtang, pan: -90, tilt: -5,  pan_classic: -80, tilt_classic: -15 }, 
+    { ...hs_thongtang, pan: 157.84, tilt: -4.08,  pan_classic: -80, tilt_classic: -15 }, 
     // Hướng ra Công viên số 2 (pan_classic: đặt ở cửa sổ hoặc cửa lùa ra công viên)
-    { ...hs_park2,     pan: 180, tilt: -10, pan_classic: 180, tilt_classic:  -5 }, 
+    { ...hs_park2,     pan: 44.06, tilt: -0.60, pan_classic: 180, tilt_classic:  -5 }, 
     // Nút bay lên góc nhìn chim bay
     { ...hs_birdview,  pan: 0, tilt: 20 } 
   ],

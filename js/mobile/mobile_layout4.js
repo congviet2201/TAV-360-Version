@@ -132,10 +132,6 @@
         ${ICONS.hotspot}
         <span>Điểm Chạm</span>
       </button>
-      <button class="ml4-setting-btn ml4-interactive" data-action="autorotate">
-        ${ICONS.autorotate}
-        <span>Tự Xoay</span>
-      </button>
       <button class="ml4-setting-btn ml4-interactive" data-action="fullscreen">
         ${ICONS.fullscreen}
         <span>Toàn Màn</span>
@@ -178,6 +174,7 @@
           <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="3">L3</button>
           <button class="ml4-switcher-pill ml4-active ml4-interactive" data-layout-switch="4">L4</button>
           <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="5">L5</button>
+          <button class="ml4-switcher-pill ml4-interactive" data-layout-switch="6">L6</button>
         </div>
       </div>
     `;
@@ -622,7 +619,7 @@
         isDragging = false;
         track.classList.remove('is-dragging');
 
-        // ── TAP: finger lifted without significant movement ────────────────
+        // ── TAP vs SWIPE: move strictly 1 item per gesture ────────────────
         if (!wasDragging && !touchMoved) {
           const touch = e.changedTouches ? e.changedTouches[0] : e;
           const el = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -630,11 +627,22 @@
           if (card) {
             const action = card.dataset.action;
             if (action && window.TAV_CORE) {
-              window.TAV_CORE.goToScene(action);
+              window.TAV_CORE.navigateTo(action);
             }
           }
+        } else if (wasDragging) {
+          // Snap strictly to 1 adjacent item slot (never skip multiple items)
+          const dragDx = offset - dragStartOffset;
+          let targetCenter = dragStartOffset;
+          if (dragDx > 15 || velX > 0.5) {
+            targetCenter = dragStartOffset + STEP;
+          } else if (dragDx < -15 || velX < -0.5) {
+            targetCenter = dragStartOffset - STEP;
+          }
+          snapTarget = Math.min(Math.max(targetCenter, PADDING), maxOffset);
+          isSnapping = true;
+          velX = 0;
         }
-        // else: let physics loop handle momentum glide
       };
 
       // Bind touch events — move is non-passive so we can preventDefault on drag
@@ -768,14 +776,18 @@
     }
 
     switch (action) {
-      case 'autorotate':
+      case 'autorotate': {
+        let isAct = false;
         if (typeof window.toggleCustomAutorotate === 'function') {
-          window.toggleCustomAutorotate();
-        } else {
+          isAct = window.toggleCustomAutorotate();
+        } else if (core) {
           core.navigateTo('autorotate');
+          isAct = !!window.customAutoRotateActive;
         }
+        showToast(isAct ? "Xoay tự động: Bật" : "Xoay tự động: Tắt");
         closeAllSheets();
         break;
+      }
 
       case 'fullscreen':
         core.navigateTo('fullscreen');

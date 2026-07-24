@@ -37,6 +37,7 @@
     info:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
     region:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
     close:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+    gallery: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
     fb:      `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H7v3h2v9h4v-9h3.6l.4-3H13V6c0-.5.5-1 1-1h3V2h-3a5 5 0 00-5 5v1z"/></svg>`,
     ig:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
     zalo:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>`,
@@ -65,13 +66,14 @@
     const hotspotsLabel = "Hotspots";
     const rotateLabel   = "Xoay T\u1ef1 \u0110\u1ed9ng";
     const fullscrLabel  = "To\u00e0n M\u00e0n H\u00ecnh";
+    const galleryLabel  = "Th\u01b0 Vi\u1ec7n";
     const shareLabel    = "Chia S\u1ebb";
     const infoLabel     = "Th\u00f4ng Tin";
     const regionLabel   = "Li\u00ean K\u1ebft V\u00f9ng";
 
     const toolBtns = [
       { action: 'hotspots',   icon: I.eye,     label: hotspotsLabel,   active: _isHotspotsVis },
-      { action: 'autorotate', icon: I.rotate,  label: rotateLabel,     active: false },
+      { action: 'gallery',    icon: I.gallery, label: galleryLabel,    active: false },
       { action: 'fullscreen', icon: I.fullscr, label: fullscrLabel,    active: false },
       { action: 'share',      icon: I.share,   label: shareLabel,      active: false },
       { action: 'info',       icon: I.info,    label: infoLabel,       active: false },
@@ -157,6 +159,7 @@
             <button class="ml5-tp-sw ml5-interactive" data-layout-switch="3">L3</button>
             <button class="ml5-tp-sw ml5-interactive" data-layout-switch="4">L4</button>
             <button class="ml5-tp-sw ml5-tp-sw-active ml5-interactive" data-layout-switch="5">L5</button>
+            <button class="ml5-tp-sw ml5-interactive" data-layout-switch="6">L6</button>
           </div>
         </div>
       </div>
@@ -307,42 +310,170 @@
       const itemW   = activeItem.offsetWidth;
       const scrollL = activeItem.offsetLeft - (trackW / 2) + (itemW / 2);
       track.scrollTo({ left: scrollL, behavior: 'smooth' });
-      setTimeout(() => { if (window._ml5RefreshScales) window._ml5RefreshScales(); }, 380);
+      if (window._ml5RefreshScales) window._ml5RefreshScales();
     }
 
     const scene = window.TAV_CORE.getSceneById(nodeId);
     if (scene) updateCompass(0);
   }
 
-  // ── Carousel scale effect ─────────────────────────────────────────────
+  // ── High-Performance Carousel Scale & Drag Physics ────────────────────
   function setupCarouselScales() {
     const track = document.getElementById('ml5-carousel-track');
     if (!track) return;
+
     const UNIT    = 80;
     const MAX_FAR = 2.4;
     let rafPending = false;
+    let itemOffsets = [];
+    let trackHalfW = 0;
+
+    function cacheGeometry() {
+      trackHalfW = track.clientWidth / 2;
+      const items = track.querySelectorAll('.ml5-carousel-item');
+      itemOffsets = [];
+      items.forEach(item => {
+        const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+        itemOffsets.push({
+          el: item,
+          centerBase: itemCenter - trackHalfW
+        });
+      });
+    }
 
     function applyScales() {
-      const trackRect = track.getBoundingClientRect();
-      const cx = trackRect.left + trackRect.width / 2;
-      track.querySelectorAll('.ml5-carousel-item').forEach(item => {
-        const r   = item.getBoundingClientRect();
-        const ic  = r.left + r.width / 2;
-        const dist = Math.abs(ic - cx);
-        const n   = Math.min(dist / UNIT, MAX_FAR) / MAX_FAR;
-        const st  = n * n * (3 - 2 * n);
-        item.style.transform = `scale(${(1.0 - st * 0.28).toFixed(3)})`;
-        item.style.opacity   = (1.0 - st * 0.52).toFixed(3);
-      });
+      if (!itemOffsets.length || !trackHalfW) cacheGeometry();
+      const scrollLeft = track.scrollLeft;
+      const len = itemOffsets.length;
+
+      for (let i = 0; i < len; i++) {
+        const itemObj = itemOffsets[i];
+        const dist = Math.abs(itemObj.centerBase - scrollLeft);
+        const n = Math.min(dist / UNIT, MAX_FAR) / MAX_FAR;
+        const st = n * n * (3 - 2 * n); // Smoothstep S-curve
+        const scale = (1.0 - st * 0.28).toFixed(3);
+        const opacity = (1.0 - st * 0.52).toFixed(3);
+
+        itemObj.el.style.transform = `scale3d(${scale}, ${scale}, 1)`;
+        itemObj.el.style.opacity   = opacity;
+      }
       rafPending = false;
     }
 
-    track.addEventListener('scroll', () => {
-      if (!rafPending) { rafPending = true; requestAnimationFrame(applyScales); }
+    function onScroll() {
+      if (!rafPending) {
+        rafPending = true;
+        requestAnimationFrame(applyScales);
+      }
+    }
+
+    track.addEventListener('scroll', onScroll, { passive: true });
+
+    if (window.ResizeObserver) {
+      const ro = new ResizeObserver(() => {
+        cacheGeometry();
+        applyScales();
+      });
+      ro.observe(track);
+    }
+
+    window._ml5RefreshScales = () => {
+      cacheGeometry();
+      requestAnimationFrame(applyScales);
+    };
+
+    cacheGeometry();
+    requestAnimationFrame(applyScales);
+
+    // Setup smooth drag & momentum
+    setupCarouselDrag(track);
+  }
+
+  function setupCarouselDrag(track) {
+    if (!track) return;
+    let isDown = false;
+    let startX = 0;
+    let startScrollLeft = 0;
+    let velX = 0;
+    let lastX = 0;
+    let lastTime = 0;
+    let momentumRaf = null;
+
+    track.addEventListener('pointerdown', e => {
+      if (e.button !== undefined && e.button !== 0) return;
+      isDown = true;
+      startX = e.clientX;
+      startScrollLeft = track.scrollLeft;
+      lastX = e.clientX;
+      lastTime = performance.now();
+      velX = 0;
+      if (momentumRaf) cancelAnimationFrame(momentumRaf);
     }, { passive: true });
 
-    window._ml5RefreshScales = () => requestAnimationFrame(applyScales);
-    requestAnimationFrame(applyScales);
+    track.addEventListener('pointermove', e => {
+      if (!isDown) return;
+      const x = e.clientX;
+      const now = performance.now();
+      const dx = x - startX;
+      track.scrollLeft = startScrollLeft - dx;
+
+      const dt = now - lastTime;
+      if (dt > 0) {
+        const currentVel = (x - lastX) / dt;
+        velX = velX * 0.4 + currentVel * 0.6;
+      }
+      lastX = x;
+      lastTime = now;
+    }, { passive: true });
+
+    const endDrag = () => {
+      if (!isDown) return;
+      isDown = false;
+      if (momentumRaf) cancelAnimationFrame(momentumRaf);
+
+      const item = track.querySelector('.ml5-carousel-item');
+      const itemStep = item ? item.offsetWidth + 8 : 80;
+      const deltaX = track.scrollLeft - startScrollLeft;
+
+      let targetScroll = startScrollLeft;
+      if (deltaX > 15 || velX < -0.1) {
+        targetScroll = startScrollLeft + itemStep;
+      } else if (deltaX < -15 || velX > 0.1) {
+        targetScroll = startScrollLeft - itemStep;
+      } else {
+        smoothSnapToNearest(track);
+        return;
+      }
+      track.scrollTo({ left: targetScroll, behavior: 'smooth' });
+    };
+
+    track.addEventListener('pointerup', endDrag, { passive: true });
+    track.addEventListener('pointercancel', endDrag, { passive: true });
+  }
+
+  function smoothSnapToNearest(track) {
+    if (!track) return;
+    const items = track.querySelectorAll('.ml5-carousel-item');
+    if (!items.length) return;
+
+    const trackHalfW = track.clientWidth / 2;
+    const scrollCenter = track.scrollLeft + trackHalfW;
+    let closestItem = null;
+    let minDistance = Infinity;
+
+    items.forEach(item => {
+      const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+      const dist = Math.abs(itemCenter - scrollCenter);
+      if (dist < minDistance) {
+        minDistance = dist;
+        closestItem = item;
+      }
+    });
+
+    if (closestItem) {
+      const targetScrollLeft = closestItem.offsetLeft + closestItem.offsetWidth / 2 - trackHalfW;
+      track.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+    }
   }
 
   // ── Compass ──────────────────────────────────────────────────────────
@@ -415,12 +546,14 @@
       style = document.createElement('style');
       style.id = 'ml5-desktop-hide';
       style.innerHTML = `@media screen and (max-width: 1024px) {
-        #modern-ui-overlay, #ui-wrapper, #minimap-widget, #compass-widget,
+        #modern-ui-container, #modern-ui-overlay, #ui-wrapper, #minimap-widget, #compass-widget,
         .layout-switcher-wrapper, .bottom-nav-container, .vertical-tool-stack,
         .sidebar-container, .gradient-floating-logo, .cmd-top-ribbon,
+        .prism-nav-container, .prism-dock, .prism-header-pill, .prism-bottom-dock,
+        .modern-header-pill, #modern-dock-container, .prism-dock-container,
         .prism-nav-wrapper, .prism-tool-container, .neo-unified-trigger,
         .blueprint-floating-gallery-container, #mobile-ui-overlay,
-        #ml2-overlay, #ml3-overlay, #ml4-overlay { display: none !important; }
+        #ml2-overlay, #ml3-overlay, #ml4-overlay, #ml6-overlay { display: none !important; }
       }`;
       document.head.appendChild(style);
     }
@@ -551,14 +684,24 @@
           const toastB = _isHotspotsVis ? "Hotspot: B\u1eadt" : "Hotspot: T\u1eaft";
           showToast(toastB);
 
-        } else if (action === 'autorotate') {
-          if (typeof window.toggleCustomAutorotate === 'function') {
-            window.toggleCustomAutorotate();
+        } else if (action === 'gallery') {
+          closeToolPanel();
+          if (typeof window.openGlobalPanoramaGallery === 'function') {
+            window.openGlobalPanoramaGallery();
           } else {
-            window.TAV_CORE.navigateTo('autorotate');
+            const galleryModal = document.getElementById('image-gallery-modal');
+            if (galleryModal) galleryModal.classList.add('active');
           }
-          const toastR = "\u0110ang xoay t\u1ef1 \u0111\u1ed9ng";
-          showToast(toastR);
+
+        } else if (action === 'autorotate') {
+          let isAct = false;
+          if (typeof window.toggleCustomAutorotate === 'function') {
+            isAct = window.toggleCustomAutorotate();
+          } else if (window.TAV_CORE) {
+            window.TAV_CORE.navigateTo('autorotate');
+            isAct = !!window.customAutoRotateActive;
+          }
+          showToast(isAct ? "Xoay tự động: Bật" : "Xoay tự động: Tắt");
 
         } else if (action === 'fullscreen') {
           window.TAV_CORE.navigateTo('fullscreen');
@@ -605,9 +748,16 @@
       compass.addEventListener('animationend', () => compass.classList.remove('ml5-pulse'), { once: true });
     });
 
-    // ── Minimap close ─────────────────────────────────────────────────
+    // ── Minimap close & Engine ────────────────────────────────────────
     const mapClose = document.getElementById('ml5-map-close');
     if (mapClose) mapClose.addEventListener('click', () => toggleMinimap(false));
+
+    const mapViewport5 = document.getElementById('ml5-minimap-viewport');
+    if (mapViewport5 && window.MobileMinimapEngine) {
+      const mapCtrl5 = window.MobileMinimapEngine.setupMap(mapViewport5);
+      document.getElementById('ml5-zoom-in')?.addEventListener('click', (e) => { e.stopPropagation(); mapCtrl5?.zoomIn(); });
+      document.getElementById('ml5-zoom-out')?.addEventListener('click', (e) => { e.stopPropagation(); mapCtrl5?.zoomOut(); });
+    }
 
     // ── Sheet close buttons ───────────────────────────────────────────
     ['ml5-nav-close'].forEach(id => {
@@ -680,16 +830,12 @@
     },
 
     destroy() {
-      if (!_initialized) return;
       _initialized = false;
-
       if (_compassRaf) { cancelAnimationFrame(_compassRaf); _compassRaf = null; }
-      clearTimeout(_toastTimer);
+      if (_toastTimer) clearTimeout(_toastTimer);
 
-      const overlay = document.getElementById('ml5-overlay');
-      if (overlay) overlay.remove();
-      const hide = document.getElementById('ml5-desktop-hide');
-      if (hide) hide.remove();
+      document.querySelectorAll('#ml5-overlay').forEach(el => el.remove());
+      document.querySelectorAll('#ml5-desktop-hide').forEach(el => el.remove());
 
       window.removeEventListener('resize', fixHeight);
       window._ml5RefreshScales = null;

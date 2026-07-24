@@ -317,7 +317,8 @@
   gap: 12px;
   padding: 0 calc(50% - 45px);
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
+  scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   height: 100%;
   align-items: center;
