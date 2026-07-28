@@ -826,13 +826,22 @@
 
 .ml2-layout-pills {
   display: flex;
-  gap: 6px;
+  gap: 5px;
   flex: 1;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.ml2-layout-pills::-webkit-scrollbar {
+  display: none;
 }
 
 .ml2-layout-pill-btn {
-  flex: 1;
-  padding: 8px 10px;
+  flex: 0 0 auto;
+  min-width: 32px;
+  padding: 6px 10px;
   border-radius: var(--ml2-radius-pill);
   border: 1px solid var(--ml2-glass-border);
   background: var(--ml2-glass-light);

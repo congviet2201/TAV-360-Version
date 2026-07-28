@@ -770,21 +770,33 @@
 
 .ml3-switcher-pills {
   display: flex;
+  gap: 4px;
   background: rgba(0,0,0,0.03);
   border-radius: var(--ml3-radius-pill);
   padding: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.ml3-switcher-pills::-webkit-scrollbar {
+  display: none;
 }
 
 .ml3-switcher-pill {
+  flex: 0 0 auto;
+  min-width: 32px;
   border: none;
   background: none;
   outline: none;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: var(--ml3-radius-pill);
-  font-size: 8.5px;
+  font-size: 9.5px;
   font-weight: 700;
   color: var(--ml3-text-dim);
   transition: all 0.22s var(--ml3-ease);
+  text-align: center;
 }
 
 .ml3-switcher-pill.ml3-active {

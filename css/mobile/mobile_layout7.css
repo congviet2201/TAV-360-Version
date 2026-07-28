@@ -1,0 +1,752 @@
+/* css/mobile/mobile_layout7.css — TAV Virtual Tour · Mobile Layout 7 (Desktop 6 Aurora Mobile Reinterpretation) */
+/* =========================================================================================
+   Design DNA  : Derived strictly from Desktop Layout 6 "Aurora"
+   Palette     : Deep Space Navy (#08111F), Neon Cyan (#00D9FF), Electric Purple (#8B5CF6), Aurora Pink (#FF0080), Emerald (#00E676)
+   Effects     : Dynamic Glassmorphism, Aurora Gradient Slider, Circular Icon Badges, Radial Neon Glows
+   Namespace   : .aurora-m7-*
+   ========================================================================================= */
+
+:root {
+  --am7-navy-bg: rgba(8, 17, 31, 0.88);
+  --am7-navy-solid: rgba(12, 22, 40, 0.96);
+  --am7-glass-border: rgba(0, 217, 255, 0.25);
+  --am7-glass-border-purple: rgba(139, 92, 246, 0.35);
+  --am7-glass-highlight: rgba(255, 255, 255, 0.14);
+  
+  --am7-cyan: #00D9FF;
+  --am7-purple: #8B5CF6;
+  --am7-pink: #FF0080;
+  --am7-emerald: #00E676;
+  
+  --am7-gradient-aurora: linear-gradient(135deg, #00D9FF 0%, #8B5CF6 50%, #FF0080 100%);
+  --am7-gradient-cyan-purple: linear-gradient(135deg, rgba(0, 217, 255, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  
+  --am7-glow-cyan: 0 0 18px rgba(0, 217, 255, 0.45);
+  --am7-glow-purple: 0 0 22px rgba(139, 92, 246, 0.5);
+  --am7-glow-card: 0 12px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(0, 217, 255, 0.15);
+  
+  --am7-font: 'Outfit', 'Inter', -apple-system, sans-serif;
+  --am7-ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --am7-ease-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ── Outer Fixed Overlay ───────────────────────────────────────────── */
+#ml7-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  font-family: var(--am7-font);
+  color: #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#ml7-overlay * {
+  box-sizing: border-box;
+}
+
+.aurora-m7-interactive {
+  pointer-events: auto;
+}
+
+/* ── Top Ribbon Header (Logo Brand Pill & Compass Widget) ──────────── */
+.aurora-m7-top-ribbon {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 10px) + 4px);
+  left: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 10002;
+  pointer-events: none;
+}
+
+.aurora-m7-brand-pill {
+  height: 32px;
+  padding: 2px 10px;
+  border-radius: 16px;
+  background: var(--am7-navy-bg);
+  border: 1px solid var(--am7-glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--am7-glow-card);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  pointer-events: auto;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: 65%;
+  transition: transform 0.22s var(--am7-ease-bounce), border-color 0.3s ease;
+}
+
+.aurora-m7-brand-pill:active {
+  transform: scale(0.95);
+}
+
+.aurora-m7-brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--am7-emerald);
+  box-shadow: 0 0 8px var(--am7-emerald);
+  animation: am7-pulse-dot 2s infinite ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes am7-pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.7; }
+}
+
+.aurora-m7-brand-text-block {
+  min-width: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.aurora-m7-brand-title {
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--am7-cyan);
+  background: var(--am7-gradient-aurora);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aurora-m7-brand-sub {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aurora-m7-compass-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--am7-navy-bg);
+  border: 1px solid var(--am7-glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--am7-glow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.22s var(--am7-ease-bounce);
+  flex-shrink: 0;
+}
+
+.aurora-m7-compass-badge:active {
+  transform: scale(0.9);
+}
+
+.aurora-m7-compass-svg {
+  width: 22px;
+  height: 22px;
+  transition: transform 0.1s linear;
+}
+
+/* ── Category Navigation Bar (Inspired by Desktop 6 Aurora Nav) ─────── */
+.aurora-m7-cat-bar {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 10px) + 44px);
+  left: 14px;
+  right: 14px;
+  height: 36px;
+  border-radius: 18px;
+  background: var(--am7-navy-bg);
+  border: 1px solid var(--am7-glass-border-purple);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--am7-glow-card);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  z-index: 10001;
+  pointer-events: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.aurora-m7-cat-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.aurora-m7-cat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.25s var(--am7-ease-spring);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.aurora-m7-cat-item:active {
+  transform: scale(0.94);
+}
+
+.aurora-m7-icon-badge {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.aurora-m7-icon-badge svg {
+  width: 9px;
+  height: 9px;
+  stroke-width: 2;
+  color: #ffffff;
+}
+
+.aurora-m7-cat-item.active {
+  background: var(--am7-gradient-cyan-purple);
+  border-color: var(--am7-cyan);
+  color: #ffffff;
+  box-shadow: var(--am7-glow-cyan);
+}
+
+.aurora-m7-cat-item.active .aurora-m7-icon-badge {
+  background: var(--am7-cyan);
+  border-color: var(--am7-cyan);
+  box-shadow: 0 0 8px var(--am7-cyan);
+}
+
+.aurora-m7-cat-item.active .aurora-m7-icon-badge svg {
+  color: #08111F;
+}
+
+/* Submenu Chevron */
+.aurora-m7-chevron {
+  width: 8px;
+  height: 8px;
+  transition: transform 0.25s ease;
+}
+
+.aurora-m7-cat-item.active .aurora-m7-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Aurora Floating Submenu Popover Card (Desktop 6 Submenu) ──────── */
+.aurora-m7-submenu-popover {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 10px) + 86px);
+  left: 14px;
+  right: 14px;
+  max-height: 55vh;
+  border-radius: 20px;
+  background: var(--am7-navy-solid);
+  border: 1px solid var(--am7-cyan);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), var(--am7-glow-cyan);
+  z-index: 10003;
+  padding: 14px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-12px) scale(0.96);
+  transition: opacity 0.28s var(--am7-ease-spring), transform 0.28s var(--am7-ease-bounce), visibility 0.28s ease;
+  overflow-y: auto;
+}
+
+.aurora-m7-submenu-popover.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.aurora-m7-scene-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.aurora-m7-scene-card {
+  height: 90px;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(8, 15, 28, 0.8);
+  cursor: pointer;
+  transition: transform 0.22s var(--am7-ease-bounce), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.aurora-m7-scene-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.75;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.aurora-m7-scene-card:active {
+  transform: scale(0.94);
+}
+
+.aurora-m7-scene-card.active {
+  border-color: var(--am7-cyan);
+  box-shadow: 0 0 16px rgba(0, 217, 255, 0.5);
+}
+
+.aurora-m7-scene-card.active img {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.aurora-m7-scene-card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 8px 6px 8px;
+  background: linear-gradient(0deg, rgba(8, 15, 28, 0.95) 0%, rgba(8, 15, 28, 0) 100%);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* Active Bar Indicator (Desktop 6 Style) */
+.aurora-m7-scene-card.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--am7-cyan);
+  box-shadow: 0 0 8px var(--am7-cyan);
+  z-index: 2;
+}
+
+/* ── Floating Aurora Action Toolbar (Desktop 6 Tool Panel Inspired) ── */
+.aurora-m7-toolbar {
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom, 12px) + 8px);
+  left: 14px;
+  right: 14px;
+  height: 58px;
+  border-radius: 29px;
+  background: var(--am7-navy-bg);
+  border: 1px solid var(--am7-glass-border);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--am7-glow-card);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 8px;
+  z-index: 10002;
+  pointer-events: auto;
+}
+
+.aurora-m7-tool-item {
+  flex: 1;
+  height: 46px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: inherit;
+  font-size: 9.5px;
+  font-weight: 500;
+  gap: 3px;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s var(--am7-ease-spring);
+  position: relative;
+}
+
+.aurora-m7-tool-icon-wrapper {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s var(--am7-ease-bounce);
+}
+
+.aurora-m7-tool-icon-wrapper svg {
+  width: 12px;
+  height: 12px;
+  stroke-width: 2;
+  color: #ffffff;
+  transition: transform 0.2s ease;
+}
+
+.aurora-m7-tool-item:active {
+  transform: scale(0.92);
+}
+
+.aurora-m7-tool-item.active {
+  color: var(--am7-cyan);
+}
+
+.aurora-m7-tool-item.active .aurora-m7-tool-icon-wrapper {
+  background: var(--am7-cyan);
+  border-color: var(--am7-cyan);
+  box-shadow: 0 0 12px var(--am7-cyan);
+}
+
+.aurora-m7-tool-item.active .aurora-m7-tool-icon-wrapper svg {
+  color: #08111F;
+}
+
+/* ── Aurora Floating Mini Map Card ─────────────────────────────────── */
+.aurora-m7-map-card {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 10px) + 86px);
+  right: 14px;
+  width: 260px;
+  height: 190px;
+  border-radius: 20px;
+  background: var(--am7-navy-solid);
+  border: 1px solid var(--am7-glass-border-purple);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--am7-glow-card);
+  z-index: 10003;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.88) translateY(-15px);
+  transition: opacity 0.28s var(--am7-ease-spring), transform 0.28s var(--am7-ease-bounce), visibility 0.28s ease;
+}
+
+.aurora-m7-map-card.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: scale(1) translateY(0);
+}
+
+.aurora-m7-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(139, 92, 246, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.aurora-m7-map-title {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--am7-cyan);
+  letter-spacing: 0.5px;
+}
+
+.aurora-m7-map-close {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.aurora-m7-map-viewport {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.aurora-m7-map-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform-origin: top left;
+}
+
+.aurora-m7-map-zoom {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 12;
+}
+
+.aurora-m7-map-zoom-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: rgba(8, 17, 31, 0.88);
+  border: 1px solid var(--am7-glass-border);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* ── Aurora Tools Sheet & Layout Switcher ──────────────────────────── */
+.aurora-m7-tools-sheet {
+  position: absolute;
+  bottom: calc(env(safe-area-inset-bottom, 12px) + 74px);
+  left: 14px;
+  right: 14px;
+  border-radius: 24px;
+  background: var(--am7-navy-solid);
+  border: 1px solid var(--am7-glass-border-purple);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: var(--am7-glow-card), var(--am7-glow-purple);
+  z-index: 10004;
+  padding: 16px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.26s var(--am7-ease-spring), transform 0.26s var(--am7-ease-bounce), visibility 0.26s ease;
+}
+
+.aurora-m7-tools-sheet.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.aurora-m7-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.aurora-m7-action-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 6px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 500;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.aurora-m7-action-tile svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+}
+
+.aurora-m7-action-tile:active {
+  transform: scale(0.93);
+}
+
+.aurora-m7-action-tile.active {
+  background: rgba(0, 217, 255, 0.12);
+  border-color: var(--am7-cyan);
+  color: var(--am7-cyan);
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+}
+
+.aurora-m7-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 14px 0 12px 0;
+}
+
+.aurora-m7-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.aurora-m7-social-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.aurora-m7-social-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* Switcher Slider Row (Desktop 6 Style) */
+.aurora-m7-switch-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  padding: 2px;
+}
+
+.aurora-m7-switch-row::-webkit-scrollbar {
+  display: none;
+}
+
+.aurora-m7-sw-pill {
+  flex: 0 0 auto;
+  min-width: 32px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.aurora-m7-sw-pill:active {
+  transform: scale(0.92);
+}
+
+.aurora-m7-sw-pill.active {
+  background: var(--am7-gradient-aurora);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 0 12px rgba(0, 217, 255, 0.6);
+}
+
+/* ── Backdrop Overlay ──────────────────────────────────────────────── */
+.aurora-m7-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 9, 18, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10002;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.aurora-m7-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ── Toast Notification Pill ───────────────────────────────────────── */
+.aurora-m7-toast {
+  position: fixed;
+  top: max(env(safe-area-inset-top, 16px) + 60px, 72px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px) scale(0.9);
+  padding: 8px 18px;
+  border-radius: 20px;
+  background: rgba(8, 15, 28, 0.92);
+  border: 1px solid var(--am7-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--am7-glow-card);
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s var(--am7-ease-spring), transform 0.25s var(--am7-ease-bounce), visibility 0.25s ease;
+  z-index: 10005;
+  white-space: nowrap;
+}
+
+.aurora-m7-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+
+/* ── Ripple Effect ─────────────────────────────────────────────────── */
+.aurora-m7-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(0, 217, 255, 0.4);
+  transform: scale(0);
+  animation: am7-ripple 0.55s linear;
+  pointer-events: none;
+}
+
+@keyframes am7-ripple {
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}

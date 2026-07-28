@@ -678,23 +678,30 @@
 .ml6-tp-switch-row {
   display: flex;
   flex: 1;
-  gap: 2px;
+  gap: 3px;
   background: rgba(0, 0, 0, 0.35);
   padding: 3px;
   border-radius: var(--ml6-r-full);
   border: 1px solid var(--ml6-border-soft);
-  justify-content: space-between;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.ml6-tp-switch-row::-webkit-scrollbar {
+  display: none;
 }
 
 .ml6-tp-sw {
-  flex: 1;
-  min-width: 0;
-  padding: 5px 2px;
+  flex: 0 0 auto;
+  min-width: 26px;
+  padding: 5px 6px;
   border-radius: var(--ml6-r-full);
   border: none;
   background: transparent;
   color: var(--ml6-text-muted);
-  font-size: 8.5px;
+  font-size: 9px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;

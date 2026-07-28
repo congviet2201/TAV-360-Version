@@ -151,6 +151,10 @@
             <button class="ml6-tp-sw ml6-interactive" data-layout-switch="4">L4</button>
             <button class="ml6-tp-sw ml6-interactive" data-layout-switch="5">L5</button>
             <button class="ml6-tp-sw ml6-tp-sw-active ml6-interactive" data-layout-switch="6">L6</button>
+            <button class="ml6-tp-sw ml6-interactive" data-layout-switch="7">L7</button>
+            <button class="ml6-tp-sw ml6-interactive" data-layout-switch="8">L8</button>
+            <button class="ml6-tp-sw ml6-interactive" data-layout-switch="9">L9</button>
+            <button class="ml6-tp-sw ml6-interactive" data-layout-switch="10">L10</button>
           </div>
         </div>
       </div>

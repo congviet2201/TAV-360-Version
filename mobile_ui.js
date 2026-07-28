@@ -152,6 +152,10 @@ function initMobileUI() {
           <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('4')">L4</button>
           <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('5')">L5</button>
           <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('6')">L6</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('7')">L7</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('8')">L8</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('9')">L9</button>
+          <button class="mob-sw-pill" onclick="if(window.switchMobileLayout) window.switchMobileLayout('10')">L10</button>
         </div>
       </div>
     </div>
@@ -479,10 +483,14 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
       if (window.MobileLayout4 && typeof window.MobileLayout4.destroy === 'function') window.MobileLayout4.destroy();
       if (window.MobileLayout5 && typeof window.MobileLayout5.destroy === 'function') window.MobileLayout5.destroy();
       if (window.MobileLayout6 && typeof window.MobileLayout6.destroy === 'function') window.MobileLayout6.destroy();
+      if (window.MobileLayout7 && typeof window.MobileLayout7.destroy === 'function') window.MobileLayout7.destroy();
+      if (window.MobileLayout8 && typeof window.MobileLayout8.destroy === 'function') window.MobileLayout8.destroy();
+      if (window.MobileLayout9 && typeof window.MobileLayout9.destroy === 'function') window.MobileLayout9.destroy();
+      if (window.MobileLayout10 && typeof window.MobileLayout10.destroy === 'function') window.MobileLayout10.destroy();
 
       // 2. Unconditionally remove all mobile overlays and injected styles from DOM
-      document.querySelectorAll('#mobile-ui-overlay, #ml2-overlay, #ml3-overlay, #ml4-overlay, #ml5-overlay, #ml6-overlay').forEach(el => el.remove());
-      document.querySelectorAll('#ml1-desktop-hide, #ml2-desktop-hide, #ml3-desktop-hide, #ml4-desktop-hide, #ml5-desktop-hide, #ml6-desktop-hide, #ml2-hotspot-fix').forEach(el => el.remove());
+      document.querySelectorAll('#mobile-ui-overlay, #ml2-overlay, #ml3-overlay, #ml4-overlay, #ml5-overlay, #ml6-overlay, #ml7-overlay, #ml8-overlay, #ml9-overlay, #ml10-overlay').forEach(el => el.remove());
+      document.querySelectorAll('#ml1-desktop-hide, #ml2-desktop-hide, #ml3-desktop-hide, #ml4-desktop-hide, #ml5-desktop-hide, #ml6-desktop-hide, #ml7-desktop-hide, #ml8-desktop-hide, #ml9-desktop-hide, #ml10-desktop-hide, #ml2-hotspot-fix').forEach(el => el.remove());
       document.body.classList.remove('region-mode-active', 'hide-hotspots');
 
       // Initialize the chosen layout
@@ -516,6 +524,30 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
         } else {
           console.warn('[Orchestrator] MobileLayout6 module not loaded yet');
         }
+      } else if (id === '7') {
+        if (window.MobileLayout7) {
+          window.MobileLayout7.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout7 module not loaded yet');
+        }
+      } else if (id === '8') {
+        if (window.MobileLayout8) {
+          window.MobileLayout8.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout8 module not loaded yet');
+        }
+      } else if (id === '9') {
+        if (window.MobileLayout9) {
+          window.MobileLayout9.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout9 module not loaded yet');
+        }
+      } else if (id === '10') {
+        if (window.MobileLayout10) {
+          window.MobileLayout10.init();
+        } else {
+          console.warn('[Orchestrator] MobileLayout10 module not loaded yet');
+        }
       } else {
         // Fallback to Layout 1 (re-run initMobileUI)
         if (typeof initMobileUI === 'function') initMobileUI();
@@ -525,7 +557,7 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
     };
 
     // Boot the saved layout
-    if (savedLayout === '2' || savedLayout === '3' || savedLayout === '4' || savedLayout === '5' || savedLayout === '6') {
+    if (savedLayout === '2' || savedLayout === '3' || savedLayout === '4' || savedLayout === '5' || savedLayout === '6' || savedLayout === '7' || savedLayout === '8' || savedLayout === '9' || savedLayout === '10') {
       const tryBootLayout = (attempts) => {
         let layoutModule = null;
         if (savedLayout === '2') layoutModule = window.MobileLayout2;
@@ -533,6 +565,10 @@ if (document.readyState === "loading") { document.addEventListener("DOMContentLo
         else if (savedLayout === '4') layoutModule = window.MobileLayout4;
         else if (savedLayout === '5') layoutModule = window.MobileLayout5;
         else if (savedLayout === '6') layoutModule = window.MobileLayout6;
+        else if (savedLayout === '7') layoutModule = window.MobileLayout7;
+        else if (savedLayout === '8') layoutModule = window.MobileLayout8;
+        else if (savedLayout === '9') layoutModule = window.MobileLayout9;
+        else if (savedLayout === '10') layoutModule = window.MobileLayout10;
 
         if (layoutModule) {
           window.scrollTo(0, 0);

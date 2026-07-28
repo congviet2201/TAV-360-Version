@@ -225,6 +225,10 @@
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l4">L4</button>
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l5">L5</button>
             <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l6">L6</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l7">L7</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l8">L8</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l9">L9</button>
+            <button class="ml2-layout-pill-btn ml2-interactive" id="ml2-switch-to-l10">L10</button>
           </div>
         </div>
       </div>
@@ -665,6 +669,18 @@
     });
     document.getElementById('ml2-switch-to-l6')?.addEventListener('click', () => {
       if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('6');
+    });
+    document.getElementById('ml2-switch-to-l7')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('7');
+    });
+    document.getElementById('ml2-switch-to-l8')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('8');
+    });
+    document.getElementById('ml2-switch-to-l9')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('9');
+    });
+    document.getElementById('ml2-switch-to-l10')?.addEventListener('click', () => {
+      if (typeof window.switchMobileLayout === 'function') window.switchMobileLayout('10');
     });
 
     // TAV_CORE scene change subscription

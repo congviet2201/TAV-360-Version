@@ -916,20 +916,30 @@
 
 .ml5-tp-switch-row {
   display: flex;
-  gap: 2px;
+  gap: 3px;
   background: rgba(124, 58, 237, 0.04);
   border: 1px solid var(--ml5-border-soft);
   border-radius: var(--ml5-r-pill);
-  padding: 2px;
+  padding: 3px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.ml5-tp-switch-row::-webkit-scrollbar {
+  display: none;
 }
 
 .ml5-tp-sw {
-  width: 20px;
-  height: 20px;
+  min-width: 26px;
+  height: 24px;
+  padding: 0 5px;
+  flex: 0 0 auto;
   border: none;
   background: none;
-  border-radius: 50%;
-  font-size: 8px;
+  border-radius: 12px;
+  font-size: 9.5px;
   font-weight: 700;
   color: var(--ml5-text-muted);
   cursor: pointer;
