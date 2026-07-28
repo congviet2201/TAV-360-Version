@@ -1,304 +1,230 @@
-/* js/mobile/mobile_layout9.js — TAV Virtual Tour · Mobile Layout 9 (Desktop 8 Nexus Mobile Reinterpretation) */
-/* =========================================================================================
-   Design DNA  : Derived strictly from Desktop Layout 8 "Nexus" (Sky/Mint/Lavender, Active Mint Line, Dark Nexus Tech)
-   Theme       : Sky Blue / Mint Green / Clean Tech Glassmorphism
-   Module      : window.MobileLayout9 { init, destroy }
-   Data source : window.TAV_CORE (shared_core.js) — no data duplication
-   ========================================================================================= */
-
+/* js/mobile/mobile_layout9.js
+   TAV Virtual Tour · Mobile Layout 9 — EDGE CONTROL (Pro Camera Viewfinder)
+   Data source : window.TAV_CORE (shared_core.js)
+   Architecture: Zero bottom toolbar. UI strictly on edges.
+     - Right : Floating vertical glass rail dock
+     - Left  : Slide-out scene drawer (trigger button only when closed)
+     - Top-L : Compact collapsible mini map
+     - Top-R : Independent floating compass
+     - Side  : Floating tools panel (pops from right rail)
+   API: window.MobileLayout9.init() / .destroy()
+*/
 (function () {
   'use strict';
 
-  // ── State ────────────────────────────────────────────────────────────
-  let _initialized     = false;
-  let _toastTimer       = null;
-  let _activeCategory   = '';
-  let _isSceneSheetOpen = false;
-  let _isMapOpen        = false;
-  let _isToolsOpen      = false;
-  let _isHotspotsVis    = true;
-  let _compassRaf       = null;
+  /* ── State ────────────────────────────────────────────────────────── */
+  var _initialized  = false;
+  var _isMapOpen    = false;
+  var _isHotsVis    = true;
+  var _isDrawerOpen = false;
+  var _isToolsOpen  = false;
+  var _compassRaf   = null;
+  var _toastTimer   = null;
+  var _activeCategory = '';
 
-  // ── SVG Icon Library (Desktop 8 Nexus Style) ─────────────────────────
-  const I = {
-    compass:  `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="rgba(94,234,212,0.4)" stroke-width="3"/><polygon points="50,15 62,50 50,62 38,50" fill="#5EEAD4"/><polygon points="50,85 62,50 50,62 38,50" fill="#38BDF8"/><circle fill="rgba(94,234,212,0.4)" cx="50" cy="50" r="6"/></svg>`,
-    scenes:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>`,
-    map:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>`,
-    eye:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
-    gallery:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`,
-    tools:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>`,
-    music:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>`,
-    fullscr:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>`,
-    info:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-    region:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
-    close:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
-    fb:       `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 8H7v3h2v9h4v-9h3.6l.4-3H13V6c0-.5.5-1 1-1h3V2h-3a5 5 0 00-5 5v1z"/></svg>`,
-    ig:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>`,
-    zalo:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>`,
+  /* ── SVG Icons ────────────────────────────────────────────────────── */
+  var I = {
+    compass:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9" stroke-width="1.5"/><polygon points="12,4 15,12 12,20 9,12" fill="#5EEAD4" stroke="none"/></svg>',
+    scenes:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.5" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.5" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1.5" stroke-width="1.8"/></svg>',
+    map:        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6" stroke-width="1.8"/><line x1="8" y1="2" x2="8" y2="18" stroke-width="1.8"/><line x1="16" y1="6" x2="16" y2="22" stroke-width="1.8"/></svg>',
+    eye:        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke-width="1.8"/></svg>',
+    eyeOff:     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" stroke-width="1.8"/><line x1="1" y1="1" x2="23" y2="23" stroke-width="1.8"/></svg>',
+    gallery:    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.8"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><polyline points="21 15 16 10 5 21" stroke-width="1.8"/></svg>',
+    tools:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3" stroke-width="1.8"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" stroke-width="1.8"/></svg>',
+    close:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="6" x2="6" y2="18" stroke-width="2"/><line x1="6" y1="6" x2="18" y2="18" stroke-width="2"/></svg>',
+    fullscreen: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" stroke-width="1.8"/></svg>',
+    info:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="1.8"/><line x1="12" y1="16" x2="12" y2="12" stroke-width="1.8"/><line x1="12" y1="8" x2="12.01" y2="8" stroke-width="2.5"/></svg>',
+    link:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-width="1.8"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-width="1.8"/></svg>',
+    music:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13" stroke-width="1.8"/><circle cx="6" cy="18" r="3" stroke-width="1.8"/><circle cx="18" cy="16" r="3" stroke-width="1.8"/></svg>',
+    facebook:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
+    share:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke-width="1.8"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-width="1.8"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-width="1.8"/></svg>'
   };
 
-  // ── DOM Builder (Derived directly from Desktop Layout 8 Nexus) ──────
+  /* ── Build DOM ────────────────────────────────────────────────────── */
   function buildDOM() {
-    const { config } = window.TAV_CORE;
-    const cats       = window.TAV_CORE.getCategories();
-    const isMuted    = window.TAV_CORE.isMusicMuted;
-
+    var core   = window.TAV_CORE;
+    var config = core.config;
+    var cats   = core.getCategories();
     _activeCategory = cats[0] || '';
 
-    const catPills = cats.map((c, i) => `
-      <button class="nexus-m9-cat-pill${i === 0 ? ' active' : ''}" data-cat="${c}">
-        <span>${c}</span>
-      </button>
-    `).join('');
+    /* Build drawer: categories + scene rows */
+    var drawerInner = '';
+    cats.forEach(function (catName) {
+      var catScenes = core.getScenesByCategory(catName);
+      drawerInner += '<div class="nm9-cat-section">';
+      drawerInner += '<div class="nm9-cat-header">' + catName + '</div>';
+      drawerInner += '<div class="nm9-scene-list">';
+      catScenes.forEach(function (s) {
+        var isActive = core.currentScene && core.currentScene.action === s.action;
+        drawerInner += '<div class="nm9-scene-row' + (isActive ? ' active' : '') + '" data-action="' + s.action + '">';
+        drawerInner += '<img src="' + s.thumb + '" alt="' + s.title + '" loading="lazy" onerror="this.src=\'preview.jpg\'" class="nm9-scene-thumb">';
+        drawerInner += '<span class="nm9-scene-name">' + s.title + '</span>';
+        drawerInner += '</div>';
+      });
+      drawerInner += '</div></div>';
+    });
 
-    return `
-      <!-- Top Ribbon Header (Logo Brand Pill & Compass Widget) -->
-      <div class="nexus-m9-top-ribbon">
-        <div class="nexus-m9-brand-pill" id="nm9-brand-btn">
-          <div class="nexus-m9-brand-dot"></div>
-          <div class="nexus-m9-brand-text-block">
-            <div class="nexus-m9-brand-title">${config.projectTitle.top}</div>
-            <div class="nexus-m9-brand-sub">${config.projectTitle.sub}</div>
-          </div>
-        </div>
+    /* Switcher pills */
+    var pills = '';
+    for (var i = 1; i <= 10; i++) {
+      pills += '<button class="nm9-sw-pill' + (i === 9 ? ' active' : '') + '" data-layout-switch="' + i + '">L' + i + '</button>';
+    }
 
-        <div class="nexus-m9-compass-badge" id="nm9-compass-btn" title="Đặt lại hướng nhìn">
-          <div class="nexus-m9-compass-svg" id="nm9-compass-dial">${I.compass}</div>
-        </div>
-      </div>
+    var isMuted = core.isMusicMuted;
 
-      <!-- Modular Floating Pods Action Dock (Layout 9 Theme) -->
-      <nav class="nexus-m9-dock" id="nm9-dock">
-        <button class="nexus-m9-dock-item pod-scene" id="nm9-dock-scenes" aria-label="Cảnh">
-          <div class="nexus-m9-dock-icon-wrapper">${I.scenes}</div>
-          <span>Cảnh</span>
-        </button>
-        <button class="nexus-m9-dock-item${_isMapOpen ? ' active' : ''}" id="nm9-dock-map" aria-label="Bản Đồ">
-          <div class="nexus-m9-dock-icon-wrapper">${I.map}</div>
-          <span>Bản Đồ</span>
-        </button>
-        <button class="nexus-m9-dock-item pod-center${_isHotspotsVis ? ' active' : ''}" id="nm9-dock-hotspot" aria-label="Hotspot">
-          <div class="nexus-m9-dock-icon-wrapper">${I.eye}</div>
-          <span>Hotspot</span>
-        </button>
-        <button class="nexus-m9-dock-item" id="nm9-dock-gallery" aria-label="Thư Viện">
-          <div class="nexus-m9-dock-icon-wrapper">${I.gallery}</div>
-          <span>Thư Viện</span>
-        </button>
-        <button class="nexus-m9-dock-item" id="nm9-dock-tools" aria-label="Công Cụ">
-          <div class="nexus-m9-dock-icon-wrapper">${I.tools}</div>
-          <span>Công Cụ</span>
-        </button>
-      </nav>
+    return (
+      '<!-- Top Edge: Brand + Compass -->' +
+      '<div class="nm9-top-bar">' +
+        '<div class="nm9-brand-pill" id="nm9-brand-pill">' +
+          '<div class="nm9-brand-dot"></div>' +
+          '<div class="nm9-brand-text">' +
+            '<span class="nm9-brand-title">' + (config.projectTitle ? config.projectTitle.top : 'TAV Villa') + '</span>' +
+            '<span class="nm9-brand-sub">EDGE CONTROL · M9</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="nm9-compass" id="nm9-compass-btn" title="Đặt lại hướng nhìn">' +
+          '<div class="nm9-compass-svg" id="nm9-compass-dial">' + I.compass + '</div>' +
+        '</div>' +
+      '</div>' +
 
-      <!-- Nexus Scene Navigation Sheet -->
-      <div class="nexus-m9-scene-sheet" id="nm9-scene-sheet">
-        <div class="nexus-m9-cat-row" id="nm9-cat-row">
-          ${catPills}
-        </div>
-        <div class="nexus-m9-scene-grid" id="nm9-scene-grid"></div>
-      </div>
+      '<!-- Left Edge: Scene Trigger Button -->' +
+      '<button class="nm9-scene-trigger" id="nm9-scene-trigger" aria-label="Danh sách Cảnh">' +
+        '<span class="nm9-trigger-icon">' + I.scenes + '</span>' +
+        '<span class="nm9-trigger-label">Cảnh</span>' +
+      '</button>' +
 
-      <!-- Mini Map Card -->
-      <div class="nexus-m9-map-card" id="nm9-map-card">
-        <div class="nexus-m9-map-header">
-          <span class="nexus-m9-map-title">Bản Đồ Virtual Tour</span>
-          <button class="nexus-m9-map-close" id="nm9-map-close">${I.close}</button>
-        </div>
-        <div class="nexus-m9-map-viewport" id="nm9-map-viewport">
-          <img src="image/Map_optimized.jpg" id="nm9-map-img" alt="Map" class="nexus-m9-map-img">
-          <div id="nm9-map-radar" style="position: absolute; top: 50%; left: 50%; width: 0; height: 0; z-index: 10;">
-            <div id="nm9-map-cone" style="position: absolute; width: 0; height: 0; border-left: 18px solid transparent; border-right: 18px solid transparent; border-top: 36px solid rgba(56,189,248,0.5); transform-origin: bottom center; transform: translate(-50%, -100%);"></div>
-            <div style="position: absolute; width: 10px; height: 10px; background: #5EEAD4; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 10px #5EEAD4;"></div>
-          </div>
-        </div>
-        <div class="nexus-m9-map-zoom">
-          <button class="nexus-m9-map-zoom-btn" id="nm9-zoom-in">+</button>
-          <button class="nexus-m9-map-zoom-btn" id="nm9-zoom-out">−</button>
-        </div>
-      </div>
+      '<!-- Left Slide-Out Scene Drawer -->' +
+      '<div class="nm9-drawer" id="nm9-drawer">' +
+        '<div class="nm9-drawer-head">' +
+          '<span class="nm9-drawer-title">Danh Sách Cảnh</span>' +
+          '<button class="nm9-drawer-close" id="nm9-drawer-close">' + I.close + '</button>' +
+        '</div>' +
+        '<div class="nm9-drawer-body">' + drawerInner + '</div>' +
+      '</div>' +
 
-      <!-- Nexus Tools Sheet Drawer -->
-      <div class="nexus-m9-tools-sheet" id="nm9-tools-sheet">
-        <div class="nexus-m9-tools-grid">
-          <button class="nexus-m9-action-tile" data-action="fullscreen">
-            ${I.fullscr}<span>Toàn Màn Hình</span>
-          </button>
-          <button class="nexus-m9-action-tile" data-action="info">
-            ${I.info}<span>Thông Tin</span>
-          </button>
-          <button class="nexus-m9-action-tile" data-action="region">
-            ${I.region}<span>Liên Kết Vùng</span>
-          </button>
-          <button class="nexus-m9-action-tile${!isMuted ? ' active' : ''}" data-action="audio">
-            ${I.music}<span>Âm Nhạc</span>
-          </button>
-        </div>
-        <div class="nexus-m9-divider"></div>
-        <div class="nexus-m9-socials">
-          <a href="${config.social.facebook}" target="_blank" class="nexus-m9-social-btn" title="Facebook">${I.fb}</a>
-          <a href="${config.social.instagram}" target="_blank" class="nexus-m9-social-btn" title="Instagram">${I.ig}</a>
-          <a href="${config.social.zalo}" target="_blank" class="nexus-m9-social-btn" title="Zalo">${I.zalo}</a>
-        </div>
-        <div class="nexus-m9-switch-row">
-          <button class="nexus-m9-sw-pill" data-layout-switch="1">L1</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="2">L2</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="3">L3</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="4">L4</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="5">L5</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="6">L6</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="7">L7</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="8">L8</button>
-          <button class="nexus-m9-sw-pill active" data-layout-switch="9">L9</button>
-          <button class="nexus-m9-sw-pill" data-layout-switch="10">L10</button>
-        </div>
-      </div>
+      '<!-- Top-Left Mini Map Card -->' +
+      '<div class="nm9-map-card" id="nm9-map-card">' +
+        '<div class="nm9-map-head">' +
+          '<span class="nm9-map-label">Bản Đồ</span>' +
+          '<button class="nm9-map-close" id="nm9-map-close">' + I.close + '</button>' +
+        '</div>' +
+        '<div class="nm9-map-view" id="nm9-map-viewport">' +
+          '<img src="image/Map_optimized.jpg" id="nm9-map-img" alt="Map" class="nm9-map-img">' +
+          '<div id="nm9-map-radar" style="position:absolute;top:50%;left:50%;width:0;height:0;z-index:10;">' +
+            '<div id="nm9-map-cone" style="position:absolute;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:28px solid rgba(94,234,212,0.55);transform-origin:bottom center;transform:translate(-50%,-100%);"></div>' +
+            '<div style="position:absolute;width:8px;height:8px;background:#5EEAD4;border-radius:50%;transform:translate(-50%,-50%);"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="nm9-map-zoom">' +
+          '<button class="nm9-map-zbtn" id="nm9-map-zin">+</button>' +
+          '<button class="nm9-map-zbtn" id="nm9-map-zout">\u2212</button>' +
+        '</div>' +
+      '</div>' +
 
-      <!-- Backdrop Overlay -->
-      <div class="nexus-m9-backdrop" id="nm9-backdrop"></div>
+      '<!-- Right Edge Vertical Glass Rail Dock -->' +
+      '<nav class="nm9-rail" id="nm9-rail">' +
+        '<button class="nm9-rail-btn" id="nm9-rail-map" title="Bản Đồ">' + I.map + '</button>' +
+        '<div class="nm9-rail-divider"></div>' +
+        '<button class="nm9-rail-btn' + (_isHotsVis ? ' active' : '') + '" id="nm9-rail-hotspot" title="Hotspot">' + (_isHotsVis ? I.eye : I.eyeOff) + '</button>' +
+        '<button class="nm9-rail-btn" id="nm9-rail-gallery" title="Thư Viện">' + I.gallery + '</button>' +
+        '<div class="nm9-rail-divider"></div>' +
+        '<button class="nm9-rail-btn" id="nm9-rail-tools" title="Công Cụ">' + I.tools + '</button>' +
+      '</nav>' +
 
-      <!-- Toast Notification -->
-      <div class="nexus-m9-toast" id="nm9-toast"></div>
-    `;
+      '<!-- Right Floating Tools Panel -->' +
+      '<div class="nm9-tools-panel" id="nm9-tools-panel">' +
+        '<div class="nm9-tools-grid">' +
+          '<button class="nm9-tool-tile" id="nm9-act-fullscreen">' + I.fullscreen + '<span>Toàn màn hình</span></button>' +
+          '<button class="nm9-tool-tile" id="nm9-act-info">' + I.info + '<span>Thông tin</span></button>' +
+          '<button class="nm9-tool-tile" id="nm9-act-link">' + I.link + '<span>Liên kết</span></button>' +
+          '<button class="nm9-tool-tile' + (!isMuted ? ' active' : '') + '" id="nm9-act-music">' + I.music + '<span>' + (isMuted ? 'Tắt nhạc' : 'Bật nhạc') + '</span></button>' +
+        '</div>' +
+        '<div class="nm9-tools-sep"></div>' +
+        '<div class="nm9-socials">' +
+          '<a href="https://facebook.com" target="_blank" class="nm9-social-btn">' + I.facebook + '</a>' +
+          '<button class="nm9-social-btn" id="nm9-act-share">' + I.share + '</button>' +
+        '</div>' +
+        '<div class="nm9-tools-sep"></div>' +
+        '<div class="nm9-switcher-row">' + pills + '</div>' +
+      '</div>' +
+
+      '<!-- Toast -->' +
+      '<div class="nm9-toast" id="nm9-toast"></div>'
+    );
   }
 
-  // ── Helper: Ripple Animation ─────────────────────────────────────────
-  function triggerRipple(el, e) {
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const ripple = document.createElement('span');
-    ripple.className = 'nexus-m9-ripple';
-    const diameter = Math.max(rect.width, rect.height);
-    const radius = diameter / 2;
-    const x = e ? (e.clientX - rect.left - radius) : (rect.width / 2 - radius);
-    const y = e ? (e.clientY - rect.top - radius) : (rect.height / 2 - radius);
-    ripple.style.width = ripple.style.height = `${diameter}px`;
-    ripple.style.left = `${x}px`;
-    ripple.style.top = `${y}px`;
-    el.appendChild(ripple);
-    setTimeout(() => ripple.remove(), 600);
-  }
-
-  // ── Toast Notification ───────────────────────────────────────────────
+  /* ── Toast ────────────────────────────────────────────────────────── */
   function showToast(msg) {
-    const toast = document.getElementById('nm9-toast');
-    if (!toast) return;
-    toast.textContent = msg;
-    toast.classList.add('show');
+    var t = document.getElementById('nm9-toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
     if (_toastTimer) clearTimeout(_toastTimer);
-    _toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    _toastTimer = setTimeout(function () { t.classList.remove('show'); }, 2200);
   }
 
-  // ── Scene Grid Builder ───────────────────────────────────────────────
-  function buildSceneGrid(catName) {
-    const grid = document.getElementById('nm9-scene-grid');
-    if (!grid) return;
-    const scenes = window.TAV_CORE.getScenesByCategory(catName);
-    const currentAction = window.TAV_CORE.currentScene ? window.TAV_CORE.currentScene.action : '';
-
-    grid.innerHTML = scenes.map(s => `
-      <div class="nexus-m9-scene-card${s.action === currentAction ? ' active' : ''}" data-action="${s.action}">
-        <img src="${s.thumb}" alt="${s.title}" loading="lazy" onerror="this.src='preview.jpg'">
-        <div class="nexus-m9-scene-title">${s.title}</div>
-      </div>
-    `).join('');
-  }
-
-  // ── Sheet & Panel Control ───────────────────────────────────────────
-  function closeAllPanels() {
-    _isSceneSheetOpen = false;
-    _isMapOpen        = false;
-    _isToolsOpen      = false;
-
-    document.getElementById('nm9-scene-sheet')?.classList.remove('open');
-    document.getElementById('nm9-map-card')?.classList.remove('open');
-    document.getElementById('nm9-tools-sheet')?.classList.remove('open');
-    document.getElementById('nm9-backdrop')?.classList.remove('open');
-
-    document.querySelectorAll('#nm9-dock .nexus-m9-dock-item').forEach(b => {
-      if (b.id !== 'nm9-dock-hotspot') {
-        b.classList.remove('active');
-      }
-    });
-  }
-
-  function toggleSceneSheet(catName) {
-    if (_isSceneSheetOpen && (!catName || _activeCategory === catName)) {
-      closeAllPanels();
-      return;
+  /* ── Drawer ───────────────────────────────────────────────────────── */
+  function setDrawer(open) {
+    _isDrawerOpen = open;
+    var drawer  = document.getElementById('nm9-drawer');
+    var trigger = document.getElementById('nm9-scene-trigger');
+    if (open) {
+      drawer && drawer.classList.add('open');
+      trigger && trigger.classList.add('active');
+    } else {
+      drawer && drawer.classList.remove('open');
+      trigger && trigger.classList.remove('active');
     }
-
-    closeAllPanels();
-    if (catName) _activeCategory = catName;
-    _isSceneSheetOpen = true;
-
-    buildSceneGrid(_activeCategory);
-
-    document.querySelectorAll('.nexus-m9-cat-pill').forEach(b => {
-      b.classList.toggle('active', b.dataset.cat === _activeCategory);
-    });
-
-    document.getElementById('nm9-scene-sheet')?.classList.add('open');
-    document.getElementById('nm9-dock-scenes')?.classList.add('active');
-    document.getElementById('nm9-backdrop')?.classList.add('open');
   }
 
-  function toggleMinimap(forceState) {
-    const nextState = forceState !== undefined ? forceState : !_isMapOpen;
-    closeAllPanels();
-    _isMapOpen = nextState;
-
-    const card = document.getElementById('nm9-map-card');
-    const tabMap = document.getElementById('nm9-dock-map');
-    if (card) card.classList.toggle('open', _isMapOpen);
-    if (tabMap) tabMap.classList.toggle('active', _isMapOpen);
-    if (_isMapOpen) showToast("Bản Đồ Virtual Tour");
-  }
-
-  function toggleToolsSheet() {
-    if (_isToolsOpen) {
-      closeAllPanels();
-      return;
+  /* ── Mini Map ─────────────────────────────────────────────────────── */
+  function setMap(open) {
+    _isMapOpen = open;
+    var card    = document.getElementById('nm9-map-card');
+    var railBtn = document.getElementById('nm9-rail-map');
+    if (open) {
+      card    && card.classList.add('open');
+      railBtn && railBtn.classList.add('active');
+    } else {
+      card    && card.classList.remove('open');
+      railBtn && railBtn.classList.remove('active');
     }
-
-    closeAllPanels();
-    _isToolsOpen = true;
-
-    document.getElementById('nm9-tools-sheet')?.classList.add('open');
-    document.getElementById('nm9-dock-tools')?.classList.add('active');
-    document.getElementById('nm9-backdrop')?.classList.add('open');
   }
 
-  // ── Sync Active State ────────────────────────────────────────────────
+  /* ── Tools Panel ──────────────────────────────────────────────────── */
+  function setTools(open) {
+    _isToolsOpen = open;
+    var panel   = document.getElementById('nm9-tools-panel');
+    var railBtn = document.getElementById('nm9-rail-tools');
+    if (open) {
+      panel   && panel.classList.add('open');
+      railBtn && railBtn.classList.add('active');
+    } else {
+      panel   && panel.classList.remove('open');
+      railBtn && railBtn.classList.remove('active');
+    }
+  }
+
+  /* ── Active Scene Sync ────────────────────────────────────────────── */
   function syncActiveScene(action) {
-    if (!action) return;
-    document.querySelectorAll('.nexus-m9-scene-card').forEach(card => {
-      card.classList.toggle('active', card.dataset.action === action);
+    document.querySelectorAll('#nm9-drawer .nm9-scene-row').forEach(function (row) {
+      row.classList.toggle('active', row.getAttribute('data-action') === action);
     });
   }
 
-  function syncAudioBtn() {
-    const btn = document.querySelector('.nexus-m9-action-tile[data-action="audio"]');
-    if (!btn) return;
-    const isMuted = window.TAV_CORE.isMusicMuted;
-    btn.classList.toggle('active', !isMuted);
-  }
-
-  // ── Compass Synchronizer ─────────────────────────────────────────────
+  /* ── Compass Sync (RAF loop) ──────────────────────────────────────── */
   function startCompassSync() {
-    const update = () => {
-      const dial = document.getElementById('nm9-compass-dial');
+    var update = function () {
+      var dial = document.getElementById('nm9-compass-dial');
       if (dial) {
-        const angle = window.TAV_CORE.getCompassAngle();
-        dial.style.transform = `rotate(${angle}deg)`;
+        var angle = window.TAV_CORE.getCompassAngle();
+        dial.style.transform = 'rotate(' + angle + 'deg)';
       }
-
-      const cone = document.getElementById('nm9-map-cone');
+      var cone = document.getElementById('nm9-map-cone');
       if (cone) {
-        const angle = window.TAV_CORE.getCompassAngle();
-        cone.style.transform = `rotate(${angle}deg)`;
+        var angle2 = window.TAV_CORE.getCompassAngle();
+        cone.style.transform = 'rotate(' + angle2 + 'deg)';
       }
-
       _compassRaf = requestAnimationFrame(update);
     };
     update();
@@ -306,180 +232,185 @@
 
   function stopCompassSync() {
     if (_compassRaf) cancelAnimationFrame(_compassRaf);
+    _compassRaf = null;
   }
 
-  // ── Setup Event Listeners ────────────────────────────────────────────
-  function setupEventListeners() {
-    const overlay = document.getElementById('ml9-overlay');
-    if (!overlay) return;
+  /* ── Event Listeners ──────────────────────────────────────────────── */
+  function setupEvents() {
+    var core = window.TAV_CORE;
 
-    // ── Brand Pill → Home Scene
-    const brandBtn = document.getElementById('nm9-brand-btn');
+    /* Brand pill → home scene */
+    var brandBtn = document.getElementById('nm9-brand-pill');
     if (brandBtn) {
-      brandBtn.addEventListener('click', e => {
-        triggerRipple(brandBtn, e);
-        window.TAV_CORE.navigateTo('node1');
-        showToast("Về Cảnh Đầu");
+      brandBtn.addEventListener('click', function () {
+        core.navigateTo('node1');
+        showToast('Về Cảnh Đầu');
       });
     }
 
-    // ── Compass Badge → Reset View
-    const compassBtn = document.getElementById('nm9-compass-btn');
+    /* Compass reset */
+    var compassBtn = document.getElementById('nm9-compass-btn');
     if (compassBtn) {
-      compassBtn.addEventListener('click', e => {
-        triggerRipple(compassBtn, e);
-        window.TAV_CORE.resetView();
-        showToast("Đặt lại hướng nhìn");
+      compassBtn.addEventListener('click', function () {
+        core.resetView();
+        showToast('Đặt lại hướng nhìn');
       });
     }
 
-    // ── Dock Action Items
-    document.getElementById('nm9-dock-scenes')?.addEventListener('click', e => {
-      triggerRipple(e.currentTarget, e);
-      toggleSceneSheet();
-    });
-
-    document.getElementById('nm9-dock-map')?.addEventListener('click', e => {
-      triggerRipple(e.currentTarget, e);
-      toggleMinimap();
-    });
-
-    document.getElementById('nm9-dock-hotspot')?.addEventListener('click', e => {
-      triggerRipple(e.currentTarget, e);
-      _isHotspotsVis = !_isHotspotsVis;
-      const pano = window.TAV_CORE ? window.TAV_CORE.getPano() : window.pano;
-      document.body.classList.toggle('hide-hotspots', !_isHotspotsVis);
-      if (pano && typeof pano.setPointHotspotsVisible === 'function') {
-        pano.setPointHotspotsVisible(_isHotspotsVis);
-      }
-      document.querySelectorAll(".hologram-marker-container, .hs-container").forEach(hs => {
-        hs.style.visibility = _isHotspotsVis ? "visible" : "hidden";
-        hs.style.opacity = _isHotspotsVis ? "" : "0";
-      });
-      document.getElementById('nm9-dock-hotspot')?.classList.toggle('active', _isHotspotsVis);
-      showToast(_isHotspotsVis ? "Hotspot: Bật" : "Hotspot: Tắt");
-    });
-
-    document.getElementById('nm9-dock-gallery')?.addEventListener('click', e => {
-      triggerRipple(e.currentTarget, e);
-      closeAllPanels();
-      if (typeof window.openGlobalPanoramaGallery === 'function') {
-        window.openGlobalPanoramaGallery();
-      } else {
-        const galleryModal = document.getElementById('image-gallery-modal');
-        if (galleryModal) galleryModal.classList.add('active');
-      }
-    });
-
-    document.getElementById('nm9-dock-tools')?.addEventListener('click', e => {
-      triggerRipple(e.currentTarget, e);
-      toggleToolsSheet();
-    });
-
-    // ── Category Pills in Scene Sheet
-    const catRow = document.getElementById('nm9-cat-row');
-    if (catRow) {
-      catRow.addEventListener('click', e => {
-        const pill = e.target.closest('.nexus-m9-cat-pill');
-        if (!pill || !pill.dataset.cat) return;
-        triggerRipple(pill, e);
-        _activeCategory = pill.dataset.cat;
-        document.querySelectorAll('.nexus-m9-cat-pill').forEach(b => b.classList.remove('active'));
-        pill.classList.add('active');
-        buildSceneGrid(_activeCategory);
+    /* Scene trigger button */
+    var sceneTrigger = document.getElementById('nm9-scene-trigger');
+    if (sceneTrigger) {
+      sceneTrigger.addEventListener('click', function () {
+        setDrawer(!_isDrawerOpen);
       });
     }
 
-    // ── Scene Cards in Scene Sheet Grid
-    const sceneGrid = document.getElementById('nm9-scene-grid');
-    if (sceneGrid) {
-      sceneGrid.addEventListener('click', e => {
-        const card = e.target.closest('.nexus-m9-scene-card');
-        if (!card || !card.dataset.action) return;
-        triggerRipple(card, e);
-        window.TAV_CORE.navigateTo(card.dataset.action);
-        const scene = window.TAV_CORE.scenes.find(s => s.action === card.dataset.action);
-        if (scene) showToast(scene.title);
-        setTimeout(() => closeAllPanels(), 200);
-      });
+    /* Drawer close */
+    var drawerClose = document.getElementById('nm9-drawer-close');
+    if (drawerClose) {
+      drawerClose.addEventListener('click', function () { setDrawer(false); });
     }
 
-    // ── Close Buttons & Backdrop
-    document.getElementById('nm9-backdrop')?.addEventListener('click', () => closeAllPanels());
-    document.getElementById('nm9-map-close')?.addEventListener('click', () => toggleMinimap(false));
-
-    // ── Mini-Map Engine Integration
-    const mapViewport = document.getElementById('nm9-map-viewport');
-    if (mapViewport && window.MobileMinimapEngine) {
-      const mapCtrl = window.MobileMinimapEngine.setupMap(mapViewport);
-      document.getElementById('nm9-zoom-in')?.addEventListener('click', (e) => { e.stopPropagation(); mapCtrl?.zoomIn(); });
-      document.getElementById('nm9-zoom-out')?.addEventListener('click', (e) => { e.stopPropagation(); mapCtrl?.zoomOut(); });
-    }
-
-    // ── Action Tiles in Tools Sheet
-    const toolsSheet = document.getElementById('nm9-tools-sheet');
-    if (toolsSheet) {
-      toolsSheet.addEventListener('click', e => {
-        const tile = e.target.closest('.nexus-m9-action-tile');
-        if (!tile) return;
-        triggerRipple(tile, e);
-        const action = tile.dataset.action;
-
-        if (action === 'fullscreen') {
-          if (window.TAV_CORE) window.TAV_CORE.navigateTo('fullscreen');
-
-        } else if (action === 'info') {
-          closeAllPanels();
-          showToast('TAV VILLA — Virtual Tour Nexus');
-          const infoModal = document.getElementById('infoModal') || document.getElementById('info-modal') || document.querySelector('.info-modal') || document.querySelector('.modern-modal');
-          if (infoModal) {
-            infoModal.classList.add('active');
-            infoModal.style.display = 'flex';
-            infoModal.style.zIndex = '10000';
-          }
-
-        } else if (action === 'region') {
-          closeAllPanels();
-          const regionPage = document.getElementById('region-page');
-          if (regionPage) {
-            document.body.classList.add('region-mode-active');
-            document.querySelector('.region-hamburger')?.classList.remove('open');
-            document.getElementById('region-menu-collapsible')?.classList.remove('open');
-          }
-
-        } else if (action === 'audio') {
-          window.TAV_CORE.toggleMusic();
-          syncAudioBtn();
-          showToast(window.TAV_CORE.isMusicMuted ? "Âm nhạc: Tắt" : "Âm nhạc: Bật");
+    /* Scene row click */
+    var drawerBody = document.querySelector('#nm9-drawer .nm9-drawer-body');
+    if (drawerBody) {
+      drawerBody.addEventListener('click', function (e) {
+        var row = e.target.closest('.nm9-scene-row');
+        if (!row) return;
+        var action = row.getAttribute('data-action');
+        if (action) {
+          core.navigateTo(action);
+          var scene = core.scenes.find(function (s) { return s.action === action; });
+          if (scene) showToast(scene.title);
+          setDrawer(false);
         }
-
-        if (action !== 'audio') setTimeout(() => closeAllPanels(), 200);
       });
     }
 
-    // ── Layout Switcher Pills
-    overlay.addEventListener('click', e => {
-      const pill = e.target.closest('[data-layout-switch]');
-      if (!pill) return;
-      triggerRipple(pill, e);
-      const targetLayout = pill.dataset.layoutSwitch;
-      if (targetLayout && typeof window.switchMobileLayout === 'function') {
-        closeAllPanels();
-        window.switchMobileLayout(targetLayout);
-      }
+    /* Rail: Map */
+    var railMap = document.getElementById('nm9-rail-map');
+    if (railMap) {
+      railMap.addEventListener('click', function () { setMap(!_isMapOpen); });
+    }
+    var mapClose = document.getElementById('nm9-map-close');
+    if (mapClose) {
+      mapClose.addEventListener('click', function () { setMap(false); });
+    }
+
+    /* Mini Map zoom & pan */
+    var mapViewport = document.getElementById('nm9-map-viewport');
+    if (mapViewport && window.MobileMinimapEngine) {
+      var mapCtrl = window.MobileMinimapEngine.setupMap(mapViewport);
+      var zoomIn  = document.getElementById('nm9-map-zin');
+      var zoomOut = document.getElementById('nm9-map-zout');
+      if (zoomIn)  zoomIn.addEventListener('click',  function (e) { e.stopPropagation(); mapCtrl && mapCtrl.zoomIn(); });
+      if (zoomOut) zoomOut.addEventListener('click', function (e) { e.stopPropagation(); mapCtrl && mapCtrl.zoomOut(); });
+    }
+
+    /* Rail: Hotspot */
+    var railHotspot = document.getElementById('nm9-rail-hotspot');
+    if (railHotspot) {
+      railHotspot.addEventListener('click', function () {
+        _isHotsVis = !_isHotsVis;
+        var pano = core.getPano ? core.getPano() : window.pano;
+        if (pano) {
+          try {
+            var action2 = _isHotsVis ? 'show' : 'hide';
+            pano.call(action2 + 'hotspots');
+          } catch (ex) { /* noop */ }
+        }
+        railHotspot.innerHTML = _isHotsVis ? I.eye : I.eyeOff;
+        railHotspot.classList.toggle('active', _isHotsVis);
+        showToast(_isHotsVis ? 'Đã hiện Hotspot' : 'Đã ẩn Hotspot');
+      });
+    }
+
+    /* Rail: Gallery → opens scene drawer */
+    var railGallery = document.getElementById('nm9-rail-gallery');
+    if (railGallery) {
+      railGallery.addEventListener('click', function () { setDrawer(true); });
+    }
+
+    /* Rail: Tools */
+    var railTools = document.getElementById('nm9-rail-tools');
+    if (railTools) {
+      railTools.addEventListener('click', function () { setTools(!_isToolsOpen); });
+    }
+
+    /* Tools Panel tiles */
+    var actFullscreen = document.getElementById('nm9-act-fullscreen');
+    if (actFullscreen) {
+      actFullscreen.addEventListener('click', function () {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(function () {});
+          showToast('Toàn màn hình');
+        } else {
+          document.exitFullscreen().catch(function () {});
+        }
+      });
+    }
+
+    var actInfo = document.getElementById('nm9-act-info');
+    if (actInfo) {
+      actInfo.addEventListener('click', function () {
+        if (window.showTourInfoModal) window.showTourInfoModal();
+      });
+    }
+
+    var actLink = document.getElementById('nm9-act-link');
+    if (actLink) {
+      actLink.addEventListener('click', function () {
+        if (window.showRegionLinkModal) window.showRegionLinkModal();
+      });
+    }
+
+    var actMusic = document.getElementById('nm9-act-music');
+    if (actMusic) {
+      actMusic.addEventListener('click', function () {
+        core.toggleMusic();
+        var muted = core.isMusicMuted;
+        actMusic.classList.toggle('active', !muted);
+        actMusic.querySelector('span').textContent = muted ? 'Tắt nhạc' : 'Bật nhạc';
+        showToast(muted ? 'Đã tắt âm nhạc' : 'Đã bật âm nhạc');
+      });
+    }
+
+    var actShare = document.getElementById('nm9-act-share');
+    if (actShare) {
+      actShare.addEventListener('click', function () {
+        if (navigator.share) {
+          navigator.share({ title: document.title, url: window.location.href }).catch(function () {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(window.location.href);
+          showToast('Đã sao chép liên kết');
+        }
+      });
+    }
+
+    /* Layout switcher pills */
+    document.querySelectorAll('#nm9-tools-panel .nm9-sw-pill').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var target = parseInt(btn.getAttribute('data-layout-switch'), 10);
+        if (window.switchMobileLayout) window.switchMobileLayout(target);
+      });
     });
 
-    // ── Subscribe to Core Events
-    window.TAV_CORE.on('scenechange', scene => {
+    /* TAV_CORE events */
+    core.on('scenechange', function (scene) {
       if (scene) syncActiveScene(scene.action);
     });
 
-    window.TAV_CORE.on('musicchange', isMuted => {
-      syncAudioBtn();
+    core.on('musicchange', function (muted) {
+      var btn = document.getElementById('nm9-act-music');
+      if (btn) {
+        btn.classList.toggle('active', !muted);
+        btn.querySelector('span').textContent = muted ? 'Tắt nhạc' : 'Bật nhạc';
+      }
     });
   }
 
-  // ── Module API ───────────────────────────────────────────────────────
+  /* ── Public API ───────────────────────────────────────────────────── */
   window.MobileLayout9 = {
     init: function () {
       if (_initialized) return;
@@ -488,52 +419,59 @@
         return;
       }
 
-      // Hide desktop & other mobile overlays
-      const desktopHideStyle = document.createElement('style');
-      desktopHideStyle.id = 'ml9-desktop-hide';
-      desktopHideStyle.textContent = `
-        html body #modern-ui-container, html body #modern-ui-overlay,
-        html body .prism-nav-container, html body .prism-dock, html body .prism-header-pill,
-        html body .prism-bottom-dock, html body .modern-header-pill, html body #modern-dock-container,
-        html body .prism-dock-container, html body .prism-nav-wrapper, html body .prism-tool-container,
-        html body .prism-dock-item, html body .prism-nav-item, html body #sidebar-container, html body #horizontal-nav-bar,
-        html body #command-bottom-ribbon, html body .modern-ui-sidebar, html body .v-rail-container, html body .bottom-nav-container,
-        html body .aurora-nav-container, html body .aurora-tool-panel, html body .pc-container,
-        html body #mobile-ui-overlay, html body #ml2-overlay, html body #ml3-overlay, html body #ml4-overlay, html body #ml5-overlay, html body #ml6-overlay, html body #ml7-overlay, html body #ml8-overlay,
-        html body #compass-widget, html body .compass-widget, html body #mob-compass, html body #ml2-compass, html body #ml3-compass, html body #ml4-compass, html body #ml5-compass, html body #ml6-compass, html body #am7-compass-btn, html body #pm8-compass-btn,
-        html body #minimap-widget, html body .minimap-widget, html body .floorplan-container, html body #floorplan, html body .floorplan-widget {
-          display: none !important;
-          visibility: hidden !important;
-          opacity: 0 !important;
-          pointer-events: none !important;
-        }
-      `;
-      document.head.appendChild(desktopHideStyle);
+      /* Hide desktop UI */
+      var style = document.createElement('style');
+      style.id = 'ml9-desktop-hide';
+      style.textContent =
+        'html body #modern-ui-container, html body #modern-ui-overlay,' +
+        'html body .prism-nav-container, html body .prism-dock,' +
+        'html body .prism-header-pill, html body .prism-bottom-dock,' +
+        'html body .modern-header-pill, html body #modern-dock-container,' +
+        'html body .prism-dock-container, html body .prism-nav-wrapper,' +
+        'html body .prism-tool-container, html body .prism-dock-item,' +
+        'html body .prism-nav-item, html body #sidebar-container,' +
+        'html body #horizontal-nav-bar, html body #command-bottom-ribbon,' +
+        'html body .modern-ui-sidebar, html body .v-rail-container,' +
+        'html body .bottom-nav-container, html body .aurora-nav-container,' +
+        'html body .aurora-tool-panel, html body .pc-container,' +
+        'html body #mobile-ui-overlay, html body #ml2-overlay,' +
+        'html body #ml3-overlay, html body #ml4-overlay, html body #ml5-overlay,' +
+        'html body #ml6-overlay, html body #ml7-overlay, html body #ml8-overlay,' +
+        'html body #ml10-overlay,' +
+        'html body #compass-widget, html body .compass-widget,' +
+        'html body #minimap-widget, html body .minimap-widget { display:none!important; }';
+      document.head.appendChild(style);
 
-      // Create overlay element
-      const overlay = document.createElement('div');
+      /* Create overlay */
+      var overlay = document.createElement('div');
       overlay.id = 'ml9-overlay';
       overlay.innerHTML = buildDOM();
       document.body.appendChild(overlay);
 
-      setupEventListeners();
+      setupEvents();
       startCompassSync();
 
-      // Initial active scene sync
+      /* Sync initial active scene */
       if (window.TAV_CORE.currentScene) {
         syncActiveScene(window.TAV_CORE.currentScene.action);
       }
 
       _initialized = true;
-      console.log('[MobileLayout9] Initialized — Desktop 8 Nexus Mobile Reinterpretation');
+      console.log('[MobileLayout9] Initialized — EDGE CONTROL Architecture');
     },
 
     destroy: function () {
       stopCompassSync();
       if (_toastTimer) clearTimeout(_toastTimer);
-      document.querySelectorAll('#ml9-overlay').forEach(el => el.remove());
-      document.querySelectorAll('#ml9-desktop-hide').forEach(el => el.remove());
-      _initialized = false;
+      var overlay = document.getElementById('ml9-overlay');
+      if (overlay) overlay.remove();
+      var style = document.getElementById('ml9-desktop-hide');
+      if (style) style.remove();
+      _initialized  = false;
+      _isMapOpen    = false;
+      _isHotsVis    = true;
+      _isDrawerOpen = false;
+      _isToolsOpen  = false;
       console.log('[MobileLayout9] Destroyed');
     }
   };
