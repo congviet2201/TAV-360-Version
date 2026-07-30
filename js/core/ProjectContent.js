@@ -25,7 +25,7 @@ window.PROJECT_CONTENT = {
     architecture: {
       label: "Kiến Trúc",
       submenu: [
-        { action: "architecture-1", label: "Kiến Trúc 1" },
+        { node: "node12", label: "Kiến Trúc 1" },
         { action: "architecture-2", label: "Kiến Trúc 2" },
         { action: "architecture-3", label: "Kiến Trúc 3" }
       ]

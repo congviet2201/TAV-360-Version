@@ -33,7 +33,10 @@
     { id: 'node8',        title: 'TAV LIVING 1',      sub: 'Interior',      category: 'INTERIOR',    thumb: 'image/thumbnails/PIN LIVING.jpg',      action: 'node8'        },
     { id: 'node9',        title: 'TAV THÔNG TẦNG',    sub: 'Interior',      category: 'INTERIOR',    thumb: 'image/thumbnails/PIN THONG TANG.jpg',  action: 'node9'        },
     { id: 'node10',       title: 'BALCONY',           sub: 'Interior',      category: 'INTERIOR',    thumb: 'image/thumbnails/PIN BALCONY.jpg',     action: 'node10'       },
-    { id: 'node11',       title: 'TAV WC',            sub: 'Interior',      category: 'INTERIOR',    thumb: 'image/thumbnails/PIN WC.jpg',          action: 'node11'       }
+    { id: 'node11',       title: 'TAV WC',            sub: 'Interior',      category: 'INTERIOR',      thumb: 'image/thumbnails/PIN WC.jpg',            action: 'node11'       },
+
+    // ── Architecture ─────────────────────────────────────────────────
+    { id: 'node12',       title: 'KIẾN TRÚC 1',       sub: 'Architecture',  category: 'ARCHITECTURE',  thumb: 'image/thumbnails/PIN KIEN TRUC 1.jpg',   action: 'node12'       }
   ];
 
   // ============================================================
@@ -46,7 +49,7 @@
       topview:      { label: 'Top View',       node: 'node1' },
       birdview:     { label: 'Bird View',       submenu: [ { node: 'node2', label: 'Bird View 1' }, { node: 'node3', label: 'Bird View 2' } ] },
       amenities:    { label: 'Tiện ích',        submenu: [ { node: 'node4', label: 'TAV Park' }, { node: 'node5', label: 'TAV Street' }, { node: 'node6', label: 'TAV Park 2' } ] },
-      architecture: { label: 'Kiến Trúc',       submenu: [ { action: 'architecture-1', label: 'Kiến Trúc 1' }, { action: 'architecture-2', label: 'Kiến Trúc 2' }, { action: 'architecture-3', label: 'Kiến Trúc 3' } ] },
+      architecture: { label: 'Kiến Trúc',       submenu: [ { node: 'node12', label: 'Kiến Trúc 1' }, { action: 'architecture-2', label: 'Kiến Trúc 2' }, { action: 'architecture-3', label: 'Kiến Trúc 3' } ] },
       interior:     { label: 'Nội Thất',        submenu: [ { node: 'node7', label: 'TAV Living 2' }, { node: 'node8', label: 'TAV Living 1' }, { node: 'node9', label: 'TAV Thông Tầng' }, { node: 'node10', label: 'TAV Balcony' }, { node: 'node11', label: 'TAV WC' } ] },
       surrounding:  { label: 'Liên kết vùng',   action: 'region-page' }
     },

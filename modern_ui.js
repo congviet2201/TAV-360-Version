@@ -71,7 +71,7 @@ const PROJECT_CONTENT = {
     architecture: {
       label: "Kiến Trúc",
       submenu: [
-        { action: "architecture-1", label: "Kiến Trúc 1" },
+        { node: "node12", label: "Kiến Trúc 1" },
         { action: "architecture-2", label: "Kiến Trúc 2" },
         { action: "architecture-3", label: "Kiến Trúc 3" }
       ]
@@ -4180,7 +4180,7 @@ document.addEventListener("click", function(e) {
       node1: 'Top View', node2: 'BIRD VIEW 1', node3: 'BIRD VIEW 2',
       node4: 'TAV PARK', node5: 'TAV STREET', node6: 'TAV PARK 2',
       node7: 'TAV LIVING 2', node8: 'TAV LIVING 1', node9: 'TAV THÔNG TẦNG',
-      node10: 'BALCONY', node11: 'TAV WC'
+      node10: 'BALCONY', node11: 'TAV WC', node12: 'KIẾN TRÚC 1'
     };
     const nameEl = document.getElementById('cmd-scene-name');
     if (nameEl && sceneNameMap[nodeId]) nameEl.textContent = sceneNameMap[nodeId];

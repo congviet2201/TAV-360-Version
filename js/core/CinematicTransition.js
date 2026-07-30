@@ -171,7 +171,10 @@
 
       _INTERNAL_CALL = true;
       try {
-        _originalOpenNext(nodeStr);
+        // Pass startView to suppress the pano2vr flyin animation (Little Planet, projection=9).
+        // Without this, the flyin plays AFTER blur fades → visible "projection morph" artifact.
+        // fov:100 = normal rectilinear view, tilt:0 = eye-level, bypasses flyin entirely.
+        _originalOpenNext(nodeStr, { fov: 100, tilt: 0 });
       } catch (err) {
         console.warn('[CinematicTransition] openNext error:', err);
         releaseLock();
