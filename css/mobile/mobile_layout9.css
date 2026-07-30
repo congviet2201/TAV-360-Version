@@ -525,6 +525,11 @@
   gap: 7px;
 }
 
+.nm9-tools-grid-3col {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+
 .nm9-tool-tile {
   display: flex;
   flex-direction: column;

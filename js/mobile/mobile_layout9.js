@@ -37,7 +37,8 @@
     link:       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke-width="1.8"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke-width="1.8"/></svg>',
     music:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 18V5l12-2v13" stroke-width="1.8"/><circle cx="6" cy="18" r="3" stroke-width="1.8"/><circle cx="18" cy="16" r="3" stroke-width="1.8"/></svg>',
     facebook:   '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>',
-    share:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke-width="1.8"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-width="1.8"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-width="1.8"/></svg>'
+    share:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke-width="1.8"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke-width="1.8"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke-width="1.8"/></svg>',
+    phone:      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.42 2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.08 6.08l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" stroke-width="1.8"/></svg>'
   };
 
   /* ── Build DOM ────────────────────────────────────────────────────── */
@@ -133,11 +134,12 @@
 
       '<!-- Right Floating Tools Panel -->' +
       '<div class="nm9-tools-panel" id="nm9-tools-panel">' +
-        '<div class="nm9-tools-grid">' +
+        '<div class="nm9-tools-grid nm9-tools-grid-3col">' +
           '<button class="nm9-tool-tile" id="nm9-act-fullscreen">' + I.fullscreen + '<span>Toàn màn hình</span></button>' +
           '<button class="nm9-tool-tile" id="nm9-act-info">' + I.info + '<span>Thông tin</span></button>' +
-          '<button class="nm9-tool-tile" id="nm9-act-link">' + I.link + '<span>Liên kết</span></button>' +
+          '<button class="nm9-tool-tile" id="nm9-act-link">' + I.link + '<span>Liên kết vùng</span></button>' +
           '<button class="nm9-tool-tile' + (!isMuted ? ' active' : '') + '" id="nm9-act-music">' + I.music + '<span>' + (isMuted ? 'Tắt nhạc' : 'Bật nhạc') + '</span></button>' +
+          '<button class="nm9-tool-tile" id="nm9-act-contact">' + I.phone + '<span>Liên hệ</span></button>' +
         '</div>' +
         '<div class="nm9-tools-sep"></div>' +
         '<div class="nm9-socials">' +
@@ -353,14 +355,41 @@
     var actInfo = document.getElementById('nm9-act-info');
     if (actInfo) {
       actInfo.addEventListener('click', function () {
-        if (window.showTourInfoModal) window.showTourInfoModal();
+        setTools(false);
+        var infoModal = document.getElementById('project-info-modal');
+        if (infoModal) {
+          var isNowActive = !infoModal.classList.contains('active');
+          infoModal.classList.toggle('active', isNowActive);
+        } else {
+          /* fallback: trigger through global action dispatcher */
+          if (window.handleToolAction) window.handleToolAction('info');
+        }
+        showToast('Thông tin dự án');
       });
     }
 
     var actLink = document.getElementById('nm9-act-link');
     if (actLink) {
       actLink.addEventListener('click', function () {
-        if (window.showRegionLinkModal) window.showRegionLinkModal();
+        setTools(false);
+        var regionPage = document.getElementById('region-page');
+        if (regionPage) {
+          document.body.classList.add('region-mode-active');
+          var hamburger = document.querySelector('.region-hamburger');
+          if (hamburger) hamburger.classList.remove('open');
+          var menu = document.getElementById('region-menu-collapsible');
+          if (menu) menu.classList.remove('open');
+        }
+        showToast('Liên kết vùng');
+      });
+    }
+
+    var actContact = document.getElementById('nm9-act-contact');
+    if (actContact) {
+      actContact.addEventListener('click', function () {
+        setTools(false);
+        window.open('https://tav.vn/', '_blank');
+        showToast('Đang mở trang liên hệ...');
       });
     }
 

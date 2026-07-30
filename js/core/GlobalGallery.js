@@ -14,7 +14,10 @@ const globalPanoramasList = [
   { id: 'gallery5', title: 'Gallery 05', src: 'image/GALLERY 05.jpg', thumb: 'image/thumbnails/GALLERY 05.jpg' },
   { id: 'gallery6', title: 'Gallery 06', src: 'image/GALLERY 06.jpg', thumb: 'image/thumbnails/GALLERY 06.jpg' },
   { id: 'gallery7', title: 'Gallery 07', src: 'image/GALLERY 07.jpg', thumb: 'image/thumbnails/GALLERY 07.jpg' },
-  { id: 'gallery8', title: 'Gallery 08', src: 'image/GALLERY 08.jpg', thumb: 'image/thumbnails/GALLERY 08.jpg' }
+  { id: 'gallery8', title: 'Gallery 08', src: 'image/GALLERY 08.jpg', thumb: 'image/thumbnails/GALLERY 08.jpg' },
+  { id: 'gallery9', title: 'Gallery 09', src: 'image/GALLERY 09.jpg', thumb: 'image/thumbnails/GALLERY 09.jpg' },
+  { id: 'gallery10', title: 'Gallery 10', src: 'image/GALLERY 10.jpg', thumb: 'image/thumbnails/GALLERY 10.jpg' },
+  { id: 'gallery11', title: 'Gallery 11', src: 'image/GALLERY 11.jpg', thumb: 'image/thumbnails/GALLERY 11.jpg' }
 ];
 
 let gpgCurrentIndex = 0;
