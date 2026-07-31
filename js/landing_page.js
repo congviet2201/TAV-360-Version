@@ -10,7 +10,7 @@
   // ═════════════════════════════════════════════════════════════════════════
   window.LANDING_CONFIG = {
     heroImage: 'image/GALLERY 04.jpg',
-    logoImage: 'image/logo.png',
+    logoImage: 'image/logo_base.png',
     logoTitle: 'TAV VILLA',
     logoSub: 'LUXURY RESIDENCE',
     eyebrowText: '• EXCLUSIVE VIRTUAL EXPERIENCE •',
@@ -81,8 +81,61 @@
       <!-- Center Content Area -->
       <main class="landing-center-content">
         <div class="landing-eyebrow">${config.eyebrowText}</div>
-        <h1 class="landing-title">${config.mainTitle}</h1>
-        <p class="landing-subtitle">${config.subtitle}</p>
+
+        <!-- Luxury Brand Box with Animated Orange-White Running Border & Split Center Logo -->
+        <div class="landing-brand-card">
+          <!-- Running Light Traces (Orange & White Border Animation) -->
+          <div class="landing-running-border-box">
+            <span class="landing-border-line b-top"></span>
+            <span class="landing-border-line b-right"></span>
+            <span class="landing-border-line b-bottom"></span>
+            <span class="landing-border-line b-left"></span>
+          </div>
+
+          <!-- CENTER LOGO CONTAINER USING logo_base.png (ULTRA-HIGH-END 3D & HOLOGRAPHIC LOGO EFFECT) -->
+          <div class="landing-center-logo-wrap">
+            <!-- Counter-rotating Dual Ambient Energy Glow Halo behind Logo -->
+            <div class="landing-logo-glow-bg"></div>
+            <div class="landing-logo-ambient-ring"></div>
+
+            <div class="landing-logo-split-container">
+
+              <!-- Solid Dual Logo Base (Left Orange #ff5500, Right White #ffffff) -->
+              <div class="landing-logo-solid-base">
+                <!-- Left Half Solid Orange -->
+                <div class="landing-logo-part landing-logo-left-solid">
+                  <div class="landing-logo-mask-img" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');"></div>
+                </div>
+
+                <!-- Right Half Solid White -->
+                <div class="landing-logo-part landing-logo-right-solid">
+                  <div class="landing-logo-mask-img" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');"></div>
+                </div>
+              </div>
+
+              <!-- Continuous 4-Part Running Border DIRECTLY ON LOGO SILHOUETTE (No outer box frame) -->
+              <div class="landing-logo-running-border-box" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');">
+                <span class="landing-logo-border-line b-top"></span>
+                <span class="landing-logo-border-line b-right"></span>
+                <span class="landing-logo-border-line b-bottom"></span>
+                <span class="landing-logo-border-line b-left"></span>
+              </div>
+
+              <!-- Holographic Sheen Sweeping Light Overlay -->
+              <div class="landing-logo-holo-sheen" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');"></div>
+
+              <!-- Center Fusion Energy Seam Line (Orange-White Sparkle at 50% split) -->
+              <div class="landing-logo-center-divider"></div>
+
+            </div>
+
+            <!-- Fallback Image -->
+            <img src="image/logo_base.png" alt="TAV Logo" class="landing-logo-fallback-img" onerror="this.src='image/LOGO.png'">
+          </div>
+
+          <h1 class="landing-title">${config.mainTitle}</h1>
+          <p class="landing-subtitle">${config.subtitle}</p>
+        </div>
         
         <button type="button" id="landing-cta-btn" class="landing-cta-btn" aria-label="${config.ctaText}">
           <span>${config.ctaText}</span>
@@ -98,6 +151,18 @@
           <div class="landing-mouse-wheel"></div>
         </div>
         <span class="landing-hint-text">${config.scrollHintText}</span>
+      </div>
+
+      <!-- Bottom-Right Powered By TAV Copyright Watermark -->
+      <div id="tav-copyright-watermark" class="tav-copyright-watermark tav-landing-watermark">
+        <span class="tav-watermark-powered">Powered By</span>
+        <div class="tav-watermark-logo-box">
+          <img src="image/logo_base.png" alt="TAV Logo" class="tav-watermark-img" onerror="this.src='image/LOGO.png'" />
+        </div>
+        <div class="tav-watermark-info">
+          <span class="tav-watermark-title">TAV</span>
+          <span class="tav-watermark-subtitle">T Architect &amp; Visualization</span>
+        </div>
       </div>
     `;
 

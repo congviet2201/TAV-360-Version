@@ -15911,6 +15911,201 @@ body.hide-hotspots .hs-container {
     100% { left: 70%; width: 25%; opacity: 0.5; }
   }
 
+}
+
+  @keyframes mobileSweepLight {
+    0%   { left: -80%;  opacity: 0; }
+    5%   { opacity: 1; }
+    45%  { left: 130%; opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+  }
+
+  /* Đường kẻ cyan chạy ngang phía dưới đáy carousel */
+  .premium-carousel-container::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    height: 2px;
+    width: 35%;
+    background: #00e5ff;
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.8), 0 0 20px rgba(0, 229, 255, 0.4);
+    animation: mobileLineRunBottom 3.5s linear infinite alternate;
+    border-radius: 1px;
+    z-index: 1001;
+  }
+
+  @keyframes mobileLineRunBottom {
+    0%   { left: 0%;  opacity: 0.5; }
+    50%  { opacity: 1; }
+    100% { left: 65%; opacity: 0.5; }
+  }
+
+  /* Nút điều hướng: tông xanh cyan */
+  .premium-carousel-nav {
+    background: rgba(9, 4, 26, 0.85) !important;
+    border: 1px solid rgba(0, 229, 255, 0.4) !important;
+    color: #00e5ff !important;
+    box-shadow: 0 0 14px rgba(0, 229, 255, 0.2),
+                inset 0 0 8px rgba(0, 229, 255, 0.06) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  .premium-carousel-nav:hover {
+    background: rgba(0, 229, 255, 0.12) !important;
+    border-color: rgba(0, 229, 255, 0.75) !important;
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.4) !important;
+    transform: scale(1.08) !important;
+  }
+
+  /* Card trung tâm: viền cyan phát sáng */
+  .pc-card-center {
+    border-color: rgba(0, 229, 255, 0.55) !important;
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.3),
+                0 8px 20px rgba(0, 0, 0, 0.5),
+                inset 0 0 15px rgba(0, 229, 255, 0.06) !important;
+  }
+
+  .pc-card-center:hover {
+    border-color: #00e5ff !important;
+    box-shadow: 0 0 32px rgba(0, 229, 255, 0.5) !important;
+  }
+
+  /* Tiêu đề card: glow nhẹ */
+  .pc-card-title {
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.55) !important;
+  }
+
+  /* Category button */
+  .pc-category-active {
+    background: rgba(9, 4, 26, 0.88) !important;
+    border: 1px solid rgba(0, 229, 255, 0.4) !important;
+    color: #00e5ff !important;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.15) !important;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     PHẦN 2: CAROUSEL TRƯỢT ĐỦ 3 CARD (prev + center + next)
+  ───────────────────────────────────────────────────────── */
+
+  /* Mở rộng track hiển thị 3 card */
+  .premium-carousel-track {
+    width: 300px !important;
+    max-width: calc(100vw - 100px) !important;
+    height: 90px !important;
+    overflow: visible !important;
+  }
+
+  /* Hiện lại card bên trái và bên phải (bị ẩn trên mobile cũ) */
+  .pc-card-prev,
+  .pc-card-next {
+    display: block !important;
+  }
+
+  /* Card trung tâm */
+  .pc-card-center {
+    width: 130px !important;
+    height: 78px !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1) !important;
+    z-index: 10 !important;
+  }
+
+  /* Card trái */
+  .pc-card-prev {
+    width: 78px !important;
+    height: 52px !important;
+    left: 12% !important;
+    transform: translate(-50%, -50%) scale(0.72) !important;
+    opacity: 0.42 !important;
+    filter: grayscale(20%) brightness(0.72) !important;
+    z-index: 5 !important;
+  }
+
+  /* Card phải */
+  .pc-card-next {
+    width: 78px !important;
+    height: 52px !important;
+    left: 88% !important;
+    transform: translate(-50%, -50%) scale(0.72) !important;
+    opacity: 0.42 !important;
+    filter: grayscale(20%) brightness(0.72) !important;
+    z-index: 5 !important;
+  }
+
+  /* Transition mượt khi chuyển card */
+  .pc-card {
+    transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                left 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                opacity 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                filter 0.55s cubic-bezier(0.2, 0.8, 0.2, 1),
+                border-color 0.3s ease !important;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     PHẦN 3: HIỆU ỨNG ĐƯỜNG LINE cho THANH TIMELINE dưới cùng
+     (cmd-tl-node và cmd-tl-line - thanh công cụ của Layout 11)
+  ───────────────────────────────────────────────────────── */
+
+  /* Timeline container: nền tối + viền cyan trên */
+  .cmd-timeline {
+    background: rgba(9, 4, 26, 0.88) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(0, 229, 255, 0.25) !important;
+    box-shadow: 0 -4px 24px rgba(0, 229, 255, 0.12) !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Hiệu ứng sweep ánh sáng ngang qua thanh timeline */
+  .cmd-timeline::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -80%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(0, 229, 255, 0.18) 50%,
+      transparent 100%
+    );
+    transform: skewX(-15deg);
+    animation: timelineSweep 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  @keyframes timelineSweep {
+    0%   { left: -80%;  opacity: 0; }
+    8%   { opacity: 1; }
+    50%  { left: 130%; opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+  }
+
+  /* Đường kẻ cyan chạy dọc theo phía trên timeline */
+  .cmd-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 30%;
+    background: linear-gradient(90deg, #00e5ff, rgba(0, 229, 255, 0));
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.7), 0 0 20px rgba(0, 229, 255, 0.4);
+    animation: timelineTopLine 4s linear infinite alternate;
+    z-index: 2;
+  }
+
+  @keyframes timelineTopLine {
+    0%   { left: 0%;  width: 25%; opacity: 0.5; }
+    50%  { opacity: 1; }
+    100% { left: 70%; width: 25%; opacity: 0.5; }
+  }
+
   /* Node item trong timeline: viền cyan và glow khi active */
   .cmd-tl-node {
     background: rgba(9, 4, 26, 0.82) !important;
@@ -16025,22 +16220,140 @@ body.layout-command #pc-track {
   justify-content: center;
 }
 
-/* --- Unified White Color Tokens with Orange Beam Flow for All Hotspots --- */
+/* --- Unified Base Color Tokens for All Hotspots --- */
 .hs-container,
-.hs-landmark-container,
-.hs-landmark-infrastructure,
-.hs-landmark-transportation,
-.hs-landmark-tourism,
-.hs-landmark-recreation,
-.hs-landmark-culture,
-.hs-container.hs-interior,
-.hs-container.hs-amenities,
-.hs-container.hs-aerial {
+.hs-landmark-container {
   --lm-color: #ffffff;
   --lm-glow: rgba(255, 255, 255, 0.45);
   --lm-bg: rgba(255, 255, 255, 0.12);
   --lm-flow-color: #ff7700;
   --lm-flow-glow: rgba(255, 119, 0, 0.85);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BIRD VIEW HOTSPOT SYSTEM — 2 CẶP LOẠI HOTSPOT (CÓ VIEW & KHÔNG CÓ VIEW)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. LOẠI CÓ VIEW (HOTSPOT CHUYỂN CẢNH PANORAMA) ──────────────────── */
+
+/* A. VIEW NỘI THẤT (Living 1, Living 2, WC, Thông tầng, Ban công) -> XANH DƯƠNG (CYAN BLUE #00E5FF) */
+.hs-container.hs-has-view.hs-interior {
+  --lm-color: #00e5ff !important;
+  --lm-glow: rgba(0, 229, 255, 0.9) !important;
+  --lm-bg: rgba(0, 229, 255, 0.2) !important;
+  --lm-flow-color: #00e5ff !important;
+  --lm-flow-glow: rgba(0, 229, 255, 1) !important;
+}
+
+.hs-container.hs-has-view.hs-interior .lm-vertical-beam {
+  width: 3.5px !important;
+  background: linear-gradient(to top, rgba(0, 229, 255, 0.4), #ffffff 40%, #00e5ff 100%) !important;
+  box-shadow: 0 0 12px #00e5ff, 0 0 25px rgba(0, 229, 255, 0.9), 0 0 40px rgba(0, 229, 255, 0.7) !important;
+}
+
+.hs-container.hs-has-view.hs-interior .lm-vertical-beam::after {
+  width: 4.5px !important;
+  height: 22px !important;
+  background: linear-gradient(to top, transparent, #ffffff, #00f2fe, #0066ff) !important;
+  box-shadow: 0 0 12px #00f2fe, 0 0 22px rgba(0, 242, 254, 1) !important;
+}
+
+.hs-container.hs-has-view.hs-interior .lm-holographic-label {
+  border: 1.5px solid #00e5ff !important;
+  background: linear-gradient(135deg, rgba(0, 180, 216, 0.92), rgba(0, 119, 182, 0.95)) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 229, 255, 0.8) !important;
+}
+
+.hs-container.hs-has-view.hs-interior .lm-icon svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9)) !important;
+}
+
+.hs-container.hs-has-view.hs-interior .lm-energy-core {
+  background: #00e5ff !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 0 1.5px #000000, 0 0 10px #00e5ff, 0 0 22px rgba(0, 229, 255, 1) !important;
+}
+
+.hs-container.hs-has-view.hs-interior .lm-ground-scan,
+.hs-container.hs-has-view.hs-interior .lm-scan-ring-2 {
+  border-color: #00e5ff !important;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(0, 229, 255, 1)) !important;
+}
+
+/* B. VIEW TIỆN ÍCH & KIẾN TRÚC (Park 1, Park 2, Street, Kiến Trúc) -> XANH LÁ CÂY (EMERALD GREEN #10B981) */
+.hs-container.hs-has-view.hs-amenities,
+.hs-container.hs-has-view.hs-architecture {
+  --lm-color: #10b981 !important;
+  --lm-glow: rgba(16, 185, 129, 0.9) !important;
+  --lm-bg: rgba(16, 185, 129, 0.2) !important;
+  --lm-flow-color: #10b981 !important;
+  --lm-flow-glow: rgba(16, 185, 129, 1) !important;
+}
+
+.hs-container.hs-has-view.hs-amenities .lm-vertical-beam,
+.hs-container.hs-has-view.hs-architecture .lm-vertical-beam {
+  width: 3.5px !important;
+  background: linear-gradient(to top, rgba(16, 185, 129, 0.4), #ffffff 40%, #10b981 100%) !important;
+  box-shadow: 0 0 12px #10b981, 0 0 25px rgba(16, 185, 129, 0.9), 0 0 40px rgba(16, 185, 129, 0.7) !important;
+}
+
+.hs-container.hs-has-view.hs-amenities .lm-vertical-beam::after,
+.hs-container.hs-has-view.hs-architecture .lm-vertical-beam::after {
+  width: 4.5px !important;
+  height: 22px !important;
+  background: linear-gradient(to top, transparent, #ffffff, #34d399, #059669) !important;
+  box-shadow: 0 0 12px #34d399, 0 0 22px rgba(52, 211, 153, 1) !important;
+}
+
+.hs-container.hs-has-view.hs-amenities .lm-holographic-label,
+.hs-container.hs-has-view.hs-architecture .lm-holographic-label {
+  border: 1.5px solid #10b981 !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.92), rgba(5, 150, 105, 0.95)) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7), 0 0 20px rgba(16, 185, 129, 0.8) !important;
+}
+
+.hs-container.hs-has-view.hs-amenities .lm-icon svg,
+.hs-container.hs-has-view.hs-architecture .lm-icon svg {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.9)) !important;
+}
+
+.hs-container.hs-has-view.hs-amenities .lm-energy-core,
+.hs-container.hs-has-view.hs-architecture .lm-energy-core {
+  background: #10b981 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 0 0 1.5px #000000, 0 0 10px #10b981, 0 0 22px rgba(16, 185, 129, 1) !important;
+}
+
+.hs-container.hs-has-view.hs-amenities .lm-ground-scan,
+.hs-container.hs-has-view.hs-amenities .lm-scan-ring-2,
+.hs-container.hs-has-view.hs-architecture .lm-ground-scan,
+.hs-container.hs-has-view.hs-architecture .lm-scan-ring-2 {
+  border-color: #10b981 !important;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 12px rgba(16, 185, 129, 1)) !important;
+}
+
+/* ─── 2. LOẠI KHÔNG CÓ VIEW (HOTSPOT CHÚ THÍCH TIỆN ÍCH) ──────────────────── */
+/* Giữ cột sáng nguyên bản & loại bỏ luồng ánh sáng chạy từ dưới lên */
+.hs-container.hs-no-view .lm-vertical-beam {
+  width: 3px !important;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.3), #ffffff 40%, var(--lm-color, #00e5ff) 100%) !important;
+  box-shadow: 0 0 10px var(--lm-color, #00e5ff), 0 0 20px var(--lm-glow, rgba(0, 229, 255, 0.8)) !important;
+}
+
+/* Loại bỏ vệt ánh sáng chạy từ dưới lên */
+.hs-container.hs-no-view .lm-vertical-beam::after {
+  display: none !important;
+}
+
+.hs-container.hs-no-view .lm-holographic-label {
+  border: none !important;
+  border-color: transparent !important;
+  background: rgba(8, 14, 28, 0.82) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55) !important;
 }
 
 .hs-container .lm-ground-scan-system {
@@ -16204,14 +16517,14 @@ body.layout-command #pc-track {
   100% { transform: rotateX(65deg) rotate(360deg); }
 }
 
-/* 4. Vertical Energy Beam (White beam + Orange running light pulse) */
+/* 4. Vertical Energy Beam */
 .lm-vertical-beam {
   position: absolute;
   bottom: 50%;
-  width: 2px;
+  width: 3px;
   height: 0;
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.2), #ffffff, rgba(255, 255, 255, 0.8));
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.2);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.3), #ffffff 40%, var(--lm-color, #00e5ff) 100%);
+  box-shadow: 0 0 10px var(--lm-color, #00e5ff), 0 0 20px var(--lm-glow, rgba(0, 229, 255, 0.8));
   opacity: 0;
   animation: lmBeamRise 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.6s,
              lmBeamPulse 2.5s ease-in-out infinite 1.4s;
@@ -16219,7 +16532,6 @@ body.layout-command #pc-track {
   overflow: visible;
 }
 
-/* Sleek Orange light pulse running up along the white beam */
 .lm-vertical-beam::after {
   content: '';
   position: absolute;
@@ -16228,9 +16540,9 @@ body.layout-command #pc-track {
   transform: translateX(-50%);
   width: 3.5px;
   height: 22px;
-  background: linear-gradient(to top, transparent, #ffffff, var(--lm-flow-color), transparent);
+  background: linear-gradient(to top, transparent, #ffffff, var(--lm-flow-color, #00e5ff), transparent);
   border-radius: 3px;
-  box-shadow: 0 0 8px var(--lm-flow-color), 0 0 14px var(--lm-flow-glow);
+  box-shadow: 0 0 8px var(--lm-flow-color, #00e5ff), 0 0 14px var(--lm-flow-glow, rgba(0, 229, 255, 0.8));
   animation: lmBeamFlow 2.2s ease-in-out infinite;
   pointer-events: none;
 }
@@ -16350,17 +16662,33 @@ body.layout-command #pc-track {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.9) !important;
 }
 
+/* 7. Hover Preview Image Card — Positioned rigidly ABOVE the Holographic Label */
+.hs-container .hs-preview-card {
+  position: absolute !important;
+  bottom: calc(var(--lm-beam-h, 110px) + 48px) !important;
+  left: 50% !important;
+  transform: translateX(-50%) translateY(10px) scale(0.92) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  z-index: 50 !important;
+}
+
+.hs-container:not(:has(.lm-vertical-beam)) .hs-preview-card {
+  bottom: 64px !important;
+}
+
 .hs-container:hover .hs-preview-card,
 .hs-container.hs-hovered .hs-preview-card {
   opacity: 1 !important;
   pointer-events: auto !important;
-  transform: translateX(-50%) translateY(-12px) !important;
+  transform: translateX(-50%) translateY(0) scale(1) !important;
 }
 
 /* Hover & Active pulse effect for Landmark Label */
 .hs-landmark-container:hover .lm-holographic-label {
-  border-color: #ffffff;
-  box-shadow: 0 6px 25px var(--lm-color), inset 0 0 12px var(--lm-glow);
+  border-color: #ffffff !important;
+  box-shadow: 0 6px 25px var(--lm-color), inset 0 0 12px var(--lm-glow) !important;
 }
 
 .lm-pulse-active .lm-holographic-label {
@@ -16371,6 +16699,140 @@ body.layout-command #pc-track {
   0% { transform: scale(1); }
   50% { transform: scale(1.1); box-shadow: 0 0 30px var(--lm-color); }
   100% { transform: scale(1); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TAV COPYRIGHT WATERMARK BADGE — LUXURY WATERMARK (Bottom-Right Home Page)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.tav-copyright-watermark {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px 6px 14px;
+  background: rgba(8, 14, 28, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 30px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 229, 255, 0.15);
+  pointer-events: auto;
+  user-select: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: tavWatermarkAppear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.tav-copyright-watermark:hover {
+  transform: translateY(-2px) scale(1.03);
+  background: rgba(8, 14, 28, 0.94);
+  border-color: rgba(0, 229, 255, 0.6);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 229, 255, 0.35);
+}
+
+.tav-watermark-powered {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.tav-watermark-logo-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px;
+  max-width: 45px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tav-watermark-img {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+}
+
+.tav-watermark-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.tav-watermark-title {
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 1.2px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.tav-watermark-subtitle {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 8px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+@keyframes tavWatermarkAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Positioning for Layout 11 (Command Layout) so it floats neatly above/beside bottom-right widgets */
+.layout-command .tav-copyright-watermark,
+body.layout-command .tav-copyright-watermark {
+  bottom: 265px !important;
+  right: 20px !important;
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 768px) {
+  .tav-copyright-watermark {
+    bottom: 16px;
+    right: 16px;
+    padding: 5px 12px;
+    gap: 8px;
+  }
+
+  .tav-watermark-powered {
+    font-size: 9.5px;
+  }
+
+  .tav-watermark-logo-box {
+    height: 22px;
+  }
+
+  .tav-watermark-title {
+    font-size: 11px;
+  }
+
+  .tav-watermark-subtitle {
+    font-size: 7px;
+  }
+
+  .layout-command .tav-copyright-watermark,
+  body.layout-command .tav-copyright-watermark {
+    bottom: calc(env(safe-area-inset-bottom, 20px) + 80px) !important;
+    right: 16px !important;
+  }
 }
 
 

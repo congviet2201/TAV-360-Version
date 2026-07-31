@@ -1979,7 +1979,7 @@ function generateSubmenuHTML(items, itemClass) {
             </svg>
           </div>
         </div>
-        </div>
+      </div>
     </div>
   `;
 
@@ -4337,30 +4337,39 @@ document.addEventListener("click", function(e) {
       item.classList.toggle("active", layout === layoutMode);
     });
 
-    // 1. Navigation dock items click handler
+    // 1. Navigation dock items hover & click handlers (Hover to hold, no click required)
     navItems.forEach(item => {
+      let popoverTimer = null;
+
+      item.addEventListener("mouseenter", function() {
+        if (popoverTimer) clearTimeout(popoverTimer);
+        const popover = this.querySelector(".monarch-popover");
+        if (popover) {
+          document.querySelectorAll(".layout-monarch .monarch-popover, .layout-regal .monarch-popover").forEach(p => p.classList.remove("open"));
+          popover.classList.add("open");
+        }
+      });
+
+      item.addEventListener("mouseleave", function() {
+        const popover = this.querySelector(".monarch-popover");
+        if (popover) {
+          popoverTimer = setTimeout(() => {
+            popover.classList.remove("open");
+          }, 180);
+        }
+      });
+
       item.addEventListener("click", function(e) {
-        // If user clicked inside the popover itself, handle selection instead
         if (e.target.closest(".monarch-popover")) {
           return;
         }
 
         const popover = this.querySelector(".monarch-popover");
         if (popover) {
-          e.stopPropagation();
-          const wasOpen = popover.classList.contains("open");
-          
-          // Close all popovers first
-          document.querySelectorAll(".layout-monarch .monarch-popover, .layout-regal .monarch-popover").forEach(p => p.classList.remove("open"));
-          
-          if (!wasOpen) {
-            popover.classList.add("open");
-          }
           return;
         }
 
-        // Otherwise (Top View, Interior, Liên kết vùng)
-        // Close all popovers
+        // Direct nav items (Top View, Interior, Liên kết vùng)
         document.querySelectorAll(".layout-monarch .monarch-popover, .layout-regal .monarch-popover").forEach(p => p.classList.remove("open"));
         
         navItems.forEach(n => n.classList.remove("active"));
@@ -5525,7 +5534,7 @@ document.addEventListener("click", function(e) {
     const beamH = pin.lineHeight || pin.height || calculateBeamHeightFromTilt(pin.tilt, 40, 150);
 
     const container = document.createElement('div');
-    container.className = `hs-container hs-landmark-container hs-${pin.category}`;
+    container.className = `hs-container hs-landmark-container hs-has-view hs-${pin.category}`;
     container.id = `hs-${pin.id}`;
     container.setAttribute('aria-label', pin.title);
     container.setAttribute('tabindex', '0');
@@ -5671,7 +5680,7 @@ document.addEventListener("click", function(e) {
   function createLandmarkHotspot(pin) {
     const container = document.createElement('div');
     const catClass = (pin.category || 'amenity').toLowerCase();
-    container.className = `hs-container hs-landmark-container hs-landmark-${catClass}`;
+    container.className = `hs-container hs-landmark-container hs-no-view hs-landmark-${catClass}`;
     container.id = `hs-landmark-${pin.id}`;
     container.setAttribute('aria-label', pin.name);
     container.setAttribute('tabindex', '0');

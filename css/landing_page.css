@@ -176,6 +176,617 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Luxury Center Brand Card */
+.landing-brand-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 48px 24px 48px;
+  margin-bottom: 28px;
+  background: rgba(8, 14, 28, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 32px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65), 
+              0 0 35px rgba(255, 140, 0, 0.25),
+              inset 0 0 25px rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  max-width: 680px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.landing-brand-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 
+              0 0 50px rgba(255, 140, 0, 0.4);
+}
+
+/* Center Logo Wrapper with 3D Tilt Perspective */
+.landing-center-logo-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  box-sizing: border-box;
+  perspective: 1000px;
+}
+
+/* Ambient Radial Energy Glow Halo behind Logo */
+.landing-logo-glow-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 210px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 35% 50%, rgba(255, 85, 0, 0.45) 0%, rgba(255, 255, 255, 0.3) 50%, transparent 75%);
+  filter: blur(26px);
+  animation: logoAmbientPulse 3.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes logoAmbientPulse {
+  0% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.92); filter: blur(22px); }
+  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); filter: blur(30px); }
+}
+
+/* Counter-Rotating Ambient Light Ring */
+.landing-logo-ambient-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 190px;
+  height: 150px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, rgba(255, 85, 0, 0.35), transparent 40%, rgba(255, 255, 255, 0.45), transparent 80%, rgba(255, 85, 0, 0.35));
+  filter: blur(14px);
+  animation: logoRingRotate 12s linear infinite;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+@keyframes logoRingRotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.landing-logo-split-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logo3DFloat 6s ease-in-out infinite alternate;
+}
+
+@keyframes logo3DFloat {
+  0% {
+    transform: translateY(-4px) rotateX(3deg) rotateY(-3deg);
+  }
+  100% {
+    transform: translateY(4px) rotateX(-3deg) rotateY(3deg);
+  }
+}
+
+/* Base Solid Dual Logo (Left Orange #ff5500, Right White #ffffff) - 100% Full & Sharp Corners */
+.landing-logo-solid-base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-logo-part {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left Half Solid Orange */
+.landing-logo-left-solid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+}
+
+.landing-logo-left-solid .landing-logo-mask-img {
+  width: 100%;
+  height: 100%;
+  background-color: #ff5500;
+  background-image: linear-gradient(135deg, #ff7700 0%, #ff5500 50%, #e04400 100%);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: drop-shadow(-3px 0 12px rgba(255, 85, 0, 0.6));
+}
+
+/* Right Half Solid White */
+.landing-logo-right-solid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  -webkit-clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+}
+
+.landing-logo-right-solid .landing-logo-mask-img {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  background-image: linear-gradient(135deg, #ffffff 0%, #f0f6ff 100%);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: drop-shadow(3px 0 12px rgba(255, 255, 255, 0.6));
+}
+
+/* ═════════════════════════════════════════════════════════════════════════
+   CONTINUOUS 4-PART RUNNING BORDER DIRECTLY ON LOGO SILHOUETTE (NO OUTER BOX):
+   b-top (0s), b-right (0.75s), b-bottom (1.5s), b-left (2.25s) with #ff8c00 -> #ffffff
+   ═════════════════════════════════════════════════════════════════════════ */
+.landing-logo-running-border-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  mix-blend-mode: screen;
+}
+
+.landing-logo-border-line {
+  position: absolute;
+  display: block;
+}
+
+.landing-logo-border-line.b-top {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(90deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runTop 3s linear infinite;
+  box-shadow: 0 0 12px #ff8c00, 0 0 18px #ffffff;
+}
+
+.landing-logo-border-line.b-right {
+  top: -100%;
+  right: 0;
+  width: 3.5px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runRight 3s linear infinite 0.75s;
+  box-shadow: 0 0 12px #ff8c00, 0 0 18px #ffffff;
+}
+
+.landing-logo-border-line.b-bottom {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 3.5px;
+  background: linear-gradient(270deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runBottom 3s linear infinite 1.5s;
+  box-shadow: 0 0 12px #ff8c00, 0 0 18px #ffffff;
+}
+
+.landing-logo-border-line.b-left {
+  bottom: -100%;
+  left: 0;
+  width: 3.5px;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runLeft 3s linear infinite 2.25s;
+  box-shadow: 0 0 12px #ff8c00, 0 0 18px #ffffff;
+}
+
+/* Holographic Sheen Sweeping Light Overlay */
+.landing-logo-holo-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(135deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0) 35%, 
+    rgba(255, 255, 255, 0.45) 48%, 
+    rgba(255, 255, 255, 0.75) 50%, 
+    rgba(255, 255, 255, 0.45) 52%, 
+    rgba(255, 255, 255, 0) 65%, 
+    transparent 100%
+  );
+  background-size: 250% 250%;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  animation: holoSheenSweep 4.5s ease-in-out infinite;
+  mix-blend-mode: overlay;
+  z-index: 12;
+}
+
+@keyframes holoSheenSweep {
+  0%, 15% { background-position: -150% -150%; }
+  65%, 100% { background-position: 150% 150%; }
+}
+
+/* Razor Sharp 50% Center Seam Divider (Orange-White Sparkle at 50% split) */
+.landing-logo-center-divider {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  height: 84%;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    #ff5500 35%, 
+    #ffffff 50%, 
+    rgba(255, 255, 255, 0.9) 65%, 
+    transparent 100%
+  );
+  box-shadow: -2px 0 10px #ff5500, 2px 0 10px #ffffff;
+  pointer-events: none;
+  border-radius: 1px;
+  animation: seamPulse 2.5s ease-in-out infinite alternate;
+  z-index: 15;
+}
+
+@keyframes seamPulse {
+  0% { opacity: 0.6; box-shadow: -2px 0 8px #ff5500, 2px 0 8px #ffffff; }
+  100% { opacity: 1; box-shadow: -4px 0 16px #ff7700, 4px 0 16px #ffffff; }
+}
+
+
+
+/* Razor Sharp 50% Center Seam Divider */
+.landing-logo-center-divider {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  height: 80%;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(255, 85, 0, 0.9) 35%, 
+    #ffffff 50%, 
+    rgba(255, 255, 255, 0.9) 65%, 
+    transparent 100%
+  );
+  box-shadow: -2px 0 8px #ff5500, 2px 0 8px #ffffff;
+  pointer-events: none;
+  border-radius: 1px;
+}
+
+/* Floating Logo Container with 3D Tilt */
+.landing-logo-split-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: logo3DFloat 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  transform-style: preserve-3d;
+}
+
+@keyframes logo3DFloat {
+  0% { transform: translateY(0) rotateX(0deg) scale(1); }
+  100% { transform: translateY(-7px) rotateX(3deg) scale(1.02); }
+}
+
+.landing-logo-part {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left Half: Vivid Metallic Orange Base */
+.landing-logo-left {
+  clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+}
+
+.landing-logo-left .landing-logo-mask-img {
+  width: 100%;
+  height: 100%;
+  background-color: #ff8c00;
+  background-image: linear-gradient(135deg, #ffba00 0%, #ff7700 45%, #e64a00 100%);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: drop-shadow(-4px 0 14px rgba(255, 140, 0, 0.95)) drop-shadow(0 0 22px rgba(255, 100, 0, 0.7));
+  animation: neonOrangePulse 2.6s ease-in-out infinite alternate;
+}
+
+@keyframes neonOrangePulse {
+  0% { filter: drop-shadow(-3px 0 10px rgba(255, 140, 0, 0.85)) drop-shadow(0 0 14px rgba(255, 80, 0, 0.55)); }
+  100% { filter: drop-shadow(-7px 0 20px rgba(255, 140, 0, 1)) drop-shadow(0 0 28px rgba(255, 120, 0, 0.9)); }
+}
+
+/* Neon Orange Laser Running Stroke Beam */
+.landing-logo-stroke-orange {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 140, 0, 0) 10%, 
+    #ffaa00 35%, 
+    #ffffff 50%, 
+    #ff5500 65%, 
+    rgba(255, 140, 0, 0) 90%, 
+    transparent 100%
+  );
+  background-size: 240% 100%;
+  animation: runNeonOrangeLaser 2.2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  mix-blend-mode: color-dodge;
+  filter: drop-shadow(-5px 0 14px #ff8c00) drop-shadow(0 0 20px #ff3300);
+}
+
+@keyframes runNeonOrangeLaser {
+  0% { background-position: -240% 0; opacity: 0.2; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { background-position: 240% 0; opacity: 0.2; }
+}
+
+/* Right Half: Diamond Platinum White Base */
+.landing-logo-right {
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  -webkit-clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+}
+
+.landing-logo-right .landing-logo-mask-img {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  background-image: linear-gradient(135deg, #ffffff 0%, #e0edff 50%, #ffffff 100%);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  filter: drop-shadow(4px 0 14px rgba(255, 255, 255, 0.95)) drop-shadow(0 0 22px rgba(255, 255, 255, 0.7));
+  animation: crystalWhitePulse 2.6s ease-in-out infinite alternate 0.3s;
+}
+
+@keyframes crystalWhitePulse {
+  0% { filter: drop-shadow(3px 0 10px rgba(255, 255, 255, 0.85)) drop-shadow(0 0 14px rgba(200, 230, 255, 0.55)); }
+  100% { filter: drop-shadow(7px 0 20px rgba(255, 255, 255, 1)) drop-shadow(0 0 28px rgba(220, 240, 255, 0.95)); }
+}
+
+/* Diamond White Laser Running Stroke Beam */
+.landing-logo-stroke-white {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0) 10%, 
+    #ffffff 35%, 
+    #ffffff 50%, 
+    #d4e8ff 65%, 
+    rgba(255, 255, 255, 0) 90%, 
+    transparent 100%
+  );
+  background-size: 240% 100%;
+  animation: runCrystalWhiteLaser 2.2s cubic-bezier(0.25, 1, 0.5, 1) infinite 0.25s;
+  mix-blend-mode: overlay;
+  filter: drop-shadow(5px 0 14px #ffffff) drop-shadow(0 0 20px rgba(180, 225, 255, 0.95));
+}
+
+@keyframes runCrystalWhiteLaser {
+  0% { background-position: -240% 0; opacity: 0.2; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { background-position: 240% 0; opacity: 0.2; }
+}
+
+/* Holographic Prismatic Light Sheen across Whole Logo Surface */
+.landing-logo-holo-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background: linear-gradient(115deg, 
+    transparent 0%, 
+    transparent 40%, 
+    rgba(255, 255, 255, 0.95) 50%, 
+    rgba(255, 200, 100, 0.8) 54%, 
+    transparent 65%, 
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  animation: holoSheenSweep 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  mix-blend-mode: overlay;
+}
+
+@keyframes holoSheenSweep {
+  0% { background-position: -300% 0; opacity: 0; }
+  20% { opacity: 0.85; }
+  50% { opacity: 0.85; }
+  100% { background-position: 300% 0; opacity: 0; }
+}
+
+/* Center Fusion Energy Seam Line (Glowing Energy Pulse at 50% split line) */
+.landing-logo-center-seam {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 70%;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    rgba(255, 140, 0, 0.8) 30%, 
+    #ffffff 50%, 
+    rgba(255, 140, 0, 0.8) 70%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 10px #ff8c00, 0 0 14px #ffffff, 0 0 20px rgba(255, 140, 0, 0.6);
+  animation: seamPulse 2.4s ease-in-out infinite alternate;
+  pointer-events: none;
+  border-radius: 2px;
+}
+
+@keyframes seamPulse {
+  0% { opacity: 0.4; height: 60%; }
+  100% { opacity: 1; height: 75%; }
+}
+
+/* Fallback img element */
+.landing-logo-fallback-img {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Continuous Running Border (Cam - Trắng) */
+.landing-running-border-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: 32px;
+  overflow: hidden;
+}
+
+.landing-border-line {
+  position: absolute;
+  display: block;
+}
+
+.landing-border-line.b-top {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2.5px;
+  background: linear-gradient(90deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runTop 3s linear infinite;
+  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
+}
+
+.landing-border-line.b-right {
+  top: -100%;
+  right: 0;
+  width: 2.5px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runRight 3s linear infinite 0.75s;
+  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
+}
+
+.landing-border-line.b-bottom {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2.5px;
+  background: linear-gradient(270deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runBottom 3s linear infinite 1.5s;
+  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
+}
+
+.landing-border-line.b-left {
+  bottom: -100%;
+  left: 0;
+  width: 2.5px;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
+  animation: runLeft 3s linear infinite 2.25s;
+  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
+}
+
+@keyframes runTop {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+@keyframes runRight {
+  0% { top: -100%; }
+  50%, 100% { top: 100%; }
+}
+
+@keyframes runBottom {
+  0% { right: -100%; }
+  50%, 100% { right: 100%; }
+}
+
+@keyframes runLeft {
+  0% { bottom: -100%; }
+  50%, 100% { bottom: 100%; }
+}
+
 /* Main Title */
 .landing-title {
   font-family: 'Playfair Display', 'Cormorant Garamond', 'Sora', Georgia, serif;
@@ -184,18 +795,18 @@
   line-height: 1.1;
   letter-spacing: 1px;
   color: #ffffff;
-  margin: 0 0 16px 0;
-  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 242, 254, 0.2);
+  margin: 0 0 12px 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 140, 0, 0.3);
 }
 
 /* Subtitle */
 .landing-subtitle {
   font-family: 'Inter', 'Outfit', sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 300;
   letter-spacing: 1.5px;
   color: rgba(255, 255, 255, 0.88);
-  margin: 0 0 40px 0;
+  margin: 0;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   max-width: 580px;
 }
@@ -381,10 +992,36 @@
     font-size: 13px;
     letter-spacing: 1.5px;
   }
+  .landing-center-logo-wrap {
+    width: 180px;
+    height: 140px;
+    margin-bottom: 14px;
+    padding: 10px;
+  }
   .landing-bottom-bar {
     padding-bottom: 20px;
   }
   .landing-hint-text {
     font-size: 10px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BOTTOM-RIGHT POWERED BY TAV WATERMARK INSIDE LANDING PAGE
+   ═══════════════════════════════════════════════════════════════════════ */
+#landing-page-overlay .tav-landing-watermark {
+  position: absolute !important;
+  bottom: 28px !important;
+  right: 36px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 100 !important;
+  margin: 0 !important;
+}
+
+@media screen and (max-width: 768px) {
+  #landing-page-overlay .tav-landing-watermark {
+    bottom: 16px !important;
+    right: 16px !important;
   }
 }
