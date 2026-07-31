@@ -579,5 +579,5 @@
       <polystyle backgroundalpha="0.25098" backgroundcolor="0x0000ff" borderalpha="1" bordercolor="0x0000ff" handcursor="1" mode="0" />
     </hotspots>
   </masternode>
-  <autorotate enabled="0" speed="0.001" delay="1.00" startloaded="0" returntohorizon="0.000" />
+  <autorotate enabled="0" speed="-0.1" delay="1.00" startloaded="0" returntohorizon="0.000" />
 </tour>

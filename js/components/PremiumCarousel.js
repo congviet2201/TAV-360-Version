@@ -402,6 +402,13 @@ class PremiumSceneCarousel {
 }
 
 window.initPremiumCarousel = function() {
+  const currentMode = (typeof layoutMode !== 'undefined') ? layoutMode : (localStorage.getItem("latien_layout_mode") || "futuristic");
+  if (currentMode !== 'command') {
+    const nodes = document.querySelectorAll('#premium-scene-carousel, #premium-scene-browser, .premium-carousel-container, #pc-prev, #pc-next, #pc-category-selector, #pc-track, .premium-carousel-nav, [class*="pc-"]');
+    nodes.forEach(el => el.remove());
+    return;
+  }
+
   if (window.premiumCarouselInstance) {
     const container = document.getElementById('premium-scene-carousel');
     if (container) {

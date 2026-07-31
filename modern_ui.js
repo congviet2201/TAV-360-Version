@@ -2601,6 +2601,16 @@ function generateSubmenuHTML(items, itemClass) {
       }
     });
 
+    if (layoutMode !== 'command' && layoutMode !== 'monarch') {
+      const cmdNodes = document.querySelectorAll('#premium-scene-carousel, #premium-scene-browser, .cmd-scene-explorer, .cmd-spatial-control, .cmd-top-ribbon, .premium-carousel-container, .carousel-container, #pc-prev, #pc-next, #pc-category-selector, #pc-track, .premium-carousel-nav');
+      cmdNodes.forEach(el => el.remove());
+    }
+
+    if (layoutMode === 'horizon') {
+      const carouselNodes = document.querySelectorAll('#premium-scene-carousel, #premium-scene-browser, .premium-carousel-container, #pc-prev, #pc-next, #pc-category-selector, #pc-track, .premium-carousel-nav, [class*="pc-"], [class*="carousel-strip"]');
+      carouselNodes.forEach(el => el.remove());
+    }
+
     // Render nodes based on mode
     if (layoutMode === "classic") {
       const tempDiv = document.createElement("div");
@@ -2660,7 +2670,7 @@ function generateSubmenuHTML(items, itemClass) {
       setupNexusListeners();
     } else if (layoutMode === "monarch") {
       const tempDiv = document.createElement("div");
-      tempDiv.innerHTML = globalFloatingLogoHTML + monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML + premiumCarouselHTML;
+      tempDiv.innerHTML = globalFloatingLogoHTML + monarchNavHTML + monarchCommandPanelHTML + monarchLayoutSelectorHTML;
       while (tempDiv.firstChild) {
         uiWrapper.appendChild(tempDiv.firstChild);
       }
@@ -4432,17 +4442,17 @@ document.addEventListener("click", function(e) {
 
     window.customAutoRotateActive = !window.customAutoRotateActive;
 
-    // 1. Native Pano2VR autorotate call
+    // 1. Native Pano2VR autorotate call (-0.1 speed = reversed direction)
     if (p) {
       if (window.customAutoRotateActive) {
-        if (typeof p.startAutorotate === 'function') p.startAutorotate(0.4, 0, 0);
+        if (typeof p.startAutorotate === 'function') p.startAutorotate(-0.1, 0, 0);
         else if (typeof p.toggleAutorotate === 'function') p.toggleAutorotate();
       } else {
         if (typeof p.stopAutorotate === 'function') p.stopAutorotate();
       }
     }
 
-    // 2. Guaranteed fallback rotation interval (50 FPS, 0.25deg/step = ~12.5deg/sec)
+    // 2. Guaranteed fallback rotation interval (50 FPS, -0.05deg/step = 0.1 speed, reversed)
     if (window.customAutoRotateInterval) {
       clearInterval(window.customAutoRotateInterval);
       window.customAutoRotateInterval = null;
@@ -4460,7 +4470,7 @@ document.addEventListener("click", function(e) {
         const activePano = getPano();
         if (activePano && typeof activePano.getPan === 'function' && typeof activePano.setPan === 'function') {
           const currentPan = activePano.getPan();
-          activePano.setPan((currentPan + 0.25) % 360);
+          activePano.setPan((currentPan - 0.05 + 360) % 360);
         }
       }, 20);
     }
@@ -7168,6 +7178,13 @@ class PremiumSceneCarousel {
 }
 
 window.initPremiumCarousel = function() {
+  const currentMode = (typeof layoutMode !== 'undefined') ? layoutMode : (localStorage.getItem("latien_layout_mode") || "futuristic");
+  if (currentMode !== 'command') {
+    const nodes = document.querySelectorAll('#premium-scene-carousel, #premium-scene-browser, .premium-carousel-container, #pc-prev, #pc-next, #pc-category-selector, #pc-track, .premium-carousel-nav, [class*="pc-"]');
+    nodes.forEach(el => el.remove());
+    return;
+  }
+
   if (window.premiumCarouselInstance) {
     const container = document.getElementById('premium-scene-carousel');
     if (container) {

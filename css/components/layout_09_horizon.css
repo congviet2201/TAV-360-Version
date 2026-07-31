@@ -50,7 +50,7 @@
 
 .layout-horizon .horizon-nav-container {
   position: absolute;
-  bottom: 24px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2000;
@@ -59,15 +59,14 @@
 
 .layout-horizon .horizon-dock {
   display: flex;
-  background: var(--horizon-glass);
-  border: 1px solid var(--horizon-glass-border);
+  background: rgba(14, 18, 28, 0.72);
+  border: 1px solid rgba(246, 193, 119, 0.3);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-radius: 20px 20px 0 0;
-  /* curved top */
-  padding: 8px 32px;
-  gap: 24px;
-  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border-radius: 40px;
+  padding: 5px 12px;
+  gap: 6px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
   align-items: center;
 }
@@ -76,8 +75,8 @@
   content: '';
   position: absolute;
   bottom: 0;
-  left: 10%;
-  right: 10%;
+  left: 15%;
+  right: 15%;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--horizon-gold), transparent);
   opacity: 0.8;
@@ -88,19 +87,20 @@
 }
 
 .layout-horizon .horizon-nav-item {
-  padding: 10px 20px;
+  padding: 7px 16px;
   cursor: pointer;
   color: var(--horizon-silver);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   font-family: var(--horizon-font);
   font-weight: 500;
-  font-size: 15px;
-  letter-spacing: 0.5px;
+  font-size: 13px;
+  letter-spacing: 0.8px;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 20px;
   position: relative;
   overflow: hidden;
   user-select: none;
+  white-space: nowrap;
 }
 
 .layout-horizon .horizon-nav-item::before {
@@ -110,36 +110,36 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(246, 193, 119, 0.04);
+  background: rgba(246, 193, 119, 0.08);
   opacity: 0;
   transition: opacity 0.3s ease;
-  border-radius: 8px;
+  border-radius: 20px;
 }
 
 .layout-horizon .horizon-nav-item:hover {
   color: #fff;
-  text-shadow: 0 0 10px rgba(246, 193, 119, 1);
+  text-shadow: 0 0 10px rgba(246, 193, 119, 0.8);
 }
 
 .layout-horizon .horizon-nav-item:hover::before {
   opacity: 1;
-  background: linear-gradient(180deg, rgba(246, 193, 119, 0.1) 0%, rgba(246, 193, 119, 0.6) 100%);
-  box-shadow: inset 0 -2px 0 var(--horizon-gold), 0 0 15px rgba(246, 193, 119, 0.4);
+  background: linear-gradient(180deg, rgba(246, 193, 119, 0.12) 0%, rgba(246, 193, 119, 0.3) 100%);
+  box-shadow: inset 0 0 10px rgba(246, 193, 119, 0.2);
 }
 
 .layout-horizon .horizon-nav-item.active {
   color: var(--horizon-gold);
   font-weight: 600;
-  background: rgba(246, 193, 119, 0.08);
-  box-shadow: inset 0 0 10px rgba(246, 193, 119, 0.1);
+  background: rgba(246, 193, 119, 0.18);
+  box-shadow: inset 0 0 12px rgba(246, 193, 119, 0.25), 0 0 10px rgba(246, 193, 119, 0.2);
 }
 
 .layout-horizon .horizon-nav-item.active::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 20%;
-  right: 20%;
+  bottom: 2px;
+  left: 25%;
+  right: 25%;
   height: 2px;
   background: var(--horizon-gold);
   box-shadow: 0 0 8px var(--horizon-gold);
@@ -148,23 +148,23 @@
 
 .layout-horizon .horizon-submenu {
   position: absolute;
-  bottom: calc(100% + 12px);
+  bottom: calc(100% + 10px);
   left: 50%;
-  transform: translateX(-50%) translateY(10px) scale(0.95);
-  background: var(--horizon-glass);
-  border: 1px solid var(--horizon-glass-border);
+  transform: translateX(-50%) translateY(8px) scale(0.96);
+  background: rgba(14, 18, 28, 0.85);
+  border: 1px solid rgba(246, 193, 119, 0.3);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-radius: 12px;
-  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(246, 193, 119, 0.05);
-  padding: 8px;
+  border-radius: 14px;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(246, 193, 119, 0.15);
+  padding: 6px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   min-width: 140px;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   z-index: 2100;
 }
@@ -172,10 +172,10 @@
 .layout-horizon .horizon-submenu::before {
   content: '';
   position: absolute;
-  bottom: -15px;
+  bottom: -12px;
   left: 0;
   right: 0;
-  height: 15px;
+  height: 12px;
   background: transparent;
 }
 
@@ -629,4 +629,66 @@
   -webkit-backdrop-filter: blur(24px) !important;
   transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1), height 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s !important;
   overflow: hidden !important;
+}
+
+/* ==========================================================================
+   LOẠI BỎ TRIỆT ĐỂ CỤM CHUYỂN VIEW (NÚT < >, BADGE CATEGORY, THANH SCROLL) Ở LAYOUT 9
+   ========================================================================== */
+body.layout-horizon #premium-scene-carousel,
+body.layout-horizon .premium-carousel-container,
+body.layout-horizon #premium-scene-browser,
+body.layout-horizon .premium-scene-browser,
+body.layout-horizon #pc-prev,
+body.layout-horizon #pc-next,
+body.layout-horizon .premium-carousel-nav,
+body.layout-horizon #pc-category-selector,
+body.layout-horizon #pc-category-active,
+body.layout-horizon #pc-category-label,
+body.layout-horizon #pc-category-dropdown,
+body.layout-horizon .pc-category-selector,
+body.layout-horizon #pc-track,
+body.layout-horizon .pc-track,
+body.layout-horizon .pc-card,
+body.layout-horizon .cmd-top-ribbon,
+body.layout-horizon .cmd-scene-explorer,
+body.layout-horizon .cmd-spatial-control,
+body.layout-horizon .monarch-command-panel,
+body.layout-horizon .monarch-layout-selector,
+body.layout-horizon [id^="pc-"],
+body.layout-horizon [class*="pc-"],
+body.layout-horizon [class*="carousel"],
+.layout-horizon #premium-scene-carousel,
+.layout-horizon .premium-carousel-container,
+.layout-horizon #premium-scene-browser,
+.layout-horizon .premium-scene-browser,
+.layout-horizon #pc-prev,
+.layout-horizon #pc-next,
+.layout-horizon .premium-carousel-nav,
+.layout-horizon #pc-category-selector,
+.layout-horizon #pc-category-active,
+.layout-horizon #pc-category-label,
+.layout-horizon #pc-category-dropdown,
+.layout-horizon .pc-category-selector,
+.layout-horizon #pc-track,
+.layout-horizon .pc-track,
+.layout-horizon .pc-card,
+.layout-horizon .cmd-top-ribbon,
+.layout-horizon .cmd-scene-explorer,
+.layout-horizon .cmd-spatial-control,
+.layout-horizon .monarch-command-panel,
+.layout-horizon .monarch-layout-selector,
+.layout-horizon [id^="pc-"],
+.layout-horizon [class*="pc-"],
+.layout-horizon [class*="carousel"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
 }

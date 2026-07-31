@@ -1,6 +1,6 @@
 .layout-command #layout-switcher-wrapper {
-  bottom: 65px !important;
-  right: 14px !important;
+  bottom: 230px !important;
+  right: 20px !important;
   left: auto !important;
   background: rgba(9, 4, 26, 0.85) !important;
   border: 1px solid var(--cmd-border-strong) !important;
@@ -13,9 +13,9 @@
 
 body.layout-command #layout-switcher-wrapper {
   display: flex !important;
-  right: 14px !important;
+  right: 20px !important;
   left: auto !important;
-  bottom: 65px !important;
+  bottom: 230px !important;
 }
 
 body.layout-command #layout-switcher-wrapper .layout-switcher-pill {
@@ -863,11 +863,11 @@ body.layout-command #layout-switcher-wrapper.active .layout-switcher-pill {
 }
 
 .layout-command #minimap-widget {
-  position: fixed;
-  bottom: 10px;
-  right: 72px;
-  /* sit to the left of the compass */
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
   left: auto !important;
+  top: auto !important;
   border: 1px solid var(--cmd-border) !important;
   border-radius: var(--cmd-radius) !important;
   background: rgba(9,4,26,0.85) !important;
@@ -1083,18 +1083,38 @@ body.layout-command #layout-switcher-wrapper.active .layout-switcher-pill {
   transform: translateY(-50%) translateX(0) !important;
 }
 
-/* Ensure Layout 11 view switcher/carousel is always visible and correctly positioned */
+/* Ensure Layout 11 view switcher/carousel track is mathematically 100% centered at bottom */
 .layout-command .premium-carousel-container,
-body.layout-command .premium-carousel-container {
+body.layout-command .premium-carousel-container,
+.layout-command #premium-scene-carousel,
+body.layout-command #premium-scene-carousel {
   display: flex !important;
   visibility: visible !important;
   opacity: 1 !important;
   position: fixed !important;
-  bottom: 90px !important;
-  left: 50% !important;
+  bottom: 20px !important;
+  left: calc(50% + 50px) !important;
+  right: auto !important;
   transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
   transform-origin: bottom center !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
   z-index: 950 !important;
+}
+
+/* Position Category badge floating 16px to the right so it doesn't offset the carousel center */
+.layout-command .pc-category-selector,
+body.layout-command .pc-category-selector,
+.layout-command #pc-category-selector,
+body.layout-command #pc-category-selector {
+  position: absolute !important;
+  left: calc(100% + 16px) !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  pointer-events: auto !important;
 }
 
 .layout-command .premium-carousel-container > *,

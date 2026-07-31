@@ -491,3 +491,55 @@ body.layout-monarch .compass-degree-display {
 .layout-monarch .compass-degree-display {
   display: none !important;
 }
+
+/* ==========================================================================
+   LOẠI BỎ TRIỆT ĐỂ CỤM CHUYỂN VIEW CAROUSEL Ở LAYOUT MONARCH
+   ========================================================================== */
+body.layout-monarch #premium-scene-carousel,
+body.layout-monarch .premium-carousel-container,
+body.layout-monarch #premium-scene-browser,
+body.layout-monarch .premium-scene-browser,
+body.layout-monarch #pc-prev,
+body.layout-monarch #pc-next,
+body.layout-monarch .premium-carousel-nav,
+body.layout-monarch #pc-category-selector,
+body.layout-monarch #pc-category-active,
+body.layout-monarch #pc-category-label,
+body.layout-monarch #pc-category-dropdown,
+body.layout-monarch .pc-category-selector,
+body.layout-monarch #pc-track,
+body.layout-monarch .pc-track,
+body.layout-monarch .pc-card,
+body.layout-monarch [id^="pc-"],
+body.layout-monarch [class*="pc-"],
+body.layout-monarch [class*="carousel"],
+.layout-monarch #premium-scene-carousel,
+.layout-monarch .premium-carousel-container,
+.layout-monarch #premium-scene-browser,
+.layout-monarch .premium-scene-browser,
+.layout-monarch #pc-prev,
+.layout-monarch #pc-next,
+.layout-monarch .premium-carousel-nav,
+.layout-monarch #pc-category-selector,
+.layout-monarch #pc-category-active,
+.layout-monarch #pc-category-label,
+.layout-monarch #pc-category-dropdown,
+.layout-monarch .pc-category-selector,
+.layout-monarch #pc-track,
+.layout-monarch .pc-track,
+.layout-monarch .pc-card,
+.layout-monarch [id^="pc-"],
+.layout-monarch [class*="pc-"],
+.layout-monarch [class*="carousel"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}
