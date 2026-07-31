@@ -1,0 +1,390 @@
+/* ==========================================================================
+   LUXURY MINIMALIST LANDING PAGE (HOME SCREEN) STYLES
+   ========================================================================== */
+
+/* Main Overlay Container */
+#landing-page-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #ffffff;
+  background-color: #080c14;
+  opacity: 1;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
+}
+
+/* Hero Background Image */
+.landing-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transform: scale(1.03);
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 1;
+}
+
+/* Subtle Dark Gradient Overlay (25-35% opacity) */
+.landing-dark-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg, 
+    rgba(8, 14, 28, 0.65) 0%, 
+    rgba(8, 14, 28, 0.28) 40%, 
+    rgba(8, 14, 28, 0.75) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Top Bar: Logo & Language Selector */
+.landing-top-bar {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1400px;
+  padding: 32px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Logo Badge */
+.landing-logo-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: default;
+}
+
+.landing-logo-img {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.landing-logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.landing-logo-title {
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.landing-logo-sub {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+}
+
+/* Language Selector */
+.landing-lang-toggle {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 4px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.landing-lang-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.7);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.landing-lang-btn.active,
+.landing-lang-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Center Content Area */
+.landing-center-content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 800px;
+  padding: 0 24px;
+  margin: auto 0;
+}
+
+/* Eyebrow Badge */
+.landing-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin-bottom: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Main Title */
+.landing-title {
+  font-family: 'Playfair Display', 'Cormorant Garamond', 'Sora', Georgia, serif;
+  font-size: 68px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 242, 254, 0.2);
+}
+
+/* Subtitle */
+.landing-subtitle {
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0 0 40px 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  max-width: 580px;
+}
+
+/* Primary Glassmorphism CTA Button */
+.landing-cta-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px 48px;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.06));
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50px;
+  cursor: pointer;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 242, 254, 0.35);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.landing-cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.6s ease;
+}
+
+.landing-cta-btn:hover {
+  transform: translateY(-4px) scale(1.03);
+  background: linear-gradient(135deg, rgba(0, 242, 254, 0.35), rgba(0, 114, 255, 0.25));
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 242, 254, 0.6);
+}
+
+.landing-cta-btn:hover::before {
+  left: 100%;
+}
+
+.landing-cta-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.landing-cta-icon {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.3s ease;
+}
+
+.landing-cta-btn:hover .landing-cta-icon {
+  transform: translateX(4px);
+}
+
+/* Bottom Hint / Indicator */
+.landing-bottom-bar {
+  position: relative;
+  z-index: 10;
+  padding-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.landing-bottom-bar:hover {
+  opacity: 1;
+}
+
+.landing-mouse-icon {
+  width: 20px;
+  height: 32px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.landing-mouse-wheel {
+  width: 3px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 2px;
+  margin-top: 6px;
+  animation: landingScrollWheel 1.8s ease-in-out infinite;
+}
+
+@keyframes landingScrollWheel {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(12px); opacity: 0; }
+}
+
+.landing-hint-text {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Cinematic Transition Out State */
+#landing-page-overlay.landing-fade-out {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#landing-page-overlay.landing-fade-out .landing-hero-bg {
+  transform: scale(1.00) !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+
+/* Tablet (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+  .landing-top-bar {
+    padding: 24px 32px;
+  }
+  .landing-title {
+    font-size: 52px;
+  }
+  .landing-subtitle {
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  .landing-cta-btn {
+    padding: 16px 40px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile (max-width: 640px) */
+@media screen and (max-width: 640px) {
+  .landing-top-bar {
+    padding: 20px 20px;
+  }
+  .landing-logo-title {
+    font-size: 16px;
+  }
+  .landing-logo-sub {
+    font-size: 8px;
+  }
+  .landing-eyebrow {
+    font-size: 9px;
+    padding: 5px 12px;
+    margin-bottom: 18px;
+  }
+  .landing-title {
+    font-size: 38px;
+    margin-bottom: 12px;
+  }
+  .landing-subtitle {
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 28px;
+    padding: 0 10px;
+  }
+  .landing-cta-btn {
+    width: 85%;
+    max-width: 320px;
+    padding: 16px 24px;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+  }
+  .landing-bottom-bar {
+    padding-bottom: 20px;
+  }
+  .landing-hint-text {
+    font-size: 10px;
+  }
+}
