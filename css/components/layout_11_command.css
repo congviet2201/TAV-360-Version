@@ -1082,3 +1082,28 @@ body.layout-command #layout-switcher-wrapper:hover .layout-switcher-pill,
 body.layout-command #layout-switcher-wrapper.active .layout-switcher-pill {
   transform: translateY(-50%) translateX(0) !important;
 }
+
+/* Ensure Layout 11 view switcher/carousel is always visible and correctly positioned */
+.layout-command .premium-carousel-container,
+body.layout-command .premium-carousel-container {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: fixed !important;
+  bottom: 90px !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: bottom center !important;
+  z-index: 950 !important;
+}
+
+.layout-command .premium-carousel-container > *,
+body.layout-command .premium-carousel-container > * {
+  pointer-events: auto !important;
+}
+
+.layout-command #pc-track,
+body.layout-command #pc-track {
+  display: block !important;
+  visibility: visible !important;
+}

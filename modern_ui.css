@@ -2236,9 +2236,22 @@
 /* Orb container â€” 16px for compact visibility */
 .hs-glow-orb {
   position: relative;
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   cursor: pointer;
+  animation: hs-orb-blink 2.4s infinite ease-in-out;
+  filter: brightness(1.2) drop-shadow(0 0 6px rgba(0, 242, 254, 0.6));
+}
+
+@keyframes hs-orb-blink {
+  0%, 100% { filter: brightness(1.1) drop-shadow(0 0 5px rgba(0,220,255,0.5)); transform: scale(1); }
+  50% { filter: brightness(1.6) drop-shadow(0 0 14px rgba(0,242,254,0.85)); transform: scale(1.1); }
+}
+
+.hs-glow-orb:hover {
+  animation-play-state: paused;
+  transform: scale(1.15);
+  filter: brightness(1.7) drop-shadow(0 0 16px rgba(0, 242, 254, 0.9));
 }
 
 /* Orb inner sphere */
@@ -2305,18 +2318,19 @@
   white-space: nowrap;
   font-family: 'Inter', 'Outfit', sans-serif;
   font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.07em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: #ffffff;
-  background: rgba(8, 12, 28, 0.78);
-  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(8, 12, 28, 0.75);
+  border: 1px solid rgba(0, 242, 254, 0.45);
   border-radius: 20px;
   padding: 3px 8px;
   backdrop-filter: blur(4px);
   text-shadow: 0 1px 4px rgba(0,0,0,0.9);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.6);
   pointer-events: none;
   opacity: 1;
+  animation: hs-label-glow 2.4s infinite ease-in-out;
 }
 
 /* Category accent colour on label border */
@@ -2398,10 +2412,11 @@
 
 .hs-pin-line {
   width: 2px;
-  height: 25px;
+  height: var(--hs-line-h, 25px);
   background-color: #3b82f6;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
   z-index: 5;
+  transition: height 0.3s ease;
 }
 
 .hs-amenities .hs-pin-line {
@@ -2438,21 +2453,35 @@
   align-items: center;
   cursor: pointer;
   /* 3D perspective to lie flat on the ground */
-  transform: rotateX(60deg);
+  transform: rotateX(50deg);
   transform-style: preserve-3d;
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  margin-bottom: -10px; /* shift center to pano coordinate */
+  margin-bottom: -10px;
   z-index: 2;
-  /* Maximize brightness without scaling */
-  filter: brightness(1.3) drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
+  /* Subtle glow + gentle blinking */
+  filter: brightness(1.2) drop-shadow(0 0 7px rgba(0, 242, 254, 0.6));
+  animation: hs-topview-blink 2.4s infinite ease-in-out;
+}
+
+@keyframes hs-topview-blink {
+  0%, 100% {
+    filter: brightness(1.1) drop-shadow(0 0 6px rgba(0, 242, 254, 0.5));
+    transform: rotateX(50deg) scale(1);
+  }
+  50% {
+    filter: brightness(1.7) drop-shadow(0 0 14px rgba(0, 242, 254, 0.85));
+    transform: rotateX(50deg) scale(1.12);
+  }
 }
 
 .hs-matterport-point:hover .hs-matterport-ground {
-  transform: rotateX(60deg) scale(1.15);
+  transform: rotateX(50deg) scale(1.2);
+  animation-play-state: paused;
+  filter: brightness(1.8) drop-shadow(0 0 18px rgba(0, 242, 254, 0.9));
 }
 
 .hs-matterport-ground:active {
-  transform: rotateX(60deg) scale(0.9);
+  transform: rotateX(50deg) scale(0.9);
 }
 
 .hs-mp-inner {
@@ -2462,16 +2491,17 @@
   background-color: #ffffff;
   z-index: 2;
   position: absolute;
+  box-shadow: 0 0 6px 3px rgba(255,255,255,0.9), 0 0 12px 5px rgba(0, 242, 254, 0.6);
 }
 
 .hs-mp-ring {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 1);
+  border: 2px solid rgba(255, 255, 255, 1);
   position: absolute;
   z-index: 1;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 8px 3px rgba(0, 242, 254, 0.55), inset 0 0 6px rgba(255, 255, 255, 0.6);
   transition: transform 0.2s;
 }
 
@@ -2511,36 +2541,46 @@
 .hs-mp-green .hs-mp-ring { box-shadow: 0 0 14px 4px rgba(74, 222, 128, 1), inset 0 0 10px rgba(74, 222, 128, 0.9); }
 .hs-mp-green .hs-mp-pulse { background: rgba(74, 222, 128, 0.9); }
 
-.hs-mp-cyan .hs-mp-inner { box-shadow: 0 0 4px 2px #22d3ee; }
-.hs-mp-cyan .hs-mp-ring { border-color: rgba(34, 211, 238, 0.9); }
-.hs-mp-cyan .hs-mp-pulse { background: rgba(34, 211, 238, 0.5); }
+.hs-mp-cyan .hs-mp-inner { box-shadow: 0 0 14px 7px #22d3ee, 0 0 24px 12px rgba(255, 255, 255, 1); }
+.hs-mp-cyan .hs-mp-ring { border-color: rgba(34, 211, 238, 1); box-shadow: 0 0 16px 6px rgba(34, 211, 238, 1), inset 0 0 14px rgba(34, 211, 238, 0.9); }
+.hs-mp-cyan .hs-mp-pulse { background: rgba(34, 211, 238, 0.95); }
 
-/* Hover Label (Tooltip) */
+/* Always-visible Label Badge */
 .hs-mp-label {
   position: absolute;
   top: 100%;
-  margin-top: 12px;
+  margin-top: 10px;
   left: 50%;
-  transform: translateX(-50%); 
-  font-size: 12px;
-  font-weight: 500;
+  transform: translateX(-50%);
+  font-family: 'Inter', 'Outfit', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
   color: #fff;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(8, 14, 28, 0.75);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  padding: 4px 10px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 3px 9px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 242, 254, 0.45);
   white-space: nowrap;
   pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.65), 0 0 6px rgba(0, 242, 254, 0.25);
+  animation: hs-label-glow 2.4s infinite ease-in-out;
   z-index: 3;
+}
+
+@keyframes hs-label-glow {
+  0%, 100% { box-shadow: 0 2px 10px rgba(0,0,0,0.7), 0 0 5px rgba(0,242,254,0.2); border-color: rgba(0,242,254,0.45); }
+  50% { box-shadow: 0 2px 14px rgba(0,0,0,0.8), 0 0 12px rgba(0,242,254,0.55); border-color: rgba(0,242,254,0.75); }
 }
 
 .hs-matterport-point:hover .hs-mp-label {
   opacity: 1;
-  transform: translateX(-50%) translateY(2px); 
+  transform: translateX(-50%) translateY(-2px) scale(1.08);
+  animation-play-state: paused;
+  box-shadow: 0 4px 22px rgba(0,0,0,0.9), 0 0 28px rgba(0,242,254,0.95);
 }
 
 /* Ensure hover card works */
@@ -15935,6 +15975,403 @@ body.hide-hotspots .hs-container {
 }
 
 /* Fix overlap between command layout tools and premium carousel */
-.layout-command .premium-carousel-container {
+.layout-command .premium-carousel-container,
+body.layout-command .premium-carousel-container {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: fixed !important;
   bottom: 90px !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(var(--current-scale, 1)) !important;
+  transform-origin: bottom center !important;
+  z-index: 950 !important;
 }
+
+.layout-command .premium-carousel-container > *,
+body.layout-command .premium-carousel-container > * {
+  pointer-events: auto !important;
+}
+
+.layout-command #pc-track,
+body.layout-command #pc-track {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* ==========================================================================
+   AMENITY LANDMARK HOTSPOTS (PERSPECTIVE GROUND SCAN SYSTEM)
+   ========================================================================== */
+
+.hs-landmark-container {
+  position: absolute;
+  pointer-events: auto;
+  z-index: 700;
+  transform: translate(-50%, -50%);
+  user-select: none;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  display: none; /* Shown via hs-visible */
+}
+
+.hs-landmark-container.hs-visible {
+  display: block;
+}
+
+.lm-scale-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Unified White Color Tokens with Orange Beam Flow for All Hotspots --- */
+.hs-container,
+.hs-landmark-container,
+.hs-landmark-infrastructure,
+.hs-landmark-transportation,
+.hs-landmark-tourism,
+.hs-landmark-recreation,
+.hs-landmark-culture,
+.hs-container.hs-interior,
+.hs-container.hs-amenities,
+.hs-container.hs-aerial {
+  --lm-color: #ffffff;
+  --lm-glow: rgba(255, 255, 255, 0.45);
+  --lm-bg: rgba(255, 255, 255, 0.12);
+  --lm-flow-color: #ff7700;
+  --lm-flow-glow: rgba(255, 119, 0, 0.85);
+}
+
+.hs-container .lm-ground-scan-system {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* --- Ground Scan System (Ultra Compact & Minimal Micro-Beacon) --- */
+.lm-ground-scan-system {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* 1. Ultra Compact Sharp Core Dot */
+.lm-energy-core {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #ffffff !important;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.8) !important;
+  box-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff, 0 0 20px rgba(0, 242, 254, 0.9) !important;
+  animation: lmCoreAppear 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+             lmCorePulse 2s ease-in-out infinite 1.2s;
+  z-index: 6;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* Black Bordered Core Dot for High Contrast in Interior, Amenities & Architecture */
+.lm-energy-core.lm-black-border {
+  width: 9px;
+  height: 9px;
+  background: #ffffff !important;
+  border: 2.2px solid #000000 !important;
+  box-shadow: 0 0 0 1px #000000, 0 0 8px #ffffff, 0 0 16px rgba(0, 242, 254, 0.9) !important;
+  opacity: 1 !important;
+}
+
+/* Redesigned Luxury Helicopter Badge for Bird View / Aerial Hotspots */
+.hs-pin-heli-badge {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #00f2fe, #0066ff);
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 242, 254, 0.9), inset 0 0 6px rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  z-index: 8;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.hs-pin-heli-badge:hover {
+  transform: scale(1.18);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 242, 254, 1);
+}
+
+.hs-heli-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.hs-heli-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #00f2fe;
+  transform: translate(-50%, -50%) scale(1);
+  animation: hsHeliPulse 2s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hsHeliPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+}
+
+@keyframes lmCoreAppear {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes lmCorePulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 6px #ffffff, 0 0 12px #ffffff, 0 0 20px rgba(0, 242, 254, 0.9); }
+  50% { transform: scale(1.25); box-shadow: 0 0 10px #ffffff, 0 0 18px #ffffff, 0 0 28px rgba(0, 242, 254, 1); }
+}
+
+/* 2. Perspective Ground Scan Solid Ring */
+.lm-ground-scan {
+  position: absolute;
+  width: 36px;
+  height: 18px;
+  border: 1.5px solid #ffffff !important;
+  border-radius: 50%;
+  transform: rotateX(65deg) scale(1);
+  opacity: 1 !important;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 8px rgba(0, 242, 254, 0.8)) !important;
+  box-shadow: 0 0 8px #ffffff, inset 0 0 6px #ffffff !important;
+  animation: lmGroundScan 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards 0.2s,
+             lmGroundScanIdle 3s ease-in-out infinite 1.4s;
+  z-index: 3;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+@keyframes lmGroundScan {
+  0% { transform: rotateX(65deg) scale(0); opacity: 0; }
+  100% { transform: rotateX(65deg) scale(1); opacity: 1; }
+}
+
+@keyframes lmGroundScanIdle {
+  0%, 100% { transform: rotateX(65deg) scale(1); box-shadow: 0 0 8px #ffffff, inset 0 0 6px #ffffff; }
+  50% { transform: rotateX(65deg) scale(1.15); box-shadow: 0 0 14px #ffffff, inset 0 0 10px #ffffff; }
+}
+
+/* 3. Perspective Rotating Dashed Scan Ring */
+.lm-scan-ring-2 {
+  position: absolute;
+  width: 50px;
+  height: 25px;
+  border: 1.2px dashed rgba(255, 255, 255, 0.95) !important;
+  border-radius: 50%;
+  transform: rotateX(65deg) scale(1);
+  opacity: 0.95 !important;
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 8px rgba(0, 242, 254, 0.8)) !important;
+  animation: lmScanRing2 1.5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards 0.4s,
+             lmRotateRing 12s linear infinite 1.9s;
+  z-index: 2;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+@keyframes lmScanRing2 {
+  0% { transform: rotateX(65deg) scale(0); opacity: 0; }
+  100% { transform: rotateX(65deg) scale(1); opacity: 0.95; }
+}
+
+@keyframes lmRotateRing {
+  0% { transform: rotateX(65deg) rotate(0deg); }
+  100% { transform: rotateX(65deg) rotate(360deg); }
+}
+
+/* 4. Vertical Energy Beam (White beam + Orange running light pulse) */
+.lm-vertical-beam {
+  position: absolute;
+  bottom: 50%;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.2), #ffffff, rgba(255, 255, 255, 0.8));
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  animation: lmBeamRise 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.6s,
+             lmBeamPulse 2.5s ease-in-out infinite 1.4s;
+  z-index: 4;
+  overflow: visible;
+}
+
+/* Sleek Orange light pulse running up along the white beam */
+.lm-vertical-beam::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.5px;
+  height: 22px;
+  background: linear-gradient(to top, transparent, #ffffff, var(--lm-flow-color), transparent);
+  border-radius: 3px;
+  box-shadow: 0 0 8px var(--lm-flow-color), 0 0 14px var(--lm-flow-glow);
+  animation: lmBeamFlow 2.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes lmBeamFlow {
+  0%   { bottom: -10px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { bottom: 100%; opacity: 0; }
+}
+
+@keyframes lmBeamRise {
+  0% { height: 0; opacity: 0; }
+  100% { height: var(--lm-beam-h, 110px); opacity: 0.9; }
+}
+
+@keyframes lmBeamPulse {
+  0%, 100% { opacity: 0.9; filter: drop-shadow(0 0 6px var(--lm-color)); }
+  50% { opacity: 0.5; filter: drop-shadow(0 0 2px var(--lm-color)); }
+}
+
+/* 5. Small Particle Burst */
+.lm-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 6;
+}
+
+.lm-p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--lm-color);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+.lm-ground-scan-system .lm-p {
+  animation: lmParticleBurst 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards 0.9s;
+}
+
+.lm-p.p1 { --tx: -20px; --ty: -30px; }
+.lm-p.p2 { --tx: 22px;  --ty: -25px; }
+.lm-p.p3 { --tx: -15px; --ty: -45px; }
+.lm-p.p4 { --tx: 18px;  --ty: -48px; }
+.lm-p.p5 { --tx: -30px; --ty: -15px; }
+.lm-p.p6 { --tx: 28px;  --ty: -18px; }
+
+@keyframes lmParticleBurst {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+}
+
+/* 6. Facility Holographic Label — Rigidly locked ON TOP of the beam (No vertical jumping) */
+.lm-holographic-label {
+  position: absolute;
+  bottom: calc(var(--lm-beam-h, 110px) + 8px); /* Sits 8px rigidly above top of the beam */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(8, 14, 28, 0.88);
+  border: 1px solid var(--lm-color);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 15px var(--lm-glow);
+  opacity: 1;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+  z-index: 10;
+}
+
+@keyframes lmLabelReveal {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.lm-icon {
+  font-size: 15px;
+  line-height: 1;
+  filter: drop-shadow(0 0 6px var(--lm-color));
+}
+
+.lm-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.4px;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+}
+
+/* In Top View (no vertical beam), position label above dot and reveal on hover */
+.hs-container:not(:has(.lm-vertical-beam)) .lm-holographic-label {
+  bottom: 22px;
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(8px);
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hs-container:hover .lm-holographic-label,
+.hs-container.hs-hovered .lm-holographic-label {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(0) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.9) !important;
+}
+
+.hs-container:hover .hs-preview-card,
+.hs-container.hs-hovered .hs-preview-card {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) translateY(-12px) !important;
+}
+
+/* Hover & Active pulse effect for Landmark Label */
+.hs-landmark-container:hover .lm-holographic-label {
+  border-color: #ffffff;
+  box-shadow: 0 6px 25px var(--lm-color), inset 0 0 12px var(--lm-glow);
+}
+
+.lm-pulse-active .lm-holographic-label {
+  animation: lmPulseFeedback 0.4s ease-out;
+}
+
+@keyframes lmPulseFeedback {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); box-shadow: 0 0 30px var(--lm-color); }
+  100% { transform: scale(1); }
+}
+
+
+

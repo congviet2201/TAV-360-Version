@@ -39,6 +39,21 @@ class PremiumSceneCarousel {
   }
   
   init() {
+    this.allScenes = window.TAV_SCENES || [];
+    this.categories = [...new Set(this.allScenes.map(s => s.category).filter(Boolean))];
+    if (this.categories.length === 0) this.categories = ['All'];
+    if (!this.currentCategory || !this.categories.includes(this.currentCategory)) {
+      this.currentCategory = this.categories[0];
+    }
+    this.scenes = this.allScenes.filter(s => s.category === this.currentCategory);
+    if (this.scenes.length === 0) this.scenes = this.allScenes;
+    this.isAnimating = false;
+
+    if (this.track) {
+      this.track.style.opacity = '1';
+      this.track.style.transform = 'none';
+    }
+
     this.renderCategoryDropdown();
     this.syncWithActiveNode(typeof activePanoNode !== 'undefined' ? activePanoNode : null);
     this.renderCarousel();
@@ -100,12 +115,16 @@ class PremiumSceneCarousel {
 
   syncWithActiveNode(nodeId) {
     if (!nodeId) return;
+    this.allScenes = window.TAV_SCENES || [];
+    if (this.allScenes.length === 0) return;
+
     const sceneIdx = this.allScenes.findIndex(s => s.action === nodeId || s.id === nodeId);
     if (sceneIdx !== -1) {
       const scene = this.allScenes[sceneIdx];
       if (scene.category && scene.category !== this.currentCategory) {
         this.currentCategory = scene.category;
         this.scenes = this.allScenes.filter(s => s.category === this.currentCategory);
+        if (this.scenes.length === 0) this.scenes = this.allScenes;
         if (this.categoryLabel) this.categoryLabel.textContent = this.currentCategory;
         if (this.categoryDropdown) {
           Array.from(this.categoryDropdown.children).forEach(child => {
@@ -115,15 +134,19 @@ class PremiumSceneCarousel {
       }
       
       // Find index in current scenes
-      const localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
-      if (localIdx !== -1 && localIdx !== this.currentIndex) {
-        this.currentIndex = localIdx;
-        this.renderCarousel();
-      } else if (localIdx === -1) {
-        // Fallback if not found in category (shouldn't happen)
-        this.currentIndex = 0;
-        this.renderCarousel();
+      let localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
+      if (localIdx === -1) {
+        this.scenes = this.allScenes;
+        localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
       }
+      if (localIdx !== -1) {
+        this.currentIndex = localIdx;
+      }
+      if (this.track) {
+        this.track.style.opacity = '1';
+        this.track.style.transform = 'none';
+      }
+      this.renderCarousel();
     }
   }
   
@@ -133,6 +156,7 @@ class PremiumSceneCarousel {
   }
   
   renderCarousel() {
+    if (!this.track) return;
     this.track.innerHTML = '';
     
     // Render 5 cards for the 3D stack effect
@@ -146,6 +170,7 @@ class PremiumSceneCarousel {
     
     indices.forEach((sceneIndex, i) => {
       const scene = this.scenes[sceneIndex];
+      if (!scene) return;
       let positionClass = 'pc-card-hidden-left';
       if (i === 1) positionClass = 'pc-card-prev';
       if (i === 2) positionClass = 'pc-card-center';
@@ -178,7 +203,7 @@ class PremiumSceneCarousel {
       this.track.appendChild(card);
     });
   }
-  
+
   navigate(direction) {
     if (this.isAnimating) return;
     this.isAnimating = true;
@@ -243,12 +268,19 @@ class PremiumSceneCarousel {
   }
   
   setupEventListeners() {
-    this.prevBtn.addEventListener('click', () => this.navigate(-1));
-    this.nextBtn.addEventListener('click', () => this.navigate(1));
+    if (this.prevBtn && !this.prevBtn.dataset.bound) {
+      this.prevBtn.dataset.bound = "true";
+      this.prevBtn.addEventListener('click', () => this.navigate(-1));
+    }
+    if (this.nextBtn && !this.nextBtn.dataset.bound) {
+      this.nextBtn.dataset.bound = "true";
+      this.nextBtn.addEventListener('click', () => this.navigate(1));
+    }
     
     // Keyboard (bind once)
     if (!window._premiumCarouselKeyBound) {
       document.addEventListener('keydown', (e) => {
+        if (typeof layoutMode !== 'undefined' && layoutMode !== 'command' && layoutMode !== 'monarch') return;
         if (!window.premiumCarouselInstance) return;
         if (e.key === 'ArrowLeft') window.premiumCarouselInstance.navigate(-1);
         if (e.key === 'ArrowRight') window.premiumCarouselInstance.navigate(1);
@@ -256,21 +288,24 @@ class PremiumSceneCarousel {
       window._premiumCarouselKeyBound = true;
     }
     
-    // Mouse wheel on carousel
-    this.container.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (e.deltaY > 0) this.navigate(1);
-      else if (e.deltaY < 0) this.navigate(-1);
-    });
-    
-    // Swipe
-    let touchStartX = 0;
-    this.container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-    this.container.addEventListener('touchend', e => {
-      const touchEndX = e.changedTouches[0].screenX;
-      if (touchStartX - touchEndX > 50) this.navigate(1);
-      if (touchEndX - touchStartX > 50) this.navigate(-1);
-    });
+    if (this.container && !this.container.dataset.bound) {
+      this.container.dataset.bound = "true";
+      // Mouse wheel on carousel
+      this.container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY > 0) this.navigate(1);
+        else if (e.deltaY < 0) this.navigate(-1);
+      });
+      
+      // Swipe
+      let touchStartX = 0;
+      this.container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+      this.container.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) this.navigate(1);
+        if (touchEndX - touchStartX > 50) this.navigate(-1);
+      });
+    }
     
     // Category Dropdown
     if (this.categoryActive && !this.categoryActive.dataset.bound) {

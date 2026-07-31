@@ -4151,18 +4151,17 @@ document.addEventListener("click", function(e) {
       updateCmdCoords();
     }, 200);
 
-    // ── 8. Sync active state immediately ─────────────────────────────────
-    if (activePanoNode) {
+    // ── 8. Initialize/Rebind Premium Carousel since DOM was just injected ──
+    if (typeof window.initPremiumCarousel === 'function') {
+      window.initPremiumCarousel();
+    }
+
+    if (typeof activePanoNode !== 'undefined' && activePanoNode) {
       syncCommandTimeline(activePanoNode);
       // Mark active scene item
       document.querySelectorAll('.cmd-scene-item').forEach(i => {
         i.classList.toggle('active', i.getAttribute('data-pano-node') === activePanoNode);
       });
-    }
-
-    // Initialize/Rebind Premium Carousel since DOM was just injected
-    if (typeof window.initPremiumCarousel === 'function') {
-      window.initPremiumCarousel();
     }
   }
 
@@ -5495,50 +5494,65 @@ document.addEventListener("click", function(e) {
     return category === 'interior' ? ICON_INTERIOR : ICON_AMENITIES;
   }
 
-  function createPremiumHotspot(pin) {
-    const isBirdView = HOTSPOT_BIRD_VIEW_NODES.includes(activePanoNode);
-    const isTopView  = HOTSPOT_TOP_VIEW_NODES.includes(activePanoNode);
-    const isTopViewDay1 = activePanoNode === "node1";
+  // Dynamic height calculation based on tilt (3D spatial distance to camera)
+  // Rule: Close points (more negative tilt) are LOW, Far points (near horizon tilt) are HIGH
+  function calculateBeamHeightFromTilt(tilt, minH = 35, maxH = 155) {
+    const numericTilt = parseFloat(tilt) || 0;
+    // Clamp tilt between -50 (closest ground near camera) and +5 (horizon/sky)
+    const clampedTilt = Math.max(-50, Math.min(5, numericTilt));
+    // Normalize ratio: 0 (tilt = -50, closest) to 1 (tilt = 5, farthest)
+    const ratio = (clampedTilt - (-50)) / (5 - (-50));
+    // Quadratic ease curve so distant points project higher above background terrain
+    const easedRatio = Math.pow(ratio, 1.25);
+    return Math.round(minH + easedRatio * (maxH - minH));
+  }
 
-    // ── Style classes ─────────────────────────────────────────────────────
-    // TYPE A  → Top View Day 1 : hs-matterport-point (matterport ground marker)
-    // TYPE B  → Top View Night : hs-aerial-point (glowing orb without label)
-    // TYPE C  → Bird View      : hs-beacon (line-pin with always-visible label & icon)
-    // TYPE D  → Interior / Amenities: hs-subtle (circle dot, soft pulse)
-    let styleClass;
-    if (isTopViewDay1) {
-      styleClass = 'hs-matterport-point';
-    } else if (isTopView) {
-      styleClass = 'hs-aerial-point';
-    } else if (isBirdView) {
-      styleClass = 'hs-beacon';
-    } else {
-      styleClass = pin.category === 'aerial' ? 'hs-aerial' : 'hs-subtle';
-    }
+  function createPremiumHotspot(pin) {
+    const isBirdViewNode = HOTSPOT_BIRD_VIEW_NODES.includes(activePanoNode);
+    const isTopViewNode  = HOTSPOT_TOP_VIEW_NODES.includes(activePanoNode);
+
+    // Calculate vertical beam height based on spatial distance (tilt): close = low, far = moderate high
+    const beamH = pin.lineHeight || pin.height || calculateBeamHeightFromTilt(pin.tilt, 40, 150);
 
     const container = document.createElement('div');
-    container.className = `hs-container hs-${pin.category} ${styleClass}`;
+    container.className = `hs-container hs-landmark-container hs-${pin.category}`;
     container.id = `hs-${pin.id}`;
     container.setAttribute('aria-label', pin.title);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'button');
+    container.style.setProperty('--lm-beam-h', `${beamH}px`);
+    container.style.setProperty('--hs-line-h', `${beamH}px`);
 
     if (isHotspotsHidden) {
       container.style.visibility = "hidden";
       container.style.opacity = "0";
     }
 
-    if (pin.category === 'aerial') {
+    const iconSvg = getHotspotIcon(pin.category);
+
+    if (pin.category === 'aerial' || pin.id.includes('bird') || pin.id.includes('top')) {
       // ══════════════════════════════════════════════════════════════════
-      // ALL AERIAL HOTSPOTS (BIRD VIEW / TOP VIEW): Pure Helicopter Icon
+      // AERIAL / BIRD VIEW SHORTCUT HOTSPOTS: Redesigned Helicopter Badge
       // ══════════════════════════════════════════════════════════════════
       container.innerHTML = `
         <div class="hs-scale-wrap">
-          <div class="hs-pin-heli" style="display:flex; justify-content:center; align-items:center; width:28px; height:28px; background:linear-gradient(135deg, #00f2fe, #4facfe); border-radius:50%; box-shadow:0 0 12px rgba(0,242,254,0.8), inset 0 0 4px rgba(255,255,255,0.6); border:2px solid #fff; z-index:6; position:relative;">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" fill="#ffffff" style="width:16px; height:16px;">
-              <path d="M400 160V128H480C488.8 128 496 120.8 496 112V80C496 71.16 488.8 64 480 64H381.7L329.1 11.4C325 7.27 319.4 4.965 313.5 4.965H160C142.3 4.965 128 19.29 128 36.97V64H32C14.33 64 0 78.33 0 96V128C0 145.7 14.33 160 32 160H400zM616 192H24C10.75 192 0 202.7 0 216V232C0 245.3 10.75 256 24 256H55.45C58.33 283.6 81.65 304 110.1 304H168C198.9 304 224 278.9 224 248V240C224 231.2 231.2 224 240 224H400C408.8 224 416 231.2 416 240V248C416 278.9 441.1 304 472 304H529.9C558.4 304 581.7 283.6 584.6 256H616C629.3 256 640 245.3 640 232V216C640 202.7 629.3 192 616 192zM128 448H512C520.8 448 528 440.8 528 432V400C528 391.2 520.8 384 512 384H128C119.2 384 112 391.2 112 400V432C112 440.8 119.2 448 128 448z"/>
-            </svg>
-            <div class="hs-pulse-ring"></div>
+          <div class="hs-pin-heli-badge">
+            <div class="hs-heli-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" style="width:20px; height:20px; color:#ffffff;">
+                <line x1="2" y1="4" x2="22" y2="4" stroke-width="2.5" />
+                <line x1="12" y1="4" x2="12" y2="7" stroke-width="2" />
+                <path d="M7 13c0-3 2.2-5.5 5-5.5s5 2.5 5 5.5v1H7v-1z" fill="currentColor" fill-opacity="0.3" stroke-width="2" />
+                <line x1="17" y1="12" x2="22" y2="9" stroke-width="2" />
+                <circle cx="22" cy="9" r="2" stroke-width="1.8" />
+                <line x1="5" y1="18" x2="19" y2="18" stroke-width="2.2" />
+                <line x1="8" y1="14" x2="6" y2="18" stroke-width="1.8" />
+                <line x1="16" y1="14" x2="18" y2="18" stroke-width="1.8" />
+              </svg>
+            </div>
+            <div class="hs-heli-pulse"></div>
+          </div>
+          <div class="lm-holographic-label">
+            <span class="lm-name">${pin.title}</span>
           </div>
           <div class="hs-preview-card">
             <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
@@ -5550,65 +5564,29 @@ document.addEventListener("click", function(e) {
           </div>
         </div>
       `;
-    } else if (isTopViewDay1) {
+    } else if (isBirdViewNode) {
       // ══════════════════════════════════════════════════════════════════
-      // TYPE A — TOP VIEW DAY 1: Matterport-style Premium Ground Marker
+      // BIRD VIEW (node2): Full White Beam + Flow Light + Holographic Label
       // ══════════════════════════════════════════════════════════════════
-      const dotColorClass = pin.category === 'interior' ? 'hs-mp-blue'
-                          : pin.category === 'amenities' ? 'hs-mp-green' : 'hs-mp-cyan';
       container.innerHTML = `
         <div class="hs-scale-wrap">
-          <div class="hs-matterport-ground ${dotColorClass}">
-            <div class="hs-mp-pulse"></div>
-            <div class="hs-mp-inner"></div>
-            <div class="hs-mp-ring"></div>
-          </div>
-          <div class="hs-mp-label">${pin.title}</div>
-          <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
-            <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to enter'}</p>
-              <div class="hs-enter-btn">Click to Enter</div>
+          <div class="lm-ground-scan-system">
+            <div class="lm-energy-core lm-black-border"></div>
+            <div class="lm-ground-scan"></div>
+            <div class="lm-scan-ring-2"></div>
+            <div class="lm-vertical-beam"></div>
+            <div class="lm-particles">
+              <span class="lm-p p1"></span>
+              <span class="lm-p p2"></span>
+              <span class="lm-p p3"></span>
+              <span class="lm-p p4"></span>
+              <span class="lm-p p5"></span>
+              <span class="lm-p p6"></span>
             </div>
           </div>
-        </div>
-      `;
-    } else if (isTopView) {
-      // ══════════════════════════════════════════════════════════════════
-      // TYPE B — TOP VIEW NIGHT: Glowing orb without permanent text label
-      // ══════════════════════════════════════════════════════════════════
-      const orbClass = pin.category === 'interior' ? 'hs-orb-blue'
-                     : pin.category === 'amenities' ? 'hs-orb-green' : 'hs-orb-cyan';
-      container.innerHTML = `
-        <div class="hs-scale-wrap">
-          <div class="hs-glow-orb ${orbClass}">
-            <div class="hs-orb-inner"></div>
-            <div class="hs-orb-pulse"></div>
-          </div>
-          <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
-            <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to enter'}</p>
-              <div class="hs-enter-btn">Click to Enter</div>
-            </div>
-          </div>
-        </div>
-      `;
-    } else if (isBirdView) {
-      // ══════════════════════════════════════════════════════════════════
-      // TYPE B — BIRD VIEW: Line-pin beacon with ALWAYS-VISIBLE label
-      // ══════════════════════════════════════════════════════════════════
-      const iconSvg = getHotspotIcon(pin.category);
-      container.innerHTML = `
-        <div class="hs-scale-wrap">
-          <div class="hs-line-pin">
-            <div class="hs-pin-text">
-              <span class="hs-pin-icon">${iconSvg}</span>${pin.title}
-            </div>
-            <div class="hs-pin-line"></div>
-            <div class="hs-pin-dot"></div>
+          <div class="lm-holographic-label">
+            <span class="lm-icon">${iconSvg}</span>
+            <span class="lm-name">${pin.title}</span>
           </div>
           <div class="hs-preview-card">
             <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
@@ -5622,17 +5600,23 @@ document.addEventListener("click", function(e) {
       `;
     } else {
       // ══════════════════════════════════════════════════════════════════
-      // TYPE C — INTERIOR / AMENITIES: Floor marker, soft pulse, small glow
+      // INTERIOR, AMENITIES, ARCHITECTURE & TOP VIEW:
+      // Remove beam and name label, keep ONLY glowing dot with BLACK BORDER!
       // ══════════════════════════════════════════════════════════════════
       container.innerHTML = `
         <div class="hs-scale-wrap">
-          <div class="hs-circle">
-            <div class="hs-circle-inner"></div>
-            <div class="hs-pulse-soft"></div>
+          <div class="lm-ground-scan-system">
+            <div class="lm-energy-core lm-black-border"></div>
+            <div class="lm-ground-scan"></div>
+            <div class="lm-scan-ring-2"></div>
           </div>
-          <div class="hs-subtle-hover">
-            <div class="hs-subtle-title">${pin.title}</div>
-            <div class="hs-subtle-enter">Click to Enter</div>
+          <div class="hs-preview-card">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <div class="hs-preview-content">
+              <h4>${pin.title}</h4>
+              <p>${pin.desc || 'Click to enter'}</p>
+              <div class="hs-enter-btn">Click to Enter</div>
+            </div>
           </div>
         </div>
       `;
@@ -5673,6 +5657,60 @@ document.addEventListener("click", function(e) {
     return container;
   }
 
+  // Create Amenity Landmark Hotspot (Information Landmark with Ground Scan & Vertical Light Beam)
+  function createLandmarkHotspot(pin) {
+    const container = document.createElement('div');
+    const catClass = (pin.category || 'amenity').toLowerCase();
+    container.className = `hs-container hs-landmark-container hs-landmark-${catClass}`;
+    container.id = `hs-landmark-${pin.id}`;
+    container.setAttribute('aria-label', pin.name);
+    container.setAttribute('tabindex', '0');
+    container.setAttribute('role', 'region');
+
+    const beamH = pin.height || calculateBeamHeightFromTilt(pin.tilt, 40, 140);
+    container.style.setProperty('--lm-beam-h', `${beamH}px`);
+    container.style.setProperty('--hs-line-h', `${beamH}px`);
+
+    if (isHotspotsHidden) {
+      container.style.visibility = "hidden";
+      container.style.opacity = "0";
+    }
+
+    // Top View & Bird View Amenity Landmarks: Full vertical beam + running light flow + holographic label badge
+    container.innerHTML = `
+      <div class="lm-scale-wrap">
+        <div class="lm-ground-scan-system">
+          <div class="lm-energy-core"></div>
+          <div class="lm-ground-scan"></div>
+          <div class="lm-scan-ring-2"></div>
+          <div class="lm-vertical-beam"></div>
+          <div class="lm-particles">
+            <span class="lm-p p1"></span>
+            <span class="lm-p p2"></span>
+            <span class="lm-p p3"></span>
+            <span class="lm-p p4"></span>
+            <span class="lm-p p5"></span>
+            <span class="lm-p p6"></span>
+          </div>
+        </div>
+        <div class="lm-holographic-label">
+          <span class="lm-icon">${pin.icon || '📍'}</span>
+          <span class="lm-name">${pin.name}</span>
+        </div>
+      </div>
+    `;
+
+    // Landmark hotspots DO NOT navigate on click — visual pulse feedback only
+    container.addEventListener('click', (e) => {
+      e.stopPropagation();
+      container.classList.remove('lm-pulse-active');
+      void container.offsetWidth;
+      container.classList.add('lm-pulse-active');
+    });
+
+    return container;
+  }
+
   // Inject all hotspots for a given node
   function injectPremiumHotspots(nodeId) {
     if (!window.pano || typeof window.pano.addHotspot !== 'function') {
@@ -5681,32 +5719,43 @@ document.addEventListener("click", function(e) {
     }
     currentHotspotElements = [];
 
-    const defs = window.hotspotData[nodeId];
-    if (!defs) {
-        console.log(`[PremiumHotspot] No hotspot definitions found for node: ${nodeId}`);
-        return;
+    const defs = window.hotspotData ? window.hotspotData[nodeId] : null;
+    if (defs && Array.isArray(defs)) {
+      console.log(`[PremiumHotspot] Found ${defs.length} hotspots for node ${nodeId}`);
+
+      defs.forEach(pin => {
+        let finalPan = parseFloat(pin.pan);
+        let finalTilt = parseFloat(pin.tilt);
+        const currentLayoutMode = lsGet("latien_layout_mode", "futuristic");
+        if (currentLayoutMode === "classic") {
+          if (pin.pan_classic !== undefined) finalPan = pin.pan_classic;
+          if (pin.tilt_classic !== undefined) finalTilt = pin.tilt_classic;
+        }
+        const el = createPremiumHotspot(pin);
+        window.pano.addHotspot(pin.id, finalPan, finalTilt, el);
+        currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: pin.id });
+      });
     }
 
-    console.log(`[PremiumHotspot] Found ${defs.length} hotspots for node ${nodeId}`);
+    // Inject Amenity Landmark Hotspots (Information-only landmarks)
+    const landmarks = window.landmarkData ? window.landmarkData[nodeId] : null;
+    if (landmarks && Array.isArray(landmarks)) {
+      console.log(`[LandmarkHotspot] Found ${landmarks.length} landmark hotspots for node ${nodeId}`);
+      landmarks.forEach(lm => {
+        let finalPan = parseFloat(lm.pan);
+        let finalTilt = parseFloat(lm.tilt);
+        const el = createLandmarkHotspot(lm);
+        window.pano.addHotspot(`lm_${lm.id}`, finalPan, finalTilt, el);
+        currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: `lm_${lm.id}`, isLandmark: true });
+      });
+    }
 
-    defs.forEach(pin => {
-      let finalPan = parseFloat(pin.pan);
-      let finalTilt = parseFloat(pin.tilt);
-      const currentLayoutMode = lsGet("latien_layout_mode", "futuristic");
-      if (currentLayoutMode === "classic") {
-        if (pin.pan_classic !== undefined) finalPan = pin.pan_classic;
-        if (pin.tilt_classic !== undefined) finalTilt = pin.tilt_classic;
-      }
-      const el = createPremiumHotspot(pin);
-      window.pano.addHotspot(pin.id, finalPan, finalTilt, el);
-      currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: pin.id });
-    });
-    
-    console.log(`[PremiumHotspot] Successfully injected ${currentHotspotElements.length} hotspots`);
+    console.log(`[PremiumHotspot] Successfully injected ${currentHotspotElements.length} total hotspots`);
 
     // After injecting, render minimap markers
     updateMinimapHotspots(nodeId);
   }
+
 
   // Update minimap overlay with hotspot markers (only in Classic layout)
   function updateMinimapHotspots(nodeId) {
@@ -5794,28 +5843,26 @@ document.addEventListener("click", function(e) {
       const hFov = camFov;            // horizontal field of view
       const vFov = camFov * (9 / 16); // vertical field of view approximation
 
-      currentHotspotElements.forEach(({ el, pan, tilt }) => {
+      currentHotspotElements.forEach(({ el, pan, tilt, isLandmark }) => {
         // Angular distance from camera center to hotspot (wrap-around safe)
         let dPan = pan - camPan;
         while (dPan >  180) dPan -= 360;
         while (dPan < -180) dPan += 360;
         const dTilt = tilt - camTilt;
 
-        if (isTopView) {
-          // Top View (Nadir): camera rotates around vertical axis only.
-          // All hotspots always remain visible regardless of pan.
+        if (isTopView && !isLandmark) {
+          // Hotspot CÓ VIEW trong Top View (Living, WC, Thông tầng, Park, Street, Bird View...):
+          // Mặc định luôn hiển thị đầy đủ, không bao giờ ẩn khi xoay
           el.classList.add('hs-visible');
           el.style.opacity = '';
           return;
         }
 
-        if (isBirdView) {
-          // Bird View visibility zone:
-          // Screen is divided into 6 equal columns — hotspots visible ONLY in the 2 center columns.
-          // Center 2/6 = 1/3 of FOV → each side shows up to ±(FOV/6) from camera center.
-          // A 15° smooth fade zone is applied just outside this boundary.
+        if (isTopView || isBirdView) {
+          // Visibility zone cho Hotspot tiện ích KHÔNG CÓ VIEW trên Top View & Bird View:
+          // Xoay tới mới hiện (fade-in), xoay ra thì ẩn (fade-out)
           const halfH = hFov / 6;       // ±FOV/6 from center (e.g. ±15° when FOV=90°)
-          const halfV = vFov * 0.5;     // full vertical FOV kept as-is
+          const halfV = vFov * 0.5;     // full vertical FOV
 
           const FADE_ZONE = 15; // degrees of smooth fade beyond the boundary
 
@@ -5855,8 +5902,64 @@ document.addEventListener("click", function(e) {
           el.style.opacity = '';
         }
       });
+
+      // Prevent visual label overlap for landmark hotspots (offset labels vertically if overlapping)
+      updateLandmarkLabelOffsets();
     } catch (e) {}
   }
+
+  // Adjust label vertical positions for landmark hotspots to prevent label overlap
+  function updateLandmarkLabelOffsets() {
+    const landmarkItems = currentHotspotElements.filter(item => item.isLandmark && item.el);
+    if (landmarkItems.length < 2) return;
+
+    // Reset offsets first
+    landmarkItems.forEach(item => {
+      const label = item.el.querySelector('.lm-holographic-label');
+      if (label) label.style.transform = '';
+    });
+
+    // Get visible labels with their rects
+    const visibleLabels = [];
+    landmarkItems.forEach(item => {
+      const label = item.el.querySelector('.lm-holographic-label');
+      if (label && item.el.classList.contains('hs-visible')) {
+        const rect = label.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          visibleLabels.push({ label, rect, offset: 0 });
+        }
+      }
+    });
+
+    // Sort by screen X (left)
+    visibleLabels.sort((a, b) => a.rect.left - b.rect.left);
+
+    // Detect collision & calculate vertical offset (only move labels, never ground anchor)
+    for (let i = 0; i < visibleLabels.length; i++) {
+      for (let j = i + 1; j < visibleLabels.length; j++) {
+        const a = visibleLabels[i];
+        const b = visibleLabels[j];
+
+        const horizOverlap = (b.rect.left < a.rect.right + 12) && (b.rect.right > a.rect.left - 12);
+        const vertOverlap = Math.abs((a.rect.top + a.offset) - (b.rect.top + b.offset)) < (a.rect.height + 8);
+
+        if (horizOverlap && vertOverlap) {
+          // Shift the overlapping label upwards
+          b.offset -= (a.rect.height + 12);
+        }
+      }
+    }
+
+    // Apply calculated label offsets
+    visibleLabels.forEach(item => {
+      if (item.offset !== 0) {
+        item.label.style.transform = `translateX(-50%) translateY(${item.offset}px)`;
+      } else {
+        item.label.style.transform = '';
+      }
+    });
+  }
+
 
   // Legacy stub — kept for backward compat with other layouts calling createHologramMarker
   function createHologramMarker(pin) {
@@ -6704,6 +6807,21 @@ class PremiumSceneCarousel {
   }
   
   init() {
+    this.allScenes = window.TAV_SCENES || [];
+    this.categories = [...new Set(this.allScenes.map(s => s.category).filter(Boolean))];
+    if (this.categories.length === 0) this.categories = ['All'];
+    if (!this.currentCategory || !this.categories.includes(this.currentCategory)) {
+      this.currentCategory = this.categories[0];
+    }
+    this.scenes = this.allScenes.filter(s => s.category === this.currentCategory);
+    if (this.scenes.length === 0) this.scenes = this.allScenes;
+    this.isAnimating = false;
+
+    if (this.track) {
+      this.track.style.opacity = '1';
+      this.track.style.transform = 'none';
+    }
+
     this.renderCategoryDropdown();
     this.syncWithActiveNode(typeof activePanoNode !== 'undefined' ? activePanoNode : null);
     this.renderCarousel();
@@ -6765,12 +6883,16 @@ class PremiumSceneCarousel {
 
   syncWithActiveNode(nodeId) {
     if (!nodeId) return;
+    this.allScenes = window.TAV_SCENES || [];
+    if (this.allScenes.length === 0) return;
+
     const sceneIdx = this.allScenes.findIndex(s => s.action === nodeId || s.id === nodeId);
     if (sceneIdx !== -1) {
       const scene = this.allScenes[sceneIdx];
       if (scene.category && scene.category !== this.currentCategory) {
         this.currentCategory = scene.category;
         this.scenes = this.allScenes.filter(s => s.category === this.currentCategory);
+        if (this.scenes.length === 0) this.scenes = this.allScenes;
         if (this.categoryLabel) this.categoryLabel.textContent = this.currentCategory;
         if (this.categoryDropdown) {
           Array.from(this.categoryDropdown.children).forEach(child => {
@@ -6780,15 +6902,19 @@ class PremiumSceneCarousel {
       }
       
       // Find index in current scenes
-      const localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
-      if (localIdx !== -1 && localIdx !== this.currentIndex) {
-        this.currentIndex = localIdx;
-        this.renderCarousel();
-      } else if (localIdx === -1) {
-        // Fallback if not found in category (shouldn't happen)
-        this.currentIndex = 0;
-        this.renderCarousel();
+      let localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
+      if (localIdx === -1) {
+        this.scenes = this.allScenes;
+        localIdx = this.scenes.findIndex(s => s.action === nodeId || s.id === nodeId);
       }
+      if (localIdx !== -1) {
+        this.currentIndex = localIdx;
+      }
+      if (this.track) {
+        this.track.style.opacity = '1';
+        this.track.style.transform = 'none';
+      }
+      this.renderCarousel();
     }
   }
   
@@ -6908,12 +7034,19 @@ class PremiumSceneCarousel {
   }
   
   setupEventListeners() {
-    this.prevBtn.addEventListener('click', () => this.navigate(-1));
-    this.nextBtn.addEventListener('click', () => this.navigate(1));
+    if (this.prevBtn && !this.prevBtn.dataset.bound) {
+      this.prevBtn.dataset.bound = "true";
+      this.prevBtn.addEventListener('click', () => this.navigate(-1));
+    }
+    if (this.nextBtn && !this.nextBtn.dataset.bound) {
+      this.nextBtn.dataset.bound = "true";
+      this.nextBtn.addEventListener('click', () => this.navigate(1));
+    }
     
     // Keyboard (bind once)
     if (!window._premiumCarouselKeyBound) {
       document.addEventListener('keydown', (e) => {
+        if (typeof layoutMode !== 'undefined' && layoutMode !== 'command' && layoutMode !== 'monarch') return;
         if (!window.premiumCarouselInstance) return;
         if (e.key === 'ArrowLeft') window.premiumCarouselInstance.navigate(-1);
         if (e.key === 'ArrowRight') window.premiumCarouselInstance.navigate(1);
@@ -6921,21 +7054,24 @@ class PremiumSceneCarousel {
       window._premiumCarouselKeyBound = true;
     }
     
-    // Mouse wheel on carousel
-    this.container.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (e.deltaY > 0) this.navigate(1);
-      else if (e.deltaY < 0) this.navigate(-1);
-    });
-    
-    // Swipe
-    let touchStartX = 0;
-    this.container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
-    this.container.addEventListener('touchend', e => {
-      const touchEndX = e.changedTouches[0].screenX;
-      if (touchStartX - touchEndX > 50) this.navigate(1);
-      if (touchEndX - touchStartX > 50) this.navigate(-1);
-    });
+    if (this.container && !this.container.dataset.bound) {
+      this.container.dataset.bound = "true";
+      // Mouse wheel on carousel
+      this.container.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        if (e.deltaY > 0) this.navigate(1);
+        else if (e.deltaY < 0) this.navigate(-1);
+      });
+      
+      // Swipe
+      let touchStartX = 0;
+      this.container.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX);
+      this.container.addEventListener('touchend', e => {
+        const touchEndX = e.changedTouches[0].screenX;
+        if (touchStartX - touchEndX > 50) this.navigate(1);
+        if (touchEndX - touchStartX > 50) this.navigate(-1);
+      });
+    }
     
     // Category Dropdown
     if (this.categoryActive && !this.categoryActive.dataset.bound) {

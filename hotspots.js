@@ -73,16 +73,17 @@ window.hotspotData = {
   ],
 
   // ─── node2: Bird View — complete navigation hub ──────────────────────
+  // Staggered height tiers so labels never overlap along the panorama view
   "node2": [
-    { ...hs_thongtang, id: "hs_thongtang_bv", pan: -55,    tilt: -34, title: "TAV THÔNG TẦNG" },
-    { ...hs_living,    id: "hs_living_bv",    pan: -30,    tilt: -35, title: "TAV LIVING 1"   },
-    { ...hs_wc,        id: "hs_wc_bv",        pan: -15,    tilt: -33, title: "TAV WC"         },
-    { ...hs_living2,   id: "hs_living2_bv",   pan:   5,    tilt: -34, title: "TAV LIVING 2"   },
-    { ...hs_park2,     id: "hs_park2_bv",     pan: -45,    tilt: -36, title: "TAV PARK 2"     },
-    { ...hs_park,      id: "hs_park_bv",      pan: -12.39, tilt: -34.49, title: "TAV PARK"    },
-    { ...hs_street,    id: "hs_street_bv",    pan:  15,    tilt: -35, title: "TAV STREET"     },
-    { ...hs_topnight,  id: "hs_topnight_bv",  pan: -16.44, tilt: -20, title: "TOP VIEW NIGHT" },
-    { ...hs_top,       id: "hs_top_bv",       pan: 180,    tilt: -20, title: "TOP VIEW DAY 1" },
+    { ...hs_thongtang, id: "hs_thongtang_bv", pan: -55,    tilt: -34,    title: "TAV THÔNG TẦNG", lineHeight: 120 },
+    { ...hs_living,    id: "hs_living_bv",    pan: -30,    tilt: -35,    title: "TAV LIVING 1",   lineHeight: 85  },
+    { ...hs_wc,        id: "hs_wc_bv",        pan: -15,    tilt: -33,    title: "TAV WC",         lineHeight: 130 },
+    { ...hs_living2,   id: "hs_living2_bv",   pan:   5,    tilt: -34,    title: "TAV LIVING 2",   lineHeight: 95  },
+    { ...hs_park2,     id: "hs_park2_bv",     pan: -45,    tilt: -36,    title: "TAV PARK 2",     lineHeight: 45  },
+    { ...hs_park,      id: "hs_park_bv",      pan: -12.39, tilt: -34.49, title: "TAV PARK",       lineHeight: 60  },
+    { ...hs_street,    id: "hs_street_bv",    pan:  15,    tilt: -35,    title: "TAV STREET",     lineHeight: 50  },
+    { ...hs_topnight,  id: "hs_topnight_bv",  pan: -16.44, tilt: -20,    title: "TOP VIEW NIGHT"                  },
+    { ...hs_top,       id: "hs_top_bv",       pan: 180,    tilt: -20,    title: "TOP VIEW DAY 1"                  },
   ],
 
   // ═══════════════════════════════════════════════════════════════════════
@@ -176,3 +177,37 @@ window.hotspotData = {
     { ...hs_birdview,id: "hs_birdview_kt1",pan:   0, tilt:  20                                       }, // ↑ Bird View
   ],
 };
+
+// ═══════════════════════════════════════════════════════════════════════
+// AMENITY LANDMARK HOTSPOTS (Information-Only Ground Scan Landmarks)
+// Applied to node1 (Top View Day) and node2 (Bird View Day)
+// ═══════════════════════════════════════════════════════════════════════
+// Landmark hotspots for node1 (Top View Day 1)
+// Staggered height ladder: 35px, 75px, 115px, 150px (zero text overlap along the 90°-112° cluster)
+const amenityLandmarksNode1 = [
+  { id: "marina_01",     name: "Bến Du Thuyền",              pan: 107.18, tilt: -36.55, category: "Tourism",        icon: "🚤", height: 35  },
+  { id: "highway6_01",   name: "Quốc Lộ 6",                 pan:  90.91, tilt: -35.47, category: "Transportation", icon: "🛣️", height: 75  },
+  { id: "expressway_01", name: "Cao Tốc Hòa Lạc - Hòa Bình", pan: 100.33, tilt: -35.50, category: "Transportation", icon: "🛣️", height: 115 },
+  { id: "bridge_01",     name: "Cầu Hòa Bình 5",            pan: 112.80, tilt: -27.82, category: "Infrastructure", icon: "🌉", height: 150 },
+  { id: "golf_01",       name: "Sân Golf Hilltop Valley",    pan:  57.15, tilt: -36.40, category: "Recreation",     icon: "⛳", height: 55  },
+  { id: "culture_01",    name: "Làng Văn Hóa Các Dân Tộc",   pan:  61.64, tilt:  -1.51, category: "Culture",        icon: "🏛️", height: 95  },
+  { id: "spring_01",     name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 120 }
+];
+
+// Landmark hotspots for node2 (Bird View Day 1)
+const amenityLandmarksNode2 = [
+  { id: "marina_01",     name: "Bến Du Thuyền",              pan:  51.17, tilt: -24.11, category: "Tourism",        icon: "🚤", height: 40  },
+  { id: "highway6_01",   name: "Quốc Lộ 6",                 pan:  34.05, tilt: -24.44, category: "Transportation", icon: "🛣️", height: 50  },
+  { id: "expressway_01", name: "Cao Tốc Hòa Lạc - Hòa Bình", pan:  46.37, tilt: -23.46, category: "Transportation", icon: "🛣️", height: 65  },
+  { id: "bridge_01",     name: "Cầu Hòa Bình 5",            pan:  63.02, tilt: -21.97, category: "Infrastructure", icon: "🌉", height: 80  },
+  { id: "golf_01",       name: "Sân Golf Hilltop Valley",    pan:  14.64, tilt: -18.01, category: "Recreation",     icon: "⛳", height: 90  },
+  { id: "culture_01",    name: "Làng Văn Hóa Các Dân Tộc",   pan:  61.64, tilt:  -1.51, category: "Culture",        icon: "🏛️", height: 95  },
+  { id: "spring_01",     name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 105 }
+];
+
+window.landmarkData = {
+  "node1": amenityLandmarksNode1,
+  "node2": amenityLandmarksNode2
+};
+
+
