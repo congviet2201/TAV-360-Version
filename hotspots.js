@@ -39,32 +39,52 @@ const hs_kientruct1 = {
   thumb: "image/thumbnails/PIN KIEN TRUC 1.jpg"
 };
 
+// Street Utility panoramas — node13: TAV Street 2, node14: TAV Street 3
+const hs_street2 = {
+  id: "hs_street2", pan: 35, tilt: -32,
+  category: "amenities", nodeTarget: "node13",
+  title: "TAV STREET 2",
+  desc: "Phố đi bộ thương mại 2",
+  thumb: "image/thumbnails/PIN STREET.jpg"
+};
+
+const hs_street3 = {
+  id: "hs_street3", pan: 50, tilt: -30,
+  category: "amenities", nodeTarget: "node14",
+  title: "TAV STREET 3",
+  desc: "Phố đi bộ thương mại 3",
+  thumb: "image/thumbnails/PIN STREET.jpg"
+};
+
+// Architecture panorama — node15: Kiến Trúc 2
+const hs_kientruct2 = {
+  id: "hs_kientruct2", pan: 15, tilt: -12,
+  category: "architecture", nodeTarget: "node15",
+  title: "KIẾN TRÚC 2",
+  desc: "Kiến trúc biệt thự TAV Villa 2",
+  thumb: "image/thumbnails/PIN KIEN TRUC 1.jpg"
+};
+
 // ═══════════════════════════════════════════════════════════════════════
 // HOTSPOT NETWORK MAP
 // Connections follow real spatial logic of the development:
-//
-//  [Living 1] ─── WC           (door inside villa)
-//  [Living 1] ─── Thông Tầng   (staircase)
-//  [Living 1] ─── Balcony      (glass sliding door)
-//  [Living 1] ─── Park         (view through garden door)
-//  [Living 2] ─── Thông Tầng   (staircase other side)
-//  [Living 2] ─── Park 2       (view through garden door)
-//  [Park]  ── Street ── [Park 2]  (pedestrian path)
-//  [Park / Park2 / Street] → Architecture  (see building facade)
-//  All nodes → Bird View  (aerial exit always available)
 // ═══════════════════════════════════════════════════════════════════════
 window.hotspotData = {
 
   // ─── node1: Top View DAY ─────────────────────────────────────────────
   "node1": [
-    { ...hs_thongtang, id: "hs_thongtang_tv", pan: -110, tilt: -68, title: "TAV THÔNG TẦNG" },
-    { ...hs_living,    id: "hs_living_tv",    pan:    0, tilt: -89.5, title: "TAV LIVING 1" },
-    { ...hs_wc,        id: "hs_wc_tv",        pan:  108, tilt: -76, title: "TAV WC"         },
-    { ...hs_living2,   id: "hs_living2_tv",   pan:  135, tilt: -68, title: "TAV LIVING 2"   },
-    { ...hs_park2,     id: "hs_park2_tv",     pan:  -30, tilt: -70, title: "TAV PARK 2"     },
-    { ...hs_park,      id: "hs_park_tv",      pan:  -72, tilt: -78, title: "TAV PARK"       },
-    { ...hs_street,    id: "hs_street_tv",    pan:  108, tilt: -55, title: "TAV STREET"     },
-    { ...hs_birdview,  id: "hs_birdview_tv",  pan:  17.12, tilt: -45 },
+    { ...hs_thongtang, id: "hs_thongtang_tv", pan: -110,    tilt: -68,   title: "TAV THÔNG TẦNG", lineHeight: 120 },
+    { ...hs_living,    id: "hs_living_tv",    pan:    0,    tilt: -89.5, title: "TAV LIVING 1",   lineHeight: 85  },
+    { ...hs_living2,   id: "hs_living2_tv",   pan:  135,    tilt: -68,   title: "TAV LIVING 2",   lineHeight: 95  },
+    { ...hs_park2,     id: "hs_park2_tv",     pan:  -30,    tilt: -70,   title: "TAV PARK 2",     lineHeight: 45  },
+    { ...hs_park,      id: "hs_park_tv",      pan:  -72,    tilt: -78,   title: "TAV PARK",       lineHeight: 60  },
+    { ...hs_wc,        id: "hs_wc_tv",        pan:  108,    tilt: -76,   title: "TAV WC",         lineHeight: 130 },
+    { ...hs_street,    id: "hs_street_tv",    pan:  108,    tilt: -55,   title: "TAV STREET",     lineHeight: 50  },
+    { ...hs_street2,   id: "hs_street2_tv",   pan:   77,    tilt: -70.40,title: "TAV STREET 2",   lineHeight: 70  },
+    { ...hs_street3,   id: "hs_street3_tv",   pan: -170.87, tilt: -76.32,title: "TAV STREET 3",   lineHeight: 80  },
+    { ...hs_kientruct1,id: "hs_kient1_tv",    pan:  -63.12, tilt: -55.48,title: "KIẾN TRÚC 1",    lineHeight: 75  },
+    { ...hs_kientruct2,id: "hs_kient2_tv",    pan:  -62.25, tilt: -62.79,title: "KIẾN TRÚC 2",    lineHeight: 100 },
+    { ...hs_birdview,  id: "hs_birdview_tv",  pan:   17.12, tilt: -45 },
   ],
 
   // ─── node3: Top View NIGHT ───────────────────────────────────────────
@@ -77,11 +97,15 @@ window.hotspotData = {
   "node2": [
     { ...hs_thongtang, id: "hs_thongtang_bv", pan: -55,    tilt: -34,    title: "TAV THÔNG TẦNG", lineHeight: 120 },
     { ...hs_living,    id: "hs_living_bv",    pan: -30,    tilt: -35,    title: "TAV LIVING 1",   lineHeight: 85  },
-    { ...hs_wc,        id: "hs_wc_bv",        pan: -15,    tilt: -33,    title: "TAV WC",         lineHeight: 130 },
     { ...hs_living2,   id: "hs_living2_bv",   pan:   5,    tilt: -34,    title: "TAV LIVING 2",   lineHeight: 95  },
     { ...hs_park2,     id: "hs_park2_bv",     pan: -45,    tilt: -36,    title: "TAV PARK 2",     lineHeight: 45  },
     { ...hs_park,      id: "hs_park_bv",      pan: -12.39, tilt: -34.49, title: "TAV PARK",       lineHeight: 60  },
+    { ...hs_wc,        id: "hs_wc_bv",        pan: -15,    tilt: -33,    title: "TAV WC",         lineHeight: 130 },
     { ...hs_street,    id: "hs_street_bv",    pan:  15,    tilt: -35,    title: "TAV STREET",     lineHeight: 50  },
+    { ...hs_street2,   id: "hs_street2_bv",   pan:  25,    tilt: -32,    title: "TAV STREET 2",   lineHeight: 70  },
+    { ...hs_street3,   id: "hs_street3_bv",   pan:  35,    tilt: -30,    title: "TAV STREET 3",   lineHeight: 90  },
+    { ...hs_kientruct1,id: "hs_kient1_bv",    pan: -100,   tilt: -28,    title: "KIẾN TRÚC 1",    lineHeight: 75  },
+    { ...hs_kientruct2,id: "hs_kient2_bv",    pan: -85,    tilt: -26,    title: "KIẾN TRÚC 2",    lineHeight: 105 },
     { ...hs_topnight,  id: "hs_topnight_bv",  pan: -16.44, tilt: -20,    title: "TOP VIEW NIGHT"                  },
     { ...hs_top,       id: "hs_top_bv",       pan: 180,    tilt: -20,    title: "TOP VIEW DAY 1"                  },
   ],
@@ -176,6 +200,28 @@ window.hotspotData = {
     { ...hs_park2,   id: "hs_park2_kt",   pan:  -90, tilt:  -8, pan_classic:  -90, tilt_classic:  -8 }, // → Park 2
     { ...hs_birdview,id: "hs_birdview_kt1",pan:   0, tilt:  20                                       }, // ↑ Bird View
   ],
+
+  // ─── Node 13: TAV Street 2 ───────────────────────────────────────────
+  "node13": [
+    { ...hs_street,  id: "hs_street_n13", pan: 180,  tilt:  -5, pan_classic: 180,  tilt_classic:  -5 },
+    { ...hs_park,    id: "hs_park_n13",   pan:  -90, tilt:  -5, pan_classic:  -90, tilt_classic:  -5 },
+    { ...hs_birdview,id: "hs_bv_n13",     pan:    0, tilt:  20                                       },
+  ],
+
+  // ─── Node 14: TAV Street 3 ───────────────────────────────────────────
+  "node14": [
+    { ...hs_street2, id: "hs_street2_n14",pan: 180,  tilt:  -5, pan_classic: 180,  tilt_classic:  -5 },
+    { ...hs_park2,   id: "hs_park2_n14",  pan:  -90, tilt:  -5, pan_classic:  -90, tilt_classic:  -5 },
+    { ...hs_birdview,id: "hs_bv_n14",     pan:    0, tilt:  20                                       },
+  ],
+
+  // ─── Node 15: Kiến Trúc 2 ────────────────────────────────────────────
+  "node15": [
+    { ...hs_park,    id: "hs_park_kt2",   pan:  -45, tilt:  -8, pan_classic:  -45, tilt_classic:  -8 },
+    { ...hs_street,  id: "hs_street_kt2", pan: -135, tilt:  -8, pan_classic: -135, tilt_classic:  -8 },
+    { ...hs_living,  id: "hs_living_kt2", pan:    0, tilt:  -5, pan_classic:    0, tilt_classic:  -5 },
+    { ...hs_birdview,id: "hs_birdview_kt2",pan:   0, tilt:  20                                       },
+  ],
 };
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -183,26 +229,64 @@ window.hotspotData = {
 // Applied to node1 (Top View Day) and node2 (Bird View Day)
 // ═══════════════════════════════════════════════════════════════════════
 // Landmark hotspots for node1 (Top View Day 1)
-// Staggered height ladder: 35px, 75px, 115px, 150px (zero text overlap along the 90°-112° cluster)
+// Staggered height ladder matching Bird View (node2)
 const amenityLandmarksNode1 = [
-  { id: "marina_01",     name: "Bến Du Thuyền",              pan: 107.18, tilt: -36.55, category: "Tourism",        icon: "🚤", height: 35  },
-  { id: "highway6_01",   name: "Quốc Lộ 6",                 pan:  90.91, tilt: -35.47, category: "Transportation", icon: "🛣️", height: 75  },
-  { id: "expressway_01", name: "Cao Tốc Hòa Lạc - Hòa Bình", pan: 100.33, tilt: -35.50, category: "Transportation", icon: "🛣️", height: 115 },
-  { id: "bridge_01",     name: "Cầu Hòa Bình 5",            pan: 112.80, tilt: -27.82, category: "Infrastructure", icon: "🌉", height: 150 },
-  { id: "golf_01",       name: "Sân Golf Hilltop Valley",    pan:  57.15, tilt: -36.40, category: "Recreation",     icon: "⛳", height: 55  },
-  { id: "culture_01",    name: "Làng Văn Hóa Các Dân Tộc",   pan:  61.64, tilt:  -1.51, category: "Culture",        icon: "🏛️", height: 95  },
-  { id: "spring_01",     name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 120 }
+  { id: "marina_01",          name: "Bến Du Thuyền",              pan: 107.18, tilt: -36.55, category: "Tourism",        icon: "🚤", height: 40  },
+  { id: "highway6_01",        name: "Quốc Lộ 6",                 pan:  90.91, tilt: -35.47, category: "Transportation", icon: "🛣️", height: 50  },
+  { id: "expressway_01",      name: "Cao Tốc Hòa Lạc - Hòa Bình", pan: 100.33, tilt: -35.50, category: "Transportation", icon: "🛣️", height: 65  },
+  { id: "bridge_01",          name: "Cầu Hòa Bình 5",            pan: 112.80, tilt: -27.82, category: "Infrastructure", icon: "🌉", height: 80, labelSide: "left"  },
+  { id: "golf_01",            name: "Sân Golf Hilltop Valley",    pan:  57.15, tilt: -36.40, category: "Recreation",     icon: "⛳", height: 90  },
+  { id: "culture_01",         name: "Làng Văn Hóa Các Dân Tộc",   pan:  52.80, tilt:  -4.50, category: "Culture",        icon: "🏛️", height: 60  },
+  { id: "spring_01",          name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 105 },
+  { id: "hanoi_01",           name: "HÀ NỘI",                    pan:  69.37, tilt:   2.02, category: "TextOnly",       isTextOnly: true },
+
+  // --- 16 Hotspots mới thêm (Cập nhật tọa độ chuẩn cho Topview node1) ---
+  { id: "hongoc_01",          name: "Hồ Ngọc",                     pan: -44.18, tilt: -23.57, category: "Tourism",        icon: "🌊", height: 55  },
+  { id: "cauthongnhat_01",    name: "Cầu Thống Nhất",               pan: -54.24, tilt: -21.75, category: "Infrastructure", icon: "🌉", height: 65  },
+  { id: "cauhuunghi_01",      name: "Cầu Hữu Nghị",                 pan: -59.17, tilt: -13.55, category: "Infrastructure", icon: "🌉", height: 75  },
+  { id: "benhvienhb_01",      name: "Bệnh viện Hòa Bình",           pan: -58.61, tilt: -12.26, category: "Medical",        icon: "🏥", height: 165 },
+  { id: "phococuchinhlan_01", name: "Phố cổ Cù Chính Lan",         pan: -60.30, tilt: -11.07, category: "Culture",        icon: "🏛️", height: 255 },
+  { id: "cauhoabinh4_02",     name: "Cầu Hòa Bình 4",              pan: -84.07, tilt: -34.25, category: "Infrastructure", icon: "🌉", height: 35  },
+  { id: "truongchinhtri_01",  name: "Trường Chính trị Hòa Bình",   pan: -70.92, tilt: -20.30, category: "Education",      icon: "🎓", height: 115 },
+  { id: "caodangsongda_01",   name: "Trường Cao đẳng Nghề Sông Đà",pan: -69.63, tilt: -16.82, category: "Education",      icon: "🎓", height: 190 },
+  { id: "cahoabinh_01",       name: "CA Hòa Bình",                 pan: -71.22, tilt: -15.62, category: "Government",     icon: "🏛️", height: 145 },
+  { id: "quangtruongtt_01",   name: "Quảng trường trung tâm",       pan: -67.53, tilt:  -9.91, category: "Culture",        icon: "🏛️", height: 235 },
+  { id: "congvientuoitre_01", name: "Công viên tuổi trẻ",          pan: -71.14, tilt: -11.20, category: "Recreation",     icon: "🌳", height: 185 },
+  { id: "cauhoabinh4_01",     name: "Cầu Hòa Bình",                pan: -73.57, tilt: -12.57, category: "Infrastructure", icon: "🌉", height: 105 },
+  { id: "sanvandong_01",      name: "Sân vận động",                pan: -74.16, tilt: -11.15, category: "Sports",        icon: "⚽", height: 125 },
+  { id: "trungtamyte_01",     name: "Trung tâm y tế Hòa Bình",      pan: -86.59, tilt: -18.97, category: "Medical",        icon: "🏥", height: 40  },
+  { id: "caodanghoabinh_01",  name: "Cao đẳng Hòa Bình",            pan: -77.73, tilt: -10.66, category: "Education",      icon: "🎓", height: 210 },
+  { id: "dapthuydien_01",     name: "Đập thủy điện Hòa Bình",       pan: -85.26, tilt:  -9.08, category: "Infrastructure", icon: "⚡", height: 120 }
 ];
 
 // Landmark hotspots for node2 (Bird View Day 1)
 const amenityLandmarksNode2 = [
-  { id: "marina_01",     name: "Bến Du Thuyền",              pan:  51.17, tilt: -24.11, category: "Tourism",        icon: "🚤", height: 40  },
-  { id: "highway6_01",   name: "Quốc Lộ 6",                 pan:  34.05, tilt: -24.44, category: "Transportation", icon: "🛣️", height: 50  },
-  { id: "expressway_01", name: "Cao Tốc Hòa Lạc - Hòa Bình", pan:  46.37, tilt: -23.46, category: "Transportation", icon: "🛣️", height: 65  },
-  { id: "bridge_01",     name: "Cầu Hòa Bình 5",            pan:  63.02, tilt: -21.97, category: "Infrastructure", icon: "🌉", height: 80  },
-  { id: "golf_01",       name: "Sân Golf Hilltop Valley",    pan:  14.64, tilt: -18.01, category: "Recreation",     icon: "⛳", height: 90  },
-  { id: "culture_01",    name: "Làng Văn Hóa Các Dân Tộc",   pan:  61.64, tilt:  -1.51, category: "Culture",        icon: "🏛️", height: 95  },
-  { id: "spring_01",     name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 105 }
+  { id: "marina_01",          name: "Bến Du Thuyền",              pan:  51.17, tilt: -24.11, category: "Tourism",        icon: "🚤", height: 40  },
+  { id: "highway6_01",        name: "Quốc Lộ 6",                 pan:  34.05, tilt: -24.44, category: "Transportation", icon: "🛣️", height: 50  },
+  { id: "expressway_01",      name: "Cao Tốc Hòa Lạc - Hòa Bình", pan:  46.37, tilt: -23.46, category: "Transportation", icon: "🛣️", height: 65  },
+  { id: "bridge_01",          name: "Cầu Hòa Bình 5",            pan:  63.02, tilt: -21.97, category: "Infrastructure", icon: "🌉", height: 80, labelSide: "left"  },
+  { id: "golf_01",            name: "Sân Golf Hilltop Valley",    pan:  14.64, tilt: -18.01, category: "Recreation",     icon: "⛳", height: 90  },
+  { id: "culture_01",         name: "Làng Văn Hóa Các Dân Tộc",   pan:  52.80, tilt:  -4.50, category: "Culture",        icon: "🏛️", height: 60  },
+  { id: "spring_01",          name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 105 },
+  { id: "hanoi_01",           name: "HÀ NỘI",                    pan:  69.37, tilt:   2.02, category: "TextOnly",       isTextOnly: true },
+
+  // --- 16 Hotspots mới thêm (Quy tắc: Gần THẤP - Xa CAO, xếp bậc thang không đè chữ) ---
+  { id: "hongoc_01",          name: "Hồ Ngọc",                     pan: -48.78, tilt: -13.56, category: "Tourism",        icon: "🌊", height: 55  },
+  { id: "cauthongnhat_01",    name: "Cầu Thống Nhất",               pan: -57.22, tilt: -14.18, category: "Infrastructure", icon: "🌉", height: 65  },
+  { id: "cauhuunghi_01",      name: "Cầu Hữu Nghị",                 pan: -66.34, tilt:  -9.18, category: "Infrastructure", icon: "🌉", height: 75  },
+  { id: "benhvienhb_01",      name: "Bệnh viện Hòa Bình",           pan: -66.30, tilt:  -8.41, category: "Medical",        icon: "🏥", height: 165 },
+  { id: "phococuchinhlan_01", name: "Phố cổ Cù Chính Lan",         pan: -67.35, tilt:  -7.99, category: "Culture",        icon: "🏛️", height: 255 },
+  { id: "cauhoabinh4_02",     name: "Cầu Hòa Bình 4 (vị trí 2)",   pan: -70.84, tilt: -20.24, category: "Infrastructure", icon: "🌉", height: 35  },
+  { id: "truongchinhtri_01",  name: "Trường Chính trị Hòa Bình",   pan: -71.97, tilt: -13.14, category: "Education",      icon: "🎓", height: 115 },
+  { id: "caodangsongda_01",   name: "Trường Cao đẳng Nghề Sông Đà",pan: -72.60, tilt: -12.52, category: "Education",      icon: "🎓", height: 190 },
+  { id: "cahoabinh_01",       name: "CA Hòa Bình",                 pan: -74.52, tilt: -10.14, category: "Government",     icon: "🏛️", height: 145 },
+  { id: "quangtruongtt_01",   name: "Quảng trường trung tâm",       pan: -75.97, tilt:  -8.43, category: "Culture",        icon: "🏛️", height: 235 },
+  { id: "congvientuoitre_01", name: "Công viên tuổi trẻ",          pan: -78.83, tilt:  -8.41, category: "Recreation",     icon: "🌳", height: 185 },
+  { id: "cauhoabinh4_01",     name: "Cầu Hòa Bình",                pan: -80.36, tilt:  -9.09, category: "Infrastructure", icon: "🌉", height: 105 },
+  { id: "sanvandong_01",      name: "Sân vận động",                pan: -82.68, tilt:  -8.23, category: "Sports",        icon: "⚽", height: 125 },
+  { id: "trungtamyte_01",     name: "Trung tâm y tế Hòa Bình",      pan: -85.15, tilt: -14.21, category: "Medical",        icon: "🏥", height: 40  },
+  { id: "caodanghoabinh_01",  name: "Cao đẳng Hòa Bình",            pan: -86.11, tilt:  -7.84, category: "Education",      icon: "🎓", height: 210 },
+  { id: "dapthuydien_01",     name: "Đập thủy điện Hòa Bình",       pan: -92.13, tilt:  -8.04, category: "Infrastructure", icon: "⚡", height: 120 }
 ];
 
 window.landmarkData = {

@@ -206,13 +206,14 @@
 /* Center Logo Wrapper with 3D Tilt Perspective */
 .landing-center-logo-wrap {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 320px;
+  max-width: 90vw;
+  height: 200px;
   margin-bottom: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
+  padding: 4px;
   box-sizing: border-box;
   perspective: 1000px;
 }
@@ -223,11 +224,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 210px;
-  height: 170px;
+  width: 300px;
+  height: 180px;
   border-radius: 50%;
-  background: radial-gradient(ellipse at 35% 50%, rgba(255, 85, 0, 0.45) 0%, rgba(255, 255, 255, 0.3) 50%, transparent 75%);
-  filter: blur(26px);
+  background: radial-gradient(ellipse at 50% 50%, rgba(255, 85, 0, 0.45) 0%, rgba(255, 255, 255, 0.3) 50%, transparent 75%);
+  filter: blur(28px);
   animation: logoAmbientPulse 3.5s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -243,11 +244,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 190px;
-  height: 150px;
+  width: 280px;
+  height: 160px;
   border-radius: 50%;
   background: conic-gradient(from 0deg, rgba(255, 85, 0, 0.35), transparent 40%, rgba(255, 255, 255, 0.45), transparent 80%, rgba(255, 85, 0, 0.35));
-  filter: blur(14px);
+  filter: blur(16px);
   animation: logoRingRotate 12s linear infinite;
   pointer-events: none;
   opacity: 0.7;
@@ -256,6 +257,27 @@
 @keyframes logoRingRotate {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Video Logo Container for shape 2 */
+.landing-logo-video-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 12px;
+  overflow: visible;
+}
+
+.landing-logo-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  mix-blend-mode: screen;
 }
 
 .landing-logo-split-container {
@@ -710,81 +732,45 @@
   object-fit: contain;
 }
 
-/* Continuous Running Border (Cam - Trắng) */
+/* Continuous Stroke-Only Rounded Corner Running Border (Neon Orange #ff8c00 & Neon White #ffffff) */
 .landing-running-border-box {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  inset: 0;
   border-radius: 32px;
+  padding: 2.5px;
+  pointer-events: none;
+  z-index: 2;
   overflow: hidden;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.landing-running-border-box::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 65%,
+    #ff8c00 82%,
+    #ffffff 92%,
+    transparent 100%
+  );
+  animation: rotateBorderConic 3.5s linear infinite;
 }
 
 .landing-border-line {
-  position: absolute;
-  display: block;
+  display: none !important;
 }
 
-.landing-border-line.b-top {
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 2.5px;
-  background: linear-gradient(90deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
-  animation: runTop 3s linear infinite;
-  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
-}
-
-.landing-border-line.b-right {
-  top: -100%;
-  right: 0;
-  width: 2.5px;
-  height: 100%;
-  background: linear-gradient(180deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
-  animation: runRight 3s linear infinite 0.75s;
-  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
-}
-
-.landing-border-line.b-bottom {
-  bottom: 0;
-  right: -100%;
-  width: 100%;
-  height: 2.5px;
-  background: linear-gradient(270deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
-  animation: runBottom 3s linear infinite 1.5s;
-  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
-}
-
-.landing-border-line.b-left {
-  bottom: -100%;
-  left: 0;
-  width: 2.5px;
-  height: 100%;
-  background: linear-gradient(0deg, transparent, #ff8c00 40%, #ffffff 80%, transparent);
-  animation: runLeft 3s linear infinite 2.25s;
-  box-shadow: 0 0 10px #ff8c00, 0 0 15px #ffffff;
-}
-
-@keyframes runTop {
-  0% { left: -100%; }
-  50%, 100% { left: 100%; }
-}
-
-@keyframes runRight {
-  0% { top: -100%; }
-  50%, 100% { top: 100%; }
-}
-
-@keyframes runBottom {
-  0% { right: -100%; }
-  50%, 100% { right: 100%; }
-}
-
-@keyframes runLeft {
-  0% { bottom: -100%; }
-  50%, 100% { bottom: 100%; }
+@keyframes rotateBorderConic {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* Main Title */

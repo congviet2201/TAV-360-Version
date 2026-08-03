@@ -51,9 +51,10 @@
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-label', 'Landing Page');
 
-    // Build Languages HTML
+    // Build Languages HTML dynamically based on stored active language
+    const activeLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
     const langBtnsHtml = config.languages.map(lang => 
-      `<button type="button" class="landing-lang-btn ${lang.active ? 'active' : ''}" data-lang="${lang.code}">${lang.label}</button>`
+      `<button type="button" class="landing-lang-btn ${lang.code === activeLang ? 'active' : ''}" data-lang="${lang.code}">${lang.label}</button>`
     ).join('');
 
     overlay.innerHTML = `
@@ -92,45 +93,26 @@
             <span class="landing-border-line b-left"></span>
           </div>
 
-          <!-- CENTER LOGO CONTAINER USING logo_base.png (ULTRA-HIGH-END 3D & HOLOGRAPHIC LOGO EFFECT) -->
+          <!-- CENTER LOGO CONTAINER USING VIDEO LOGO TAV PANOTOUR -->
           <div class="landing-center-logo-wrap">
-            <!-- Counter-rotating Dual Ambient Energy Glow Halo behind Logo -->
             <div class="landing-logo-glow-bg"></div>
-            <div class="landing-logo-ambient-ring"></div>
-
-            <div class="landing-logo-split-container">
-
-              <!-- Solid Dual Logo Base (Left Orange #ff5500, Right White #ffffff) -->
-              <div class="landing-logo-solid-base">
-                <!-- Left Half Solid Orange -->
-                <div class="landing-logo-part landing-logo-left-solid">
-                  <div class="landing-logo-mask-img" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');"></div>
-                </div>
-
-                <!-- Right Half Solid White -->
-                <div class="landing-logo-part landing-logo-right-solid">
-                  <div class="landing-logo-mask-img" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');"></div>
-                </div>
-              </div>
-
-              <!-- Continuous 4-Part Running Border DIRECTLY ON LOGO SILHOUETTE (No outer box frame) -->
-              <div class="landing-logo-running-border-box" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');">
-                <span class="landing-logo-border-line b-top"></span>
-                <span class="landing-logo-border-line b-right"></span>
-                <span class="landing-logo-border-line b-bottom"></span>
-                <span class="landing-logo-border-line b-left"></span>
-              </div>
-
-              <!-- Holographic Sheen Sweeping Light Overlay -->
-              <div class="landing-logo-holo-sheen" style="-webkit-mask-image: url('image/logo_base.png'); mask-image: url('image/logo_base.png');"></div>
-
-              <!-- Center Fusion Energy Seam Line (Orange-White Sparkle at 50% split) -->
-              <div class="landing-logo-center-divider"></div>
-
+            <div class="landing-logo-video-box">
+              <video 
+                class="landing-logo-video" 
+                autoplay 
+                loop 
+                muted 
+                playsinline 
+                webkit-playsinline 
+                preload="auto"
+                aria-label="LOGO TAV PANOTOUR Video Animation">
+                <source src="video logo/LOGO TAV PANOTOUR/LOGO TAV PANOTOUR.webm" type="video/webm">
+                <source src="video logo/LOGO TAV PANOTOUR/LOGO TAV PANOTOUR.mp4" type="video/mp4">
+                <source src="video logo/LOGO TAV PANOTOUR/LOGO TAV PANOTOUR.mov" type="video/quicktime">
+                <source src="image/shape_transparent.webm" type="video/webm">
+                <source src="image/shape.mp4" type="video/mp4">
+              </video>
             </div>
-
-            <!-- Fallback Image -->
-            <img src="image/logo_base.png" alt="TAV Logo" class="landing-logo-fallback-img" onerror="this.src='image/LOGO.png'">
           </div>
 
           <h1 class="landing-title">${config.mainTitle}</h1>
@@ -170,6 +152,11 @@
 
     // Attach Event Listeners
     attachLandingEvents(overlay);
+
+    // Sync initial language text
+    if (window.switchLanguage) {
+      window.switchLanguage(activeLang);
+    }
   }
 
   // ═════════════════════════════════════════════════════════════════════════
@@ -207,6 +194,14 @@
         }
       });
     });
+
+    // Auto-play logo video gracefully
+    const logoVideo = overlay.querySelector('.landing-logo-video');
+    if (logoVideo) {
+      logoVideo.play().catch(err => {
+        console.warn('Logo video autoplay deferred:', err);
+      });
+    }
   }
 
   // Dismiss Landing Page with 800ms Cinematic Fade Transition

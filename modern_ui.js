@@ -64,7 +64,10 @@ const PROJECT_CONTENT = {
       label: "Tiện ích",
       submenu: [
         { node: "node4", label: "TAV Park" },
+        { node: "node11", label: "TAV WC" },
         { node: "node5", label: "TAV Street" },
+        { node: "node13", label: "TAV Street 2" },
+        { node: "node14", label: "TAV Street 3" },
         { node: "node6", label: "TAV Park 2" }
       ]
     },
@@ -72,8 +75,7 @@ const PROJECT_CONTENT = {
       label: "Kiến Trúc",
       submenu: [
         { node: "node12", label: "Kiến Trúc 1" },
-        { action: "architecture-2", label: "Kiến Trúc 2" },
-        { action: "architecture-3", label: "Kiến Trúc 3" }
+        { node: "node15", label: "Kiến Trúc 2" }
       ]
     },
     interior: {
@@ -82,8 +84,7 @@ const PROJECT_CONTENT = {
         { node: "node7", label: "TAV Living 2" },
         { node: "node8", label: "TAV Living 1" },
         { node: "node9", label: "TAV Thông Tầng" },
-        { node: "node10", label: "TAV Balcony" },
-        { node: "node11", label: "TAV WC" }
+        { node: "node10", label: "TAV Balcony" }
       ]
     },
     surrounding: {
@@ -2201,13 +2202,13 @@ function generateSubmenuHTML(items, itemClass) {
             <div class="blueprint-gallery-item" data-pano-node="node2"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN BIRD.jpg')"></div><span class="blueprint-thumb-title">Bird View 1</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node3"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN TOP NIGHT.jpg')"></div><span class="blueprint-thumb-title">Bird View 2</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node4"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN PARK.jpg')"></div><span class="blueprint-thumb-title">Park</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node11"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN WC.jpg')"></div><span class="blueprint-thumb-title">WC</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node5"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN STREET.jpg')"></div><span class="blueprint-thumb-title">Street</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node6"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN PARK 02.jpg')"></div><span class="blueprint-thumb-title">Park 2</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node7"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN LIVING 2.jpg')"></div><span class="blueprint-thumb-title">Living 2</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node8"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN LIVING.jpg')"></div><span class="blueprint-thumb-title">Living 1</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node9"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN THONG TANG.jpg')"></div><span class="blueprint-thumb-title">Thông Tầng</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node10"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN BALCONY.jpg')"></div><span class="blueprint-thumb-title">Balcony</span></div>
-            <div class="blueprint-gallery-item" data-pano-node="node11"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN WC.jpg')"></div><span class="blueprint-thumb-title">WC</span></div>
           </div>
         </div>
         <div class="blueprint-gallery-nav next" id="blueprint-gallery-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
@@ -2837,6 +2838,15 @@ function generateSubmenuHTML(items, itemClass) {
     if (panoNode && window.pano) {
       console.log(`Navigating to Pano Node: ${panoNode}`);
       window.pano.openNext(`{${panoNode}}`);
+      if (panoNode === 'node1' && typeof window.pano.setPan === 'function') {
+        setTimeout(() => {
+          if (window.pano && typeof window.pano.setPan === 'function') {
+            window.pano.setPan(202);
+            if (typeof window.pano.setTilt === 'function') window.pano.setTilt(-90);
+            if (typeof window.pano.setFov === 'function') window.pano.setFov(140);
+          }
+        }, 150);
+      }
       showNotification(`Đang chuyển đến: ${titleText}`);
     } else if (action) {
       showNotification(`Đang tải: ${titleText}`);
@@ -4189,7 +4199,8 @@ document.addEventListener("click", function(e) {
       node1: 'Top View', node2: 'BIRD VIEW 1', node3: 'BIRD VIEW 2',
       node4: 'TAV PARK', node5: 'TAV STREET', node6: 'TAV PARK 2',
       node7: 'TAV LIVING 2', node8: 'TAV LIVING 1', node9: 'TAV THÔNG TẦNG',
-      node10: 'BALCONY', node11: 'TAV WC', node12: 'KIẾN TRÚC 1'
+      node10: 'BALCONY', node11: 'TAV WC', node12: 'KIẾN TRÚC 1',
+      node13: 'TAV STREET 2', node14: 'TAV STREET 3', node15: 'KIẾN TRÚC 2'
     };
     const nameEl = document.getElementById('cmd-scene-name');
     if (nameEl && sceneNameMap[nodeId]) nameEl.textContent = sceneNameMap[nodeId];
@@ -4750,13 +4761,30 @@ document.addEventListener("click", function(e) {
           }
     
           syncMinimap(continuousPan);
-    
-          // Premium hotspot depth/visibility (All Layouts)
-          updateHotspotVisibility();
         }
+
+        // Premium hotspot depth/visibility & label collision prevention (Always update every frame)
+        updateHotspotVisibility();
+        syncPerspectiveTextScale();
       }
     } catch (e) {}
     compassAnimFrame = requestAnimationFrame(syncCompass);
+  }
+
+  // Scale text-only labels (HÀ NỘI) to match panorama image zoom:
+  // Pano2VR internally shrinks hotspot containers when zooming in (to keep pixel size fixed).
+  // We apply (refFov/currentFov)^2 to counteract that AND add proportional growth with the image.
+  // Result: Zoom IN → text BIGGER (like the image), Zoom OUT → text SMALLER (like the image).
+  function syncPerspectiveTextScale() {
+    if (!window.pano || typeof window.pano.getFov !== 'function') return;
+    const currentFov = Math.max(10, Math.min(150, window.pano.getFov() || 90));
+    const refFov = 90;
+    const scale = Math.pow(refFov / currentFov, 2);
+
+    document.querySelectorAll('.hs-text-only-container .lm-big-text-wrapper').forEach(wrapper => {
+      wrapper.style.transform = `scale(${scale.toFixed(4)})`;
+      wrapper.style.transformOrigin = 'center center';
+    });
   }
 
   let activeViewer = 'main';
@@ -5585,7 +5613,7 @@ document.addEventListener("click", function(e) {
       `;
     } else if (isBirdViewNode) {
       // ══════════════════════════════════════════════════════════════════
-      // BIRD VIEW (node2): Full White Beam + Flow Light + Holographic Label
+      // BIRD VIEW (node2): Full Beam + Flow Light + Holographic Label
       // ══════════════════════════════════════════════════════════════════
       container.innerHTML = `
         <div class="hs-scale-wrap">
@@ -5619,8 +5647,8 @@ document.addEventListener("click", function(e) {
       `;
     } else {
       // ══════════════════════════════════════════════════════════════════
-      // INTERIOR, AMENITIES, ARCHITECTURE & TOP VIEW:
-      // Remove beam and name label, keep ONLY glowing dot with BLACK BORDER!
+      // TOP VIEW (node1), INTERIOR, AMENITIES & ARCHITECTURE:
+      // Circular dots ONLY by default, NO beam, NO text label
       // ══════════════════════════════════════════════════════════════════
       container.innerHTML = `
         <div class="hs-scale-wrap">
@@ -5676,9 +5704,103 @@ document.addEventListener("click", function(e) {
     return container;
   }
 
-  // Create Amenity Landmark Hotspot (Information Landmark with Ground Scan & Vertical Light Beam)
+  // Helper function to capitalize ONLY the first letter of words (Title Case)
+  function toTitleCase(str) {
+    if (!str) return '';
+    if (str === 'HÀ NỘI') return 'Hà Nội';
+    return str.split(' ').map(word => {
+      if (!word) return '';
+      if (word === 'CA' || word === 'HB') return word;
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    }).join(' ');
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // OUTER-HIGHEST SKYLINE SYSTEM FOR AMENITY LANDMARKS
+  // - 2 Outermost landmarks are HIGHEST: Trường Cao đẳng Nghề Sông Đà (Far Left = 340px), CA Hòa Bình (Far Right = 320px)
+  // - All inner landmarks step down progressively towards center (340px/320px -> 300px -> 260px -> ... -> 60px)
+  // - 40px vertical gaps between labels on same side for ZERO OVERLAP
+  // ═══════════════════════════════════════════════════════════════════
+  function calculateAdaptiveSkylineHeights(landmarks) {
+    if (!landmarks || !Array.isArray(landmarks)) return;
+
+    const explicitSkylineMap = {
+      // ══════════════════════════════════════════════════════════════════
+      // LEFT SIDE NAMED LADDER 
+      // Phố cổ Cù Chính Lan remains on the left with a massive height gap below Trường Chính trị
+      // ══════════════════════════════════════════════════════════════════
+      "caodangsongda_01":   { side: "left",  height: 330, zIndex: 2950 }, // 1. Trường Cao đẳng Nghề Sông Đà
+      "truongchinhtri_01":  { side: "left",  height: 290, zIndex: 2850 }, // 2. Trường Chính trị Hòa Bình
+      "expressway_01":      { side: "left",  height: 250, zIndex: 2150 }, // 3. Cao tốc Hòa Lạc
+      "benhvienhb_01":      { side: "left",  height: 220, zIndex: 2650 }, // 4. Bệnh viện Hòa Bình
+      "marina_01":          { side: "left",  height: 180, zIndex: 1950 }, // 5. Bến du thuyền
+      "phococuchinhlan_01": { side: "left",  height: 140, zIndex: 2750 }, // 6. Phố cổ Cù Chính Lan (Safe 150px gap below truongchinhtri)
+      "cauthongnhat_01":    { side: "left",  height: 110, zIndex: 2550 }, // 7. Cầu Thống Nhất
+      "cauhuunghi_01":      { side: "left",  height: 80,  zIndex: 2450 }, // 8. Cầu Hữu Nghị
+      "hongoc_01":          { side: "left",  height: 50,  zIndex: 2350 }, // 9. Hồ Ngọc
+      "cauhoabinh4_02":     { side: "left",  height: 20,  zIndex: 2250 }, // 10. Cầu Hòa Bình 4 (vị trí 2)
+
+      // ══════════════════════════════════════════════════════════════════
+      // RIGHT SIDE NAMED LADDER
+      // Cầu Hòa Bình explicitly moved back to the RIGHT side per request!
+      // ══════════════════════════════════════════════════════════════════
+      "cahoabinh_01":       { side: "right", height: 325, zIndex: 2900 }, // 1. CA Hòa Bình
+      "quangtruongtt_01":   { side: "right", height: 280, zIndex: 2800 }, // 2. Quảng trường trung tâm
+      "congvientuoitre_01": { side: "right", height: 235, zIndex: 2700 }, // 3. Công viên tuổi trẻ
+      "bridge_01":          { side: "left",  height: 215, zIndex: 2250 }, // Cầu Hòa Bình 5 (Nằm bên TRÁI per request)
+      "cauhoabinh4_01":     { side: "right", height: 190, zIndex: 2600 }, // 5. Cầu Hòa Bình (Nằm bên PHẢI)
+      "sanvandong_01":      { side: "right", height: 165, zIndex: 2500 }, // 6. Sân vận động
+      "spring_01":          { side: "right", height: 135, zIndex: 1900 }, // 7. Suối Ngọc
+      "caodanghoabinh_01":  { side: "right", height: 100, zIndex: 2400 }, // 8. Cao đẳng Hòa Bình
+      "dapthuydien_01":     { side: "right", height: 65,  zIndex: 2300 }, // 9. Đập thủy điện Hòa Bình
+      "trungtamyte_01":     { side: "right", height: 25,  zIndex: 2200 }, // 10. Trung tâm y tế Hòa Bình
+
+      // ADDITIONAL LANDMARKS
+      "culture_01":         { side: "left",  height: 180, zIndex: 2000 },
+      "highway6_01":        { side: "right", height: 155, zIndex: 2050 },
+      "golf_01":            { side: "right", height: 75,  zIndex: 1850 }
+    };
+
+    landmarks.forEach(lm => {
+      if (lm.isTextOnly || lm.category === 'TextOnly') return;
+      const lookupId = lm.id;
+      const config = explicitSkylineMap[lookupId];
+      if (config) {
+        lm.calculatedHeight = config.height;
+        lm.labelSide = config.side;
+        lm.calculatedZIndex = config.zIndex;
+      } else {
+        const tiltVal = parseFloat(lm.tilt) || 0;
+        lm.calculatedZIndex = Math.round(1500 + (tiltVal + 90) * 15);
+        lm.labelSide = parseFloat(lm.pan) < 0 ? 'left' : 'right';
+        lm.calculatedHeight = Math.max(30, Math.min(130, Math.round(70 + tiltVal * 2)));
+      }
+    });
+  }
+
+  // Create Amenity Landmark Hotspot (Information Landmark or Floating Big Text)
   function createLandmarkHotspot(pin) {
     const container = document.createElement('div');
+
+    // Large Floating Text Only mode (e.g. HANOI title)
+    if (pin.isTextOnly || pin.category === 'TextOnly') {
+      container.className = `hs-container hs-landmark-container hs-no-view hs-text-only-container`;
+      container.id = `hs-landmark-${pin.id}`;
+      container.setAttribute('aria-label', pin.name);
+
+      if (isHotspotsHidden) {
+        container.style.visibility = "hidden";
+        container.style.opacity = "0";
+      }
+
+      container.innerHTML = `
+        <div class="lm-big-text-wrapper">
+          <span class="lm-big-text-content">${pin.name}</span>
+        </div>
+      `;
+      return container;
+    }
+
     const catClass = (pin.category || 'amenity').toLowerCase();
     container.className = `hs-container hs-landmark-container hs-no-view hs-landmark-${catClass}`;
     container.id = `hs-landmark-${pin.id}`;
@@ -5686,35 +5808,40 @@ document.addEventListener("click", function(e) {
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'region');
 
-    const beamH = pin.height || calculateBeamHeightFromTilt(pin.tilt, 40, 140);
+    const beamH = pin.calculatedHeight || pin.height || calculateBeamHeightFromTilt(pin.tilt, 30, 130);
     container.style.setProperty('--lm-beam-h', `${beamH}px`);
     container.style.setProperty('--hs-line-h', `${beamH}px`);
+    if (pin.calculatedZIndex) {
+      container.style.zIndex = pin.calculatedZIndex;
+    }
 
     if (isHotspotsHidden) {
       container.style.visibility = "hidden";
       container.style.opacity = "0";
     }
 
-    // Top View & Bird View Amenity Landmarks: Full vertical beam + running light flow + holographic label badge
+    // Capitalize Title Case (Viết hoa chữ cái đầu, không in hoa toàn bộ) & remove icon
+    const formattedName = toTitleCase(pin.name);
+    const sideClass = pin.labelSide === 'left' ? 'lm-side-left' : 'lm-side-right';
+
+    // Amenity Landmark: Vertical White Dashed Beam (Pole) + Alternating Glass Flag Badge
     container.innerHTML = `
       <div class="lm-scale-wrap">
         <div class="lm-ground-scan-system">
           <div class="lm-energy-core"></div>
           <div class="lm-ground-scan"></div>
           <div class="lm-scan-ring-2"></div>
-          <div class="lm-vertical-beam"></div>
+        </div>
+        <div class="lm-vertical-beam">
           <div class="lm-particles">
             <span class="lm-p p1"></span>
             <span class="lm-p p2"></span>
             <span class="lm-p p3"></span>
             <span class="lm-p p4"></span>
-            <span class="lm-p p5"></span>
-            <span class="lm-p p6"></span>
           </div>
         </div>
-        <div class="lm-holographic-label">
-          <span class="lm-icon">${pin.icon || '📍'}</span>
-          <span class="lm-name">${pin.name}</span>
+        <div class="lm-glass-flag ${sideClass}">
+          <span class="lm-name">${formattedName}</span>
         </div>
       </div>
     `;
@@ -5760,12 +5887,21 @@ document.addEventListener("click", function(e) {
     const landmarks = window.landmarkData ? window.landmarkData[nodeId] : null;
     if (landmarks && Array.isArray(landmarks)) {
       console.log(`[LandmarkHotspot] Found ${landmarks.length} landmark hotspots for node ${nodeId}`);
+      // Calculate dynamic stair-step skyline heights before creating elements
+      calculateAdaptiveSkylineHeights(landmarks);
       landmarks.forEach(lm => {
         let finalPan = parseFloat(lm.pan);
         let finalTilt = parseFloat(lm.tilt);
         const el = createLandmarkHotspot(lm);
         window.pano.addHotspot(`lm_${lm.id}`, finalPan, finalTilt, el);
-        currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: `lm_${lm.id}`, isLandmark: true });
+        currentHotspotElements.push({
+          el,
+          pan: finalPan,
+          tilt: finalTilt,
+          id: `lm_${lm.id}`,
+          isLandmark: true,
+          baseHeight: lm.calculatedHeight || 70
+        });
       });
     }
 
@@ -5858,25 +5994,71 @@ document.addEventListener("click", function(e) {
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
       const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
 
-      // Aspect ratio: assume 16:9 — horizontal FOV wider than vertical
-      const hFov = camFov;            // horizontal field of view
-      const vFov = camFov * (9 / 16); // vertical field of view approximation
+      // Do NOT stretch beam heights when zooming out — keep beams ultra-compact, short, and sleek at all times!
+      const fovScale = 1.0;
 
-      currentHotspotElements.forEach(({ el, pan, tilt, isLandmark }) => {
+      currentHotspotElements.forEach(({ el, pan, tilt, isLandmark, baseHeight }) => {
+        // Large Text Only (e.g. HÀ NỘI): ALWAYS 100% VISIBLE
+        if (el && el.classList.contains('hs-text-only-container')) {
+          el.classList.add('hs-visible');
+          el.style.opacity = '1';
+          el.style.visibility = 'visible';
+          el.style.display = 'block';
+          return;
+        }
+
         // Angular distance from camera center to hotspot (wrap-around safe)
         let dPan = pan - camPan;
         while (dPan >  180) dPan -= 360;
         while (dPan < -180) dPan += 360;
         const dTilt = tilt - camTilt;
 
-        if (isTopView && !isLandmark) {
-          // Hotspot CÓ VIEW trong Top View (Living, WC, Thông tầng, Park, Street, Bird View...):
-          // Mặc định luôn hiển thị đầy đủ, không bao giờ ẩn khi xoay
+        const isHasView = el && el.classList.contains('hs-has-view');
+        const isNoViewLandmark = isLandmark || (el && el.classList.contains('hs-no-view'));
+
+        if (isHasView || !isNoViewLandmark) {
+          // Hotspot CÓ VIEW (Navigation Hotspots với panorama target):
+          // Mặc định luôn hiển thị đầy đủ toàn bộ trên tất cả các cảnh, không bao giờ ẩn khi xoay
           el.classList.add('hs-visible');
-          el.style.opacity = '';
+          el.style.opacity = '1';
+          el.style.visibility = 'visible';
+          el.style.display = 'block';
           return;
         }
 
+        // Center Viewport Visibility Zone CHỈ dành cho Landmark KHÔNG CÓ VIEW (hs-no-view):
+        if (isNoViewLandmark) {
+          // Adapt beam height dynamically to FOV zoom level so vertical pixel gap is preserved
+          if (baseHeight) {
+            const scaledH = Math.round(baseHeight * fovScale);
+            el.style.setProperty('--lm-beam-h', `${scaledH}px`);
+          }
+
+          const CENTER_PAN_THRESHOLD = Math.min(11, camFov * 0.12); // tight ~3-4cm window in screen center
+          const FADE_BUFFER = 6;                                    // quick smooth fade transition zone
+
+          const absPan  = Math.abs(dPan);
+          const absTilt = Math.abs(dTilt);
+
+          if (absPan > (CENTER_PAN_THRESHOLD + FADE_BUFFER) || absTilt > 50) {
+            // Outside 3-4cm center window — HIDE completely
+            el.classList.remove('hs-visible');
+            el.style.opacity = '0';
+            el.style.visibility = 'hidden';
+          } else if (absPan > CENTER_PAN_THRESHOLD) {
+            // Edge transition zone — quick smooth fade
+            el.classList.add('hs-visible');
+            el.style.visibility = 'visible';
+            const fadeRatio = 1 - (absPan - CENTER_PAN_THRESHOLD) / FADE_BUFFER;
+            el.style.opacity = String(Math.max(0, Math.min(1, fadeRatio)));
+          } else {
+            // Inside ~3-4cm center strip — FULLY VISIBLE & OPAQUE
+            el.classList.add('hs-visible');
+            el.style.opacity = '1';
+            el.style.visibility = 'visible';
+          }
+          return;
+        }
         if (isTopView || isBirdView) {
           // Visibility zone cho Hotspot tiện ích KHÔNG CÓ VIEW trên Top View & Bird View:
           // Xoay tới mới hiện (fade-in), xoay ra thì ẩn (fade-out)
@@ -5908,6 +6090,14 @@ document.addEventListener("click", function(e) {
             el.classList.add('hs-visible');
             el.style.opacity = '';
           }
+
+          // Additional Focal Density Soft Fading for Amenity Landmarks to prevent visual clutter
+          if (isLandmark && el.classList.contains('hs-visible')) {
+            if (absPan > 28 && !el.classList.contains('hs-hovered')) {
+              const softOpacity = Math.max(0.3, 1 - (absPan - 28) / 14);
+              el.style.opacity = String(softOpacity);
+            }
+          }
           return;
         }
 
@@ -5922,61 +6112,13 @@ document.addEventListener("click", function(e) {
         }
       });
 
-      // Prevent visual label overlap for landmark hotspots (offset labels vertically if overlapping)
-      updateLandmarkLabelOffsets();
+      // Hotspot positions are fixed by preset height ladder — no jittering
     } catch (e) {}
   }
 
-  // Adjust label vertical positions for landmark hotspots to prevent label overlap
+  // Legacy helper stub — landmark positions are locked to fixed preset height ladders
   function updateLandmarkLabelOffsets() {
-    const landmarkItems = currentHotspotElements.filter(item => item.isLandmark && item.el);
-    if (landmarkItems.length < 2) return;
-
-    // Reset offsets first
-    landmarkItems.forEach(item => {
-      const label = item.el.querySelector('.lm-holographic-label');
-      if (label) label.style.transform = '';
-    });
-
-    // Get visible labels with their rects
-    const visibleLabels = [];
-    landmarkItems.forEach(item => {
-      const label = item.el.querySelector('.lm-holographic-label');
-      if (label && item.el.classList.contains('hs-visible')) {
-        const rect = label.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) {
-          visibleLabels.push({ label, rect, offset: 0 });
-        }
-      }
-    });
-
-    // Sort by screen X (left)
-    visibleLabels.sort((a, b) => a.rect.left - b.rect.left);
-
-    // Detect collision & calculate vertical offset (only move labels, never ground anchor)
-    for (let i = 0; i < visibleLabels.length; i++) {
-      for (let j = i + 1; j < visibleLabels.length; j++) {
-        const a = visibleLabels[i];
-        const b = visibleLabels[j];
-
-        const horizOverlap = (b.rect.left < a.rect.right + 12) && (b.rect.right > a.rect.left - 12);
-        const vertOverlap = Math.abs((a.rect.top + a.offset) - (b.rect.top + b.offset)) < (a.rect.height + 8);
-
-        if (horizOverlap && vertOverlap) {
-          // Shift the overlapping label upwards
-          b.offset -= (a.rect.height + 12);
-        }
-      }
-    }
-
-    // Apply calculated label offsets
-    visibleLabels.forEach(item => {
-      if (item.offset !== 0) {
-        item.label.style.transform = `translateX(-50%) translateY(${item.offset}px)`;
-      } else {
-        item.label.style.transform = '';
-      }
-    });
+    // Locked in place — no dynamic frame jitter
   }
 
 
@@ -6109,6 +6251,17 @@ document.addEventListener("click", function(e) {
 
     syncStateWithNode(currentNodeId);
     updateMinimapPosition(currentNodeId);
+
+    // Set default viewing angle 210 degrees for Top View (node1) on reload / load
+    if (currentNodeId === 'node1' && window.pano && typeof window.pano.setPan === 'function') {
+      setTimeout(() => {
+        if (window.pano && typeof window.pano.setPan === 'function') {
+          window.pano.setPan(202);
+          if (typeof window.pano.setTilt === 'function') window.pano.setTilt(-90);
+          if (typeof window.pano.setFov === 'function') window.pano.setFov(140);
+        }
+      }, 100);
+    }
 
     // Clear old hotspots every node change
     currentHotspotElements = [];
@@ -6499,7 +6652,8 @@ const globalPanoramasList = [
   { id: 'gallery8', title: 'Gallery 08', src: 'image/GALLERY 08.jpg', thumb: 'image/thumbnails/GALLERY 08.jpg' },
   { id: 'gallery9', title: 'Gallery 09', src: 'image/GALLERY 09.jpg', thumb: 'image/thumbnails/GALLERY 09.jpg' },
   { id: 'gallery10', title: 'Gallery 10', src: 'image/GALLERY 10.jpg', thumb: 'image/thumbnails/GALLERY 10.jpg' },
-  { id: 'gallery11', title: 'Gallery 11', src: 'image/GALLERY 11.jpg', thumb: 'image/thumbnails/GALLERY 11.jpg' }
+  { id: 'gallery11', title: 'Gallery 11', src: 'image/GALLERY 11.jpg', thumb: 'image/thumbnails/GALLERY 11.jpg' },
+  { id: 'gallery12', title: 'Gallery 12', src: 'image/GALLERY 12.jpg', thumb: 'image/thumbnails/GALLERY 12.jpg' }
 ];
 
 let gpgCurrentIndex = 0;
@@ -7376,3 +7530,146 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
   }, 1000);
+
+/* ==========================================================================
+   DEVELOPER CROSSHAIR & COORDINATES DEBUGGER TOOL
+   Type `enableCrosshairDebugger()` in Console to toggle on/off.
+   ========================================================================== */
+window.enableCrosshairDebugger = function() {
+  const oldOverlay = document.getElementById('tav-debug-crosshair-overlay');
+  if (oldOverlay) {
+    oldOverlay.remove();
+    if (window.tavCoordInterval) clearInterval(window.tavCoordInterval);
+    console.log('%c❌ Crosshair Debugger Disabled.', 'color: #ff5555; font-weight: bold;');
+    return;
+  }
+
+  const overlay = document.createElement('div');
+  overlay.id = 'tav-debug-crosshair-overlay';
+  overlay.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 30px;
+      height: 30px;
+      pointer-events: none;
+      z-index: 999999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    ">
+      <div style="position: absolute; width: 24px; height: 2px; background: #00e5ff; box-shadow: 0 0 8px #00e5ff, 0 0 2px #000;"></div>
+      <div style="position: absolute; width: 2px; height: 24px; background: #00e5ff; box-shadow: 0 0 8px #00e5ff, 0 0 2px #000;"></div>
+      <div style="width: 6px; height: 6px; border-radius: 50%; background: #ffffff; border: 1.5px solid #ff7700; box-shadow: 0 0 8px #ff7700;"></div>
+    </div>
+
+    <div id="tav-coord-panel" style="
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 999999;
+      background: rgba(8, 14, 28, 0.94);
+      border: 1.5px solid #00e5ff;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-family: 'Share Tech Mono', 'Consolas', monospace;
+      font-size: 13px;
+      color: #ffffff;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(0, 229, 255, 0.3);
+      min-width: 240px;
+      user-select: none;
+    ">
+      <div style="font-weight: bold; color: #00e5ff; margin-bottom: 8px; font-size: 13px; border-bottom: 1px solid rgba(0,229,255,0.3); padding-bottom: 4px; display: flex; justify-content: space-between; align-items: center;">
+        <span>🎯 PANORAMA COORDINATES</span>
+        <button id="tav-close-coord" style="background: none; border: none; color: #ff5555; font-size: 16px; cursor: pointer; padding: 0 4px;">&times;</button>
+      </div>
+      <div style="margin-bottom: 4px;">Node: <span id="tav-val-node" style="color: #ff7700; font-weight: bold;">-</span></div>
+      <div style="margin-bottom: 4px;">Pan  ( Yaw): <span id="tav-val-pan" style="color: #00e5ff; font-weight: bold;">0.00°</span></div>
+      <div style="margin-bottom: 4px;">Tilt (Pitch): <span id="tav-val-tilt" style="color: #10b981; font-weight: bold;">0.00°</span></div>
+      <div style="margin-bottom: 8px;">FoV  ( Zoom): <span id="tav-val-fov" style="color: #ffaa00; font-weight: bold;">0.00°</span></div>
+      
+      <button id="tav-copy-coord" style="
+        width: 100%;
+        background: linear-gradient(135deg, #00e5ff, #0077b6);
+        border: none;
+        border-radius: 6px;
+        color: #fff;
+        padding: 6px 10px;
+        font-weight: bold;
+        font-size: 12px;
+        cursor: pointer;
+        font-family: inherit;
+        box-shadow: 0 4px 12px rgba(0, 229, 255, 0.3);
+      ">📋 Copy & Log Tọa Độ (Console)</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  document.getElementById('tav-close-coord').addEventListener('click', () => {
+    overlay.remove();
+    if (window.tavCoordInterval) clearInterval(window.tavCoordInterval);
+  });
+
+  function getPanoInstance() {
+    return window.pano || (window.TAV_CORE ? window.TAV_CORE.getPano() : null);
+  }
+
+  function updateCoords() {
+    const p = getPanoInstance();
+    if (!p) return;
+
+    const pan = typeof p.getPan === 'function' ? p.getPan() : 0;
+    const tilt = typeof p.getTilt === 'function' ? p.getTilt() : 0;
+    const fov = typeof p.getFov === 'function' ? p.getFov() : 0;
+    const node = typeof p.getNodeId === 'function' ? p.getNodeId() : (window.activePanoNode || 'node2');
+
+    document.getElementById('tav-val-node').textContent = node;
+    document.getElementById('tav-val-pan').textContent = pan.toFixed(2) + '°';
+    document.getElementById('tav-val-tilt').textContent = tilt.toFixed(2) + '°';
+    document.getElementById('tav-val-fov').textContent = fov.toFixed(2) + '°';
+  }
+
+  if (window.tavCoordInterval) clearInterval(window.tavCoordInterval);
+  window.tavCoordInterval = setInterval(updateCoords, 100);
+
+  document.getElementById('tav-copy-coord').addEventListener('click', () => {
+    const p = getPanoInstance();
+    if (!p) return;
+
+    const pan = Number(p.getPan().toFixed(2));
+    const tilt = Number(p.getTilt().toFixed(2));
+    const fov = Number(p.getFov().toFixed(2));
+    const node = (typeof p.getNodeId === 'function' ? p.getNodeId() : (window.activePanoNode || 'node2'));
+
+    const coordObj = { node, pan, tilt, fov };
+    const codeSnippet = `{ pan: ${pan}, tilt: ${tilt}, fov: ${fov} }`;
+
+    console.log('%c🎯 [TAV Pano Coordinates]', 'color: #00e5ff; font-weight: bold; font-size: 14px;', coordObj);
+    console.log('%cSnippet Code:', 'color: #ffaa00; font-weight: bold;', codeSnippet);
+
+    navigator.clipboard.writeText(codeSnippet).then(() => {
+      alert(`Đã copy & in Console thành công!\nNode: ${node}\nPan: ${pan}°, Tilt: ${tilt}°, FoV: ${fov}°`);
+    }).catch(() => {
+      alert(`Node: ${node}\nPan: ${pan}°, Tilt: ${tilt}°, FoV: ${fov}°`);
+    });
+  });
+
+  console.log('%c✅ Crosshair Debugger Enabled! Tọa độ đang tự động cập nhật ở góc trên bên phải.', 'color: #10b981; font-weight: bold;');
+};
+
+window.getCenterCoords = function() {
+  const p = window.pano || (window.TAV_CORE ? window.TAV_CORE.getPano() : null);
+  if (!p) return null;
+  const coords = {
+    node: typeof p.getNodeId === 'function' ? p.getNodeId() : (window.activePanoNode || 'node2'),
+    pan: Number(p.getPan().toFixed(2)),
+    tilt: Number(p.getTilt().toFixed(2)),
+    fov: Number(p.getFov().toFixed(2))
+  };
+  console.log('%c🎯 [Current Center Coords]', 'color: #00e5ff; font-weight: bold;', coords);
+  return coords;
+};

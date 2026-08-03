@@ -23,8 +23,8 @@
   // ============================================================
   const SCENES = [
     { id: 'node1',        title: 'Top View',         sub: 'Aerial · Day',  category: 'TOP VIEW',    thumb: 'image/thumbnails/thumb_PIN TOP.jpg',  action: 'node1'        },
-    { id: 'node2',        title: 'BIRD VIEW 1',       sub: 'Drone · 80m',   category: 'TOP VIEW',    thumb: 'image/thumbnails/PIN BIRD.jpg',        action: 'node2'        },
-    { id: 'node3',        title: 'BIRD VIEW 2',       sub: 'Aerial · Dusk', category: 'TOP VIEW',    thumb: 'image/thumbnails/PIN TOP NIGHT.jpg',   action: 'node3'        },
+    { id: 'node2',        title: 'BIRD VIEW 1',       sub: 'Drone · 80m',   category: 'BIRD VIEW',   thumb: 'image/thumbnails/PIN BIRD.jpg',        action: 'node2'        },
+    { id: 'node3',        title: 'BIRD VIEW 2',       sub: 'Aerial · Dusk', category: 'BIRD VIEW',   thumb: 'image/thumbnails/PIN TOP NIGHT.jpg',   action: 'node3'        },
     { id: 'node4',        title: 'TAV PARK',          sub: 'Amenity',       category: 'AMENITIES',   thumb: 'image/thumbnails/PIN PARK.jpg',        action: 'node4'        },
     { id: 'node5',        title: 'TAV STREET',        sub: 'Amenity',       category: 'AMENITIES',   thumb: 'image/thumbnails/PIN STREET.jpg',      action: 'node5'        },
     { id: 'node6',        title: 'TAV PARK 2',        sub: 'Amenity',       category: 'AMENITIES',   thumb: 'image/thumbnails/PIN PARK 02.jpg',     action: 'node6'        },
@@ -35,8 +35,13 @@
     { id: 'node10',       title: 'BALCONY',           sub: 'Interior',      category: 'INTERIOR',    thumb: 'image/thumbnails/PIN BALCONY.jpg',     action: 'node10'       },
     { id: 'node11',       title: 'TAV WC',            sub: 'Interior',      category: 'INTERIOR',      thumb: 'image/thumbnails/PIN WC.jpg',            action: 'node11'       },
 
+    // ── Amenities & Street Utilities ───────────────────────────────
+    { id: 'node13',       title: 'TAV STREET 2',      sub: 'Street Utility',category: 'AMENITIES',   thumb: 'image/thumbnails/PIN STREET.jpg',      action: 'node13'       },
+    { id: 'node14',       title: 'TAV STREET 3',      sub: 'Street Utility',category: 'AMENITIES',   thumb: 'image/thumbnails/PIN STREET.jpg',      action: 'node14'       },
+
     // ── Architecture ─────────────────────────────────────────────────
-    { id: 'node12',       title: 'KIẾN TRÚC 1',       sub: 'Architecture',  category: 'ARCHITECTURE',  thumb: 'image/thumbnails/PIN KIEN TRUC 1.jpg',   action: 'node12'       }
+    { id: 'node12',       title: 'KIẾN TRÚC 1',       sub: 'Architecture',  category: 'ARCHITECTURE',  thumb: 'image/thumbnails/PIN KIEN TRUC 1.jpg',   action: 'node12'       },
+    { id: 'node15',       title: 'KIẾN TRÚC 2',       sub: 'Architecture',  category: 'ARCHITECTURE',  thumb: 'image/thumbnails/PIN KIEN TRUC 1.jpg',   action: 'node15'       }
   ];
 
   // ============================================================
@@ -48,9 +53,9 @@
     navItems: {
       topview:      { label: 'Top View',       node: 'node1' },
       birdview:     { label: 'Bird View',       submenu: [ { node: 'node2', label: 'Bird View 1' }, { node: 'node3', label: 'Bird View 2' } ] },
-      amenities:    { label: 'Tiện ích',        submenu: [ { node: 'node4', label: 'TAV Park' }, { node: 'node5', label: 'TAV Street' }, { node: 'node6', label: 'TAV Park 2' } ] },
-      architecture: { label: 'Kiến Trúc',       submenu: [ { node: 'node12', label: 'Kiến Trúc 1' }, { action: 'architecture-2', label: 'Kiến Trúc 2' }, { action: 'architecture-3', label: 'Kiến Trúc 3' } ] },
-      interior:     { label: 'Nội Thất',        submenu: [ { node: 'node7', label: 'TAV Living 2' }, { node: 'node8', label: 'TAV Living 1' }, { node: 'node9', label: 'TAV Thông Tầng' }, { node: 'node10', label: 'TAV Balcony' }, { node: 'node11', label: 'TAV WC' } ] },
+      amenities:    { label: 'Tiện ích',        submenu: [ { node: 'node4', label: 'TAV Park' }, { node: 'node11', label: 'TAV WC' }, { node: 'node5', label: 'TAV Street' }, { node: 'node13', label: 'TAV Street 2' }, { node: 'node14', label: 'TAV Street 3' }, { node: 'node6', label: 'TAV Park 2' } ] },
+      architecture: { label: 'Kiến Trúc',       submenu: [ { node: 'node12', label: 'Kiến Trúc 1' }, { node: 'node15', label: 'Kiến Trúc 2' } ] },
+      interior:     { label: 'Nội Thất',        submenu: [ { node: 'node7', label: 'TAV Living 2' }, { node: 'node8', label: 'TAV Living 1' }, { node: 'node9', label: 'TAV Thông Tầng' }, { node: 'node10', label: 'TAV Balcony' } ] },
       surrounding:  { label: 'Liên kết vùng',   action: 'region-page' }
     },
     social: {
@@ -182,6 +187,118 @@
   }
 
   // ============================================================
+  // ⑨ MULTI-LANGUAGE I18N SYSTEM (VI / EN)
+  // ============================================================
+  const I18N_DICTIONARY = {
+    vi: {
+      landing_eyebrow: "• TRẢI NGHIỆM THỰC TẾ ẢO ĐẲNG CẤP •",
+      landing_title: "TAV Villa",
+      landing_subtitle: "Trải Nghiệm Sa Bàn 360° Cao Cấp",
+      landing_cta: "THAM QUAN DỰ ÁN",
+      landing_hint: "Khám phá trải nghiệm 360°",
+      
+      nav_topview: "Top View",
+      nav_birdview: "Bird View",
+      nav_amenities: "Tiện Ích",
+      nav_architecture: "Kiến Trúc",
+      nav_interior: "Nội Thất",
+      nav_surrounding: "Liên Kết Vùng",
+      
+      tool_map: "Bản Đồ",
+      tool_gallery: "Bộ Sưu Tập",
+      tool_autorotate: "Tự Quay",
+      tool_music: "Nhạc Nền",
+      tool_hotspots: "Hotspots",
+      tool_fullscreen: "Toàn Màn Hình",
+      tool_share: "Chia Sẻ",
+      tool_guide: "Hướng Dẫn",
+
+      click_to_enter: "Nhấn để tham quan",
+      click_to_fly: "Nhấn để bay"
+    },
+    en: {
+      landing_eyebrow: "• EXCLUSIVE VIRTUAL EXPERIENCE •",
+      landing_title: "TAV Villa",
+      landing_subtitle: "Premium 360° Virtual Tour Experience",
+      landing_cta: "EXPLORE TOUR",
+      landing_hint: "Discover 360° Experience",
+      
+      nav_topview: "Top View",
+      nav_birdview: "Bird View",
+      nav_amenities: "Amenities",
+      nav_architecture: "Architecture",
+      nav_interior: "Interior",
+      nav_surrounding: "Regional Map",
+      
+      tool_map: "Map",
+      tool_gallery: "Gallery",
+      tool_autorotate: "Auto Rotate",
+      tool_music: "Music",
+      tool_hotspots: "Hotspots",
+      tool_fullscreen: "Fullscreen",
+      tool_share: "Share",
+      tool_guide: "Guide",
+
+      click_to_enter: "Click to Enter",
+      click_to_fly: "Click to Fly"
+    }
+  };
+
+  let currentLang = localStorage.getItem('tav_language') || 'vi';
+
+  function switchLanguage(lang) {
+    if (!lang || !I18N_DICTIONARY[lang]) lang = 'vi';
+    currentLang = lang;
+    localStorage.setItem('tav_language', lang);
+    document.documentElement.setAttribute('lang', lang);
+
+    const dict = I18N_DICTIONARY[lang];
+
+    // Update Landing Page elements if present
+    const landingEyebrow = document.querySelector('.landing-eyebrow');
+    if (landingEyebrow) landingEyebrow.textContent = dict.landing_eyebrow;
+
+    const landingSubtitle = document.querySelector('.landing-subtitle');
+    if (landingSubtitle) landingSubtitle.textContent = dict.landing_subtitle;
+
+    const landingCtaSpan = document.querySelector('#landing-cta-btn span');
+    if (landingCtaSpan) landingCtaSpan.textContent = dict.landing_cta;
+
+    const landingHintText = document.querySelector('.landing-hint-text');
+    if (landingHintText) landingHintText.textContent = dict.landing_hint;
+
+    // Update Language Toggle Buttons (VIE / ENG) active state
+    document.querySelectorAll('.landing-lang-btn, .lang-toggle-btn').forEach(btn => {
+      const bLang = btn.getAttribute('data-lang');
+      btn.classList.toggle('active', bLang === lang);
+    });
+
+    // Update Desktop Header Nav items if present
+    const navTop = document.querySelector('[data-nav="topview"] .nav-label, [data-nav="topview"] span');
+    if (navTop) navTop.textContent = dict.nav_topview;
+
+    const navBird = document.querySelector('[data-nav="birdview"] .nav-label, [data-nav="birdview"] span');
+    if (navBird) navBird.textContent = dict.nav_birdview;
+
+    const navAmen = document.querySelector('[data-nav="amenities"] .nav-label, [data-nav="amenities"] span');
+    if (navAmen) navAmen.textContent = dict.nav_amenities;
+
+    const navArch = document.querySelector('[data-nav="architecture"] .nav-label, [data-nav="architecture"] span');
+    if (navArch) navArch.textContent = dict.nav_architecture;
+
+    const navInt = document.querySelector('[data-nav="interior"] .nav-label, [data-nav="interior"] span');
+    if (navInt) navInt.textContent = dict.nav_interior;
+
+    const navSurr = document.querySelector('[data-nav="surrounding"] .nav-label, [data-nav="surrounding"] span');
+    if (navSurr) navSurr.textContent = dict.nav_surrounding;
+
+    // Dispatch global event for other components
+    window.dispatchEvent(new CustomEvent('tavLanguageChanged', { detail: { lang, dict } }));
+
+    console.log('[I18N] Language switched to:', lang.toUpperCase());
+  }
+
+  // ============================================================
   // ⑦ EXPOSE window.TAV_CORE — Public API
   // ============================================================
   window.TAV_CORE = Object.freeze({
@@ -205,7 +322,12 @@
     // Utilities
     getCategories:       getCategories,
     getScenesByCategory: getScenesByCategory,
-    getSceneById:        getSceneById
+    getSceneById:        getSceneById,
+
+    // i18n
+    get currentLang() { return currentLang; },
+    switchLanguage: switchLanguage,
+    dictionary: I18N_DICTIONARY
   });
 
   // ============================================================
@@ -218,6 +340,11 @@
   window.isMusicMuted          = false; // kept for legacy read
   window.toggleGlobalMusic     = toggleMusic;
 
-  console.log('[TAV_CORE] Shared Core initialized —', SCENES.length, 'scenes loaded.');
+  // Expose global language function
+  window.currentLang           = currentLang;
+  window.switchLanguage        = switchLanguage;
+  window.I18N_DICTIONARY       = I18N_DICTIONARY;
+
+  console.log('[TAV_CORE] Shared Core initialized —', SCENES.length, 'scenes loaded. Language:', currentLang.toUpperCase());
 
 })();

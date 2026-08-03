@@ -19,6 +19,8 @@ window.PROJECT_CONTENT = {
       submenu: [
         { node: "node4", label: "TAV Park" },
         { node: "node5", label: "TAV Street" },
+        { node: "node13", label: "TAV Street 2" },
+        { node: "node14", label: "TAV Street 3" },
         { node: "node6", label: "TAV Park 2" }
       ]
     },
@@ -26,8 +28,7 @@ window.PROJECT_CONTENT = {
       label: "Kiến Trúc",
       submenu: [
         { node: "node12", label: "Kiến Trúc 1" },
-        { action: "architecture-2", label: "Kiến Trúc 2" },
-        { action: "architecture-3", label: "Kiến Trúc 3" }
+        { node: "node15", label: "Kiến Trúc 2" }
       ]
     },
     interior: {
@@ -53,4 +54,4 @@ window.generateSubmenuHTML = function(items, itemClass) {
     const attr = item.node ? `data-pano-node="${item.node}"` : `data-action="${item.action}"`;
     return `<div class="${itemClass}" ${attr}>${item.label}</div>`;
   }).join('');
-};
+};

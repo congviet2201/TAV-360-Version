@@ -16337,23 +16337,136 @@ body.layout-command #pc-track {
 }
 
 /* ─── 2. LOẠI KHÔNG CÓ VIEW (HOTSPOT CHÚ THÍCH TIỆN ÍCH) ──────────────────── */
-/* Giữ cột sáng nguyên bản & loại bỏ luồng ánh sáng chạy từ dưới lên */
-.hs-container.hs-no-view .lm-vertical-beam {
-  width: 3px !important;
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.3), #ffffff 40%, var(--lm-color, #00e5ff) 100%) !important;
-  box-shadow: 0 0 10px var(--lm-color, #00e5ff), 0 0 20px var(--lm-glow, rgba(0, 229, 255, 0.8)) !important;
+/* ═══════════════════════════════════════════════════════════════════════
+   LOẠI KHÔNG CÓ VIEW (HOTSPOT CHÚ THÍCH TIỆN ÍCH - VERTICAL INFORMATION FLAG)
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Category Accent Colors for Amenity Landmarks */
+.hs-container.hs-no-view.hs-landmark-infrastructure {
+  --lm-color: #00e5ff;
+  --lm-glow: rgba(0, 229, 255, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-transportation {
+  --lm-color: #ffb703;
+  --lm-glow: rgba(255, 183, 3, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-tourism {
+  --lm-color: #10b981;
+  --lm-glow: rgba(16, 185, 129, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-medical {
+  --lm-color: #ff4d6d;
+  --lm-glow: rgba(255, 77, 109, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-education {
+  --lm-color: #a855f7;
+  --lm-glow: rgba(168, 85, 247, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-culture {
+  --lm-color: #c084fc;
+  --lm-glow: rgba(192, 132, 252, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-recreation {
+  --lm-color: #84cc16;
+  --lm-glow: rgba(132, 204, 22, 0.5);
+}
+.hs-container.hs-no-view.hs-landmark-government,
+.hs-container.hs-no-view.hs-landmark-sports {
+  --lm-color: #00f2fe;
+  --lm-glow: rgba(0, 242, 254, 0.5);
 }
 
-/* Loại bỏ vệt ánh sáng chạy từ dưới lên */
+/* Vertical Energy Beam (White Dashed Pole) */
+.hs-container.hs-no-view .lm-vertical-beam {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 2.5px !important;
+  height: 0;
+  background: repeating-linear-gradient(
+    to top,
+    transparent 0px,
+    transparent 4px,
+    #ffffff 4px,
+    #ffffff 10px
+  ) !important;
+  box-shadow: 0 0 8px #ffffff, 0 0 14px rgba(255, 255, 255, 0.8) !important;
+  opacity: 0;
+  animation: lmBeamRise 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.2s !important;
+  z-index: 4;
+  overflow: visible !important;
+}
+
 .hs-container.hs-no-view .lm-vertical-beam::after {
   display: none !important;
 }
 
-.hs-container.hs-no-view .lm-holographic-label {
-  border: none !important;
-  border-color: transparent !important;
-  background: rgba(8, 14, 28, 0.82) !important;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.55) !important;
+@keyframes lmBeamRise {
+  0% { height: 0; opacity: 0; }
+  100% { height: var(--lm-beam-h, 170px); opacity: 0.95; }
+}
+
+/* Glass Flag Box (ATTACHED DIRECTLY TO DASHED BEAM - LEFT/RIGHT HALVES) */
+.hs-container.hs-no-view .lm-glass-flag {
+  position: absolute !important;
+  bottom: var(--lm-beam-h, 170px) !important;
+  transform: translateY(50%) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 5px 12px 5px 9px !important;
+  background: rgba(10, 18, 36, 0.88) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 12px var(--lm-glow, rgba(0, 229, 255, 0.3)) !important;
+  white-space: nowrap !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+  z-index: 10;
+  cursor: pointer;
+}
+
+/* Right-side label attachment (default) */
+.hs-container.hs-no-view .lm-glass-flag.lm-side-right {
+  left: calc(50% + 5px) !important;
+  right: auto !important;
+  border-left: 2.5px solid var(--lm-color, #00e5ff) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 4px 12px 12px 4px !important;
+}
+
+/* Left-side label attachment (alternating) */
+.hs-container.hs-no-view .lm-glass-flag.lm-side-left {
+  right: calc(50% + 5px) !important;
+  left: auto !important;
+  border-right: 2.5px solid var(--lm-color, #00e5ff) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-radius: 12px 4px 4px 12px !important;
+}
+
+.hs-container.hs-no-view:hover .lm-glass-flag,
+.hs-container.hs-no-view.hs-hovered .lm-glass-flag {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.8), 0 0 25px var(--lm-color, #00e5ff) !important;
+}
+
+/* Category Icon & Name Typography */
+.hs-container.hs-no-view .lm-flag-icon {
+  display: none !important;
+}
+
+.hs-container.hs-no-view .lm-name {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.2px !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
+  text-transform: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .hs-container .lm-ground-scan-system {
@@ -16628,6 +16741,50 @@ body.layout-command #pc-track {
 @keyframes lmLabelReveal {
   0% { opacity: 0; }
   100% { opacity: 1; }
+}
+
+/* 7. Large Floating Sky Typography (e.g. HÀ NỘI over the mountains) — Natural 3D Perspective Scaling */
+.hs-text-only-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 650;
+  user-select: none;
+  font-family: 'Montserrat', 'Inter', system-ui, -apple-system, sans-serif;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.hs-text-only-container.hs-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.lm-big-text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.lm-big-text-content {
+  font-size: 54px;
+  font-weight: 800;
+  letter-spacing: 12px;
+  color: #ffffff;
+  background: linear-gradient(180deg, #FFFFFF 0%, rgba(240, 248, 255, 0.75) 60%, rgba(200, 225, 255, 0.3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.25) 100%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0.85) 45%, rgba(0, 0, 0, 0.25) 100%);
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 25px rgba(255, 255, 255, 0.4));
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .lm-icon {

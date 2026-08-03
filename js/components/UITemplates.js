@@ -2134,13 +2134,13 @@ window.TAVTemplates = window.TAVTemplates || {};
             <div class="blueprint-gallery-item" data-pano-node="node2"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN BIRD.jpg')"></div><span class="blueprint-thumb-title">Bird View 1</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node3"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN TOP NIGHT.jpg')"></div><span class="blueprint-thumb-title">Bird View 2</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node4"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN PARK.jpg')"></div><span class="blueprint-thumb-title">Park</span></div>
+            <div class="blueprint-gallery-item" data-pano-node="node11"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN WC.jpg')"></div><span class="blueprint-thumb-title">WC</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node5"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN STREET.jpg')"></div><span class="blueprint-thumb-title">Street</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node6"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN PARK 02.jpg')"></div><span class="blueprint-thumb-title">Park 2</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node7"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN LIVING 2.jpg')"></div><span class="blueprint-thumb-title">Living 2</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node8"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN LIVING.jpg')"></div><span class="blueprint-thumb-title">Living 1</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node9"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN THONG TANG.jpg')"></div><span class="blueprint-thumb-title">Thông Tầng</span></div>
             <div class="blueprint-gallery-item" data-pano-node="node10"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN BALCONY.jpg')"></div><span class="blueprint-thumb-title">Balcony</span></div>
-            <div class="blueprint-gallery-item" data-pano-node="node11"><div class="blueprint-thumb" style="background-image:url('image/thumbnails/PIN WC.jpg')"></div><span class="blueprint-thumb-title">WC</span></div>
           </div>
         </div>
         <div class="blueprint-gallery-nav next" id="blueprint-gallery-next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
