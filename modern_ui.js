@@ -6462,6 +6462,9 @@ document.addEventListener("DOMContentLoaded", function() {
   // Removing them causes birdview / other views to completely lose hotspot
   // positions. Instead we only update the text content of existing DOM
   // label elements (identified by data-pin-id on the container).
+  //
+  // NOTE: Hotspots whose display name starts with "TAV" are NEVER translated —
+  // the brand name "TAV" is kept as-is in all languages.
   // ─────────────────────────────────────────────────────────────────────────
   window.addEventListener('tavLanguageChanged', function(e) {
     const lang = e.detail && e.detail.lang;
@@ -6470,8 +6473,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const clickFlyText   = window.getI18nText('click_to_fly',   'Click to Fly');
     const clickEnterText = window.getI18nText('click_to_enter', 'Click to Enter');
 
-    // ── Premium hotspots (navigation hotspots with view) ──────────────────
-    // Container id = hs-${pin.id}, carries data-pin-id="${pin.id}"
+    // ── Premium & Landmark hotspots: update labels in-place ───────────────
+    // Container carries data-pin-id="${pin.id}" added at creation time.
     document.querySelectorAll('.hs-container[data-pin-id]').forEach(container => {
       const pinId = container.getAttribute('data-pin-id');
       const isPinLandmark = container.getAttribute('data-pin-type') === 'landmark';
@@ -6482,6 +6485,10 @@ document.addEventListener("DOMContentLoaded", function() {
       // Resolve the translated display name
       const translatedName = window.getHotspotName(pseudoPin);
       if (!translatedName) return;
+
+      // ── BRAND GUARD: Never translate names that start with "TAV" ─────
+      // TAV Park, TAV Street, TAV Living, etc. keep their original name.
+      if (translatedName.trimStart().toUpperCase().startsWith('TAV')) return;
 
       // Update aria-label
       container.setAttribute('aria-label', translatedName);
