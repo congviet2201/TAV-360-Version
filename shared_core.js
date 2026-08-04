@@ -210,12 +210,14 @@
       
       // Toolbar Tools & Controls
       tool_map: "Bản Đồ",
+      tool_info: "Thông Tin Dự Án",
       tool_gallery: "Bộ Sưu Tập",
       tool_autorotate: "Tự Quay",
       tool_music: "Nhạc Nền",
-      tool_hotspots: "Hotspots",
+      tool_hotspots: "Điểm Điều Hướng",
       tool_fullscreen: "Toàn Màn Hình",
       tool_share: "Chia Sẻ",
+      tool_call: "Tư Vấn",
       tool_guide: "Hướng Dẫn",
 
       // Submenus & Categories
@@ -305,12 +307,14 @@
       
       // Toolbar Tools & Controls
       tool_map: "Map",
+      tool_info: "Project Info",
       tool_gallery: "Gallery",
       tool_autorotate: "Auto Rotate",
       tool_music: "Music",
       tool_hotspots: "Hotspots",
       tool_fullscreen: "Fullscreen",
       tool_share: "Share",
+      tool_call: "Consult",
       tool_guide: "Guide",
 
       // Submenus & Categories
@@ -407,71 +411,79 @@
 
     const dict = I18N_DICTIONARY[lang];
 
-    // 1. Update Landing Page elements
-    const landingWelcome = document.querySelector('.landing-header-welcome-title');
-    if (landingWelcome) landingWelcome.textContent = dict.landing_welcome;
+    // ─── PRIMARY: Update all elements tagged with [data-i18n-key] ────────────
+    // This is the reliable universal method — works across ALL layouts.
+    document.querySelectorAll('[data-i18n-key]').forEach(el => {
+      const key = el.getAttribute('data-i18n-key');
+      if (dict[key] !== undefined) {
+        el.textContent = dict[key];
+      }
+    });
 
-    const landingEyebrow = document.querySelector('.landing-eyebrow');
-    if (landingEyebrow) landingEyebrow.textContent = dict.landing_eyebrow;
-
-    const landingSubtitle = document.querySelector('.landing-subtitle');
-    if (landingSubtitle) landingSubtitle.textContent = dict.landing_subtitle;
-
-    const landingCtaSpan = document.querySelector('#landing-cta-btn span');
-    if (landingCtaSpan) landingCtaSpan.textContent = dict.landing_cta;
-
-    const landingHintText = document.querySelector('.landing-hint-text');
-    if (landingHintText) landingHintText.textContent = dict.landing_hint;
-
-    // 2. Update Language Toggle Buttons (VIE / ENG) active state
+    // ─── Language Toggle Buttons active state (landing + in-tour pill) ────────
     document.querySelectorAll('.landing-lang-btn, .lang-toggle-btn, .tav-lang-btn').forEach(btn => {
       const bLang = btn.getAttribute('data-lang');
       btn.classList.toggle('active', bLang === lang);
     });
 
-    // 3. Update Desktop Navigation items
-    const navTop = document.querySelector('[data-nav="topview"] .nav-label, [data-id="topview"] .nav-label, [data-nav="topview"] span');
-    if (navTop) navTop.textContent = dict.nav_topview;
+    // ─── Landing Page extra elements (not tagged with data-i18n-key) ─────────
+    const landingWelcome = document.querySelector('.landing-header-welcome-title');
+    if (landingWelcome && !landingWelcome.hasAttribute('data-i18n-key'))
+      landingWelcome.textContent = dict.landing_welcome;
 
-    const navBird = document.querySelector('[data-nav="birdview"] .nav-label, [data-id="birdview"] .nav-label, [data-nav="birdview"] span');
-    if (navBird) navBird.textContent = dict.nav_birdview;
+    const landingEyebrow = document.querySelector('.landing-eyebrow');
+    if (landingEyebrow && !landingEyebrow.hasAttribute('data-i18n-key'))
+      landingEyebrow.textContent = dict.landing_eyebrow;
 
-    const navAmen = document.querySelector('[data-nav="amenities"] .nav-label, [data-id="amenities"] .nav-label, [data-nav="amenities"] span');
-    if (navAmen) navAmen.textContent = dict.nav_amenities;
+    const landingSubtitle = document.querySelector('.landing-subtitle');
+    if (landingSubtitle && !landingSubtitle.hasAttribute('data-i18n-key'))
+      landingSubtitle.textContent = dict.landing_subtitle;
 
-    const navArch = document.querySelector('[data-nav="architecture"] .nav-label, [data-id="architecture"] .nav-label, [data-nav="architecture"] span');
-    if (navArch) navArch.textContent = dict.nav_architecture;
+    const landingCtaSpan = document.querySelector('#landing-cta-btn span');
+    if (landingCtaSpan && !landingCtaSpan.hasAttribute('data-i18n-key'))
+      landingCtaSpan.textContent = dict.landing_cta;
 
-    const navInt = document.querySelector('[data-nav="interior"] .nav-label, [data-id="interior"] .nav-label, [data-nav="interior"] span');
-    if (navInt) navInt.textContent = dict.nav_interior;
+    const landingHintText = document.querySelector('.landing-hint-text');
+    if (landingHintText && !landingHintText.hasAttribute('data-i18n-key'))
+      landingHintText.textContent = dict.landing_hint;
 
-    const navSurr = document.querySelector('[data-nav="surrounding"] .nav-label, [data-id="surrounding"] .nav-label, [data-nav="surrounding"] span');
-    if (navSurr) navSurr.textContent = dict.nav_surrounding;
+    // ─── Fallback: Nav spans by data-id (covers layouts not yet tagged) ───────
+    const navMap = {
+      topview:      'nav_topview',
+      birdview:     'nav_birdview',
+      amenities:    'nav_amenities',
+      architecture: 'nav_architecture',
+      interior:     'nav_interior',
+      surrounding:  'nav_surrounding',
+    };
+    Object.entries(navMap).forEach(([id, key]) => {
+      // Update all span/label children of any [data-id="X"] that have NO data-i18n-key yet
+      document.querySelectorAll(`[data-id="${id}"] span:not([data-i18n-key]), [data-id="${id}"] .nav-label:not([data-i18n-key])`).forEach(el => {
+        if (dict[key]) el.textContent = dict[key];
+      });
+    });
 
-    // 4. Update Toolbar Item Tooltips & Labels
-    const toolMap = document.querySelector('[data-tool="map"] .tool-label, [data-tool="map"] span, #btn-map .tool-label');
-    if (toolMap) toolMap.textContent = dict.tool_map;
-
-    const toolGallery = document.querySelector('[data-tool="gallery"] .tool-label, [data-tool="gallery"] span, #btn-gallery .tool-label');
-    if (toolGallery) toolGallery.textContent = dict.tool_gallery;
-
-    const toolAuto = document.querySelector('[data-tool="autorotate"] .tool-label, [data-tool="autorotate"] span, #btn-autorotate .tool-label');
-    if (toolAuto) toolAuto.textContent = dict.tool_autorotate;
-
-    const toolMusic = document.querySelector('[data-tool="music"] .tool-label, [data-tool="music"] span, #btn-music .tool-label');
-    if (toolMusic) toolMusic.textContent = dict.tool_music;
-
-    const toolHs = document.querySelector('[data-tool="hotspots"] .tool-label, [data-tool="hotspots"] span, #btn-hotspots .tool-label');
-    if (toolHs) toolHs.textContent = dict.tool_hotspots;
-
-    const toolFs = document.querySelector('[data-tool="fullscreen"] .tool-label, [data-tool="fullscreen"] span, #btn-fullscreen .tool-label');
-    if (toolFs) toolFs.textContent = dict.tool_fullscreen;
-
-    const toolShare = document.querySelector('[data-tool="share"] .tool-label, [data-tool="share"] span, #btn-share .tool-label');
-    if (toolShare) toolShare.textContent = dict.tool_share;
-
-    const toolGuide = document.querySelector('[data-tool="guide"] .tool-label, [data-tool="guide"] span, #btn-guide .tool-label');
-    if (toolGuide) toolGuide.textContent = dict.tool_guide;
+    // ─── Fallback: Toolbar tooltips by data-action (covers untagged layouts) ──
+    const toolActionMap = {
+      info:       'tool_info',
+      music:      'tool_music',
+      images:     'tool_gallery',
+      hotspots:   'tool_hotspots',
+      autorotate: 'tool_autorotate',
+      share:      'tool_share',
+      call:       'tool_call',
+      fullscreen: 'tool_fullscreen',
+    };
+    Object.entries(toolActionMap).forEach(([action, key]) => {
+      document.querySelectorAll(`[data-action="${action}"] .tool-tooltip:not([data-i18n-key]), [data-action="${action}"] .tool-label:not([data-i18n-key])`)
+        .forEach(el => {
+          if (dict[key]) el.textContent = dict[key];
+        });
+      // Update title attributes on tool buttons
+      document.querySelectorAll(`[data-action="${action}"]`).forEach(el => {
+        if (el.hasAttribute('title') && dict[key]) el.setAttribute('title', dict[key]);
+      });
+    });
 
     // Dispatch global event for all custom components to re-render translations
     window.dispatchEvent(new CustomEvent('tavLanguageChanged', { detail: { lang, dict } }));

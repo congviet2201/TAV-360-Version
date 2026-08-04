@@ -305,14 +305,14 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="vision-icon" title="Top View">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
           </div>
-          <span>${PROJECT_CONTENT.navItems.topview.label}</span>
+          <span data-i18n-key="nav_topview">${PROJECT_CONTENT.navItems.topview.label}</span>
         </div>
         <!-- Bird View -->
         <div class="vision-icon-wrapper" data-id="birdview">
           <div class="vision-icon" title="Bird View">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M12 4h9M3 12l3-3 3 3M6 9v11M3 20h6"></path></svg>
           </div>
-          <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
+          <span data-i18n-key="nav_birdview">${PROJECT_CONTENT.navItems.birdview.label}</span>
           <div class="vision-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'v-sub-item')}
             </div>
@@ -322,7 +322,7 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="vision-icon" title="Tiện ích">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 12l10 5 10-5"></path><path d="M2 17l10 5 10-5"></path></svg>
           </div>
-          <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
+          <span data-i18n-key="nav_amenities">${PROJECT_CONTENT.navItems.amenities.label}</span>
           <div class="vision-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'v-sub-item')}
             </div>
@@ -332,7 +332,7 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="vision-icon" title="Kiến trúc">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V8l9-6 9 6v13"></path><path d="M9 21v-6h6v6"></path><path d="M14 3v-1h3v4"></path></svg>
           </div>
-          <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
+          <span data-i18n-key="nav_architecture">${PROJECT_CONTENT.navItems.architecture.label}</span>
           <div class="vision-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'v-sub-item')}
             </div>
@@ -342,7 +342,7 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="vision-icon" title="Nội thất">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 8h4M7 11h6"></path></svg>
           </div>
-          <span>${PROJECT_CONTENT.navItems.interior.label}</span>
+          <span data-i18n-key="nav_interior">${PROJECT_CONTENT.navItems.interior.label}</span>
           <div class="vision-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'v-sub-item')}
             </div>
@@ -352,7 +352,7 @@ function generateSubmenuHTML(items, itemClass) {
           <div class="vision-icon" title="Liên kết vùng">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path></svg>
           </div>
-          <span>${PROJECT_CONTENT.navItems.surrounding.label}</span>
+          <span data-i18n-key="nav_surrounding">${PROJECT_CONTENT.navItems.surrounding.label}</span>
         </div>
       </div>
     </div>
@@ -435,7 +435,7 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M12 16v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             <circle cx="12" cy="8" r="1" fill="currentColor"/>
           </svg>
-          <div class="tool-tooltip">Thông Tin Dự Án</div>
+          <div class="tool-tooltip" data-i18n-key="tool_info">Thông Tin Dự Án</div>
         </div>
         <!-- 2. Music On/Off -->
         <div class="tool-button" data-action="music" id="btn-music">
@@ -444,7 +444,7 @@ function generateSubmenuHTML(items, itemClass) {
             <circle cx="6" cy="18" r="3" stroke="currentColor" stroke-width="2"/>
             <circle cx="18" cy="16" r="3" stroke="currentColor" stroke-width="2"/>
           </svg>
-          <div class="tool-tooltip">Nhạc Nền</div>
+          <div class="tool-tooltip" data-i18n-key="tool_music">Nhạc Nền</div>
         </div>
         <!-- 3. Show/Hide Images -->
         <div class="tool-button" data-action="images" id="btn-images">
@@ -453,7 +453,7 @@ function generateSubmenuHTML(items, itemClass) {
             <circle cx="8.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
             <path d="M21 15l-5-5L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <div class="tool-tooltip">Hình Ảnh</div>
+          <div class="tool-tooltip" data-i18n-key="tool_gallery">Hình Ảnh</div>
         </div>
         <!-- 4. Show/Hide Hotspots -->
         <div class="tool-button" data-action="hotspots" id="btn-hotspots">
@@ -463,7 +463,7 @@ function generateSubmenuHTML(items, itemClass) {
             <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"/>
             <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <div class="tool-tooltip">\u0110i\u1ec3m \u0110i\u1ec1u H\u01b0\u1edbng</div>
+          <div class="tool-tooltip" data-i18n-key="tool_hotspots">Điểm Điều Hướng</div>
         </div>
         <!-- 4b. Autorotate -->
         <div class="tool-button" data-action="autorotate" id="btn-autorotate">
@@ -471,7 +471,7 @@ function generateSubmenuHTML(items, itemClass) {
             <polyline points="23 4 23 10 17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <div class="tool-tooltip">T\u1ef1 \u0110\u1ed9ng Xoay</div>
+          <div class="tool-tooltip" data-i18n-key="tool_autorotate">Tự Động Xoay</div>
         </div>
         <!-- 5. Share -->
         <div class="tool-button" data-action="share" id="btn-share">
@@ -481,7 +481,7 @@ function generateSubmenuHTML(items, itemClass) {
             <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="2"/>
             <path d="M8.59 13.51L15.42 17.49M15.41 6.51L8.59 10.49" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <div class="tool-tooltip">Chia Sẻ</div>
+          <div class="tool-tooltip" data-i18n-key="tool_share">Chia Sẻ</div>
         </div>
         <!-- 6. Call for Consultation -->
         <div class="tool-button" data-action="call" id="btn-call">
@@ -635,7 +635,7 @@ function generateSubmenuHTML(items, itemClass) {
               <line x1="8" y1="21" x2="16" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
               <line x1="12" y1="17" x2="12" y2="21" stroke-linecap="round" stroke-linejoin="round"></line>
             </svg>
-            <span>Top View</span>
+            <span data-i18n-key="nav_topview">Top View</span>
           </div>
 
         <!-- 2. BIRD VIEW -->
@@ -645,7 +645,7 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M5 8v10a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1V8"></path>
             <path d="M12 3v5"></path>
           </svg>
-          <span>${PROJECT_CONTENT.navItems.birdview.label}</span>
+          <span data-i18n-key="nav_birdview">${PROJECT_CONTENT.navItems.birdview.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.birdview.submenu, 'submenu-item')}
@@ -659,7 +659,7 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
             <path d="M2 17l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <span>${PROJECT_CONTENT.navItems.amenities.label}</span>
+          <span data-i18n-key="nav_amenities">${PROJECT_CONTENT.navItems.amenities.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'submenu-item')}
@@ -682,7 +682,7 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M9 21v-6h6v6" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
             <path d="M14 3v-1h3v4" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"></path>
           </svg>
-          <span>${PROJECT_CONTENT.navItems.architecture.label}</span>
+          <span data-i18n-key="nav_architecture">${PROJECT_CONTENT.navItems.architecture.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'submenu-item')}
@@ -697,7 +697,7 @@ function generateSubmenuHTML(items, itemClass) {
             <path d="M12 17v4" stroke-linecap="round" stroke-linejoin="round"></path>
             <path d="M7 8h4M7 11h6" stroke-linecap="round" stroke-linejoin="round"></path>
           </svg>
-          <span>${PROJECT_CONTENT.navItems.interior.label}</span>
+          <span data-i18n-key="nav_interior">${PROJECT_CONTENT.navItems.interior.label}</span>
           <!-- Submenu -->
           <div class="nav-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.interior.submenu, 'submenu-item')}
@@ -709,7 +709,7 @@ function generateSubmenuHTML(items, itemClass) {
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path><path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"></path>
           </svg>
-          <span>${PROJECT_CONTENT.navItems.surrounding.label}</span>
+          <span data-i18n-key="nav_surrounding">${PROJECT_CONTENT.navItems.surrounding.label}</span>
         </div>
       </div>
     </div>
