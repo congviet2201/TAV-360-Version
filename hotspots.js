@@ -232,12 +232,12 @@ window.hotspotData = {
 // Staggered height ladder matching Bird View (node2)
 const amenityLandmarksNode1 = [
   { id: "marina_01",          name: "Bến Du Thuyền",              pan: 107.18, tilt: -36.55, category: "Tourism",        icon: "🚤", height: 145, labelSide: "left" },
-  { id: "highway6_01",        name: "Quốc Lộ 6",                 pan:  90.91, tilt: -35.47, category: "Transportation", icon: "🛣️", height: 15  },
+  { id: "highway6_01",        name: "Quốc Lộ 6",                 pan:  90.91, tilt: -35.47, category: "Transportation", icon: "🛣️", height: 65  },
   { id: "expressway_01",      name: "Cao Tốc Hòa Lạc - Hòa Bình", pan: 100.33, tilt: -35.50, category: "Transportation", icon: "🛣️", height: 190, labelSide: "left" },
   { id: "bridge_01",          name: "Cầu Hòa Bình 5",            pan: 112.80, tilt: -27.82, category: "Infrastructure", icon: "🌉", height: 40,  labelSide: "left" },
-  { id: "golf_01",            name: "Sân Golf Hilltop Valley",    pan:  57.15, tilt: -36.40, category: "Recreation",     icon: "⛳", height: 40  },
-  { id: "culture_01",         name: "Làng Văn Hóa Các Dân Tộc",   pan:  52.80, tilt:  -4.50, category: "Culture",        icon: "🏛️", height: 10  },
-  { id: "spring_01",          name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 55  },
+  { id: "golf_01",            name: "Sân Golf Hilltop Valley",    pan:  57.15, tilt: -36.40, category: "Recreation",     icon: "⛳", height: 90  },
+  { id: "culture_01",         name: "Làng Văn Hóa Các Dân Tộc",   pan:  52.80, tilt:  -4.50, category: "Culture",        icon: "🏛️", height: 80,  labelSide: "right" },
+  { id: "spring_01",          name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 105 },
   { id: "hanoi_01",           name: "HÀ NỘI",                    pan:  69.37, tilt:   2.02, category: "TextOnly",       isTextOnly: true },
 
   // --- 16 Hotspots mới thêm (Sao chép hoàn toàn cấu hình độ cao từ Bird View node2) ---
@@ -262,12 +262,12 @@ const amenityLandmarksNode1 = [
 // Landmark hotspots for node2 (Bird View Day 1)
 const amenityLandmarksNode2 = [
   { id: "marina_01",          name: "Bến Du Thuyền",              pan:  51.17, tilt: -24.11, category: "Tourism",        icon: "🚤", height: 145, labelSide: "left" },
-  { id: "highway6_01",        name: "Quốc Lộ 6",                 pan:  34.05, tilt: -24.44, category: "Transportation", icon: "🛣️", height: 15  },
+  { id: "highway6_01",        name: "Quốc Lộ 6",                 pan:  34.05, tilt: -24.44, category: "Transportation", icon: "🛣️", height: 65  },
   { id: "expressway_01",      name: "Cao Tốc Hòa Lạc - Hòa Bình", pan:  46.37, tilt: -23.46, category: "Transportation", icon: "🛣️", height: 190, labelSide: "left" },
   { id: "bridge_01",          name: "Cầu Hòa Bình 5",            pan:  63.02, tilt: -21.97, category: "Infrastructure", icon: "🌉", height: 40,  labelSide: "left" },
-  { id: "golf_01",            name: "Sân Golf Hilltop Valley",    pan:  14.64, tilt: -18.01, category: "Recreation",     icon: "⛳", height: 40  },
-  { id: "culture_01",         name: "Làng Văn Hóa Các Dân Tộc",   pan:  52.80, tilt:  -4.50, category: "Culture",        icon: "🏛️", height: 10  },
-  { id: "spring_01",          name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 55  },
+  { id: "golf_01",            name: "Sân Golf Hilltop Valley",    pan:  14.64, tilt: -18.01, category: "Recreation",     icon: "⛳", height: 90  },
+  { id: "culture_01",         name: "Làng Văn Hóa Các Dân Tộc",   pan:  52.80, tilt:  -4.50, category: "Culture",        icon: "🏛️", height: 80,  labelSide: "right" },
+  { id: "spring_01",          name: "Suối Ngọc Vua Bà",          pan:  23.49, tilt:   1.29, category: "Tourism",        icon: "🌊", height: 105 },
   { id: "hanoi_01",           name: "HÀ NỘI",                    pan:  69.37, tilt:   2.02, category: "TextOnly",       isTextOnly: true },
 
   // --- 16 Hotspots mới thêm (Quy tắc: Gần THẤP - Xa CAO, xếp bậc thang không đè chữ) ---
