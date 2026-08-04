@@ -11,11 +11,11 @@
   window.LANDING_CONFIG = {
     heroImage: 'image/GALLERY 04.jpg',
     logoImage: 'image/logo_base.png',
-    logoTitle: 'TAV VILLA',
+    logoTitle: 'VR360 TOUR',
     logoSub: 'LUXURY RESIDENCE',
     eyebrowText: '• EXCLUSIVE VIRTUAL EXPERIENCE •',
-    mainTitle: 'TAV Villa',
-    subtitle: 'Premium 360° Virtual Tour Experience',
+    mainTitle: 'VR360 TOUR',
+    subtitle: 'TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP',
     ctaText: 'THAM QUAN DỰ ÁN',
     scrollHintText: 'Khám phá trải nghiệm 360°',
     transitionDurationMs: 800,
@@ -64,19 +64,22 @@
       <!-- Subtle Dark Overlay Gradient -->
       <div class="landing-dark-overlay"></div>
 
-      <!-- Top Bar: Logo & Language Selector -->
+      <!-- Top Bar: Welcome Banner & Logo & Language Selector -->
       <header class="landing-top-bar">
-        <div class="landing-logo-badge">
-          <img src="${config.logoImage}" alt="${config.logoTitle}" class="landing-logo-img" onerror="this.style.display='none'; document.getElementById('landing-logo-fallback').style.display='flex';">
-          <div id="landing-logo-fallback" class="landing-logo-text" style="${config.logoImage ? 'display:flex;' : 'display:flex;'}">
-            <span class="landing-logo-title">${config.logoTitle}</span>
-            <span class="landing-logo-sub">${config.logoSub}</span>
+        <div class="landing-header-welcome-title">CHÀO MỪNG BẠN ĐẾN VỚI TAV</div>
+        <div class="landing-top-bar-inner">
+          <div class="landing-logo-badge">
+            <img src="${config.logoImage}" alt="${config.logoTitle}" class="landing-logo-img" onerror="this.style.display='none'; document.getElementById('landing-logo-fallback').style.display='flex';">
+            <div id="landing-logo-fallback" class="landing-logo-text" style="${config.logoImage ? 'display:flex;' : 'display:flex;'}">
+              <span class="landing-logo-title">${config.logoTitle}</span>
+              <span class="landing-logo-sub">${config.logoSub}</span>
+            </div>
           </div>
-        </div>
 
-        <nav class="landing-lang-toggle" aria-label="Language Selector">
-          ${langBtnsHtml}
-        </nav>
+          <nav class="landing-lang-toggle" aria-label="Language Selector">
+            ${langBtnsHtml}
+          </nav>
+        </div>
       </header>
 
       <!-- Center Content Area -->

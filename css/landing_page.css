@@ -64,11 +64,31 @@
   z-index: 10;
   width: 100%;
   max-width: 1400px;
-  padding: 32px 48px;
+  padding: 24px 48px 12px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.landing-header-welcome-title {
+  font-family: 'Times New Roman', Times, Georgia, serif !important;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  text-transform: uppercase;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 255, 255, 0.4);
+  text-align: center;
+}
+
+.landing-top-bar-inner {
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
 }
 
 /* Logo Badge */
@@ -93,7 +113,7 @@
 }
 
 .landing-logo-title {
-  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-family: Arial, 'Times New Roman', sans-serif;
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 1.5px;
@@ -775,11 +795,11 @@
 
 /* Main Title */
 .landing-title {
-  font-family: 'Playfair Display', 'Cormorant Garamond', 'Sora', Georgia, serif;
+  font-family: Arial, 'Times New Roman', sans-serif;
   font-size: 68px;
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   color: #ffffff;
   margin: 0 0 12px 0;
   text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 140, 0, 0.3);

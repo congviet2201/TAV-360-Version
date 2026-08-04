@@ -192,8 +192,8 @@
   const I18N_DICTIONARY = {
     vi: {
       landing_eyebrow: "• TRẢI NGHIỆM THỰC TẾ ẢO ĐẲNG CẤP •",
-      landing_title: "TAV Villa",
-      landing_subtitle: "Trải Nghiệm Sa Bàn 360° Cao Cấp",
+      landing_title: "VR360 TOUR",
+      landing_subtitle: "TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP",
       landing_cta: "THAM QUAN DỰ ÁN",
       landing_hint: "Khám phá trải nghiệm 360°",
       
@@ -218,8 +218,8 @@
     },
     en: {
       landing_eyebrow: "• EXCLUSIVE VIRTUAL EXPERIENCE •",
-      landing_title: "TAV Villa",
-      landing_subtitle: "Premium 360° Virtual Tour Experience",
+      landing_title: "VR360 TOUR",
+      landing_subtitle: "TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP",
       landing_cta: "EXPLORE TOUR",
       landing_hint: "Discover 360° Experience",
       
