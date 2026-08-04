@@ -64,7 +64,6 @@ const PROJECT_CONTENT = {
       label: "Tiện ích",
       submenu: [
         { node: "node4", label: "TAV Park" },
-        { node: "node11", label: "TAV WC" },
         { node: "node5", label: "TAV Street" },
         { node: "node13", label: "TAV Street 2" },
         { node: "node14", label: "TAV Street 3" },
@@ -84,7 +83,8 @@ const PROJECT_CONTENT = {
         { node: "node7", label: "TAV Living 2" },
         { node: "node8", label: "TAV Living 1" },
         { node: "node9", label: "TAV Thông Tầng" },
-        { node: "node10", label: "TAV Balcony" }
+        { node: "node10", label: "TAV Balcony" },
+        { node: "node11", label: "TAV WC" }
       ]
     },
     surrounding: {
@@ -1666,7 +1666,7 @@ function generateSubmenuHTML(items, itemClass) {
           </div>
 
           <!-- Item 3: Amenities -->
-          <div class="nexus-nav-item" data-id="amenities">
+          <div class="nexus-nav-item has-submenu" data-id="amenities">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="m12 3-1.912 5.886H3.88l5.03 3.656L7.002 18.43 12 14.772l4.998 3.656-1.908-5.888 5.03-3.656h-6.208L12 3Z"></path>
@@ -1674,12 +1674,13 @@ function generateSubmenuHTML(items, itemClass) {
             </div>
             <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.amenities.label}</span>
             <span class="nexus-active-line"></span>
-          <div class="nexus-submenu">
+            <div class="nexus-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.amenities.submenu, 'nexus-submenu-item')}
-            </div></div>
+            </div>
+          </div>
 
           <!-- Item 4: Architecture -->
-          <div class="nexus-nav-item" data-id="architecture">
+          <div class="nexus-nav-item has-submenu" data-id="architecture">
             <div class="nexus-nav-icon-wrapper">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2"></rect>
@@ -1691,9 +1692,10 @@ function generateSubmenuHTML(items, itemClass) {
             </div>
             <span class="nexus-nav-label">${PROJECT_CONTENT.navItems.architecture.label}</span>
             <span class="nexus-active-line"></span>
-          <div class="nexus-submenu">
+            <div class="nexus-submenu">
               ${generateSubmenuHTML(PROJECT_CONTENT.navItems.architecture.submenu, 'nexus-submenu-item')}
-            </div></div>
+            </div>
+          </div>
 
           <!-- Item 5: Interior -->
           <div class="nexus-nav-item has-submenu" data-id="interior">
@@ -2149,6 +2151,9 @@ function generateSubmenuHTML(items, itemClass) {
     <div class="rgl-neo-tools-system">
       <!-- Module 1: View -->
       <div class="rgl-neo-tool-module">
+        <div class="rgl-neo-tool-btn" data-action="info" title="Thông tin dự án">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
         <div class="rgl-neo-tool-btn" data-action="toggle-minimap" title="Bản đồ">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="18"></line><line x1="15" y1="6" x2="15" y2="21"></line></svg>
         </div>
@@ -3274,20 +3279,38 @@ document.addEventListener('click', (e) => {
     }
 
     if (unifiedContainer && unifiedTrigger) {
-      unifiedContainer.addEventListener('mouseenter', () => {
+      let unifiedTimer = null;
+
+      const openUnified = () => {
+        if (unifiedTimer) {
+          clearTimeout(unifiedTimer);
+          unifiedTimer = null;
+        }
         if (!unifiedContainer.classList.contains('pinned')) {
           unifiedContainer.classList.remove('collapsed');
           unifiedContainer.classList.add('active');
         }
-      });
-      
-      unifiedContainer.addEventListener('mouseleave', () => {
-        if (!unifiedContainer.classList.contains('pinned')) {
-          unifiedContainer.classList.add('collapsed');
-          unifiedContainer.classList.remove('active');
-          closeAllSubmenus();
-        }
-      });
+      };
+
+      const closeUnified = () => {
+        if (unifiedTimer) clearTimeout(unifiedTimer);
+        unifiedTimer = setTimeout(() => {
+          if (!unifiedContainer.classList.contains('pinned')) {
+            // Check if mouse is still hovering anywhere over unified container or trigger
+            if (unifiedContainer.matches(':hover') || unifiedTrigger.matches(':hover')) return;
+
+            unifiedContainer.classList.add('collapsed');
+            unifiedContainer.classList.remove('active');
+            closeAllSubmenus();
+          }
+        }, 300);
+      };
+
+      unifiedTrigger.addEventListener('mouseenter', openUnified);
+      unifiedTrigger.addEventListener('mouseleave', closeUnified);
+
+      unifiedContainer.addEventListener('mouseenter', openUnified);
+      unifiedContainer.addEventListener('mouseleave', closeUnified);
       
       unifiedTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -3313,27 +3336,44 @@ document.addEventListener('click', (e) => {
       });
     }
 
-    navCards.forEach(card => {
-      const group = card.closest('.neo-nav-item-group');
+    itemGroups.forEach(group => {
+      const card = group.querySelector('.neo-nav-card');
+      if (!card) return;
 
-      card.addEventListener("mouseenter", () => {
-        if (card.classList.contains("pinned")) return;
-        
-        // If there's a pinned card in the layout, don't auto-open others on hover
+      let closeTimer = null;
+
+      group.addEventListener("mouseenter", () => {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = null;
+        }
+
         const hasPinned = document.querySelector(".layout-neo .neo-nav-card.pinned");
         if (hasPinned) return;
 
-        closeAllSubmenus();
+        // Close other groups, keep current group open
+        itemGroups.forEach(otherGroup => {
+          if (otherGroup !== group) {
+            otherGroup.classList.remove("open");
+            const otherCard = otherGroup.querySelector(".neo-nav-card");
+            if (otherCard && !otherCard.classList.contains("pinned")) {
+              otherCard.classList.remove("active");
+            }
+          }
+        });
+
         card.classList.add("active");
-        if (group) group.classList.add("open");
+        group.classList.add("open");
       });
 
-      card.addEventListener("mouseleave", () => {
-        const hasPinned = document.querySelector(".layout-neo .neo-nav-card.pinned");
-        if (!card.classList.contains("pinned") && !hasPinned) {
-          card.classList.remove("active");
-          if (group) group.classList.remove("open");
-        }
+      group.addEventListener("mouseleave", () => {
+        closeTimer = setTimeout(() => {
+          const hasPinned = document.querySelector(".layout-neo .neo-nav-card.pinned");
+          if (!card.classList.contains("pinned") && !hasPinned) {
+            card.classList.remove("active");
+            group.classList.remove("open");
+          }
+        }, 220);
       });
 
       card.addEventListener("click", (e) => {
@@ -3346,13 +3386,13 @@ document.addEventListener('click', (e) => {
         
         if (!isPinnedCard) {
           card.classList.add("pinned", "active");
-          if (group) group.classList.add("open");
+          group.classList.add("open");
         } else {
           card.classList.remove("pinned", "active");
         }
 
         // Direct navigation if no submenu, or if it is interior or surrounding
-        const hasSubmenu = group && group.querySelector(".neo-submenu-tree") !== null;
+        const hasSubmenu = group.querySelector(".neo-submenu-tree") !== null;
         const id = card.getAttribute("data-id");
         if (!hasSubmenu || id === "surrounding") {
           routeNavigation(card);
@@ -3387,19 +3427,32 @@ document.addEventListener('click', (e) => {
 
     const allTools = document.querySelectorAll(".neo-quick-btn, .neo-dock-item");
     allTools.forEach(btn => {
-      if (btn.classList.contains("has-children")) {
+      let toolTimer = null;
+      if (btn.classList.contains("has-children") || btn.querySelector('.neo-dock-submenu')) {
         btn.addEventListener("mouseenter", () => {
+          if (toolTimer) {
+            clearTimeout(toolTimer);
+            toolTimer = null;
+          }
           if (!btn.classList.contains("pinned")) btn.classList.add("hover-open");
         });
+
         btn.addEventListener("mouseleave", () => {
-          btn.classList.remove("hover-open");
+          toolTimer = setTimeout(() => {
+            if (!btn.classList.contains("pinned")) {
+              btn.classList.remove("hover-open");
+            }
+          }, 220);
         });
+
         btn.addEventListener("click", (e) => {
           if (e.target.closest('.neo-dock-submenu')) return; // ignore clicks inside submenu
           e.stopPropagation();
           const isPinnedTool = btn.classList.contains("pinned");
           allTools.forEach(t => t.classList.remove("pinned", "hover-open"));
-          if (!isPinnedTool) btn.classList.add("pinned");
+          if (!isPinnedTool) {
+            btn.classList.add("pinned", "hover-open");
+          }
         });
       } else {
         btn.addEventListener("click", function(e) {
@@ -3732,17 +3785,44 @@ document.addEventListener('click', (e) => {
     const submenuItems = document.querySelectorAll(".layout-prism .prism-submenu-item");
     const toolItems    = document.querySelectorAll(".layout-prism .prism-tool-item");
 
-    // 1. Navigation items — toggle submenu or navigate
+    // 1. Navigation items — hover to open/keep submenus, click to pin or navigate
     navItems.forEach(item => {
+      let closeTimer = null;
+
+      item.addEventListener("mouseenter", function() {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = null;
+        }
+        if (this.classList.contains("has-submenu")) {
+          navItems.forEach(n => {
+            if (n !== this && !n.classList.contains("pinned")) {
+              n.classList.remove("open");
+            }
+          });
+          this.classList.add("open");
+        }
+      });
+
+      item.addEventListener("mouseleave", function() {
+        closeTimer = setTimeout(() => {
+          if (this.classList.contains("has-submenu") && !this.classList.contains("pinned")) {
+            this.classList.remove("open");
+          }
+        }, 220);
+      });
+
       item.addEventListener("click", function(e) {
         if (this.classList.contains("has-submenu")) {
           e.stopPropagation();
-          const wasOpen = this.classList.contains("open");
-          navItems.forEach(n => n.classList.remove("open"));
-          if (!wasOpen) this.classList.add("open");
+          const isPinned = this.classList.contains("pinned");
+          navItems.forEach(n => n.classList.remove("pinned", "open"));
+          if (!isPinned) {
+            this.classList.add("pinned", "open");
+          }
           return;
         }
-        navItems.forEach(n => n.classList.remove("active", "open"));
+        navItems.forEach(n => n.classList.remove("active", "open", "pinned"));
         submenuItems.forEach(s => s.classList.remove("active"));
         this.classList.add("active");
         activeNavItemId = this.getAttribute("data-id");
@@ -3810,17 +3890,44 @@ document.addEventListener("click", function(e) {
     const submenuItems = document.querySelectorAll(".layout-nexus .nexus-submenu-item");
     const toolItems    = document.querySelectorAll(".layout-nexus .nexus-tool-item");
 
-    // 1. Navigation items — toggle submenu or navigate
+    // 1. Navigation items — hover to open/keep submenus, click to pin or navigate
     navItems.forEach(item => {
+      let closeTimer = null;
+
+      item.addEventListener("mouseenter", function() {
+        if (closeTimer) {
+          clearTimeout(closeTimer);
+          closeTimer = null;
+        }
+        if (this.classList.contains("has-submenu")) {
+          navItems.forEach(n => {
+            if (n !== this && !n.classList.contains("pinned")) {
+              n.classList.remove("open");
+            }
+          });
+          this.classList.add("open");
+        }
+      });
+
+      item.addEventListener("mouseleave", function() {
+        closeTimer = setTimeout(() => {
+          if (this.classList.contains("has-submenu") && !this.classList.contains("pinned")) {
+            this.classList.remove("open");
+          }
+        }, 220);
+      });
+
       item.addEventListener("click", function(e) {
         if (this.classList.contains("has-submenu")) {
           e.stopPropagation();
-          const wasOpen = this.classList.contains("open");
-          navItems.forEach(n => n.classList.remove("open"));
-          if (!wasOpen) this.classList.add("open");
+          const isPinned = this.classList.contains("pinned");
+          navItems.forEach(n => n.classList.remove("pinned", "open"));
+          if (!isPinned) {
+            this.classList.add("pinned", "open");
+          }
           return;
         }
-        navItems.forEach(n => n.classList.remove("active", "open"));
+        navItems.forEach(n => n.classList.remove("active", "open", "pinned"));
         submenuItems.forEach(s => s.classList.remove("active"));
         this.classList.add("active");
         activeNavItemId = this.getAttribute("data-id");
@@ -4222,11 +4329,23 @@ document.addEventListener("click", function(e) {
   function setupRegalListeners(handleSwitch) {
     const navContainer = document.getElementById("blueprint-nav-container");
     const navButton = document.getElementById("blueprint-nav-button");
-    if (navContainer && navButton) {
-      navButton.addEventListener("click", (e) => {
-        e.stopPropagation();
-        navContainer.classList.toggle("pinned");
+    if (navContainer) {
+      let navTimer = null;
+      navContainer.addEventListener("mouseenter", () => {
+        if (navTimer) { clearTimeout(navTimer); navTimer = null; }
+        navContainer.classList.add("pinned");
       });
+      navContainer.addEventListener("mouseleave", () => {
+        navTimer = setTimeout(() => {
+          navContainer.classList.remove("pinned");
+        }, 300);
+      });
+      if (navButton) {
+        navButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          navContainer.classList.toggle("pinned");
+        });
+      }
       document.addEventListener("click", (e) => {
         if (!navContainer.contains(e.target)) {
           navContainer.classList.remove("pinned");
@@ -6379,8 +6498,8 @@ const globalModalsHTML = `
         <section class="contact-section">
           <h3>Thông Tin Liên Hệ</h3>
           <p>Hotline: <strong>077 646 9999</strong></p>
-          <p>Email: contact@latien.vn</p>
-          <p>Website: www.latien.vn</p>
+          <p>Email: <a href="mailto:info@tav.vn" style="color: inherit; text-decoration: underline;">info@tav.vn</a></p>
+          <p>Website: <a href="https://tav.vn/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">https://tav.vn/</a></p>
         </section>
       </div>
     </div>
@@ -6426,9 +6545,6 @@ const globalModalsHTML = `
         <a href="tel:0776469999" style="display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #00f2fe, #4facfe); color: #fff; text-decoration: none; border-radius: 24px; font-weight: bold; font-size: 18px; box-shadow: 0 4px 15px rgba(0,242,254,0.3);">077 646 9999</a>
         <p style="margin-top: 16px; font-size: 13px; color: #aaa;">Hỗ trợ tư vấn 24/7</p>
       </div>
-    </div>
-  </div>
-
   <!-- 3. Social Share Floating Menu -->
   <div class="social-share-menu" id="social-share-menu">
     <a href="https://www.facebook.com/profile.php?id=100068490675716" target="_blank" class="social-btn facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
@@ -6438,351 +6554,372 @@ const globalModalsHTML = `
 `;
 
 document.addEventListener("DOMContentLoaded", function() {
-  // Inject global modals ONLY ONCE if not already present
   if (!document.getElementById("image-gallery-modal")) {
     document.body.insertAdjacentHTML("beforeend", globalModalsHTML);
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // INJECT FLOATING LANGUAGE TOGGLE (VIE / ENG)
-  // ─────────────────────────────────────────────────────────────────────────
   if (!document.getElementById('tav-lang-toggle-pill')) {
     const curLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
-    const pill = document.createElement('div');
+    const pill = document.createElement('button');
     pill.id = 'tav-lang-toggle-pill';
-    pill.className = 'tav-lang-toggle-pill';
-    pill.setAttribute('role', 'group');
+    pill.className = 'tav-lang-round-pill';
     pill.setAttribute('aria-label', 'Language Toggle');
-    pill.innerHTML = `
-      <button class="tav-lang-btn ${curLang === 'vi' ? 'active' : ''}" data-lang="vi" title="Tiếng Việt">VIE</button>
-      <span class="tav-lang-sep">|</span>
-      <button class="tav-lang-btn ${curLang === 'en' ? 'active' : ''}" data-lang="en" title="English">ENG</button>
-    `;
+    pill.setAttribute('title', curLang === 'vi' ? 'Chuyển sang English' : 'Chuyển sang Tiếng Việt');
+    pill.innerHTML = `<span class="tav-lang-code">${curLang === 'vi' ? 'VIE' : 'ENG'}</span>`;
+    pill.addEventListener('click', function(e) {
+      e.preventDefault();
+      const activeLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
+      const targetLang = activeLang === 'vi' ? 'en' : 'vi';
+      pill.classList.add('is-changing');
+      setTimeout(() => pill.classList.remove('is-changing'), 300);
+      if (window.TAV_CORE && typeof window.TAV_CORE.switchLanguage === 'function') {
+        window.TAV_CORE.switchLanguage(targetLang);
+      } else if (typeof window.switchLanguage === 'function') {
+        window.switchLanguage(targetLang);
+      }
+    });
     document.body.appendChild(pill);
   }
 
-  // ─────────────────────────────────────────────────────────────────────────
-  // INJECT LANGUAGE TOGGLE BUTTON INTO EVERY LAYOUT TOOLBAR
-  // ─────────────────────────────────────────────────────────────────────────
-  // CSS injected once — styles the universal tav-lang-toolbar-btn element
   (function injectLangBtnCSS() {
     if (document.getElementById('tav-lang-btn-style')) return;
     const style = document.createElement('style');
     style.id = 'tav-lang-btn-style';
     style.textContent = `
       /* ═══════════════════════════════════════════════════════════════
-         TAV LANGUAGE TOGGLE BUTTON — PER-LAYOUT THEMED STYLES
-         Base structure: shared.  Colors: per layout body class.
+         TAV SINGLE LANGUAGE TOGGLE BUTTON — PERFECT LAYOUT INTEGRATION
+         Seamlessly inherits & matches exact shape, colors, borders and
+         hover states for all 11 layouts.
          ═══════════════════════════════════════════════════════════════ */
 
-      /* ── Base / Reset ── */
+      /* ── Base Structure ── */
       .tav-lang-toolbar-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 0;
-        border-radius: 20px;
-        padding: 3px 5px;
+        position: relative;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         cursor: pointer;
-        font-family: inherit;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.09em;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        transition: all 0.22s ease;
+        font-family: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
         user-select: none;
         white-space: nowrap;
         flex-shrink: 0;
         box-sizing: border-box;
-        /* default fallback */
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.15);
-        color: rgba(255,255,255,0.5);
-      }
-      .tav-lang-toolbar-btn .tl-seg {
-        padding: 2px 7px;
-        border-radius: 14px;
-        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-        color: inherit;
-        font-size: 10px;
-        font-weight: 700;
-      }
-      .tav-lang-toolbar-btn .tl-div {
-        font-size: 9px;
-        opacity: 0.25;
-        margin: 0 1px;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        overflow: hidden;
       }
 
-      /* ── Spacing per container type ── */
-      #tool-sub-stack .tav-lang-toolbar-btn  { margin: 8px auto 0; }
-      .neo-toolbar .tav-lang-toolbar-btn      { margin: 0 6px; }
-      #vision-right-dock .tav-lang-toolbar-btn { margin: 10px auto 0; }
-      .aurora-tool-list .tav-lang-toolbar-btn { margin: 10px auto 0; }
-      #horizon-tool-panel .tav-lang-toolbar-btn { margin: 10px auto 0; }
-      .prism-tool-list .tav-lang-toolbar-btn  { margin: 10px auto 0; }
-      .nexus-tool-list .tav-lang-toolbar-btn  { margin: 10px auto 0; }
-      .monarch-command-list .tav-lang-toolbar-btn { margin: 10px auto 0; }
-      .rgl-neo-tools-system .tav-lang-toolbar-btn { margin: 8px auto 0; }
-      .cmd-ctrl-panel .tav-lang-toolbar-btn,
-      .cmd-ribbon .tav-lang-toolbar-btn       { margin: 0 6px; }
+      .tav-lang-toolbar-btn .tav-lang-code,
+      .tav-lang-round-pill .tav-lang-code {
+        font-size: 12px !important;
+        font-weight: 900 !important;
+        letter-spacing: 0.08em !important;
+        line-height: 1 !important;
+        text-transform: uppercase !important;
+        pointer-events: none !important;
+        transition: transform 0.25s ease, opacity 0.25s ease !important;
+        display: inline-block !important;
+      }
 
+      .tav-lang-toolbar-btn.is-changing .tav-lang-code {
+        transform: rotateY(180deg) scale(0.5);
+        opacity: 0;
+      }
+
+      .tav-lang-toolbar-btn:active {
+        transform: scale(0.92) !important;
+      }
+
+      /* Hide any rogue tooltips inside language button to prevent text collision */
+      .tav-lang-toolbar-btn .tool-tooltip,
+      .tav-lang-toolbar-btn .tool-label {
+        display: none !important;
+      }
+
+      /* ── Floating Round Pill (Top-Right fallback) ── */
+      .tav-lang-round-pill {
+        position: fixed;
+        top: 16px;
+        right: 20px;
+        z-index: 9990;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(10, 10, 20, 0.75);
+        border: 1.5px solid rgba(255, 255, 255, 0.22);
+        color: #ffffff;
+        font-family: 'Inter', 'Outfit', sans-serif;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 0;
+        outline: none;
+      }
 
       /* ════════════════════════════════════════════════════════
-         01  CLASSIC — Cyan / Gold glass
+         01  CLASSIC — Soft Squircle 12px / Pearl Glass
          ════════════════════════════════════════════════════════ */
       .layout-classic .tav-lang-toolbar-btn {
-        background: rgba(0, 10, 30, 0.55);
-        border: 1px solid rgba(0, 242, 254, 0.30);
-        border-radius: 20px;
-        color: rgba(0, 242, 254, 0.55);
-        box-shadow: 0 0 8px rgba(0,242,254,0.08);
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        margin: 5px 0;
+        background: var(--pearl-bg, rgba(255, 255, 255, 0.75));
+        border: 1.5px solid var(--pearl-border, rgba(255, 255, 255, 0.4));
+        color: #201f1c;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: inset 0 1px 1px rgba(255,255,255,0.9), 0 3px 8px rgba(0,0,0,0.08);
       }
       .layout-classic .tav-lang-toolbar-btn:hover {
-        border-color: rgba(0, 242, 254, 0.55);
-        background: rgba(0, 10, 30, 0.75);
-        box-shadow: 0 0 12px rgba(0,242,254,0.18);
-      }
-      .layout-classic .tav-lang-toolbar-btn .tl-seg { color: rgba(0, 242, 254, 0.45); }
-      .layout-classic .tav-lang-toolbar-btn .tl-div { color: rgba(0, 242, 254, 0.20); }
-      .layout-classic .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #00f2fe, #4facfe);
-        color: #fff;
-        box-shadow: 0 0 8px rgba(0,242,254,0.45);
+        transform: translateX(-4px) scale(1.05);
+        background: var(--gold-primary, #d4af37);
+        border-color: var(--gold-primary, #d4af37);
+        color: #ffffff;
+        box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
       }
 
       /* ════════════════════════════════════════════════════════
-         02  FUTURISTIC — Purple / Indigo cyberpunk
+         02  FUTURISTIC — Cyberpunk Soft Rounded 12px
          ════════════════════════════════════════════════════════ */
       .layout-futuristic .tav-lang-toolbar-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        margin: 5px 0;
         background: rgba(10, 5, 30, 0.65);
         border: 1px solid rgba(124, 58, 237, 0.35);
-        border-radius: 4px;
-        color: rgba(167, 139, 250, 0.6);
-        box-shadow: 0 0 10px rgba(124,58,237,0.10);
+        color: #a78bfa;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.15);
       }
       .layout-futuristic .tav-lang-toolbar-btn:hover {
-        border-color: rgba(124, 58, 237, 0.65);
-        background: rgba(10, 5, 30, 0.85);
-        box-shadow: 0 0 14px rgba(124,58,237,0.25);
-      }
-      .layout-futuristic .tav-lang-toolbar-btn .tl-seg { color: rgba(167,139,250,0.5); }
-      .layout-futuristic .tav-lang-toolbar-btn .tl-div { color: rgba(124,58,237,0.25); }
-      .layout-futuristic .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #7C3AED, #4F46E5);
-        color: #fff;
-        box-shadow: 0 0 10px rgba(124,58,237,0.5);
-        border-radius: 2px;
+        transform: translateY(-2px) scale(1.05);
+        border-color: #a78bfa;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: #ffffff;
+        box-shadow: 0 0 16px rgba(124, 58, 237, 0.6);
       }
 
       /* ════════════════════════════════════════════════════════
-         03  NEO — Purple / Violet minimal pill
+         03  NEO — Light Frosted Glass Dock Circle 50%
          ════════════════════════════════════════════════════════ */
       .layout-neo .tav-lang-toolbar-btn {
-        background: rgba(15, 8, 40, 0.60);
-        border: 1px solid rgba(124, 58, 237, 0.28);
-        border-radius: 24px;
-        color: rgba(167, 139, 250, 0.55);
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        margin: 0 6px;
+        background: rgba(255, 255, 255, 0.85);
+        border: 1.5px solid rgba(124, 58, 237, 0.35);
+        color: #1E293B;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.12);
       }
       .layout-neo .tav-lang-toolbar-btn:hover {
-        border-color: rgba(124, 58, 237, 0.55);
-        background: rgba(15, 8, 40, 0.80);
-      }
-      .layout-neo .tav-lang-toolbar-btn .tl-seg { color: rgba(167,139,250,0.50); }
-      .layout-neo .tav-lang-toolbar-btn .tl-div { color: rgba(124,58,237,0.22); }
-      .layout-neo .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(90deg, #7C3AED, #5B21B6);
-        color: #fff;
-        box-shadow: 0 0 8px rgba(124,58,237,0.4);
+        transform: translateY(-2px) scale(1.06);
+        border-color: #7C3AED;
+        background: linear-gradient(135deg, #7C3AED, #4F46E5);
+        color: #ffffff;
+        box-shadow: 0 6px 18px rgba(124, 58, 237, 0.4);
       }
 
       /* ════════════════════════════════════════════════════════
-         04  GRADIENT — Pink / Red vibrant
+         04  GRADIENT — Rose Neon Circular Glass 50%
          ════════════════════════════════════════════════════════ */
       .layout-gradient .tav-lang-toolbar-btn {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        margin: 5px 0;
         background: rgba(20, 5, 30, 0.55);
-        border: 1px solid rgba(240, 147, 251, 0.30);
-        border-radius: 20px;
-        color: rgba(240, 147, 251, 0.6);
-        box-shadow: 0 0 10px rgba(240,147,251,0.08);
+        border: 1.5px solid rgba(240, 147, 251, 0.40);
+        color: #f093fb;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 0 10px rgba(240, 147, 251, 0.15);
       }
       .layout-gradient .tav-lang-toolbar-btn:hover {
-        border-color: rgba(240, 147, 251, 0.55);
-        background: rgba(20, 5, 30, 0.75);
-        box-shadow: 0 0 14px rgba(240,147,251,0.2);
-      }
-      .layout-gradient .tav-lang-toolbar-btn .tl-seg { color: rgba(240,147,251,0.5); }
-      .layout-gradient .tav-lang-toolbar-btn .tl-div { color: rgba(240,147,251,0.22); }
-      .layout-gradient .tav-lang-toolbar-btn .tl-seg.active {
+        transform: translateY(-2px) scale(1.06);
+        border-color: #f093fb;
         background: linear-gradient(135deg, #f093fb, #f5576c);
-        color: #fff;
-        box-shadow: 0 0 10px rgba(240,147,251,0.45);
+        color: #ffffff;
+        box-shadow: 0 0 16px rgba(240, 147, 251, 0.55);
       }
 
       /* ════════════════════════════════════════════════════════
-         05  AURORA — Purple / Emerald aurora
+         05  AURORA — Light Pastel Circular Glass 50%
          ════════════════════════════════════════════════════════ */
       .layout-aurora .tav-lang-toolbar-btn {
-        background: rgba(8, 5, 25, 0.60);
-        border: 1px solid rgba(167, 139, 250, 0.28);
-        border-radius: 20px;
-        color: rgba(167, 139, 250, 0.55);
-        box-shadow: 0 0 8px rgba(167,139,250,0.06);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        margin: 5px 0;
+        background: rgba(241, 245, 249, 0.85);
+        border: 1.5px solid rgba(199, 210, 254, 0.7);
+        color: #312e81;
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        box-shadow: 0 4px 14px rgba(79, 70, 229, 0.10);
       }
       .layout-aurora .tav-lang-toolbar-btn:hover {
-        border-color: rgba(167, 139, 250, 0.52);
-        background: rgba(8, 5, 25, 0.80);
-        box-shadow: 0 0 14px rgba(167,139,250,0.18);
-      }
-      .layout-aurora .tav-lang-toolbar-btn .tl-seg { color: rgba(167,139,250,0.48); }
-      .layout-aurora .tav-lang-toolbar-btn .tl-div { color: rgba(167,139,250,0.20); }
-      .layout-aurora .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #8B5CF6, #34D399);
-        color: #fff;
-        box-shadow: 0 0 10px rgba(139,92,246,0.4);
+        transform: translateY(-2px) scale(1.06);
+        border-color: #4f46e5;
+        background: #4f46e5;
+        color: #ffffff;
+        box-shadow: 0 6px 18px rgba(79, 70, 229, 0.35);
       }
 
       /* ════════════════════════════════════════════════════════
-         06  HORIZON — Sky blue / Steel
+         06  HORIZON — Warm Amber Circular Pill 50%
          ════════════════════════════════════════════════════════ */
       .layout-horizon .tav-lang-toolbar-btn {
-        background: rgba(8, 14, 28, 0.65);
-        border: 1px solid rgba(142, 216, 255, 0.25);
-        border-radius: 6px;
-        color: rgba(142, 216, 255, 0.5);
-        box-shadow: 0 0 8px rgba(142,216,255,0.06);
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        margin: 5px 0;
+        background: rgba(14, 18, 28, 0.72);
+        border: 1.5px solid rgba(246, 193, 119, 0.35);
+        color: #f6c177;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 0 10px rgba(246, 193, 119, 0.12);
       }
       .layout-horizon .tav-lang-toolbar-btn:hover {
-        border-color: rgba(142, 216, 255, 0.5);
-        background: rgba(8, 14, 28, 0.85);
-        box-shadow: 0 0 12px rgba(142,216,255,0.15);
-      }
-      .layout-horizon .tav-lang-toolbar-btn .tl-seg { color: rgba(142,216,255,0.48); }
-      .layout-horizon .tav-lang-toolbar-btn .tl-div { color: rgba(142,216,255,0.20); }
-      .layout-horizon .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #8ED8FF, #60a5fa);
-        color: #0a0f1e;
-        box-shadow: 0 0 8px rgba(142,216,255,0.4);
+        transform: translateY(-2px) scale(1.05);
+        border-color: #f6c177;
+        background: rgba(246, 193, 119, 0.22);
+        color: #ffffff;
+        box-shadow: 0 0 14px rgba(246, 193, 119, 0.4);
       }
 
       /* ════════════════════════════════════════════════════════
-         07  PRISM — Coral / Purple gradient
+         07  PRISM — Coral Flame Dark Card 20px
          ════════════════════════════════════════════════════════ */
       .layout-prism .tav-lang-toolbar-btn {
-        background: rgba(15, 8, 35, 0.65);
-        border: 1px solid rgba(124, 58, 237, 0.30);
-        border-radius: 8px;
-        color: rgba(255, 107, 107, 0.55);
-        box-shadow: 0 0 8px rgba(124,58,237,0.08);
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        margin: 0;
+        background: rgba(31, 41, 55, 0.75);
+        border: 1.5px solid rgba(255, 107, 107, 0.40);
+        color: #ff6b6b;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       }
       .layout-prism .tav-lang-toolbar-btn:hover {
-        border-color: rgba(255, 107, 107, 0.45);
-        background: rgba(15, 8, 35, 0.85);
-        box-shadow: 0 0 12px rgba(255,107,107,0.18);
-      }
-      .layout-prism .tav-lang-toolbar-btn .tl-seg { color: rgba(255,107,107,0.48); }
-      .layout-prism .tav-lang-toolbar-btn .tl-div { color: rgba(124,58,237,0.25); }
-      .layout-prism .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #FF6B6B, #7C3AED);
-        color: #fff;
-        box-shadow: 0 0 10px rgba(255,107,107,0.4);
-        border-radius: 5px;
+        transform: translateY(-2px) scale(1.05);
+        border-color: #ff6b6b;
+        background: linear-gradient(135deg, #ff6b6b, #7c3aed);
+        color: #ffffff;
+        box-shadow: 0 0 16px rgba(255, 107, 107, 0.5);
       }
 
       /* ════════════════════════════════════════════════════════
-         08  NEXUS — Lavender / Mint subtle
+         08  NEXUS — Mint Sky Cyber Pill 10px
          ════════════════════════════════════════════════════════ */
       .layout-nexus .tav-lang-toolbar-btn {
-        background: rgba(5, 8, 20, 0.65);
-        border: 1px solid rgba(167, 139, 250, 0.20);
+        width: 42px;
+        height: 42px;
         border-radius: 10px;
-        color: rgba(148, 163, 184, 0.55);
+        margin: 5px 0;
+        background: rgba(23, 25, 35, 0.75);
+        border: 1.5px solid rgba(94, 234, 212, 0.35);
+        color: #5EEAD4;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 0 8px rgba(94, 234, 212, 0.15);
       }
       .layout-nexus .tav-lang-toolbar-btn:hover {
-        border-color: rgba(167, 139, 250, 0.42);
-        background: rgba(5, 8, 20, 0.85);
-      }
-      .layout-nexus .tav-lang-toolbar-btn .tl-seg { color: rgba(148,163,184,0.48); }
-      .layout-nexus .tav-lang-toolbar-btn .tl-div { color: rgba(148,163,184,0.18); }
-      .layout-nexus .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #A78BFA, #6EE7B7);
-        color: #0a0f1a;
-        box-shadow: 0 0 8px rgba(167,139,250,0.35);
-        border-radius: 7px;
+        transform: translateY(-2px) scale(1.05);
+        border-color: #5EEAD4;
+        background: linear-gradient(135deg, #38BDF8, #A78BFA);
+        color: #0f172a;
+        box-shadow: 0 0 14px rgba(94, 234, 212, 0.45);
       }
 
       /* ════════════════════════════════════════════════════════
-         09  MONARCH — Luxury Gold / Dark
+         09  MONARCH — Champagne Gold Luxury Rounded 12px
          ════════════════════════════════════════════════════════ */
       .layout-monarch .tav-lang-toolbar-btn {
-        background: rgba(13, 13, 13, 0.80);
-        border: 1px solid rgba(214, 179, 106, 0.35);
-        border-radius: 2px;
-        color: rgba(214, 179, 106, 0.55);
-        letter-spacing: 0.12em;
-        box-shadow: 0 0 10px rgba(214,179,106,0.06);
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        margin: 5px 0;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(15, 23, 42, 0.65) 100%);
+        border: 1.5px solid rgba(214, 179, 106, 0.65);
+        color: #D4AF37;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 0 10px rgba(214, 179, 106, 0.15);
       }
       .layout-monarch .tav-lang-toolbar-btn:hover {
-        border-color: rgba(214, 179, 106, 0.65);
-        background: rgba(13, 13, 13, 0.95);
-        box-shadow: 0 0 14px rgba(214,179,106,0.18);
-      }
-      .layout-monarch .tav-lang-toolbar-btn .tl-seg { color: rgba(214,179,106,0.5); }
-      .layout-monarch .tav-lang-toolbar-btn .tl-div { color: rgba(214,179,106,0.22); }
-      .layout-monarch .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #C8A96B, #E8C882);
+        transform: translateY(-2px) scale(1.05);
+        border-color: #F3E5AB;
+        background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 100%);
         color: #0d0d0d;
-        box-shadow: 0 0 10px rgba(200,169,107,0.45);
-        border-radius: 1px;
+        box-shadow: 0 0 16px rgba(212, 175, 55, 0.55);
       }
 
       /* ════════════════════════════════════════════════════════
-         10  REGAL / ARCHITECT — Blueprint cream / Monochrome
+         10  REGAL — Cyan Steel Tool Module Tile 12px
          ════════════════════════════════════════════════════════ */
       .layout-regal .tav-lang-toolbar-btn {
-        background: rgba(8, 8, 14, 0.80);
-        border: 1px solid rgba(229, 228, 224, 0.20);
-        border-radius: 2px;
-        color: rgba(229, 228, 224, 0.45);
-        letter-spacing: 0.14em;
-        font-size: 9px;
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        margin: 0;
+        background: rgba(16, 22, 34, 0.35);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: var(--rgl-neo-text-dim, #9CA3AF);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        position: relative;
+        z-index: 101;
       }
       .layout-regal .tav-lang-toolbar-btn:hover {
-        border-color: rgba(229, 228, 224, 0.45);
-        background: rgba(8, 8, 14, 0.95);
-      }
-      .layout-regal .tav-lang-toolbar-btn .tl-seg { color: rgba(229,228,224,0.40); }
-      .layout-regal .tav-lang-toolbar-btn .tl-div { color: rgba(229,228,224,0.16); }
-      .layout-regal .tav-lang-toolbar-btn .tl-seg.active {
-        background: rgba(229, 228, 224, 0.92);
-        color: #080808;
-        box-shadow: none;
-        border-radius: 1px;
+        color: var(--rgl-neo-accent, #00e5ff);
+        border-color: rgba(0, 229, 255, 0.25);
+        transform: scale(1.05);
+        background: rgba(0, 229, 255, 0.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 229, 255, 0.1);
       }
 
       /* ════════════════════════════════════════════════════════
-         11  COMMAND — Cyan HUD / Tactical
+         11  COMMAND — Tactical Cyan Rounded HUD Tile
          ════════════════════════════════════════════════════════ */
       .layout-command .tav-lang-toolbar-btn {
-        background: rgba(9, 4, 26, 0.85);
-        border: 1px solid rgba(0, 229, 255, 0.28);
-        border-radius: 0;
-        color: rgba(200, 232, 240, 0.50);
-        letter-spacing: 0.12em;
-        font-size: 9.5px;
-        box-shadow: 0 0 8px rgba(0,229,255,0.06);
+        width: 46px !important;
+        height: 46px !important;
+        border-radius: 10px !important;
+        margin: 0 !important;
+        background: rgba(9, 4, 26, 0.9) !important;
+        border: 1px solid var(--cmd-border-strong) !important;
+        color: var(--cmd-cyan) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.1) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
       }
       .layout-command .tav-lang-toolbar-btn:hover {
-        border-color: rgba(0, 229, 255, 0.55);
-        background: rgba(9, 4, 26, 0.98);
-        box-shadow: 0 0 12px rgba(0,229,255,0.18);
-      }
-      .layout-command .tav-lang-toolbar-btn .tl-seg { color: rgba(200,232,240,0.45); }
-      .layout-command .tav-lang-toolbar-btn .tl-div { color: rgba(0,229,255,0.22); }
-      .layout-command .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg, #00e5ff, #0099bb);
-        color: #030c18;
-        box-shadow: 0 0 10px rgba(0,229,255,0.5);
-        border-radius: 0;
+        border-color: #00e5ff !important;
+        background: rgba(0, 229, 255, 0.15) !important;
+        color: #00e5ff !important;
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.4) !important;
+        transform: translateY(-2px) !important;
       }
     `;
     document.head.appendChild(style);
@@ -6791,78 +6928,149 @@ document.addEventListener("DOMContentLoaded", function() {
   function createLangBtn() {
     const curLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
     const btn = document.createElement('div');
-    btn.className = 'tav-lang-toolbar-btn';
-    btn.setAttribute('role', 'group');
-    btn.setAttribute('aria-label', 'Language');
-    btn.innerHTML = `
-      <span class="tl-seg${curLang === 'vi' ? ' active' : ''}" data-lang="vi">VIE</span>
-      <span class="tl-div">|</span>
-      <span class="tl-seg${curLang === 'en' ? ' active' : ''}" data-lang="en">ENG</span>
-    `;
+
+    let itemClass = 'tool-button';
+    if (document.body.classList.contains('layout-neo')) {
+      itemClass = 'neo-dock-item neo-tool-btn';
+    } else if (document.body.classList.contains('layout-gradient')) {
+      itemClass = 'vision-icon-wrapper tool-button';
+    } else if (document.body.classList.contains('layout-aurora')) {
+      itemClass = 'aurora-tool-item tool-button';
+    } else if (document.body.classList.contains('layout-horizon')) {
+      itemClass = 'horizon-tool-item tool-button';
+    } else if (document.body.classList.contains('layout-prism')) {
+      itemClass = 'prism-tool-item tool-button';
+    } else if (document.body.classList.contains('layout-nexus')) {
+      itemClass = 'nexus-tool-item tool-button';
+    } else if (document.body.classList.contains('layout-monarch')) {
+      itemClass = 'monarch-command-item tool-button';
+    } else if (document.body.classList.contains('layout-regal')) {
+      itemClass = 'rgl-neo-tool-btn tool-button';
+    } else if (document.body.classList.contains('layout-command')) {
+      itemClass = 'cmd-ctrl-tile tool-button';
+    }
+
+    btn.className = `${itemClass} tav-lang-toolbar-btn`;
+    btn.setAttribute('role', 'button');
+    btn.setAttribute('tabindex', '0');
+    btn.setAttribute('data-action', 'lang-toggle');
+
+    const labelVi = 'Chuyển sang English';
+    const labelEn = 'Chuyển sang Tiếng Việt';
+    btn.setAttribute('title', curLang === 'vi' ? labelVi : labelEn);
+
+    const displayCode = curLang === 'vi' ? 'VIE' : 'ENG';
+
+    if (document.body.classList.contains('layout-command')) {
+      btn.innerHTML = `
+        <div class="cmd-ctrl-icon" style="font-weight: 900; font-size: 13px; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%;">${displayCode}</div>
+        <div class="cmd-ctrl-label">LANG</div>
+        <div class="cmd-ctrl-glow"></div>
+      `;
+    } else {
+      btn.innerHTML = `<span class="tav-lang-code">${displayCode}</span>`;
+    }
+
     btn.addEventListener('click', function(e) {
-      const seg = e.target.closest('.tl-seg');
-      if (!seg) return;
-      const lang = seg.getAttribute('data-lang');
-      if (window.TAV_CORE && window.TAV_CORE.switchLanguage) {
-        window.TAV_CORE.switchLanguage(lang);
+      e.preventDefault();
+      e.stopPropagation();
+
+      const activeLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
+      const targetLang = activeLang === 'vi' ? 'en' : 'vi';
+
+      // Visual flip animation
+      btn.classList.add('is-changing');
+      setTimeout(() => btn.classList.remove('is-changing'), 300);
+
+      // Trigger language switch
+      if (window.TAV_CORE && typeof window.TAV_CORE.switchLanguage === 'function') {
+        window.TAV_CORE.switchLanguage(targetLang);
+      } else if (typeof window.switchLanguage === 'function') {
+        window.switchLanguage(targetLang);
       }
-      // Sync all tav-lang-toolbar-btn buttons across layouts
-      document.querySelectorAll('.tav-lang-toolbar-btn .tl-seg').forEach(s => {
-        s.classList.toggle('active', s.getAttribute('data-lang') === lang);
-      });
     });
+
     return btn;
   }
 
   function injectLangBtnToAllToolbars() {
-    // Correct selector map — each key is the actual DOM ID or class
-    // of the toolbar container in each layout.
+    // Selector map — each key is the actual DOM container of the toolbar in each layout.
     const toolbarSelectors = [
-      // 01 Classic — toolbarButtonsHTML lives inside #tool-sub-stack
       '#tool-sub-stack',
-      // 02 Futuristic — same template, same id
-      // (already covered by #tool-sub-stack above)
-      // 03 Neo — bottom horizontal dock
       '#neo-toolbar',
       '.neo-toolbar',
-      // 04 Gradient — right-rail vertical list
       '#vision-right-dock',
-      // 05 Aurora
       '.aurora-tool-list',
-      // 06 Horizon
       '#horizon-tool-panel',
-      // 07 Prism
       '.prism-tool-list',
-      // 08 Nexus
       '.nexus-tool-list',
-      // 09 Monarch
       '.monarch-command-list',
-      // 10 Regal
       '.rgl-neo-tools-system',
-      // 11 Command — ribbon + control panel
       '.cmd-ctrl-panel',
       '.cmd-ribbon',
+      '#cmd-spatial-control',
+      '.cmd-spatial-control'
     ];
 
     toolbarSelectors.forEach(sel => {
       const container = document.querySelector(sel);
       if (!container) return;
+
       // Avoid duplicate injection
       if (container.querySelector('.tav-lang-toolbar-btn')) return;
-      container.appendChild(createLangBtn());
+
+      const langBtn = createLangBtn();
+
+      // Find Info button inside this container to place language button directly after/below it
+      const infoBtn = container.querySelector('[data-action="info"]') ||
+                       container.querySelector('#btn-info');
+
+      if (infoBtn) {
+        infoBtn.insertAdjacentElement('afterend', langBtn);
+      } else {
+        const firstModule = container.querySelector('.rgl-neo-tool-module');
+        if (firstModule) {
+          firstModule.insertBefore(langBtn, firstModule.firstElementChild);
+        } else if (container.firstElementChild) {
+          container.insertBefore(langBtn, container.firstElementChild);
+        } else {
+          container.appendChild(langBtn);
+        }
+      }
     });
   }
 
   // Expose globally so injectLayoutComponents can call it after each layout rebuild
   window.injectLangBtnToAllToolbars = injectLangBtnToAllToolbars;
 
-  // Also sync button active state on language change
+  // Also sync button active state & displayed text on language change
   window.addEventListener('tavLanguageChanged', function(e) {
-    const lang = e.detail && e.detail.lang;
-    if (!lang) return;
-    document.querySelectorAll('.tav-lang-toolbar-btn .tl-seg').forEach(seg => {
-      seg.classList.toggle('active', seg.getAttribute('data-lang') === lang);
+    const lang = (e.detail && e.detail.lang) || 'vi';
+    const displayCode = lang === 'vi' ? 'VIE' : 'ENG';
+    const titleText = lang === 'vi' ? 'Chuyển sang English' : 'Chuyển sang Tiếng Việt';
+
+    // Update all toolbar language buttons
+    document.querySelectorAll('.tav-lang-toolbar-btn').forEach(btn => {
+      btn.setAttribute('title', titleText);
+      const codeSpan = btn.querySelector('.tav-lang-code');
+      if (codeSpan) {
+        codeSpan.textContent = displayCode;
+      }
+      const tooltip = btn.querySelector('.tool-tooltip');
+      if (tooltip && !tooltip.hasAttribute('data-i18n-key')) {
+        tooltip.textContent = lang === 'vi' ? 'Ngôn ngữ' : 'Language';
+      }
     });
+
+    // Update floating round pill if present
+    const pill = document.getElementById('tav-lang-toggle-pill');
+    if (pill) {
+      pill.setAttribute('title', titleText);
+      const pillCode = pill.querySelector('.tav-lang-code');
+      if (pillCode) {
+        pillCode.textContent = displayCode;
+      }
+    }
   });
 
   // ─────────────────────────────────────────────────────────────────────────

@@ -419,6 +419,11 @@
   pointer-events: none !important;
 }
 
+.layout-neo .neo-unified-container.active,
+.layout-neo .neo-unified-container:hover {
+  pointer-events: auto !important;
+}
+
 .layout-neo .neo-unified-trigger {
   pointer-events: auto !important;
   width: 30px !important;
@@ -489,6 +494,13 @@
   opacity: 0 !important;
   pointer-events: none !important;
   transform: translateX(30px) !important;
+}
+
+.layout-neo .neo-unified-container.collapsed:hover .neo-nav-panel,
+.layout-neo .neo-unified-container.active .neo-nav-panel {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateX(0) !important;
 }
 
 .layout-neo .neo-nav-item-group {
@@ -613,7 +625,30 @@
   z-index: 105 !important;
 }
 
-.layout-neo .neo-nav-item-group.open .neo-submenu-tree {
+.layout-neo .neo-submenu-tree::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: -10px;
+  right: -10px;
+  height: 20px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+.layout-neo .neo-dock-submenu::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  bottom: -10px;
+  right: -20px;
+  width: 30px;
+  background: transparent;
+  pointer-events: auto;
+}
+
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree,
+.layout-neo .neo-nav-item-group:hover .neo-submenu-tree {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
@@ -671,7 +706,9 @@
 }
 
 .layout-neo .neo-nav-item-group.open .neo-submenu-tree .submenu-item,
-.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card {
+.layout-neo .neo-nav-item-group.open .neo-submenu-tree .mega-card,
+.layout-neo .neo-nav-item-group:hover .neo-submenu-tree .submenu-item,
+.layout-neo .neo-nav-item-group:hover .neo-submenu-tree .mega-card {
   opacity: 1 !important;
   transform: translateY(0) !important;
 }
@@ -732,6 +769,13 @@
   opacity: 0 !important;
   pointer-events: none !important;
   transform: translateY(-30px) !important;
+}
+
+.layout-neo .neo-unified-container.collapsed:hover .neo-toolbar,
+.layout-neo .neo-unified-container.active .neo-toolbar {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  transform: translateY(0) !important;
 }
 
 .layout-neo .neo-toolbar .neo-dock-item {

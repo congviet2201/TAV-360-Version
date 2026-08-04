@@ -15,19 +15,7 @@
   const SUN_ANCHORS = {
     "node1":  Object.assign({}, TOPVIEW_SUN_POS),    // Top View (Day 1) — Pan: -38.80°, Tilt: 28.95°
     "node2":  Object.assign({}, BIRDVIEW_SUN_POS),   // Bird View (Day 1) — Pan: -126.73°, Tilt: 39.69°
-    "node3":  { enabled: false },                    // Night View (No Sun)
-    "node4":  Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Park
-    "node5":  Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Street
-    "node6":  Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Park 2
-    "node7":  Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Living 2
-    "node8":  Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Living 1
-    "node9":  Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Thông Tầng
-    "node10": Object.assign({}, BIRDVIEW_SUN_POS),   // Balcony
-    "node11": Object.assign({}, BIRDVIEW_SUN_POS),   // TAV WC
-    "node12": Object.assign({}, BIRDVIEW_SUN_POS),   // Kiến Trúc 1
-    "node13": Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Street 2
-    "node14": Object.assign({}, BIRDVIEW_SUN_POS),   // TAV Street 3
-    "default": Object.assign({}, BIRDVIEW_SUN_POS)   // Default Fallback
+    "default": { enabled: false }                    // Disabled for all other scenes (Park, Street, Interior, Balcony, etc.)
   };
 
   // Hexagonal Optical Lens Ghost offsets radiating from Sun origin to screen center
@@ -96,7 +84,7 @@
     // Re-verify Pano2VR anchor registration continuously after transitions
     setInterval(updateSunAnchor, 2000);
 
-    console.log('[SunFlareController] Precision Sun Positions Initialized (TopView: -38.80/28.95, BirdView: -126.73/39.69).');
+    console.log('[SunFlareController] Precision Sun Positions Initialized for Bird View and Top View only.');
   }
 
   function getSunAnchor() {
@@ -107,16 +95,23 @@
       else if (typeof pano.getCurrentNode === 'function') rawNode = pano.getCurrentNode();
     }
     // Clean curly braces format e.g. "{node2}" -> "node2"
-    const nodeId = (rawNode || '').replace(/[\{\}]/g, '').trim() || 'node2';
+    const nodeId = (rawNode || '').replace(/[\{\}]/g, '').trim() || '';
 
-    if (window.HOTSPOT_TOP_VIEW_NODES && window.HOTSPOT_TOP_VIEW_NODES.includes(nodeId)) {
+    if (nodeId === 'node1') {
+      return SUN_ANCHORS["node1"];
+    }
+    if (nodeId === 'node2') {
+      return SUN_ANCHORS["node2"];
+    }
+
+    if (window.HOTSPOT_TOP_VIEW_NODES && window.HOTSPOT_TOP_VIEW_NODES.includes(nodeId) && nodeId !== 'node3') {
       return SUN_ANCHORS["node1"];
     }
     if (window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(nodeId)) {
       return SUN_ANCHORS["node2"];
     }
 
-    return SUN_ANCHORS[nodeId] || SUN_ANCHORS["default"];
+    return SUN_ANCHORS["default"];
   }
 
   function updateSunAnchor() {
@@ -126,6 +121,10 @@
     const anchor = getSunAnchor();
     if (anchor.enabled) {
       pano.addHotspot('sun_target_pos', anchor.pan, anchor.tilt, targetHotspotEl);
+    } else {
+      if (typeof pano.removeHotspot === 'function') {
+        try { pano.removeHotspot('sun_target_pos'); } catch(e) {}
+      }
     }
   }
 

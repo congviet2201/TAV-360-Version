@@ -16,7 +16,27 @@
   z-index: 100;
   display: flex;
   align-items: center;
-  pointer-events: none;
+  pointer-events: auto;
+}
+
+.layout-regal .rgl-neo-nav-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: transparent;
+  pointer-events: auto;
+  z-index: 0;
+}
+
+.layout-regal .rgl-neo-nav-wrapper.pinned .rgl-neo-panel,
+.layout-regal .rgl-neo-nav-wrapper:hover .rgl-neo-panel {
+  opacity: 1 !important;
+  transform: translateX(32px) scale(1) !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
 }
 
 .layout-regal .rgl-neo-nav-core {
@@ -598,4 +618,12 @@
 
 .layout-regal .rgl-neo-tool-btn.active::after {
   background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.5), transparent) !important;
+}
+
+/* Eliminate any ghost text pseudo-elements on nav modules */
+.layout-regal .rgl-neo-nav-module::before,
+.layout-regal .rgl-neo-nav-header::before,
+.layout-regal .rgl-neo-nav-header::after {
+  display: none !important;
+  content: none !important;
 }

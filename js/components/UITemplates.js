@@ -2550,8 +2550,8 @@ window.globalModalsHTML = `
         <section class="contact-section">
           <h3>Thông Tin Liên Hệ</h3>
           <p>Hotline: <strong>077 646 9999</strong></p>
-          <p>Email: contact@latien.vn</p>
-          <p>Website: www.latien.vn</p>
+          <p>Email: <a href="mailto:info@tav.vn" style="color: inherit; text-decoration: underline;">info@tav.vn</a></p>
+          <p>Website: <a href="https://tav.vn/" target="_blank" rel="noopener" style="color: inherit; text-decoration: underline;">https://tav.vn/</a></p>
         </section>
       </div>
     </div>

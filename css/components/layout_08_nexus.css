@@ -177,6 +177,17 @@ body.layout-nexus {
   z-index: 1001;
 }
 
+.layout-nexus .nexus-submenu::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: -10px;
+  right: -10px;
+  height: 20px;
+  background: transparent;
+  pointer-events: auto;
+}
+
 .layout-nexus .nexus-nav-item.open .nexus-submenu,
 .layout-nexus .nexus-nav-item.has-submenu:hover .nexus-submenu {
   opacity: 1;

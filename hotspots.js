@@ -137,8 +137,8 @@ window.hotspotData = {
   // ─── Node 9: TAV THÔNG TẦNG ──────────────────────────────────────────
   // Thông Tầng → Living 1 only + Bird View
   "node9": [
-    { ...hs_living,   id: "hs_living_n9",  pan:  -90, tilt:  -5, pan_classic:  -90, tilt_classic: -25 }, // → Living 1
-    { ...hs_birdview, id: "hs_bv_n9",      pan:    0, tilt:  20                                       }, // ↑ Bird View
+    { ...hs_living,   id: "hs_living_n9",  pan: -7.62, tilt: -11.83, pan_classic: -7.62, tilt_classic: -11.83 }, // → Living 1
+    { ...hs_birdview, id: "hs_bv_n9",      pan:     0, tilt:   20                                            }, // ↑ Bird View
   ],
 
   // ─── Node 10: BALCONY ────────────────────────────────────────────────
@@ -174,17 +174,17 @@ window.hotspotData = {
     { ...hs_street,     id: "hs_street_pk2",  pan:  -50, tilt: -10, pan_classic:  80,  tilt_classic: -15  }, // đường ra Phố đi bộ
     { ...hs_park,       id: "hs_park_pk2",    pan:  -90, tilt:  -5, pan_classic: -90,  tilt_classic:  -5  }, // sang Park 1
     { ...hs_living2,    id: "hs_living2_pk2", pan: -230, tilt:  -5, pan_classic:-230,  tilt_classic:   3  }, // cổng vào biệt thự 2
-    { ...hs_kientruct1, id: "hs_kient_pk2",   pan: -120, tilt:  -8, pan_classic:-120,  tilt_classic:  -8  }, // nhìn sang mặt tiền
+    { ...hs_kientruct1, id: "hs_kient_pk2",   pan: 68.55, tilt: 1.16, pan_classic: 68.55, tilt_classic: 1.16 }, // nhìn sang mặt tiền (Kiến Trúc 1)
     { ...hs_birdview,   id: "hs_bv_pk2",      pan:    0, tilt:  20                                        }, // ↑ Bird View
   ],
 
   // ─── Node 5: TAV STREET ──────────────────────────────────────────────
   // Street → Park · Living 1 · Living 2 + Bird View
   "node5": [
-    { ...hs_park,    id: "hs_park_n5",    pan: 180,  tilt:  -5, pan_classic: 180,  tilt_classic: -10 }, // → Park
-    { ...hs_living,  id: "hs_living_n5",  pan:   0,  tilt:  -5, pan_classic:   0,  tilt_classic:  -5 }, // → Living 1
-    { ...hs_living2, id: "hs_living2_n5", pan:  30,  tilt:  -5, pan_classic:  30,  tilt_classic:  -5 }, // → Living 2
-    { ...hs_birdview,id: "hs_bv_st",      pan:   0,  tilt:  20                                       }, // ↑ Bird View
+    { ...hs_park,    id: "hs_park_n5",    pan: 89.67, tilt: -4.36, pan_classic: 89.67, tilt_classic: -4.36 }, // → Park
+    { ...hs_living,  id: "hs_living_n5",  pan:     0, tilt:   -5, pan_classic:     0, tilt_classic:    -5 }, // → Living 1
+    { ...hs_living2, id: "hs_living2_n5", pan:    30, tilt:   -5, pan_classic:    30, tilt_classic:    -5 }, // → Living 2
+    { ...hs_birdview,id: "hs_bv_st",      pan:     0, tilt:   20                                         }, // ↑ Bird View
   ],
 
   // ═══════════════════════════════════════════════════════════════════════
@@ -194,33 +194,33 @@ window.hotspotData = {
   // ─── Node 12: Kiến Trúc 1 ────────────────────────────────────────────
   // Architecture → Park · Street · Living 1 · Park 2 + Bird View
   "node12": [
-    { ...hs_park,    id: "hs_park_kt",    pan:  -45, tilt:  -8, pan_classic:  -45, tilt_classic:  -8 }, // → Park
-    { ...hs_street,  id: "hs_street_kt",  pan: -135, tilt:  -8, pan_classic: -135, tilt_classic:  -8 }, // → Street
-    { ...hs_living,  id: "hs_living_kt",  pan:    0, tilt:  -5, pan_classic:    0, tilt_classic:  -5 }, // → Living 1
-    { ...hs_park2,   id: "hs_park2_kt",   pan:  -90, tilt:  -8, pan_classic:  -90, tilt_classic:  -8 }, // → Park 2
-    { ...hs_birdview,id: "hs_birdview_kt1",pan:   0, tilt:  20                                       }, // ↑ Bird View
+    { ...hs_park,    id: "hs_park_kt",    pan:  103.44, tilt:  2.43, pan_classic:  103.44, tilt_classic:  2.43 }, // → TAV Park 1
+    { ...hs_street,  id: "hs_street_kt",  pan:  -67.34, tilt: -7.17, pan_classic:  -67.34, tilt_classic: -7.17 }, // → TAV Street
+    { ...hs_living,  id: "hs_living_kt",  pan:   19.91, tilt:  2.32, pan_classic:   19.91, tilt_classic:  2.32 }, // → TAV Living 1
+    { ...hs_park2,   id: "hs_park2_kt",   pan: -133.22, tilt:  2.93, pan_classic: -133.22, tilt_classic:  2.93 }, // → TAV Park 2
+    { ...hs_birdview,id: "hs_birdview_kt1",pan:   0,    tilt: 20                                               }, // ↑ Bird View
   ],
 
   // ─── Node 13: TAV Street 2 ───────────────────────────────────────────
   "node13": [
-    { ...hs_street,  id: "hs_street_n13", pan: 180,  tilt:  -5, pan_classic: 180,  tilt_classic:  -5 },
-    { ...hs_park,    id: "hs_park_n13",   pan:  -90, tilt:  -5, pan_classic:  -90, tilt_classic:  -5 },
-    { ...hs_birdview,id: "hs_bv_n13",     pan:    0, tilt:  20                                       },
+    { ...hs_street,  id: "hs_street_n13", pan:   0.67, tilt: -4.95, pan_classic:   0.67, tilt_classic: -4.95 }, // → TAV Street
+    { ...hs_park,    id: "hs_park_n13",   pan: -140.68, tilt:  9.38, pan_classic: -140.68, tilt_classic:  9.38 }, // → TAV Park
+    { ...hs_birdview,id: "hs_bv_n13",     pan:      0, tilt: 20                                         }, // ↑ Bird View
   ],
 
   // ─── Node 14: TAV Street 3 ───────────────────────────────────────────
   "node14": [
-    { ...hs_street2, id: "hs_street2_n14",pan: 180,  tilt:  -5, pan_classic: 180,  tilt_classic:  -5 },
-    { ...hs_park2,   id: "hs_park2_n14",  pan:  -90, tilt:  -5, pan_classic:  -90, tilt_classic:  -5 },
-    { ...hs_birdview,id: "hs_bv_n14",     pan:    0, tilt:  20                                       },
+    { ...hs_street2, id: "hs_street2_n14",pan:  93.20, tilt: -0.56, pan_classic:  93.20, tilt_classic: -0.56 }, // → TAV Street 2
+    { ...hs_park2,   id: "hs_park2_n14",  pan:   2.98, tilt:  1.51, pan_classic:   2.98, tilt_classic:  1.51 }, // → TAV Park 2
+    { ...hs_birdview,id: "hs_bv_n14",     pan:      0, tilt: 20                                         }, // ↑ Bird View
   ],
 
   // ─── Node 15: Kiến Trúc 2 ────────────────────────────────────────────
   "node15": [
-    { ...hs_park,    id: "hs_park_kt2",   pan:  -45, tilt:  -8, pan_classic:  -45, tilt_classic:  -8 },
-    { ...hs_street,  id: "hs_street_kt2", pan: -135, tilt:  -8, pan_classic: -135, tilt_classic:  -8 },
-    { ...hs_living,  id: "hs_living_kt2", pan:    0, tilt:  -5, pan_classic:    0, tilt_classic:  -5 },
-    { ...hs_birdview,id: "hs_birdview_kt2",pan:   0, tilt:  20                                       },
+    { ...hs_park,    id: "hs_park_kt2",   pan:    1.04, tilt: -0.40, pan_classic:    1.04, tilt_classic: -0.40 }, // → TAV Park
+    { ...hs_street,  id: "hs_street_kt2", pan:  -91.06, tilt: -4.68, pan_classic:  -91.06, tilt_classic: -4.68 }, // → TAV Street
+    { ...hs_living,  id: "hs_living_kt2", pan: -172.85, tilt:  1.84, pan_classic: -172.85, tilt_classic:  1.84 }, // → TAV Living 1
+    { ...hs_birdview,id: "hs_birdview_kt2",pan:   0,    tilt: 20                                               }, // ↑ Bird View
   ],
 };
 
