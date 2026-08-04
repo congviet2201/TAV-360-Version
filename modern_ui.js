@@ -2785,6 +2785,11 @@ function generateSubmenuHTML(items, itemClass) {
       // Command
       var cmdExplorer = document.getElementById("cmd-scene-explorer");
       if (cmdExplorer && cmdExplorer.classList.contains("collapsed")) cmdExplorer.classList.remove("collapsed");
+
+      // ── Inject language toggle button into the current layout's toolbar ──
+      if (typeof window.injectLangBtnToAllToolbars === 'function') {
+        window.injectLangBtnToAllToolbars();
+      }
     }, 50);
   }
 
@@ -6560,53 +6565,46 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function injectLangBtnToAllToolbars() {
-    // Map of { cssSelector: appendMethod }
-    // Each entry: a toolbar container selector + where to append the button
-    const toolbarMap = [
-      // 01 Classic / 02 Futuristic — shared toolbarButtonsHTML rendered inside .tool-container
-      { sel: '.tool-container', pos: 'append' },
+    // Correct selector map — each key is the actual DOM ID or class
+    // of the toolbar container in each layout.
+    const toolbarSelectors = [
+      // 01 Classic — toolbarButtonsHTML lives inside #tool-sub-stack
+      '#tool-sub-stack',
+      // 02 Futuristic — same template, same id
+      // (already covered by #tool-sub-stack above)
       // 03 Neo — bottom horizontal dock
-      { sel: '.neo-toolbar', pos: 'append' },
-      // 04 Gradient — right rail vertical
-      { sel: '#vision-right-dock', pos: 'append' },
+      '#neo-toolbar',
+      '.neo-toolbar',
+      // 04 Gradient — right-rail vertical list
+      '#vision-right-dock',
       // 05 Aurora
-      { sel: '.aurora-tool-list', pos: 'append' },
+      '.aurora-tool-list',
       // 06 Horizon
-      { sel: '#horizon-tool-panel', pos: 'append' },
+      '#horizon-tool-panel',
       // 07 Prism
-      { sel: '.prism-tool-list', pos: 'append' },
+      '.prism-tool-list',
       // 08 Nexus
-      { sel: '.nexus-tool-list', pos: 'append' },
+      '.nexus-tool-list',
       // 09 Monarch
-      { sel: '.monarch-command-list', pos: 'append' },
-      // 10 Regal / Architect
-      { sel: '.rgl-neo-tools-system', pos: 'append' },
-      // 11 Command
-      { sel: '.cmd-ctrl-panel', pos: 'append' },
-      { sel: '.cmd-ribbon', pos: 'append' },
+      '.monarch-command-list',
+      // 10 Regal
+      '.rgl-neo-tools-system',
+      // 11 Command — ribbon + control panel
+      '.cmd-ctrl-panel',
+      '.cmd-ribbon',
     ];
 
-    toolbarMap.forEach(({ sel }) => {
+    toolbarSelectors.forEach(sel => {
       const container = document.querySelector(sel);
       if (!container) return;
-      // Avoid double injection
+      // Avoid duplicate injection
       if (container.querySelector('.tav-lang-toolbar-btn')) return;
       container.appendChild(createLangBtn());
     });
   }
 
-  // Inject immediately (may already be rendered)
-  injectLangBtnToAllToolbars();
-
-  // Re-inject whenever layout is switched (MutationObserver on body)
-  (function watchLayoutChanges() {
-    let debounce = null;
-    const obs = new MutationObserver(() => {
-      clearTimeout(debounce);
-      debounce = setTimeout(injectLangBtnToAllToolbars, 200);
-    });
-    obs.observe(document.body, { childList: true, subtree: true });
-  })();
+  // Expose globally so injectLayoutComponents can call it after each layout rebuild
+  window.injectLangBtnToAllToolbars = injectLangBtnToAllToolbars;
 
   // Also sync button active state on language change
   window.addEventListener('tavLanguageChanged', function(e) {
