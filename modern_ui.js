@@ -6470,73 +6470,320 @@ document.addEventListener("DOMContentLoaded", function() {
     const style = document.createElement('style');
     style.id = 'tav-lang-btn-style';
     style.textContent = `
-      /* ── Universal Language Toggle Button in Toolbar ── */
+      /* ═══════════════════════════════════════════════════════════════
+         TAV LANGUAGE TOGGLE BUTTON — PER-LAYOUT THEMED STYLES
+         Base structure: shared.  Colors: per layout body class.
+         ═══════════════════════════════════════════════════════════════ */
+
+      /* ── Base / Reset ── */
       .tav-lang-toolbar-btn {
         display: inline-flex;
         align-items: center;
-        gap: 2px;
-        background: rgba(255,255,255,0.07);
-        border: 1px solid rgba(255,255,255,0.18);
+        gap: 0;
         border-radius: 20px;
-        padding: 4px 6px;
+        padding: 3px 5px;
         cursor: pointer;
         font-family: inherit;
         font-size: 10px;
         font-weight: 700;
-        letter-spacing: 0.08em;
-        color: rgba(255,255,255,0.55);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        transition: all 0.2s ease;
+        letter-spacing: 0.09em;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.22s ease;
         user-select: none;
         white-space: nowrap;
         flex-shrink: 0;
         box-sizing: border-box;
+        /* default fallback */
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.15);
+        color: rgba(255,255,255,0.5);
       }
-      .tav-lang-toolbar-btn:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.3); }
       .tav-lang-toolbar-btn .tl-seg {
-        padding: 2px 6px;
+        padding: 2px 7px;
         border-radius: 14px;
-        transition: background 0.18s, color 0.18s;
-        color: rgba(255,255,255,0.45);
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        color: inherit;
         font-size: 10px;
-      }
-      .tav-lang-toolbar-btn .tl-seg.active {
-        background: linear-gradient(135deg,#00f2fe,#4facfe);
-        color: #fff;
-        box-shadow: 0 1px 6px rgba(0,200,255,0.35);
+        font-weight: 700;
       }
       .tav-lang-toolbar-btn .tl-div {
-        color: rgba(255,255,255,0.2);
         font-size: 9px;
+        opacity: 0.25;
+        margin: 0 1px;
       }
 
-      /* ── Per-layout adaptations ── */
-      /* Classic / Futuristic: vertical toolbar, add separator + item */
-      .tool-container .tav-lang-toolbar-btn,
-      #tool-dock .tav-lang-toolbar-btn { flex-direction: row; margin: 6px auto 0; }
+      /* ── Spacing per container type ── */
+      #tool-sub-stack .tav-lang-toolbar-btn  { margin: 8px auto 0; }
+      .neo-toolbar .tav-lang-toolbar-btn      { margin: 0 6px; }
+      #vision-right-dock .tav-lang-toolbar-btn { margin: 10px auto 0; }
+      .aurora-tool-list .tav-lang-toolbar-btn { margin: 10px auto 0; }
+      #horizon-tool-panel .tav-lang-toolbar-btn { margin: 10px auto 0; }
+      .prism-tool-list .tav-lang-toolbar-btn  { margin: 10px auto 0; }
+      .nexus-tool-list .tav-lang-toolbar-btn  { margin: 10px auto 0; }
+      .monarch-command-list .tav-lang-toolbar-btn { margin: 10px auto 0; }
+      .rgl-neo-tools-system .tav-lang-toolbar-btn { margin: 8px auto 0; }
+      .cmd-ctrl-panel .tav-lang-toolbar-btn,
+      .cmd-ribbon .tav-lang-toolbar-btn       { margin: 0 6px; }
 
-      /* Neo horizontal bottom dock */
-      .neo-toolbar .tav-lang-toolbar-btn { margin: 0 4px; }
 
-      /* Aurora / Horizon / Prism / Nexus vertical toolbars */
-      .aurora-tool-list .tav-lang-toolbar-btn,
-      #horizon-tool-panel .tav-lang-toolbar-btn,
-      .prism-tool-list .tav-lang-toolbar-btn,
-      .nexus-tool-list .tav-lang-toolbar-btn { margin: 8px auto 0; }
+      /* ════════════════════════════════════════════════════════
+         01  CLASSIC — Cyan / Gold glass
+         ════════════════════════════════════════════════════════ */
+      .layout-classic .tav-lang-toolbar-btn {
+        background: rgba(0, 10, 30, 0.55);
+        border: 1px solid rgba(0, 242, 254, 0.30);
+        border-radius: 20px;
+        color: rgba(0, 242, 254, 0.55);
+        box-shadow: 0 0 8px rgba(0,242,254,0.08);
+      }
+      .layout-classic .tav-lang-toolbar-btn:hover {
+        border-color: rgba(0, 242, 254, 0.55);
+        background: rgba(0, 10, 30, 0.75);
+        box-shadow: 0 0 12px rgba(0,242,254,0.18);
+      }
+      .layout-classic .tav-lang-toolbar-btn .tl-seg { color: rgba(0, 242, 254, 0.45); }
+      .layout-classic .tav-lang-toolbar-btn .tl-div { color: rgba(0, 242, 254, 0.20); }
+      .layout-classic .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #00f2fe, #4facfe);
+        color: #fff;
+        box-shadow: 0 0 8px rgba(0,242,254,0.45);
+      }
 
-      /* Monarch command panel (right side) */
-      .monarch-command-list .tav-lang-toolbar-btn { margin: 8px auto 0; }
+      /* ════════════════════════════════════════════════════════
+         02  FUTURISTIC — Purple / Indigo cyberpunk
+         ════════════════════════════════════════════════════════ */
+      .layout-futuristic .tav-lang-toolbar-btn {
+        background: rgba(10, 5, 30, 0.65);
+        border: 1px solid rgba(124, 58, 237, 0.35);
+        border-radius: 4px;
+        color: rgba(167, 139, 250, 0.6);
+        box-shadow: 0 0 10px rgba(124,58,237,0.10);
+      }
+      .layout-futuristic .tav-lang-toolbar-btn:hover {
+        border-color: rgba(124, 58, 237, 0.65);
+        background: rgba(10, 5, 30, 0.85);
+        box-shadow: 0 0 14px rgba(124,58,237,0.25);
+      }
+      .layout-futuristic .tav-lang-toolbar-btn .tl-seg { color: rgba(167,139,250,0.5); }
+      .layout-futuristic .tav-lang-toolbar-btn .tl-div { color: rgba(124,58,237,0.25); }
+      .layout-futuristic .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #7C3AED, #4F46E5);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(124,58,237,0.5);
+        border-radius: 2px;
+      }
 
-      /* Regal utility groups */
-      .rgl-neo-tools-system .tav-lang-toolbar-btn { margin: 6px auto 0; }
+      /* ════════════════════════════════════════════════════════
+         03  NEO — Purple / Violet minimal pill
+         ════════════════════════════════════════════════════════ */
+      .layout-neo .tav-lang-toolbar-btn {
+        background: rgba(15, 8, 40, 0.60);
+        border: 1px solid rgba(124, 58, 237, 0.28);
+        border-radius: 24px;
+        color: rgba(167, 139, 250, 0.55);
+      }
+      .layout-neo .tav-lang-toolbar-btn:hover {
+        border-color: rgba(124, 58, 237, 0.55);
+        background: rgba(15, 8, 40, 0.80);
+      }
+      .layout-neo .tav-lang-toolbar-btn .tl-seg { color: rgba(167,139,250,0.50); }
+      .layout-neo .tav-lang-toolbar-btn .tl-div { color: rgba(124,58,237,0.22); }
+      .layout-neo .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(90deg, #7C3AED, #5B21B6);
+        color: #fff;
+        box-shadow: 0 0 8px rgba(124,58,237,0.4);
+      }
 
-      /* Command ribbon */
-      .cmd-ribbon .tav-lang-toolbar-btn,
-      .cmd-ctrl-panel .tav-lang-toolbar-btn { margin: 0 4px; }
+      /* ════════════════════════════════════════════════════════
+         04  GRADIENT — Pink / Red vibrant
+         ════════════════════════════════════════════════════════ */
+      .layout-gradient .tav-lang-toolbar-btn {
+        background: rgba(20, 5, 30, 0.55);
+        border: 1px solid rgba(240, 147, 251, 0.30);
+        border-radius: 20px;
+        color: rgba(240, 147, 251, 0.6);
+        box-shadow: 0 0 10px rgba(240,147,251,0.08);
+      }
+      .layout-gradient .tav-lang-toolbar-btn:hover {
+        border-color: rgba(240, 147, 251, 0.55);
+        background: rgba(20, 5, 30, 0.75);
+        box-shadow: 0 0 14px rgba(240,147,251,0.2);
+      }
+      .layout-gradient .tav-lang-toolbar-btn .tl-seg { color: rgba(240,147,251,0.5); }
+      .layout-gradient .tav-lang-toolbar-btn .tl-div { color: rgba(240,147,251,0.22); }
+      .layout-gradient .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #f093fb, #f5576c);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(240,147,251,0.45);
+      }
 
-      /* Gradient right-rail vertical */
-      #vision-right-dock .tav-lang-toolbar-btn { margin: 8px auto 0; }
+      /* ════════════════════════════════════════════════════════
+         05  AURORA — Purple / Emerald aurora
+         ════════════════════════════════════════════════════════ */
+      .layout-aurora .tav-lang-toolbar-btn {
+        background: rgba(8, 5, 25, 0.60);
+        border: 1px solid rgba(167, 139, 250, 0.28);
+        border-radius: 20px;
+        color: rgba(167, 139, 250, 0.55);
+        box-shadow: 0 0 8px rgba(167,139,250,0.06);
+      }
+      .layout-aurora .tav-lang-toolbar-btn:hover {
+        border-color: rgba(167, 139, 250, 0.52);
+        background: rgba(8, 5, 25, 0.80);
+        box-shadow: 0 0 14px rgba(167,139,250,0.18);
+      }
+      .layout-aurora .tav-lang-toolbar-btn .tl-seg { color: rgba(167,139,250,0.48); }
+      .layout-aurora .tav-lang-toolbar-btn .tl-div { color: rgba(167,139,250,0.20); }
+      .layout-aurora .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #8B5CF6, #34D399);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(139,92,246,0.4);
+      }
+
+      /* ════════════════════════════════════════════════════════
+         06  HORIZON — Sky blue / Steel
+         ════════════════════════════════════════════════════════ */
+      .layout-horizon .tav-lang-toolbar-btn {
+        background: rgba(8, 14, 28, 0.65);
+        border: 1px solid rgba(142, 216, 255, 0.25);
+        border-radius: 6px;
+        color: rgba(142, 216, 255, 0.5);
+        box-shadow: 0 0 8px rgba(142,216,255,0.06);
+      }
+      .layout-horizon .tav-lang-toolbar-btn:hover {
+        border-color: rgba(142, 216, 255, 0.5);
+        background: rgba(8, 14, 28, 0.85);
+        box-shadow: 0 0 12px rgba(142,216,255,0.15);
+      }
+      .layout-horizon .tav-lang-toolbar-btn .tl-seg { color: rgba(142,216,255,0.48); }
+      .layout-horizon .tav-lang-toolbar-btn .tl-div { color: rgba(142,216,255,0.20); }
+      .layout-horizon .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #8ED8FF, #60a5fa);
+        color: #0a0f1e;
+        box-shadow: 0 0 8px rgba(142,216,255,0.4);
+      }
+
+      /* ════════════════════════════════════════════════════════
+         07  PRISM — Coral / Purple gradient
+         ════════════════════════════════════════════════════════ */
+      .layout-prism .tav-lang-toolbar-btn {
+        background: rgba(15, 8, 35, 0.65);
+        border: 1px solid rgba(124, 58, 237, 0.30);
+        border-radius: 8px;
+        color: rgba(255, 107, 107, 0.55);
+        box-shadow: 0 0 8px rgba(124,58,237,0.08);
+      }
+      .layout-prism .tav-lang-toolbar-btn:hover {
+        border-color: rgba(255, 107, 107, 0.45);
+        background: rgba(15, 8, 35, 0.85);
+        box-shadow: 0 0 12px rgba(255,107,107,0.18);
+      }
+      .layout-prism .tav-lang-toolbar-btn .tl-seg { color: rgba(255,107,107,0.48); }
+      .layout-prism .tav-lang-toolbar-btn .tl-div { color: rgba(124,58,237,0.25); }
+      .layout-prism .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #FF6B6B, #7C3AED);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(255,107,107,0.4);
+        border-radius: 5px;
+      }
+
+      /* ════════════════════════════════════════════════════════
+         08  NEXUS — Lavender / Mint subtle
+         ════════════════════════════════════════════════════════ */
+      .layout-nexus .tav-lang-toolbar-btn {
+        background: rgba(5, 8, 20, 0.65);
+        border: 1px solid rgba(167, 139, 250, 0.20);
+        border-radius: 10px;
+        color: rgba(148, 163, 184, 0.55);
+      }
+      .layout-nexus .tav-lang-toolbar-btn:hover {
+        border-color: rgba(167, 139, 250, 0.42);
+        background: rgba(5, 8, 20, 0.85);
+      }
+      .layout-nexus .tav-lang-toolbar-btn .tl-seg { color: rgba(148,163,184,0.48); }
+      .layout-nexus .tav-lang-toolbar-btn .tl-div { color: rgba(148,163,184,0.18); }
+      .layout-nexus .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #A78BFA, #6EE7B7);
+        color: #0a0f1a;
+        box-shadow: 0 0 8px rgba(167,139,250,0.35);
+        border-radius: 7px;
+      }
+
+      /* ════════════════════════════════════════════════════════
+         09  MONARCH — Luxury Gold / Dark
+         ════════════════════════════════════════════════════════ */
+      .layout-monarch .tav-lang-toolbar-btn {
+        background: rgba(13, 13, 13, 0.80);
+        border: 1px solid rgba(214, 179, 106, 0.35);
+        border-radius: 2px;
+        color: rgba(214, 179, 106, 0.55);
+        letter-spacing: 0.12em;
+        box-shadow: 0 0 10px rgba(214,179,106,0.06);
+      }
+      .layout-monarch .tav-lang-toolbar-btn:hover {
+        border-color: rgba(214, 179, 106, 0.65);
+        background: rgba(13, 13, 13, 0.95);
+        box-shadow: 0 0 14px rgba(214,179,106,0.18);
+      }
+      .layout-monarch .tav-lang-toolbar-btn .tl-seg { color: rgba(214,179,106,0.5); }
+      .layout-monarch .tav-lang-toolbar-btn .tl-div { color: rgba(214,179,106,0.22); }
+      .layout-monarch .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #C8A96B, #E8C882);
+        color: #0d0d0d;
+        box-shadow: 0 0 10px rgba(200,169,107,0.45);
+        border-radius: 1px;
+      }
+
+      /* ════════════════════════════════════════════════════════
+         10  REGAL / ARCHITECT — Blueprint cream / Monochrome
+         ════════════════════════════════════════════════════════ */
+      .layout-regal .tav-lang-toolbar-btn {
+        background: rgba(8, 8, 14, 0.80);
+        border: 1px solid rgba(229, 228, 224, 0.20);
+        border-radius: 2px;
+        color: rgba(229, 228, 224, 0.45);
+        letter-spacing: 0.14em;
+        font-size: 9px;
+      }
+      .layout-regal .tav-lang-toolbar-btn:hover {
+        border-color: rgba(229, 228, 224, 0.45);
+        background: rgba(8, 8, 14, 0.95);
+      }
+      .layout-regal .tav-lang-toolbar-btn .tl-seg { color: rgba(229,228,224,0.40); }
+      .layout-regal .tav-lang-toolbar-btn .tl-div { color: rgba(229,228,224,0.16); }
+      .layout-regal .tav-lang-toolbar-btn .tl-seg.active {
+        background: rgba(229, 228, 224, 0.92);
+        color: #080808;
+        box-shadow: none;
+        border-radius: 1px;
+      }
+
+      /* ════════════════════════════════════════════════════════
+         11  COMMAND — Cyan HUD / Tactical
+         ════════════════════════════════════════════════════════ */
+      .layout-command .tav-lang-toolbar-btn {
+        background: rgba(9, 4, 26, 0.85);
+        border: 1px solid rgba(0, 229, 255, 0.28);
+        border-radius: 0;
+        color: rgba(200, 232, 240, 0.50);
+        letter-spacing: 0.12em;
+        font-size: 9.5px;
+        box-shadow: 0 0 8px rgba(0,229,255,0.06);
+      }
+      .layout-command .tav-lang-toolbar-btn:hover {
+        border-color: rgba(0, 229, 255, 0.55);
+        background: rgba(9, 4, 26, 0.98);
+        box-shadow: 0 0 12px rgba(0,229,255,0.18);
+      }
+      .layout-command .tav-lang-toolbar-btn .tl-seg { color: rgba(200,232,240,0.45); }
+      .layout-command .tav-lang-toolbar-btn .tl-div { color: rgba(0,229,255,0.22); }
+      .layout-command .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg, #00e5ff, #0099bb);
+        color: #030c18;
+        box-shadow: 0 0 10px rgba(0,229,255,0.5);
+        border-radius: 0;
+      }
     `;
     document.head.appendChild(style);
   })();
