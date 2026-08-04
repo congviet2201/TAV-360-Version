@@ -5575,6 +5575,7 @@ document.addEventListener("click", function(e) {
     container.id = `hs-${pin.id}`;
     container.setAttribute('aria-label', displayTitle);
     container.setAttribute('data-pin-id', pin.id);
+    container.setAttribute('data-original-name', displayTitle);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'button');
     container.style.setProperty('--lm-beam-h', `${beamH}px`);
@@ -5816,6 +5817,7 @@ document.addEventListener("click", function(e) {
       container.setAttribute('aria-label', displayName);
       container.setAttribute('data-pin-id', pin.id);
       container.setAttribute('data-pin-type', 'landmark');
+      container.setAttribute('data-original-name', displayName);
 
       if (isHotspotsHidden) {
         container.style.visibility = "hidden";
@@ -5836,6 +5838,7 @@ document.addEventListener("click", function(e) {
     container.setAttribute('aria-label', displayName);
     container.setAttribute('data-pin-id', pin.id);
     container.setAttribute('data-pin-type', 'landmark');
+    container.setAttribute('data-original-name', displayName);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'region');
 
@@ -6648,9 +6651,29 @@ document.addEventListener("DOMContentLoaded", function() {
       const translatedName = window.getHotspotName(pseudoPin);
       if (!translatedName) return;
 
-      // ── BRAND GUARD: Never translate names that start with "TAV" ─────
-      // TAV Park, TAV Street, TAV Living, etc. keep their original name.
-      if (translatedName.trimStart().toUpperCase().startsWith('TAV')) return;
+      // ── BRAND GUARD (multi-layer): Never translate TAV-branded hotspots ──
+      //
+      // Layer 1: Check the ORIGINAL name stored in data-original-name (set at
+      //          hotspot creation time — most reliable check).
+      const originalName = container.getAttribute('data-original-name') || '';
+
+      // Layer 2: Check the CURRENT visible text in the DOM label element.
+      const currentLmName = (container.querySelector('.lm-name') || {}).textContent || '';
+
+      // Layer 3: Check the TRANSLATED name from the dictionary.
+      const isOriginalTAV    = originalName.trimStart().toUpperCase().startsWith('TAV');
+      const isCurrentTextTAV = currentLmName.trimStart().toUpperCase().startsWith('TAV');
+      const isTranslatedTAV  = translatedName.trimStart().toUpperCase().startsWith('TAV');
+
+      // Also check the VI dictionary name (to catch hotspots whose VI name has
+      // TAV but whose EN fallback may not — e.g. id resolves to raw pinId)
+      let isViNameTAV = false;
+      if (window.I18N_DICTIONARY && window.I18N_DICTIONARY.vi) {
+        const viName = window.I18N_DICTIONARY.vi[`hs_${pinId}`] || '';
+        isViNameTAV = viName.trimStart().toUpperCase().startsWith('TAV');
+      }
+
+      if (isOriginalTAV || isCurrentTextTAV || isTranslatedTAV || isViNameTAV) return;
 
       // Update aria-label
       container.setAttribute('aria-label', translatedName);
