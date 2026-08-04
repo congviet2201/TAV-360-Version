@@ -5558,13 +5558,17 @@ document.addEventListener("click", function(e) {
     const isBirdViewNode = HOTSPOT_BIRD_VIEW_NODES.includes(activePanoNode);
     const isTopViewNode  = HOTSPOT_TOP_VIEW_NODES.includes(activePanoNode);
 
+    const displayTitle = window.getHotspotName ? window.getHotspotName(pin) : (pin.title || pin.name || '');
+    const clickFlyText = window.getI18nText ? window.getI18nText('click_to_fly', 'Click to Fly') : 'Click to Fly';
+    const clickEnterText = window.getI18nText ? window.getI18nText('click_to_enter', 'Click to Enter') : 'Click to Enter';
+
     // Calculate vertical beam height based on spatial distance (tilt): close = low, far = moderate high
     const beamH = pin.lineHeight || pin.height || calculateBeamHeightFromTilt(pin.tilt, 40, 150);
 
     const container = document.createElement('div');
     container.className = `hs-container hs-landmark-container hs-has-view hs-${pin.category}`;
     container.id = `hs-${pin.id}`;
-    container.setAttribute('aria-label', pin.title);
+    container.setAttribute('aria-label', displayTitle);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'button');
     container.style.setProperty('--lm-beam-h', `${beamH}px`);
@@ -5605,14 +5609,14 @@ document.addEventListener("click", function(e) {
             <div class="hs-heli-pulse"></div>
           </div>
           <div class="lm-holographic-label">
-            <span class="lm-name">${pin.title}</span>
+            <span class="lm-name">${displayTitle}</span>
           </div>
           <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${displayTitle}" onerror="this.style.display='none'">
             <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to fly'}</p>
-              <div class="hs-enter-btn">Click to Fly</div>
+              <h4>${displayTitle}</h4>
+              <p>${pin.desc || clickFlyText}</p>
+              <div class="hs-enter-btn">${clickFlyText}</div>
             </div>
           </div>
         </div>
@@ -5639,14 +5643,14 @@ document.addEventListener("click", function(e) {
           </div>
           <div class="lm-holographic-label">
             <span class="lm-icon">${iconSvg}</span>
-            <span class="lm-name">${pin.title}</span>
+            <span class="lm-name">${displayTitle}</span>
           </div>
           <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${displayTitle}" onerror="this.style.display='none'">
             <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to enter'}</p>
-              <div class="hs-enter-btn">Click to Enter</div>
+              <h4>${displayTitle}</h4>
+              <p>${pin.desc || clickEnterText}</p>
+              <div class="hs-enter-btn">${clickEnterText}</div>
             </div>
           </div>
         </div>
@@ -5664,11 +5668,11 @@ document.addEventListener("click", function(e) {
             <div class="lm-scan-ring-2"></div>
           </div>
           <div class="hs-preview-card">
-            <img src="${pin.thumb || 'preview.jpg'}" alt="${pin.title}" onerror="this.style.display='none'">
+            <img src="${pin.thumb || 'preview.jpg'}" alt="${displayTitle}" onerror="this.style.display='none'">
             <div class="hs-preview-content">
-              <h4>${pin.title}</h4>
-              <p>${pin.desc || 'Click to enter'}</p>
-              <div class="hs-enter-btn">Click to Enter</div>
+              <h4>${displayTitle}</h4>
+              <p>${pin.desc || clickEnterText}</p>
+              <div class="hs-enter-btn">${clickEnterText}</div>
             </div>
           </div>
         </div>
@@ -5797,11 +5801,13 @@ document.addEventListener("click", function(e) {
   function createLandmarkHotspot(pin) {
     const container = document.createElement('div');
 
+    const displayName = window.getHotspotName ? window.getHotspotName(pin) : (pin.name || pin.title || '');
+
     // Large Floating Text Only mode (e.g. HANOI title)
     if (pin.isTextOnly || pin.category === 'TextOnly') {
       container.className = `hs-container hs-landmark-container hs-no-view hs-text-only-container`;
       container.id = `hs-landmark-${pin.id}`;
-      container.setAttribute('aria-label', pin.name);
+      container.setAttribute('aria-label', displayName);
 
       if (isHotspotsHidden) {
         container.style.visibility = "hidden";
@@ -5810,7 +5816,7 @@ document.addEventListener("click", function(e) {
 
       container.innerHTML = `
         <div class="lm-big-text-wrapper">
-          <span class="lm-big-text-content">${pin.name}</span>
+          <span class="lm-big-text-content">${displayName}</span>
         </div>
       `;
       return container;
@@ -5819,7 +5825,7 @@ document.addEventListener("click", function(e) {
     const catClass = (pin.category || 'amenity').toLowerCase();
     container.className = `hs-container hs-landmark-container hs-no-view hs-landmark-${catClass}`;
     container.id = `hs-landmark-${pin.id}`;
-    container.setAttribute('aria-label', pin.name);
+    container.setAttribute('aria-label', displayName);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'region');
 
@@ -5836,7 +5842,7 @@ document.addEventListener("click", function(e) {
     }
 
     // Capitalize Title Case (Viết hoa chữ cái đầu, không in hoa toàn bộ) & remove icon
-    const formattedName = toTitleCase(pin.name);
+    const formattedName = toTitleCase(displayName);
     const sideClass = pin.labelSide === 'left' ? 'lm-side-left' : 'lm-side-right';
 
     // Amenity Landmark: Vertical White Dashed Beam (Pole) + Alternating Glass Flag Badge
@@ -6424,6 +6430,41 @@ document.addEventListener("DOMContentLoaded", function() {
     document.body.insertAdjacentHTML("beforeend", globalModalsHTML);
   }
 
+  // ─────────────────────────────────────────────────────────────────────────
+  // INJECT FLOATING LANGUAGE TOGGLE (VIE / ENG)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (!document.getElementById('tav-lang-toggle-pill')) {
+    const curLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
+    const pill = document.createElement('div');
+    pill.id = 'tav-lang-toggle-pill';
+    pill.className = 'tav-lang-toggle-pill';
+    pill.setAttribute('role', 'group');
+    pill.setAttribute('aria-label', 'Language Toggle');
+    pill.innerHTML = `
+      <button class="tav-lang-btn ${curLang === 'vi' ? 'active' : ''}" data-lang="vi" title="Tiếng Việt">VIE</button>
+      <span class="tav-lang-sep">|</span>
+      <button class="tav-lang-btn ${curLang === 'en' ? 'active' : ''}" data-lang="en" title="English">ENG</button>
+    `;
+    document.body.appendChild(pill);
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // LISTEN FOR LANGUAGE CHANGE → RE-INJECT HOTSPOTS
+  // When language changes, we need to re-render all hotspots to display
+  // translated names. Remove all current hotspots and re-inject them.
+  // ─────────────────────────────────────────────────────────────────────────
+  window.addEventListener('tavLanguageChanged', function(e) {
+    // Re-inject hotspots on current node to refresh translated labels
+    const nodeId = window.activePanoNode || 'node1';
+    if (window.pano && typeof window.pano.removeHotspots === 'function') {
+      window.pano.removeHotspots();
+    }
+    if (typeof injectPremiumHotspots === 'function') {
+      injectPremiumHotspots(nodeId);
+    }
+    console.log('[I18N] Hotspots re-injected with language:', e.detail.lang);
+  });
+
   // ESC key closes modals and syncs button states
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
@@ -6575,6 +6616,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
       }, 300);
       window.open('https://tav.vn/', '_blank');
+      return;
+    }
+
+    // 8. In-Tour Language Toggle (tav-lang-btn)
+    if (e.target.closest('.tav-lang-btn')) {
+      const btn = e.target.closest('.tav-lang-btn');
+      const lang = btn.getAttribute('data-lang');
+      if (lang && window.switchLanguage) {
+        window.switchLanguage(lang);
+      }
       return;
     }
 

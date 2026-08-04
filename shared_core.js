@@ -187,16 +187,20 @@
   }
 
   // ============================================================
+  // ============================================================
   // ⑨ MULTI-LANGUAGE I18N SYSTEM (VI / EN)
   // ============================================================
   const I18N_DICTIONARY = {
     vi: {
+      // Landing Page
+      landing_welcome: "CHÀO MỪNG BẠN ĐẾN VỚI TAV",
       landing_eyebrow: "• TRẢI NGHIỆM THỰC TẾ ẢO ĐẲNG CẤP •",
       landing_title: "VR360 TOUR",
       landing_subtitle: "TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP",
       landing_cta: "THAM QUAN DỰ ÁN",
       landing_hint: "Khám phá trải nghiệm 360°",
       
+      // Main Nav Items
       nav_topview: "Top View",
       nav_birdview: "Bird View",
       nav_amenities: "Tiện Ích",
@@ -204,6 +208,7 @@
       nav_interior: "Nội Thất",
       nav_surrounding: "Liên Kết Vùng",
       
+      // Toolbar Tools & Controls
       tool_map: "Bản Đồ",
       tool_gallery: "Bộ Sưu Tập",
       tool_autorotate: "Tự Quay",
@@ -213,16 +218,84 @@
       tool_share: "Chia Sẻ",
       tool_guide: "Hướng Dẫn",
 
+      // Submenus & Categories
+      cat_amenities: "Tiện Ích Đẳng Cấp",
+      cat_architecture: "Kiến Trúc Độc Bản",
+      cat_interior: "Nội Thất Sang Trọng",
+      cat_regional: "Liên Kết Vùng Trọng Điểm",
+
+      // Landmark & Regional Hotspots
+      hs_marina_01: "Bến Du Thuyền",
+      hs_highway6_01: "Quốc Lộ 6",
+      hs_expressway_01: "Cao Tốc Hòa Lạc - Hòa Bình",
+      hs_bridge_01: "Cầu Hòa Bình 5",
+      hs_golf_01: "Sân Golf Hilltop Valley",
+      hs_culture_01: "Làng Văn Hóa Các Dân Tộc",
+      hs_spring_01: "Suối Ngọc Vua Bà",
+      hs_hanoi_01: "HÀ NỘI",
+      hs_hongoc_01: "Hồ Ngọc",
+      hs_cauthongnhat_01: "Cầu Thống Nhất",
+      hs_cauhuunghi_01: "Cầu Hữu Nghị",
+      hs_benhvienhb_01: "Bệnh viện Hòa Bình",
+      hs_phococuchinhlan_01: "Phố cổ Cù Chính Lan",
+      hs_cauhoabinh4_02: "Cầu Hòa Bình 4",
+      hs_truongchinhtri_01: "Trường Chính trị Hòa Bình",
+      hs_caodangsongda_01: "Trường Cao đẳng Nghề Sông Đà",
+      hs_cahoabinh_01: "CA Hòa Bình",
+      hs_congvientuoitre_01: "Công viên tuổi trẻ",
+      hs_quangtruongtt_01: "Quảng trường trung tâm",
+      hs_cauhoabinh4_01: "Cầu Hòa Bình",
+      hs_sanvandong_01: "Sân vận động",
+      hs_trungtamyte_01: "Trung tâm y tế Hòa Bình",
+      hs_caodanghoabinh_01: "Cao đẳng Hòa Bình",
+      hs_dapthuydien_01: "Đập thủy điện Hòa Bình",
+
+      // Tour Hotspots
+      hs_park: "TAV Park",
+      hs_street: "TAV Street",
+      hs_park2: "TAV Park 2",
+      hs_living2: "TAV Living 2",
+      hs_living1: "TAV Living 1",
+      hs_mezzanine: "TAV Thông Tầng",
+      hs_balcony: "BALCONY",
+      hs_wc: "TAV WC",
+      hs_arch1: "Kiến Trúc 1",
+      hs_arch2: "Kiến Trúc 2",
+      hs_street2: "TAV Street 2",
+      hs_street3: "TAV Street 3",
+
+      // Guide Modal
+      guide_title: "HƯỚNG DẪN THAM QUAN 360°",
+      guide_step1_title: "Xoay Góc Nhìn",
+      guide_step1_desc: "Kéo chuột hoặc vuốt màn hình để xoay không gian 360°",
+      guide_step2_title: "Phóng To / Thu Nhỏ",
+      guide_step2_desc: "Cuộn chuột hoặc dùng 2 ngón tay chụm lại để Zoom",
+      guide_step3_title: "Di Chuyển Điểm Quan Sát",
+      guide_step3_desc: "Nhấn vào các biểu tượng Hotspot phát sáng để đổi vị trí",
+      guide_btn: "BẮT ĐẦU THAM QUAN",
+
+      // Modals & Messages
+      map_modal_title: "SƠ ĐỒ VỊ TRÍ & MẶT BẰNG 360°",
+      gallery_modal_title: "BỘ SƯU TẬP HÌNH ẢNH DỰ ÁN",
+      share_modal_title: "CHIA SẺ DỰ ÁN VR360",
+      share_copy_btn: "Sao Chép Liên Kết",
+      share_copied_toast: "Đã sao chép liên kết vào bộ nhớ tạm!",
+
+      // General
       click_to_enter: "Nhấn để tham quan",
-      click_to_fly: "Nhấn để bay"
+      click_to_fly: "Nhấn để bay",
+      powered_by: "Phát triển bởi TAV"
     },
     en: {
+      // Landing Page
+      landing_welcome: "WELCOME TO TAV",
       landing_eyebrow: "• EXCLUSIVE VIRTUAL EXPERIENCE •",
       landing_title: "VR360 TOUR",
-      landing_subtitle: "TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP",
+      landing_subtitle: "EXCLUSIVE 360° VIRTUAL MASTERPLAN EXPERIENCE",
       landing_cta: "EXPLORE TOUR",
       landing_hint: "Discover 360° Experience",
       
+      // Main Nav Items
       nav_topview: "Top View",
       nav_birdview: "Bird View",
       nav_amenities: "Amenities",
@@ -230,6 +303,7 @@
       nav_interior: "Interior",
       nav_surrounding: "Regional Map",
       
+      // Toolbar Tools & Controls
       tool_map: "Map",
       tool_gallery: "Gallery",
       tool_autorotate: "Auto Rotate",
@@ -239,12 +313,91 @@
       tool_share: "Share",
       tool_guide: "Guide",
 
+      // Submenus & Categories
+      cat_amenities: "Premium Amenities",
+      cat_architecture: "Unique Architecture",
+      cat_interior: "Luxury Interior",
+      cat_regional: "Key Regional Connections",
+
+      // Landmark & Regional Hotspots
+      hs_marina_01: "Marina Pier",
+      hs_highway6_01: "National Highway 6",
+      hs_expressway_01: "Hoa Lac - Hoa Binh Expressway",
+      hs_bridge_01: "Hoa Binh Bridge 5",
+      hs_golf_01: "Hilltop Valley Golf Course",
+      hs_culture_01: "Ethnic Culture Village",
+      hs_spring_01: "Suoi Ngoc Vua Ba Stream",
+      hs_hanoi_01: "HA NOI",
+      hs_hongoc_01: "Emerald Lake",
+      hs_cauthongnhat_01: "Thong Nhat Bridge",
+      hs_cauhuunghi_01: "Huu Nghi Bridge",
+      hs_benhvienhb_01: "Hoa Binh Hospital",
+      hs_phococuchinhlan_01: "Cu Chinh Lan Old Town",
+      hs_cauhoabinh4_02: "Hoa Binh Bridge 4",
+      hs_truongchinhtri_01: "Hoa Binh Political Academy",
+      hs_caodangsongda_01: "Song Da Vocational College",
+      hs_cahoabinh_01: "Hoa Binh Police HQ",
+      hs_congvientuoitre_01: "Youth Park",
+      hs_quangtruongtt_01: "Central Square",
+      hs_cauhoabinh4_01: "Hoa Binh Bridge",
+      hs_sanvandong_01: "Sports Stadium",
+      hs_trungtamyte_01: "Hoa Binh Medical Center",
+      hs_caodanghoabinh_01: "Hoa Binh College",
+      hs_dapthuydien_01: "Hoa Binh Hydropower Dam",
+
+      // Tour Hotspots
+      hs_park: "TAV Park",
+      hs_street: "TAV Street",
+      hs_park2: "TAV Park 2",
+      hs_living2: "TAV Living 2",
+      hs_living1: "TAV Living 1",
+      hs_mezzanine: "TAV Mezzanine",
+      hs_balcony: "TAV Balcony",
+      hs_wc: "TAV WC",
+      hs_arch1: "Architecture 1",
+      hs_arch2: "Architecture 2",
+      hs_street2: "TAV Street 2",
+      hs_street3: "TAV Street 3",
+
+      // Guide Modal
+      guide_title: "360° TOUR GUIDE",
+      guide_step1_title: "Rotate View",
+      guide_step1_desc: "Drag mouse or swipe screen to rotate 360° space",
+      guide_step2_title: "Zoom In / Out",
+      guide_step2_desc: "Scroll mouse wheel or pinch two fingers to Zoom",
+      guide_step3_title: "Navigate Viewpoints",
+      guide_step3_desc: "Click glowing Hotspot icons to switch positions",
+      guide_btn: "START TOUR",
+
+      // Modals & Messages
+      map_modal_title: "360° LOCATION MAP & MASTERPLAN",
+      gallery_modal_title: "PROJECT PHOTO GALLERY",
+      share_modal_title: "SHARE VR360 TOUR",
+      share_copy_btn: "Copy Link",
+      share_copied_toast: "Link copied to clipboard!",
+
+      // General
       click_to_enter: "Click to Enter",
-      click_to_fly: "Click to Fly"
+      click_to_fly: "Click to Fly",
+      powered_by: "Powered by TAV"
     }
   };
 
   let currentLang = localStorage.getItem('tav_language') || 'vi';
+
+  function getI18nText(key, defaultVal) {
+    const dict = I18N_DICTIONARY[currentLang] || I18N_DICTIONARY.vi;
+    return dict[key] || defaultVal || key;
+  }
+
+  function getHotspotName(pin) {
+    if (!pin) return '';
+    const key = pin.id ? `hs_${pin.id}` : null;
+    if (key && I18N_DICTIONARY[currentLang] && I18N_DICTIONARY[currentLang][key]) {
+      return I18N_DICTIONARY[currentLang][key];
+    }
+    return pin.name || pin.title || '';
+  }
 
   function switchLanguage(lang) {
     if (!lang || !I18N_DICTIONARY[lang]) lang = 'vi';
@@ -254,7 +407,10 @@
 
     const dict = I18N_DICTIONARY[lang];
 
-    // Update Landing Page elements if present
+    // 1. Update Landing Page elements
+    const landingWelcome = document.querySelector('.landing-header-welcome-title');
+    if (landingWelcome) landingWelcome.textContent = dict.landing_welcome;
+
     const landingEyebrow = document.querySelector('.landing-eyebrow');
     if (landingEyebrow) landingEyebrow.textContent = dict.landing_eyebrow;
 
@@ -267,32 +423,57 @@
     const landingHintText = document.querySelector('.landing-hint-text');
     if (landingHintText) landingHintText.textContent = dict.landing_hint;
 
-    // Update Language Toggle Buttons (VIE / ENG) active state
-    document.querySelectorAll('.landing-lang-btn, .lang-toggle-btn').forEach(btn => {
+    // 2. Update Language Toggle Buttons (VIE / ENG) active state
+    document.querySelectorAll('.landing-lang-btn, .lang-toggle-btn, .tav-lang-btn').forEach(btn => {
       const bLang = btn.getAttribute('data-lang');
       btn.classList.toggle('active', bLang === lang);
     });
 
-    // Update Desktop Header Nav items if present
-    const navTop = document.querySelector('[data-nav="topview"] .nav-label, [data-nav="topview"] span');
+    // 3. Update Desktop Navigation items
+    const navTop = document.querySelector('[data-nav="topview"] .nav-label, [data-id="topview"] .nav-label, [data-nav="topview"] span');
     if (navTop) navTop.textContent = dict.nav_topview;
 
-    const navBird = document.querySelector('[data-nav="birdview"] .nav-label, [data-nav="birdview"] span');
+    const navBird = document.querySelector('[data-nav="birdview"] .nav-label, [data-id="birdview"] .nav-label, [data-nav="birdview"] span');
     if (navBird) navBird.textContent = dict.nav_birdview;
 
-    const navAmen = document.querySelector('[data-nav="amenities"] .nav-label, [data-nav="amenities"] span');
+    const navAmen = document.querySelector('[data-nav="amenities"] .nav-label, [data-id="amenities"] .nav-label, [data-nav="amenities"] span');
     if (navAmen) navAmen.textContent = dict.nav_amenities;
 
-    const navArch = document.querySelector('[data-nav="architecture"] .nav-label, [data-nav="architecture"] span');
+    const navArch = document.querySelector('[data-nav="architecture"] .nav-label, [data-id="architecture"] .nav-label, [data-nav="architecture"] span');
     if (navArch) navArch.textContent = dict.nav_architecture;
 
-    const navInt = document.querySelector('[data-nav="interior"] .nav-label, [data-nav="interior"] span');
+    const navInt = document.querySelector('[data-nav="interior"] .nav-label, [data-id="interior"] .nav-label, [data-nav="interior"] span');
     if (navInt) navInt.textContent = dict.nav_interior;
 
-    const navSurr = document.querySelector('[data-nav="surrounding"] .nav-label, [data-nav="surrounding"] span');
+    const navSurr = document.querySelector('[data-nav="surrounding"] .nav-label, [data-id="surrounding"] .nav-label, [data-nav="surrounding"] span');
     if (navSurr) navSurr.textContent = dict.nav_surrounding;
 
-    // Dispatch global event for other components
+    // 4. Update Toolbar Item Tooltips & Labels
+    const toolMap = document.querySelector('[data-tool="map"] .tool-label, [data-tool="map"] span, #btn-map .tool-label');
+    if (toolMap) toolMap.textContent = dict.tool_map;
+
+    const toolGallery = document.querySelector('[data-tool="gallery"] .tool-label, [data-tool="gallery"] span, #btn-gallery .tool-label');
+    if (toolGallery) toolGallery.textContent = dict.tool_gallery;
+
+    const toolAuto = document.querySelector('[data-tool="autorotate"] .tool-label, [data-tool="autorotate"] span, #btn-autorotate .tool-label');
+    if (toolAuto) toolAuto.textContent = dict.tool_autorotate;
+
+    const toolMusic = document.querySelector('[data-tool="music"] .tool-label, [data-tool="music"] span, #btn-music .tool-label');
+    if (toolMusic) toolMusic.textContent = dict.tool_music;
+
+    const toolHs = document.querySelector('[data-tool="hotspots"] .tool-label, [data-tool="hotspots"] span, #btn-hotspots .tool-label');
+    if (toolHs) toolHs.textContent = dict.tool_hotspots;
+
+    const toolFs = document.querySelector('[data-tool="fullscreen"] .tool-label, [data-tool="fullscreen"] span, #btn-fullscreen .tool-label');
+    if (toolFs) toolFs.textContent = dict.tool_fullscreen;
+
+    const toolShare = document.querySelector('[data-tool="share"] .tool-label, [data-tool="share"] span, #btn-share .tool-label');
+    if (toolShare) toolShare.textContent = dict.tool_share;
+
+    const toolGuide = document.querySelector('[data-tool="guide"] .tool-label, [data-tool="guide"] span, #btn-guide .tool-label');
+    if (toolGuide) toolGuide.textContent = dict.tool_guide;
+
+    // Dispatch global event for all custom components to re-render translations
     window.dispatchEvent(new CustomEvent('tavLanguageChanged', { detail: { lang, dict } }));
 
     console.log('[I18N] Language switched to:', lang.toUpperCase());
@@ -327,7 +508,9 @@
     // i18n
     get currentLang() { return currentLang; },
     switchLanguage: switchLanguage,
-    dictionary: I18N_DICTIONARY
+    dictionary: I18N_DICTIONARY,
+    getI18nText: getI18nText,
+    getHotspotName: getHotspotName
   });
 
   // ============================================================
@@ -344,6 +527,8 @@
   window.currentLang           = currentLang;
   window.switchLanguage        = switchLanguage;
   window.I18N_DICTIONARY       = I18N_DICTIONARY;
+  window.getI18nText           = getI18nText;
+  window.getHotspotName        = getHotspotName;
 
   console.log('[TAV_CORE] Shared Core initialized —', SCENES.length, 'scenes loaded. Language:', currentLang.toUpperCase());
 

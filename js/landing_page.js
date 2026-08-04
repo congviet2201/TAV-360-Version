@@ -53,9 +53,16 @@
 
     // Build Languages HTML dynamically based on stored active language
     const activeLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
+    const dict = (window.I18N_DICTIONARY && window.I18N_DICTIONARY[activeLang]) || {};
     const langBtnsHtml = config.languages.map(lang => 
       `<button type="button" class="landing-lang-btn ${lang.code === activeLang ? 'active' : ''}" data-lang="${lang.code}">${lang.label}</button>`
     ).join('');
+
+    const welcomeText = dict.landing_welcome || 'CHÀO MỪNG BẠN ĐẾN VỚI TAV';
+    const eyebrow = dict.landing_eyebrow || config.eyebrowText;
+    const subtitleText = dict.landing_subtitle || config.subtitle;
+    const ctaLabel = dict.landing_cta || config.ctaText;
+    const hintText = dict.landing_hint || config.scrollHintText;
 
     overlay.innerHTML = `
       <!-- Full-screen Hero Background -->
@@ -66,7 +73,7 @@
 
       <!-- Top Bar: Welcome Banner & Logo & Language Selector -->
       <header class="landing-top-bar">
-        <div class="landing-header-welcome-title">CHÀO MỪNG BẠN ĐẾN VỚI TAV</div>
+        <div class="landing-header-welcome-title">${welcomeText}</div>
         <div class="landing-top-bar-inner">
           <div class="landing-logo-badge">
             <img src="${config.logoImage}" alt="${config.logoTitle}" class="landing-logo-img" onerror="this.style.display='none'; document.getElementById('landing-logo-fallback').style.display='flex';">
@@ -84,7 +91,7 @@
 
       <!-- Center Content Area -->
       <main class="landing-center-content">
-        <div class="landing-eyebrow">${config.eyebrowText}</div>
+        <div class="landing-eyebrow">${eyebrow}</div>
 
         <!-- Luxury Brand Box with Animated Orange-White Running Border & Split Center Logo -->
         <div class="landing-brand-card">
@@ -116,11 +123,11 @@
           </div>
 
           <h1 class="landing-title">${config.mainTitle}</h1>
-          <p class="landing-subtitle">${config.subtitle}</p>
+          <p class="landing-subtitle">${subtitleText}</p>
         </div>
         
-        <button type="button" id="landing-cta-btn" class="landing-cta-btn" aria-label="${config.ctaText}">
-          <span>${config.ctaText}</span>
+        <button type="button" id="landing-cta-btn" class="landing-cta-btn" aria-label="${ctaLabel}">
+          <span>${ctaLabel}</span>
           <svg class="landing-cta-icon" viewBox="0 0 24 24">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -132,7 +139,7 @@
         <div class="landing-mouse-icon">
           <div class="landing-mouse-wheel"></div>
         </div>
-        <span class="landing-hint-text">${config.scrollHintText}</span>
+        <span class="landing-hint-text">${hintText}</span>
       </div>
 
       <!-- Bottom-Right Powered By TAV Copyright Watermark -->

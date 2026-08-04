@@ -1031,3 +1031,78 @@
     right: 16px !important;
   }
 }
+
+/* ============================================================
+   IN-TOUR FLOATING LANGUAGE TOGGLE PILL  (VIE | ENG)
+   ============================================================ */
+.tav-lang-toggle-pill {
+  position: fixed;
+  top: 14px;
+  right: 20px;
+  z-index: 9990;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: rgba(10, 10, 20, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 30px;
+  padding: 4px 6px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+  transition: opacity 0.3s ease;
+  pointer-events: all;
+}
+
+.tav-lang-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.55);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  line-height: 1;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  user-select: none;
+}
+
+.tav-lang-btn.active {
+  color: #fff;
+  background: rgba(255, 140, 50, 0.35);
+  box-shadow: 0 0 10px rgba(255, 140, 50, 0.4);
+}
+
+.tav-lang-btn:hover:not(.active) {
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.1);
+}
+
+.tav-lang-sep {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 11px;
+  padding: 0 1px;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Hide language pill when landing page is visible (it has its own toggle) */
+#landing-page-overlay:not(.dismissed) ~ .tav-lang-toggle-pill,
+body:has(#landing-page-overlay) .tav-lang-toggle-pill {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .tav-lang-toggle-pill {
+    top: auto;
+    bottom: 80px;
+    right: 12px;
+    top: 10px;
+  }
+}
