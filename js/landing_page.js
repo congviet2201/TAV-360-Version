@@ -105,12 +105,10 @@
                 playsinline 
                 webkit-playsinline 
                 preload="auto"
-                aria-label="LOGO TAV PANOTOUR Video Animation">
-                <source src="video logo/LOGO TAV PANOTOUR/LOGO TAV PANOTOUR.webm" type="video/webm">
-                <source src="video logo/LOGO TAV PANOTOUR/LOGO TAV PANOTOUR.mp4" type="video/mp4">
-                <source src="video logo/LOGO TAV PANOTOUR/LOGO TAV PANOTOUR.mov" type="video/quicktime">
-                <source src="image/shape_transparent.webm" type="video/webm">
-                <source src="image/shape.mp4" type="video/mp4">
+                aria-label="LOGO TAV PANOTOUR 3 Video Animation">
+                <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.webm" type="video/webm">
+                <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.mp4" type="video/mp4">
+                <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.mov" type="video/quicktime">
               </video>
             </div>
           </div>

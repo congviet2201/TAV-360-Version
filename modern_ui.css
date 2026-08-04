@@ -16238,11 +16238,31 @@ body.layout-command #pc-track {
 
 /* A. VIEW NỘI THẤT (Living 1, Living 2, WC, Thông tầng, Ban công) -> XANH DƯƠNG (CYAN BLUE #00E5FF) */
 .hs-container.hs-has-view.hs-interior {
+  z-index: 100 !important;
   --lm-color: #00e5ff !important;
   --lm-glow: rgba(0, 229, 255, 0.9) !important;
   --lm-bg: rgba(0, 229, 255, 0.2) !important;
   --lm-flow-color: #00e5ff !important;
   --lm-flow-glow: rgba(0, 229, 255, 1) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SPECIFIC STACKING LAYERS FOR PANORAMA HOTSPOTS:
+   - Kiến trúc 1 & TAV Park: nằm sau cùng (z-index: 10)
+   - TAV Living 1 & TAV WC: nằm trước 2 cột trên (z-index: 1000)
+   ══════════════════════════════════════════════════════════════════ */
+.hs-container[id*="kient1"],
+.hs-container[id*="hs_park"],
+div:has(> .hs-container[id*="kient1"]),
+div:has(> .hs-container[id*="hs_park"]) {
+  z-index: 10 !important;
+}
+
+.hs-container[id*="hs_living"],
+.hs-container[id*="hs_wc"],
+div:has(> .hs-container[id*="hs_living"]),
+div:has(> .hs-container[id*="hs_wc"]) {
+  z-index: 1000 !important;
 }
 
 .hs-container.hs-has-view.hs-interior .lm-vertical-beam {
@@ -16285,6 +16305,7 @@ body.layout-command #pc-track {
 /* B. VIEW TIỆN ÍCH & KIẾN TRÚC (Park 1, Park 2, Street, Kiến Trúc) -> XANH LÁ CÂY (EMERALD GREEN #10B981) */
 .hs-container.hs-has-view.hs-amenities,
 .hs-container.hs-has-view.hs-architecture {
+  z-index: 200 !important;
   --lm-color: #10b981 !important;
   --lm-glow: rgba(16, 185, 129, 0.9) !important;
   --lm-bg: rgba(16, 185, 129, 0.2) !important;
@@ -16341,39 +16362,23 @@ body.layout-command #pc-track {
    LOẠI KHÔNG CÓ VIEW (HOTSPOT CHÚ THÍCH TIỆN ÍCH - VERTICAL INFORMATION FLAG)
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* Category Accent Colors for Amenity Landmarks */
-.hs-container.hs-no-view.hs-landmark-infrastructure {
-  --lm-color: #00e5ff;
-  --lm-glow: rgba(0, 229, 255, 0.5);
+/* Synchronized White Theme for All Amenity Landmark Flag Boards */
+.hs-container.hs-no-view {
+  --lm-color: #ffffff !important;
+  --lm-glow: rgba(255, 255, 255, 0.6) !important;
 }
-.hs-container.hs-no-view.hs-landmark-transportation {
-  --lm-color: #ffb703;
-  --lm-glow: rgba(255, 183, 3, 0.5);
-}
-.hs-container.hs-no-view.hs-landmark-tourism {
-  --lm-color: #10b981;
-  --lm-glow: rgba(16, 185, 129, 0.5);
-}
-.hs-container.hs-no-view.hs-landmark-medical {
-  --lm-color: #ff4d6d;
-  --lm-glow: rgba(255, 77, 109, 0.5);
-}
-.hs-container.hs-no-view.hs-landmark-education {
-  --lm-color: #a855f7;
-  --lm-glow: rgba(168, 85, 247, 0.5);
-}
-.hs-container.hs-no-view.hs-landmark-culture {
-  --lm-color: #c084fc;
-  --lm-glow: rgba(192, 132, 252, 0.5);
-}
-.hs-container.hs-no-view.hs-landmark-recreation {
-  --lm-color: #84cc16;
-  --lm-glow: rgba(132, 204, 22, 0.5);
-}
+
+.hs-container.hs-no-view.hs-landmark-infrastructure,
+.hs-container.hs-no-view.hs-landmark-transportation,
+.hs-container.hs-no-view.hs-landmark-tourism,
+.hs-container.hs-no-view.hs-landmark-medical,
+.hs-container.hs-no-view.hs-landmark-education,
+.hs-container.hs-no-view.hs-landmark-culture,
+.hs-container.hs-no-view.hs-landmark-recreation,
 .hs-container.hs-no-view.hs-landmark-government,
 .hs-container.hs-no-view.hs-landmark-sports {
-  --lm-color: #00f2fe;
-  --lm-glow: rgba(0, 242, 254, 0.5);
+  --lm-color: #ffffff !important;
+  --lm-glow: rgba(255, 255, 255, 0.6) !important;
 }
 
 /* Vertical Energy Beam (White Dashed Pole) */
@@ -16420,7 +16425,7 @@ body.layout-command #pc-track {
   backdrop-filter: blur(14px) !important;
   -webkit-backdrop-filter: blur(14px) !important;
   border: 1px solid rgba(255, 255, 255, 0.28) !important;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 12px var(--lm-glow, rgba(0, 229, 255, 0.3)) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.4) !important;
   white-space: nowrap !important;
   opacity: 1 !important;
   visibility: visible !important;
@@ -16433,8 +16438,8 @@ body.layout-command #pc-track {
 .hs-container.hs-no-view .lm-glass-flag.lm-side-right {
   left: calc(50% + 5px) !important;
   right: auto !important;
-  border-left: 2.5px solid var(--lm-color, #00e5ff) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-left: 2.5px solid #ffffff !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.35) !important;
   border-radius: 4px 12px 12px 4px !important;
 }
 
@@ -16442,15 +16447,15 @@ body.layout-command #pc-track {
 .hs-container.hs-no-view .lm-glass-flag.lm-side-left {
   right: calc(50% + 5px) !important;
   left: auto !important;
-  border-right: 2.5px solid var(--lm-color, #00e5ff) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.25) !important;
+  border-right: 2.5px solid #ffffff !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.35) !important;
   border-radius: 12px 4px 4px 12px !important;
 }
 
 .hs-container.hs-no-view:hover .lm-glass-flag,
 .hs-container.hs-no-view.hs-hovered .lm-glass-flag {
-  border-color: rgba(255, 255, 255, 0.6) !important;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.8), 0 0 25px var(--lm-color, #00e5ff) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.8) !important;
 }
 
 /* Category Icon & Name Typography */
@@ -16827,7 +16832,7 @@ body.layout-command #pc-track {
   transform: translateX(-50%) translateY(10px) scale(0.92) !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   z-index: 50 !important;
 }
 
@@ -16858,9 +16863,9 @@ body.layout-command #pc-track {
   100% { transform: scale(1); }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════════
    TAV COPYRIGHT WATERMARK BADGE — LUXURY WATERMARK (Bottom-Right Home Page)
-   ═══════════════════════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════════════ */
 
 .tav-copyright-watermark {
   position: fixed;
@@ -16990,6 +16995,183 @@ body.layout-command .tav-copyright-watermark {
     bottom: calc(env(safe-area-inset-bottom, 20px) + 80px) !important;
     right: 16px !important;
   }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SUN LENS FLARE SYSTEM — MONOCHROMATIC TRANSPARENT WHITE (KHÔNG MÀU)
+   ══════════════════════════════════════════════════════════════════ */
+.sun-flare-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none !important;
+  z-index: 9980;
+  overflow: hidden;
+  transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity;
+}
+
+.sun-flare-origin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+/* Starburst Diffraction Rays - Monochromatic Transparent White */
+.sun-star-rays {
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg, 
+    transparent 0deg, rgba(255, 255, 255, 0.22) 2deg, transparent 5deg,
+    transparent 40deg, rgba(255, 255, 255, 0.16) 43deg, transparent 46deg,
+    transparent 85deg, rgba(255, 255, 255, 0.28) 88deg, transparent 92deg,
+    transparent 135deg, rgba(255, 255, 255, 0.14) 138deg, transparent 142deg,
+    transparent 180deg, rgba(255, 255, 255, 0.22) 183deg, transparent 187deg,
+    transparent 225deg, rgba(255, 255, 255, 0.16) 228deg, transparent 232deg,
+    transparent 270deg, rgba(255, 255, 255, 0.25) 273deg, transparent 277deg,
+    transparent 315deg, rgba(255, 255, 255, 0.14) 318deg, transparent 322deg
+  );
+  mix-blend-mode: screen;
+  animation: sun-star-shimmer 120s linear infinite;
+}
+
+/* Horizontal Anamorphic Flare Streak - Monochromatic Transparent White */
+.sun-anamorphic-line {
+  position: absolute;
+  width: 1400px;
+  height: 3px;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.05) 15%, 
+    rgba(255, 255, 255, 0.25) 35%, 
+    rgba(255, 255, 255, 0.65) 50%, 
+    rgba(255, 255, 255, 0.25) 65%, 
+    rgba(255, 255, 255, 0.05) 85%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+  mix-blend-mode: screen;
+  transform: rotate(-5deg);
+}
+
+/* Optical Ghosts Wrapper */
+.sun-ghosts-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Optical Hexagonal Ghost Artifacts - Pure Glass Transparent White (Không màu) */
+.sun-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  will-change: transform;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.ghost-hex-1 {
+  width: 48px;
+  height: 48px;
+  margin-left: -24px;
+  margin-top: -24px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.35) 15%, rgba(255, 255, 255, 0.08) 65%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+}
+
+.ghost-hex-2 {
+  width: 80px;
+  height: 80px;
+  margin-left: -40px;
+  margin-top: -40px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.28) 20%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
+}
+
+.ghost-hex-3 {
+  width: 120px;
+  height: 120px;
+  margin-left: -60px;
+  margin-top: -60px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 25%, rgba(255, 255, 255, 0.04) 75%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.18));
+}
+
+.ghost-hex-4 {
+  width: 65px;
+  height: 65px;
+  margin-left: -32.5px;
+  margin-top: -32.5px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.32) 20%, rgba(255, 255, 255, 0.06) 70%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2));
+}
+
+.ghost-ring {
+  width: 250px;
+  height: 250px;
+  margin-left: -125px;
+  margin-top: -125px;
+  border-radius: 50% !important;
+  clip-path: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 16px rgba(255, 255, 255, 0.1);
+}
+
+.ghost-hex-5 {
+  width: 175px;
+  height: 175px;
+  margin-left: -87.5px;
+  margin-top: -87.5px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.18) 30%, rgba(255, 255, 255, 0.03) 75%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.15));
+}
+
+.ghost-hex-6 {
+  width: 130px;
+  height: 130px;
+  margin-left: -65px;
+  margin-top: -65px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 25%, rgba(255, 255, 255, 0.05) 75%, transparent 100%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.18));
+}
+
+.ghost-hex-7 {
+  width: 240px;
+  height: 240px;
+  margin-left: -120px;
+  margin-top: -120px;
+  background: radial-gradient(circle, transparent 25%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.03) 75%, transparent 95%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  filter: blur(1px) drop-shadow(0 0 15px rgba(255, 255, 255, 0.15));
+}
+
+@keyframes sun-star-shimmer {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 

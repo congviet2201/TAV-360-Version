@@ -5570,6 +5570,12 @@ document.addEventListener("click", function(e) {
     container.style.setProperty('--lm-beam-h', `${beamH}px`);
     container.style.setProperty('--hs-line-h', `${beamH}px`);
 
+    if (pin.id.includes('kient1') || pin.id.includes('park')) {
+      container.style.zIndex = '10';
+    } else if (pin.id.includes('living') || pin.id.includes('wc')) {
+      container.style.zIndex = '1000';
+    }
+
     if (isHotspotsHidden) {
       container.style.visibility = "hidden";
       container.style.opacity = "0";
@@ -5727,53 +5733,62 @@ document.addEventListener("click", function(e) {
     const explicitSkylineMap = {
       // ══════════════════════════════════════════════════════════════════
       // LEFT SIDE NAMED LADDER 
-      // Phố cổ Cù Chính Lan remains on the left with a massive height gap below Trường Chính trị
+      // Sông Đà & Trường Chính Trị raised high above Bệnh Viện to eliminate overlap
       // ══════════════════════════════════════════════════════════════════
-      "caodangsongda_01":   { side: "left",  height: 330, zIndex: 2950 }, // 1. Trường Cao đẳng Nghề Sông Đà
-      "truongchinhtri_01":  { side: "left",  height: 290, zIndex: 2850 }, // 2. Trường Chính trị Hòa Bình
-      "expressway_01":      { side: "left",  height: 250, zIndex: 2150 }, // 3. Cao tốc Hòa Lạc
-      "benhvienhb_01":      { side: "left",  height: 220, zIndex: 2650 }, // 4. Bệnh viện Hòa Bình
-      "marina_01":          { side: "left",  height: 180, zIndex: 1950 }, // 5. Bến du thuyền
-      "phococuchinhlan_01": { side: "left",  height: 140, zIndex: 2750 }, // 6. Phố cổ Cù Chính Lan (Safe 150px gap below truongchinhtri)
-      "cauthongnhat_01":    { side: "left",  height: 110, zIndex: 2550 }, // 7. Cầu Thống Nhất
-      "cauhuunghi_01":      { side: "left",  height: 80,  zIndex: 2450 }, // 8. Cầu Hữu Nghị
-      "hongoc_01":          { side: "left",  height: 50,  zIndex: 2350 }, // 9. Hồ Ngọc
-      "cauhoabinh4_02":     { side: "left",  height: 20,  zIndex: 2250 }, // 10. Cầu Hòa Bình 4 (vị trí 2)
+      "caodangsongda_01":   { side: "left",  height: 360, zIndex: 3000 }, // 1. Trường Cao đẳng Nghề Sông Đà
+      "truongchinhtri_01":  { side: "left",  height: 305, zIndex: 2900 }, // 2. Trường Chính trị Hòa Bình
+      "phococuchinhlan_01": { side: "left",  height: 260, zIndex: 2800 }, // 3. Phố cổ Cù Chính Lan
+      "expressway_01":      { side: "left",  height: 190, zIndex: 2150 }, // 4. Cao tốc Hòa Lạc
+      "marina_01":          { side: "left",  height: 145, zIndex: 2700 }, // 5. Bến du thuyền
+      "benhvienhb_01":      { side: "left",  height: 105, zIndex: 2650 }, // 6. Bệnh viện Hòa Bình
+      "bridge_01":          { side: "left",  height: 40,  zIndex: 2250 }, // 7. Cầu Hòa Bình 5
+      "cauthongnhat_01":    { side: "left",  height: 85,  zIndex: 2550 }, // 8. Cầu Thống Nhất
+      "cauhuunghi_01":      { side: "left",  height: 70,  zIndex: 2450 }, // 9. Cầu Hữu Nghị
+      "hongoc_01":          { side: "left",  height: 10,  zIndex: 2350 }, // 10. Hồ Ngọc
+      "cauhoabinh4_02":     { side: "left",  height: 60,  zIndex: 2250 }, // 11. Cầu Hòa Bình 4 (vị trí 2)
 
       // ══════════════════════════════════════════════════════════════════
       // RIGHT SIDE NAMED LADDER
-      // Cầu Hòa Bình explicitly moved back to the RIGHT side per request!
+      // Cầu Hòa Bình placed AFTER / BELOW Công viên tuổi trẻ
       // ══════════════════════════════════════════════════════════════════
-      "cahoabinh_01":       { side: "right", height: 325, zIndex: 2900 }, // 1. CA Hòa Bình
-      "quangtruongtt_01":   { side: "right", height: 280, zIndex: 2800 }, // 2. Quảng trường trung tâm
-      "congvientuoitre_01": { side: "right", height: 235, zIndex: 2700 }, // 3. Công viên tuổi trẻ
-      "bridge_01":          { side: "left",  height: 215, zIndex: 2250 }, // Cầu Hòa Bình 5 (Nằm bên TRÁI per request)
-      "cauhoabinh4_01":     { side: "right", height: 190, zIndex: 2600 }, // 5. Cầu Hòa Bình (Nằm bên PHẢI)
-      "sanvandong_01":      { side: "right", height: 165, zIndex: 2500 }, // 6. Sân vận động
-      "spring_01":          { side: "right", height: 135, zIndex: 1900 }, // 7. Suối Ngọc
-      "caodanghoabinh_01":  { side: "right", height: 100, zIndex: 2400 }, // 8. Cao đẳng Hòa Bình
-      "dapthuydien_01":     { side: "right", height: 65,  zIndex: 2300 }, // 9. Đập thủy điện Hòa Bình
-      "trungtamyte_01":     { side: "right", height: 25,  zIndex: 2200 }, // 10. Trung tâm y tế Hòa Bình
+      "cahoabinh_01":       { side: "right", height: 345, zIndex: 3000 }, // 1. CA Hòa Bình
+      "congvientuoitre_01": { side: "right", height: 275, zIndex: 2900 }, // 2. Công viên tuổi trẻ
+      "quangtruongtt_01":   { side: "right", height: 225, zIndex: 2800 }, // 3. Quảng trường trung tâm
+      "cauhoabinh4_01":     { side: "right", height: 155, zIndex: 2700 }, // 4. Cầu Hòa Bình
+      "sanvandong_01":      { side: "right", height: 105, zIndex: 2500 }, // 5. Sân vận động
+      "spring_01":          { side: "right", height: 90,  zIndex: 1900 }, // 7. Suối Ngọc
+      "caodanghoabinh_01":  { side: "right", height: 60,  zIndex: 2400 }, // 8. Cao đẳng Hòa Bình
+      "dapthuydien_01":     { side: "right", height: 20,  zIndex: 2300 }, // 9. Đập thủy điện Hòa Bình
+      "trungtamyte_01":     { side: "right", height: 50,  zIndex: 2200 }, // 10. Trung tâm y tế Hòa Bình
 
       // ADDITIONAL LANDMARKS
-      "culture_01":         { side: "left",  height: 180, zIndex: 2000 },
-      "highway6_01":        { side: "right", height: 155, zIndex: 2050 },
-      "golf_01":            { side: "right", height: 75,  zIndex: 1850 }
+      "culture_01":         { side: "left",  height: 130, zIndex: 2000 },
+      "highway6_01":        { side: "right", height: 105, zIndex: 2050 },
+      "golf_01":            { side: "right", height: 25,  zIndex: 1850 }
     };
 
     landmarks.forEach(lm => {
       if (lm.isTextOnly || lm.category === 'TextOnly') return;
       const lookupId = lm.id;
       const config = explicitSkylineMap[lookupId];
-      if (config) {
+
+      // Prioritize per-node height defined directly on the landmark object
+      if (lm.height !== undefined && lm.height !== null) {
+        lm.calculatedHeight = lm.height;
+      } else if (config) {
         lm.calculatedHeight = config.height;
-        lm.labelSide = config.side;
+      }
+
+      if (config) {
+        lm.labelSide = lm.labelSide || config.side;
         lm.calculatedZIndex = config.zIndex;
       } else {
         const tiltVal = parseFloat(lm.tilt) || 0;
         lm.calculatedZIndex = Math.round(1500 + (tiltVal + 90) * 15);
-        lm.labelSide = parseFloat(lm.pan) < 0 ? 'left' : 'right';
-        lm.calculatedHeight = Math.max(30, Math.min(130, Math.round(70 + tiltVal * 2)));
+        lm.labelSide = lm.labelSide || (parseFloat(lm.pan) < 0 ? 'left' : 'right');
+        if (!lm.calculatedHeight) {
+          lm.calculatedHeight = Math.max(30, Math.min(130, Math.round(70 + tiltVal * 2)));
+        }
       }
     });
   }
