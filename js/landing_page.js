@@ -111,7 +111,6 @@
                 aria-label="LOGO TAV PANOTOUR 3 Video Animation">
                 <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.webm" type="video/webm">
                 <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.mp4" type="video/mp4">
-                <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.mov" type="video/quicktime">
               </video>
             </div>
           </div>

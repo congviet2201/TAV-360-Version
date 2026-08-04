@@ -1,3 +1,4 @@
 node_modules/
 output.zip
+*.zip
 *.mov

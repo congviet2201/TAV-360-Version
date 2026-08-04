@@ -297,8 +297,8 @@
       <preview color="0x808080" strip="1"/>
     </input>
     <view pannorth="0" fovmode="2">
-      <start fov="140" tilt="-90" projection="4" pan="202"/>
-      <flyin fov="140" tilt="-90" projection="4" pan="202"/>
+      <start fov="120" tilt="-90" projection="4" pan="202"/>
+      <flyin fov="120" tilt="-90" projection="4" pan="202"/>
       <min tilt="-90" fovpixel="2" pan="0"/>
       <max fov="140" tilt="90" scaletofit="1" fovfisheye="360" fovstereographic="330" pan="360"/>
     </view>

@@ -2843,7 +2843,7 @@ function generateSubmenuHTML(items, itemClass) {
           if (window.pano && typeof window.pano.setPan === 'function') {
             window.pano.setPan(202);
             if (typeof window.pano.setTilt === 'function') window.pano.setTilt(-90);
-            if (typeof window.pano.setFov === 'function') window.pano.setFov(140);
+            if (typeof window.pano.setFov === 'function') window.pano.setFov(120);
           }
         }, 150);
       }
@@ -6273,7 +6273,7 @@ document.addEventListener("click", function(e) {
         if (window.pano && typeof window.pano.setPan === 'function') {
           window.pano.setPan(202);
           if (typeof window.pano.setTilt === 'function') window.pano.setTilt(-90);
-          if (typeof window.pano.setFov === 'function') window.pano.setFov(140);
+          if (typeof window.pano.setFov === 'function') window.pano.setFov(120);
         }
       }, 100);
     }
