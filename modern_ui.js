@@ -5569,6 +5569,7 @@ document.addEventListener("click", function(e) {
     container.className = `hs-container hs-landmark-container hs-has-view hs-${pin.category}`;
     container.id = `hs-${pin.id}`;
     container.setAttribute('aria-label', displayTitle);
+    container.setAttribute('data-pin-id', pin.id);
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'button');
     container.style.setProperty('--lm-beam-h', `${beamH}px`);
@@ -5808,6 +5809,8 @@ document.addEventListener("click", function(e) {
       container.className = `hs-container hs-landmark-container hs-no-view hs-text-only-container`;
       container.id = `hs-landmark-${pin.id}`;
       container.setAttribute('aria-label', displayName);
+      container.setAttribute('data-pin-id', pin.id);
+      container.setAttribute('data-pin-type', 'landmark');
 
       if (isHotspotsHidden) {
         container.style.visibility = "hidden";
@@ -5826,6 +5829,8 @@ document.addEventListener("click", function(e) {
     container.className = `hs-container hs-landmark-container hs-no-view hs-landmark-${catClass}`;
     container.id = `hs-landmark-${pin.id}`;
     container.setAttribute('aria-label', displayName);
+    container.setAttribute('data-pin-id', pin.id);
+    container.setAttribute('data-pin-type', 'landmark');
     container.setAttribute('tabindex', '0');
     container.setAttribute('role', 'region');
 
@@ -6449,20 +6454,58 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
-  // LISTEN FOR LANGUAGE CHANGE → RE-INJECT HOTSPOTS
-  // When language changes, we need to re-render all hotspots to display
-  // translated names. Remove all current hotspots and re-inject them.
+  // LISTEN FOR LANGUAGE CHANGE → UPDATE HOTSPOT LABELS IN-PLACE
+  //
+  // CRITICAL: We must NEVER call window.pano.removeHotspots() here.
+  // That API removes ALL Pano2VR hotspots, including the native navigation
+  // point hotspots that Pano2VR uses to position items in 3D space.
+  // Removing them causes birdview / other views to completely lose hotspot
+  // positions. Instead we only update the text content of existing DOM
+  // label elements (identified by data-pin-id on the container).
   // ─────────────────────────────────────────────────────────────────────────
   window.addEventListener('tavLanguageChanged', function(e) {
-    // Re-inject hotspots on current node to refresh translated labels
-    const nodeId = window.activePanoNode || 'node1';
-    if (window.pano && typeof window.pano.removeHotspots === 'function') {
-      window.pano.removeHotspots();
-    }
-    if (typeof injectPremiumHotspots === 'function') {
-      injectPremiumHotspots(nodeId);
-    }
-    console.log('[I18N] Hotspots re-injected with language:', e.detail.lang);
+    const lang = e.detail && e.detail.lang;
+    if (!lang || !window.getHotspotName || !window.getI18nText) return;
+
+    const clickFlyText   = window.getI18nText('click_to_fly',   'Click to Fly');
+    const clickEnterText = window.getI18nText('click_to_enter', 'Click to Enter');
+
+    // ── Premium hotspots (navigation hotspots with view) ──────────────────
+    // Container id = hs-${pin.id}, carries data-pin-id="${pin.id}"
+    document.querySelectorAll('.hs-container[data-pin-id]').forEach(container => {
+      const pinId = container.getAttribute('data-pin-id');
+      const isPinLandmark = container.getAttribute('data-pin-type') === 'landmark';
+
+      // Build a pseudo-pin object so getHotspotName can resolve the key
+      const pseudoPin = { id: pinId, name: pinId };
+
+      // Resolve the translated display name
+      const translatedName = window.getHotspotName(pseudoPin);
+      if (!translatedName) return;
+
+      // Update aria-label
+      container.setAttribute('aria-label', translatedName);
+
+      if (isPinLandmark) {
+        // Landmark hotspot: text lives in .lm-name, .lm-big-text-content, .lm-title
+        container.querySelectorAll('.lm-name, .lm-big-text-content, .lm-title').forEach(el => {
+          el.textContent = translatedName;
+        });
+      } else {
+        // Premium/navigation hotspot: name in .lm-name, preview h4, enter button
+        container.querySelectorAll('.lm-name').forEach(el => {
+          el.textContent = translatedName;
+        });
+        container.querySelectorAll('.hs-preview-content h4').forEach(el => {
+          el.textContent = translatedName;
+        });
+        container.querySelectorAll('.hs-enter-btn').forEach(el => {
+          el.textContent = clickFlyText;
+        });
+      }
+    });
+
+    console.log('[I18N] Hotspot labels updated in-place for language:', lang);
   });
 
   // ESC key closes modals and syncs button states
