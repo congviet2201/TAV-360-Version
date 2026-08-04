@@ -6454,6 +6454,170 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // ─────────────────────────────────────────────────────────────────────────
+  // INJECT LANGUAGE TOGGLE BUTTON INTO EVERY LAYOUT TOOLBAR
+  // ─────────────────────────────────────────────────────────────────────────
+  // CSS injected once — styles the universal tav-lang-toolbar-btn element
+  (function injectLangBtnCSS() {
+    if (document.getElementById('tav-lang-btn-style')) return;
+    const style = document.createElement('style');
+    style.id = 'tav-lang-btn-style';
+    style.textContent = `
+      /* ── Universal Language Toggle Button in Toolbar ── */
+      .tav-lang-toolbar-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 2px;
+        background: rgba(255,255,255,0.07);
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 20px;
+        padding: 4px 6px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: rgba(255,255,255,0.55);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        transition: all 0.2s ease;
+        user-select: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        box-sizing: border-box;
+      }
+      .tav-lang-toolbar-btn:hover { background: rgba(255,255,255,0.13); border-color: rgba(255,255,255,0.3); }
+      .tav-lang-toolbar-btn .tl-seg {
+        padding: 2px 6px;
+        border-radius: 14px;
+        transition: background 0.18s, color 0.18s;
+        color: rgba(255,255,255,0.45);
+        font-size: 10px;
+      }
+      .tav-lang-toolbar-btn .tl-seg.active {
+        background: linear-gradient(135deg,#00f2fe,#4facfe);
+        color: #fff;
+        box-shadow: 0 1px 6px rgba(0,200,255,0.35);
+      }
+      .tav-lang-toolbar-btn .tl-div {
+        color: rgba(255,255,255,0.2);
+        font-size: 9px;
+      }
+
+      /* ── Per-layout adaptations ── */
+      /* Classic / Futuristic: vertical toolbar, add separator + item */
+      .tool-container .tav-lang-toolbar-btn,
+      #tool-dock .tav-lang-toolbar-btn { flex-direction: row; margin: 6px auto 0; }
+
+      /* Neo horizontal bottom dock */
+      .neo-toolbar .tav-lang-toolbar-btn { margin: 0 4px; }
+
+      /* Aurora / Horizon / Prism / Nexus vertical toolbars */
+      .aurora-tool-list .tav-lang-toolbar-btn,
+      #horizon-tool-panel .tav-lang-toolbar-btn,
+      .prism-tool-list .tav-lang-toolbar-btn,
+      .nexus-tool-list .tav-lang-toolbar-btn { margin: 8px auto 0; }
+
+      /* Monarch command panel (right side) */
+      .monarch-command-list .tav-lang-toolbar-btn { margin: 8px auto 0; }
+
+      /* Regal utility groups */
+      .rgl-neo-tools-system .tav-lang-toolbar-btn { margin: 6px auto 0; }
+
+      /* Command ribbon */
+      .cmd-ribbon .tav-lang-toolbar-btn,
+      .cmd-ctrl-panel .tav-lang-toolbar-btn { margin: 0 4px; }
+
+      /* Gradient right-rail vertical */
+      #vision-right-dock .tav-lang-toolbar-btn { margin: 8px auto 0; }
+    `;
+    document.head.appendChild(style);
+  })();
+
+  function createLangBtn() {
+    const curLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
+    const btn = document.createElement('div');
+    btn.className = 'tav-lang-toolbar-btn';
+    btn.setAttribute('role', 'group');
+    btn.setAttribute('aria-label', 'Language');
+    btn.innerHTML = `
+      <span class="tl-seg${curLang === 'vi' ? ' active' : ''}" data-lang="vi">VIE</span>
+      <span class="tl-div">|</span>
+      <span class="tl-seg${curLang === 'en' ? ' active' : ''}" data-lang="en">ENG</span>
+    `;
+    btn.addEventListener('click', function(e) {
+      const seg = e.target.closest('.tl-seg');
+      if (!seg) return;
+      const lang = seg.getAttribute('data-lang');
+      if (window.TAV_CORE && window.TAV_CORE.switchLanguage) {
+        window.TAV_CORE.switchLanguage(lang);
+      }
+      // Sync all tav-lang-toolbar-btn buttons across layouts
+      document.querySelectorAll('.tav-lang-toolbar-btn .tl-seg').forEach(s => {
+        s.classList.toggle('active', s.getAttribute('data-lang') === lang);
+      });
+    });
+    return btn;
+  }
+
+  function injectLangBtnToAllToolbars() {
+    // Map of { cssSelector: appendMethod }
+    // Each entry: a toolbar container selector + where to append the button
+    const toolbarMap = [
+      // 01 Classic / 02 Futuristic — shared toolbarButtonsHTML rendered inside .tool-container
+      { sel: '.tool-container', pos: 'append' },
+      // 03 Neo — bottom horizontal dock
+      { sel: '.neo-toolbar', pos: 'append' },
+      // 04 Gradient — right rail vertical
+      { sel: '#vision-right-dock', pos: 'append' },
+      // 05 Aurora
+      { sel: '.aurora-tool-list', pos: 'append' },
+      // 06 Horizon
+      { sel: '#horizon-tool-panel', pos: 'append' },
+      // 07 Prism
+      { sel: '.prism-tool-list', pos: 'append' },
+      // 08 Nexus
+      { sel: '.nexus-tool-list', pos: 'append' },
+      // 09 Monarch
+      { sel: '.monarch-command-list', pos: 'append' },
+      // 10 Regal / Architect
+      { sel: '.rgl-neo-tools-system', pos: 'append' },
+      // 11 Command
+      { sel: '.cmd-ctrl-panel', pos: 'append' },
+      { sel: '.cmd-ribbon', pos: 'append' },
+    ];
+
+    toolbarMap.forEach(({ sel }) => {
+      const container = document.querySelector(sel);
+      if (!container) return;
+      // Avoid double injection
+      if (container.querySelector('.tav-lang-toolbar-btn')) return;
+      container.appendChild(createLangBtn());
+    });
+  }
+
+  // Inject immediately (may already be rendered)
+  injectLangBtnToAllToolbars();
+
+  // Re-inject whenever layout is switched (MutationObserver on body)
+  (function watchLayoutChanges() {
+    let debounce = null;
+    const obs = new MutationObserver(() => {
+      clearTimeout(debounce);
+      debounce = setTimeout(injectLangBtnToAllToolbars, 200);
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+  })();
+
+  // Also sync button active state on language change
+  window.addEventListener('tavLanguageChanged', function(e) {
+    const lang = e.detail && e.detail.lang;
+    if (!lang) return;
+    document.querySelectorAll('.tav-lang-toolbar-btn .tl-seg').forEach(seg => {
+      seg.classList.toggle('active', seg.getAttribute('data-lang') === lang);
+    });
+  });
+
+  // ─────────────────────────────────────────────────────────────────────────
   // LISTEN FOR LANGUAGE CHANGE → UPDATE HOTSPOT LABELS IN-PLACE
   //
   // CRITICAL: We must NEVER call window.pano.removeHotspots() here.
