@@ -6179,6 +6179,11 @@ document.addEventListener("click", function(e) {
     });
   }
 
+  let _lastCamPan = null;
+  let _lastCamTilt = null;
+  let _lastCamFov = null;
+  let _isRotatingTimeout = null;
+
   // Update hotspot depth/visibility every rAF frame — called from syncCompass
   function updateHotspotVisibility() {
     if (!window.pano || currentHotspotElements.length === 0) return;
@@ -6186,6 +6191,26 @@ document.addEventListener("click", function(e) {
       const camPan  = window.pano.getPan()  || 0;
       const camTilt = window.pano.getTilt() || 0;
       const camFov  = window.pano.getFov()  || 90;
+
+      // Active rotation detection to throttle GPU workload during panning
+      const panDelta  = Math.abs(camPan  - (_lastCamPan  !== null ? _lastCamPan  : camPan));
+      const tiltDelta = Math.abs(camTilt - (_lastCamTilt !== null ? _lastCamTilt : camTilt));
+      const fovDelta  = Math.abs(camFov  - (_lastCamFov  !== null ? _lastCamFov  : camFov));
+      const isMoving  = panDelta > 0.02 || tiltDelta > 0.02 || fovDelta > 0.02;
+
+      _lastCamPan  = camPan;
+      _lastCamTilt = camTilt;
+      _lastCamFov  = camFov;
+
+      if (isMoving) {
+        if (!document.body.classList.contains('pano-is-rotating')) {
+          document.body.classList.add('pano-is-rotating');
+        }
+        clearTimeout(_isRotatingTimeout);
+        _isRotatingTimeout = setTimeout(() => {
+          document.body.classList.remove('pano-is-rotating');
+        }, 150);
+      }
 
       let currentNode = '';
       try { currentNode = window.pano.getCurrentNode() || ''; } catch(e) {}

@@ -704,6 +704,37 @@
   }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   GPU HARDWARE COMPOSITING & SMOOTH ROTATION ENGINE (60 FPS UNLOCK)
+   ══════════════════════════════════════════════════════════════════ */
+.hs-container,
+.lm-scale-wrap,
+.hologram-marker-container,
+.lm-vertical-beam,
+.lm-glass-flag,
+.lm-holographic-label {
+  will-change: transform, opacity !important;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Touch Passthrough: Allows smooth WebGL panorama dragging without input stalling */
+.hs-container *,
+.lm-scale-wrap *,
+.lm-glass-flag * {
+  pointer-events: none !important;
+}
+
+/* During Active Camera Rotation: Pause heavy animations to maximize 60 FPS WebGL rendering */
+body.pano-is-rotating .hs-container *,
+body.pano-is-rotating .lm-scale-wrap *,
+body.pano-is-rotating .hologram-marker-container * {
+  animation-play-state: paused !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
 /* Extra compact scaling for narrow portrait phones (iPhone SE / 360px - 414px) */
 @media screen and (max-width: 480px) {
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
