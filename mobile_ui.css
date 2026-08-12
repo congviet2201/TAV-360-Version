@@ -608,13 +608,88 @@
 /* ============================================================
    MOBILE HOTSPOT SIZE & TOUCH TARGET OPTIMIZATION
    ============================================================ */
+/* ============================================================
+   UNIVERSAL MOBILE HOTSPOT SCALING & RESPONSIVE FIT
+   Fits perfectly on any mobile screen (iPhone SE, Pro Max, Galaxy, Pixel)
+   ============================================================ */
 @media screen and (max-width: 1024px) {
-  /* Visible hotspot scale: ~24px to ~32px responsive */
+  /* Scale down overall hotspot containers cleanly */
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
-    transform: scale(0.68) !important;
+    transform: scale(0.56) !important;
+    transform-origin: center center !important;
   }
   
-  /* Touch target area: minimum 44px for easy tapping */
+  /* Proportional 50% height reduction for mobile screens:
+     Lowers beam pole length and name badge elevation down by 50% while preserving
+     stair-step proportions and vertical label gaps to prevent overlaps. */
+  /* Override keyframe animation & lock 50% beam height on mobile for ALL hotspot types */
+  .hs-container .lm-vertical-beam,
+  .hs-container.hs-no-view .lm-vertical-beam {
+    animation: none !important;
+    opacity: 0.95 !important;
+    height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+    max-height: none !important;
+  }
+  .hs-container .lm-vertical-beam::after,
+  .hs-container.hs-no-view .lm-vertical-beam::after {
+    max-height: none !important;
+  }
+
+  /* Centered holographic label badges sit rigidly on top of the 50% reduced beam tip */
+  .hs-container .lm-holographic-label {
+    bottom: calc(var(--lm-beam-h, 70px) * 0.5 + 4px) !important;
+    padding: 3px 8px !important;
+    font-size: 10px !important;
+    max-width: 120px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+  }
+
+  /* Glass flag badges lock directly centered onto the top tip of the 50% reduced beam pole */
+  .hs-container .lm-glass-flag,
+  .hs-container.hs-no-view .lm-glass-flag {
+    bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+    transform: translateY(50%) !important;
+    padding: 3px 8px !important;
+    font-size: 10px !important;
+    max-width: 120px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+  }
+  .hs-container .lm-holographic-label .lm-name,
+  .hs-container .lm-glass-flag .lm-name {
+    font-size: 9.5px !important;
+    letter-spacing: 0.3px !important;
+  }
+  .hs-container .lm-holographic-label .lm-icon svg,
+  .hs-container .lm-glass-flag .lm-icon svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Compact ground scan ring & core dot */
+  .hs-container .lm-ground-scan-system {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .hs-container .lm-ground-scan {
+    width: 28px !important;
+    height: 28px !important;
+  }
+  .hs-container .lm-scan-ring-2 {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .hs-container .lm-energy-core {
+    width: 10px !important;
+    height: 10px !important;
+  }
+
+  /* Accessible tap target (>=44px) without inflating visual size */
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot, .ggnode {
     min-width: 44px !important;
     min-height: 44px !important;
@@ -625,7 +700,35 @@
   .hs-label, .hotspot-label, .mm-tooltip {
     font-size: 10px !important;
     padding: 3px 8px !important;
-    max-width: 140px !important;
+    max-width: 120px !important;
+  }
+}
+
+/* Extra compact scaling for narrow portrait phones (iPhone SE / 360px - 414px) */
+@media screen and (max-width: 480px) {
+  .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
+    transform: scale(0.48) !important;
+  }
+  .hs-container .lm-vertical-beam,
+  .hs-container.hs-no-view .lm-vertical-beam {
+    animation: none !important;
+    opacity: 0.95 !important;
+    height: calc(var(--lm-beam-h, 70px) * 0.45) !important;
+    max-height: none !important;
+  }
+  .hs-container .lm-holographic-label {
+    bottom: calc(var(--lm-beam-h, 70px) * 0.45 + 3px) !important;
+    padding: 2px 6px !important;
+    font-size: 9px !important;
+    max-width: 105px !important;
+  }
+  .hs-container .lm-glass-flag,
+  .hs-container.hs-no-view .lm-glass-flag {
+    bottom: calc(var(--lm-beam-h, 70px) * 0.45) !important;
+    transform: translateY(50%) !important;
+    padding: 2px 6px !important;
+    font-size: 9px !important;
+    max-width: 105px !important;
   }
 }
 
