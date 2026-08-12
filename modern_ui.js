@@ -5878,6 +5878,11 @@ document.addEventListener("click", function(e) {
   // - All inner landmarks step down progressively towards center (340px/320px -> 300px -> 260px -> ... -> 60px)
   // - 40px vertical gaps between labels on same side for ZERO OVERLAP
   // ═══════════════════════════════════════════════════════════════════
+  // ADAPTIVE SKYLINE COLLISION RESOLVER FOR AMENITY LANDMARKS
+  // - Preserves all original landmark pan, tilt, and height coordinates from hotspots.js
+  // - Detects horizontally adjacent pins and adjusts heights dynamically to eliminate overlaps
+  // - Guarantees a 6px-10px clear vertical gap between nearby badges
+  // ═══════════════════════════════════════════════════════════════════
   function calculateAdaptiveSkylineHeights(landmarks) {
     if (!landmarks || !Array.isArray(landmarks)) return;
 
@@ -6185,6 +6190,14 @@ document.addEventListener("click", function(e) {
       let currentNode = '';
       try { currentNode = window.pano.getCurrentNode() || ''; } catch(e) {}
 
+      // Hard safety clamp for 1528px tile panoramas to prevent cubic face boundary clipping
+      if (['node12', 'node13', 'node14', 'node15'].includes(currentNode)) {
+        if (typeof window.pano.setFovMax === 'function') window.pano.setFovMax(90);
+        if (camFov > 90 && typeof window.pano.setFov === 'function') {
+          window.pano.setFov(90);
+        }
+      }
+
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
       const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
 
@@ -6459,20 +6472,20 @@ document.addEventListener("click", function(e) {
       }, 100);
     }
 
-    // MOBILE-ONLY FIX FOR ARCHITECTURE NODES (node12: Kiến Trúc 1 & node15: Kiến Trúc 2):
-    // Fixes edge folding/creasing distortion ("lỗi gấp khúc") caused by wide diagonal FOV on tall mobile screens
-    if (window.innerWidth <= 1024 && (currentNodeId === 'node12' || currentNodeId === 'node15')) {
+    // ARCHITECTURE & 1528px NODES FIX (node12, node13, node14, node15):
+    // Prevents cubic boundary edge clipping ("lỗi cắt hình lập phương") when zooming out
+    if (['node12', 'node13', 'node14', 'node15'].includes(currentNodeId)) {
       setTimeout(() => {
         if (window.pano) {
           const container = document.getElementById("container");
           if (container && typeof window.pano.setViewerSize === 'function') {
             window.pano.setViewerSize(container.offsetWidth, container.offsetHeight);
           }
-          if (typeof window.pano.setFov === 'function') {
-            window.pano.setFov(75); // Optimal architecture FOV on mobile portrait to prevent edge warping/folding
-          }
+          if (typeof window.pano.setFovMode === 'function') window.pano.setFovMode(2);
+          if (typeof window.pano.setFovMax  === 'function') window.pano.setFovMax(90);
+          if (typeof window.pano.setFov     === 'function') window.pano.setFov(85);
         }
-      }, 80);
+      }, 50);
     }
 
     // Clear old hotspots every node change

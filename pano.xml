@@ -552,10 +552,10 @@
       <preview color="0x808080" strip="1"/>
     </input>
     <view pannorth="0" fovmode="2">
-      <start fov="100" tilt="0" projection="4" pan="0"/>
-      <flyin fov="100" tilt="-30" projection="4" pan="0"/>
+      <start fov="85" tilt="0" projection="4" pan="0"/>
+      <flyin fov="85" tilt="-10" projection="4" pan="0"/>
       <min tilt="-90" fovpixel="2" pan="0"/>
-      <max fov="140" tilt="90" scaletofit="1" fovfisheye="360" fovstereographic="330" pan="360"/>
+      <max fov="90" fovfisheye="360" fovstereographic="270" pan="360" scaletofit="0" tilt="90"/>
     </view>
     <userdata description="" tags="" heading="0" customnodeid="" longitude="" datetime="" latitude="" comment="" title="Kiến Trúc 1" author="" info="" source="" nodeid="node12" copyright=""/>
     <hotspots width="180" wordwrap="1" height="20" smoothmovement="0">
@@ -577,10 +577,10 @@
       <preview color="0x808080" strip="1"/>
     </input>
     <view pannorth="0" fovmode="2">
-      <start fov="100" tilt="0" projection="4" pan="0"/>
-      <flyin fov="100" tilt="-30" projection="4" pan="0"/>
+      <start fov="85" tilt="0" projection="4" pan="0"/>
+      <flyin fov="85" tilt="-10" projection="4" pan="0"/>
       <min tilt="-90" fovpixel="2" pan="0"/>
-      <max fov="140" tilt="90" scaletofit="1" fovfisheye="360" fovstereographic="330" pan="360"/>
+      <max fov="90" fovfisheye="360" fovstereographic="270" pan="360" scaletofit="0" tilt="90"/>
     </view>
     <userdata description="" tags="" heading="0" customnodeid="" longitude="" datetime="" latitude="" comment="" title="TAV Street 2" author="" info="" source="" nodeid="node13" copyright=""/>
     <hotspots width="180" wordwrap="1" height="20" smoothmovement="0">
@@ -601,10 +601,10 @@
       <preview color="0x808080" strip="1"/>
     </input>
     <view pannorth="0" fovmode="2">
-      <start fov="100" tilt="0" projection="4" pan="0"/>
-      <flyin fov="100" tilt="-30" projection="4" pan="0"/>
+      <start fov="85" tilt="0" projection="4" pan="0"/>
+      <flyin fov="85" tilt="-10" projection="4" pan="0"/>
       <min tilt="-90" fovpixel="2" pan="0"/>
-      <max fov="140" tilt="90" scaletofit="1" fovfisheye="360" fovstereographic="330" pan="360"/>
+      <max fov="90" fovfisheye="360" fovstereographic="270" pan="360" scaletofit="0" tilt="90"/>
     </view>
     <userdata description="" tags="" heading="0" customnodeid="" longitude="" datetime="" latitude="" comment="" title="TAV Street 3" author="" info="" source="" nodeid="node14" copyright=""/>
     <hotspots width="180" wordwrap="1" height="20" smoothmovement="0">
@@ -625,10 +625,10 @@
       <preview color="0x808080" strip="1"/>
     </input>
     <view pannorth="0" fovmode="2">
-      <start fov="100" tilt="0" projection="4" pan="0"/>
-      <flyin fov="100" tilt="-30" projection="4" pan="0"/>
+      <start fov="85" tilt="0" projection="4" pan="0"/>
+      <flyin fov="85" tilt="-10" projection="4" pan="0"/>
       <min tilt="-90" fovpixel="2" pan="0"/>
-      <max fov="140" tilt="90" scaletofit="1" fovfisheye="360" fovstereographic="330" pan="360"/>
+      <max fov="90" fovfisheye="360" fovstereographic="270" pan="360" scaletofit="0" tilt="90"/>
     </view>
     <userdata description="" tags="" heading="0" customnodeid="" longitude="" datetime="" latitude="" comment="" title="Kiến Trúc 2" author="" info="" source="" nodeid="node15" copyright=""/>
     <hotspots width="180" wordwrap="1" height="20" smoothmovement="0">
