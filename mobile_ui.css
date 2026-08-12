@@ -674,13 +674,14 @@
   /* Micro-sized, fine-detailed holographic label badges */
   .hs-container .lm-holographic-label {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5 + 4px) !important;
-    padding: 2px 6px !important;
+    padding: 2px 7px !important;
     font-size: 8.5px !important;
-    max-width: 110px !important;
+    max-width: none !important;
+    width: max-content !important;
     border-radius: 4px !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
   }
 
@@ -688,19 +689,25 @@
   .hs-container.hs-has-view .lm-glass-flag {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     transform: translateY(50%) !important;
-    padding: 2px 6px !important;
+    padding: 2px 7px !important;
     font-size: 8.5px !important;
-    max-width: 110px !important;
+    max-width: none !important;
+    width: max-content !important;
     border-radius: 4px !important;
     white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
   }
 
   .hs-container .lm-holographic-label .lm-name,
   .hs-container .lm-glass-flag .lm-name {
     font-size: 8.5px !important;
     letter-spacing: 0.2px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    width: auto !important;
   }
 
   /* Mobile Floating Sky Typography (e.g. HÀ NỘI) - Transparent Background, Dynamic Zoom Scaling */
@@ -1068,7 +1075,7 @@
     animation: utLabelRetractMobile 0.4s ease-in forwards !important;
   }
 
-  /* Label mobile: tối ưu hóa 60FPS — bỏ backdrop-filter (gây giật lag canvas mobile) */
+  /* Label mobile: tối ưu hóa 60FPS — tự co giãn theo chiều dài tên (không giới hạn max-width) */
   .hs-container.hs-no-view .lm-glass-flag {
     position: absolute !important;
     bottom: var(--lm-beam-h, 70px) !important;
@@ -1084,6 +1091,9 @@
     border: 1px solid rgba(255, 255, 255, 0.3) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
     white-space: nowrap !important;
+    max-width: none !important;
+    width: max-content !important;
+    overflow: visible !important;
     opacity: 0 !important;
     visibility: hidden !important;
     z-index: 10 !important;
@@ -1099,11 +1109,16 @@
     font-size: 9px !important;
   }
 
-  /* Tên label nhỏ hơn */
+  /* Tên label nhỏ hơn, hiển thị đầy đủ không bị cắt bớt */
   .hs-container.hs-no-view .lm-glass-flag .lm-name,
   .hs-container.hs-no-view .lm-glass-flag .lm-label-text {
     font-size: 9px !important;
     letter-spacing: 0.4px !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    max-width: none !important;
+    width: auto !important;
   }
 
   /* Touch Passthrough: Allows smooth WebGL panorama dragging */
@@ -1132,26 +1147,26 @@
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
     transform: scale(0.42) !important;
   }
-  .hs-container .lm-vertical-beam,
-  .hs-container.hs-no-view .lm-vertical-beam {
+  .hs-container.hs-has-view .lm-vertical-beam {
     animation: none !important;
     opacity: 0.95 !important;
     height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     max-height: none !important;
   }
-  .hs-container .lm-holographic-label {
+  .hs-container.hs-has-view .lm-holographic-label {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5 + 3px) !important;
     padding: 2px 5px !important;
     font-size: 8px !important;
-    max-width: 95px !important;
+    max-width: none !important;
+    width: max-content !important;
   }
-  .hs-container .lm-glass-flag,
-  .hs-container.hs-no-view .lm-glass-flag {
+  .hs-container.hs-has-view .lm-glass-flag {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     transform: translateY(50%) !important;
     padding: 2px 5px !important;
     font-size: 8px !important;
-    max-width: 95px !important;
+    max-width: none !important;
+    width: max-content !important;
   }
 }
 

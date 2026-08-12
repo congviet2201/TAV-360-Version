@@ -117,8 +117,8 @@
                 webkit-playsinline 
                 preload="auto"
                 aria-label="LOGO TAV PANOTOUR 3 Video Animation">
-                <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.webm" type="video/webm">
-                <source src="video logo/LOGO TAV PANOTOUR 3/LOGO TAV PANOTOUR 3.mp4" type="video/mp4">
+                <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.webm" type="video/webm">
+                <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -203,12 +203,35 @@
       });
     });
 
-    // Auto-play logo video gracefully
+    // Robust Auto-play & Display Engine for Video Logo
     const logoVideo = overlay.querySelector('.landing-logo-video');
     if (logoVideo) {
-      logoVideo.play().catch(err => {
-        console.warn('Logo video autoplay deferred:', err);
-      });
+      logoVideo.muted = true;
+      logoVideo.defaultMuted = true;
+      logoVideo.setAttribute('muted', '');
+      logoVideo.setAttribute('playsinline', '');
+
+      const attemptPlay = () => {
+        const p = logoVideo.play();
+        if (p && typeof p.then === 'function') {
+          p.then(() => {
+            logoVideo.style.opacity = '1';
+            logoVideo.style.visibility = 'visible';
+          }).catch(err => {
+            console.warn('Logo video autoplay deferred, attaching touch/click listener:', err);
+            const forcePlay = () => {
+              logoVideo.play().then(() => {
+                logoVideo.style.opacity = '1';
+                logoVideo.style.visibility = 'visible';
+              }).catch(() => {});
+            };
+            window.addEventListener('click', forcePlay, { once: true });
+            window.addEventListener('touchstart', forcePlay, { once: true });
+          });
+        }
+      };
+
+      attemptPlay();
     }
   }
 

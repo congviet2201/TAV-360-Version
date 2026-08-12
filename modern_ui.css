@@ -16739,6 +16739,9 @@ div:has(> .hs-container[id*="hs_wc"]) {
   border: 1px solid rgba(255, 255, 255, 0.28) !important;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.4) !important;
   white-space: nowrap !important;
+  max-width: none !important;
+  width: max-content !important;
+  overflow: visible !important;
   opacity: 0 !important;
   visibility: hidden !important;
   transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
@@ -16782,6 +16785,11 @@ div:has(> .hs-container[id*="hs_wc"]) {
   letter-spacing: 0.2px !important;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95) !important;
   text-transform: none !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  max-width: none !important;
+  width: auto !important;
   opacity: 1 !important;
   visibility: visible !important;
 }
