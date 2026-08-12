@@ -949,7 +949,7 @@
     overflow: visible !important;
   }
 
-  /* Keyframes mobile: từ dưới lên, 750ms (T% giảm 100%→0%) */
+  /* Keyframes mobile: từ dưới lên, 750ms — không xài filter: blur() gây lag mobile GPU */
   @keyframes utBeamAscentMobile {
     0%   { clip-path: inset(100% 0 0 0); opacity: 0; }
     5%   { clip-path: inset(97%  0 0 0); opacity: 0.65; }
@@ -960,11 +960,11 @@
   }
 
   @keyframes utLabelAscentMobile {
-    0%   { opacity: 0; visibility: hidden; bottom: 0; transform: translateY(50%) scale(0.2); filter: blur(4px); }
-    20%  { opacity: 0.1; visibility: visible; bottom: 0; transform: translateY(50%) scale(0.25); filter: blur(4px); }
-    50%  { opacity: 0.5; bottom: calc(var(--lm-beam-h, 70px) * 0.45); transform: translateY(50%) scale(0.7); filter: blur(2px); }
-    80%  { opacity: 0.85; bottom: calc(var(--lm-beam-h, 70px) * 0.82); transform: translateY(50%) scale(0.95); filter: blur(0px); }
-    100% { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 70px); transform: translateY(50%) scale(1); filter: blur(0px); }
+    0%   { opacity: 0; visibility: hidden; bottom: 0; transform: translateY(50%) scale(0.2); }
+    20%  { opacity: 0.25; visibility: visible; bottom: 0; transform: translateY(50%) scale(0.35); }
+    50%  { opacity: 0.65; bottom: calc(var(--lm-beam-h, 70px) * 0.45); transform: translateY(50%) scale(0.7); }
+    80%  { opacity: 0.9; bottom: calc(var(--lm-beam-h, 70px) * 0.82); transform: translateY(50%) scale(0.95); }
+    100% { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 70px); transform: translateY(50%) scale(1); }
   }
 
   @keyframes utBeamRetractMobile {
@@ -975,7 +975,7 @@
 
   @keyframes utLabelRetractMobile {
     0%   { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 70px); transform: translateY(50%) scale(1); }
-    100% { opacity: 0; visibility: hidden;  bottom: 0; transform: translateY(50%) scale(0.2); filter: blur(4px); }
+    100% { opacity: 0; visibility: hidden;  bottom: 0; transform: translateY(50%) scale(0.2); }
   }
 
   /* STATE: HIDDEN */
@@ -1051,7 +1051,6 @@
     opacity: 1 !important;
     visibility: visible !important;
     transform: translateY(50%) scale(1) !important;
-    filter: blur(0px) !important;
   }
 
   /* STATE: HIDING — cột thu về chấm */
@@ -1069,7 +1068,7 @@
     animation: utLabelRetractMobile 0.4s ease-in forwards !important;
   }
 
-  /* Label mobile: nhỏ hơn desktop */
+  /* Label mobile: tối ưu hóa 60FPS — bỏ backdrop-filter (gây giật lag canvas mobile) */
   .hs-container.hs-no-view .lm-glass-flag {
     position: absolute !important;
     bottom: var(--lm-beam-h, 70px) !important;
@@ -1079,11 +1078,11 @@
     align-items: center !important;
     gap: 5px !important;
     padding: 4px 9px 4px 7px !important;
-    background: rgba(10, 18, 36, 0.88) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.55), 0 0 8px rgba(255, 255, 255, 0.35) !important;
+    background: rgba(10, 18, 36, 0.95) !important; /* solid high contrast, NO backdrop-filter */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5) !important;
     white-space: nowrap !important;
     opacity: 0 !important;
     visibility: hidden !important;
@@ -1114,13 +1113,17 @@
     pointer-events: none !important;
   }
 
-  /* During Active Camera Rotation: Pause heavy animations */
+  /* During Active Camera Rotation: Pause heavy animations and strip filters for 60 FPS WebGL panning */
   body.pano-is-rotating .hs-container *,
   body.pano-is-rotating .lm-scale-wrap *,
   body.pano-is-rotating .hologram-marker-container * {
     animation-play-state: paused !important;
+    animation: none !important;
     box-shadow: none !important;
     filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: none !important;
   }
 }
 

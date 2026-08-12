@@ -6343,9 +6343,48 @@ document.addEventListener("click", function(e) {
     });
   }
 
+  // 60FPS Mobile Drag / Touch Rotation Tracker
+  let mobileRotationTimer = null;
+  function triggerMobileRotationState() {
+    if (window.innerWidth > 1024) return;
+    if (!document.body.classList.contains('pano-is-rotating')) {
+      document.body.classList.add('pano-is-rotating');
+    }
+    if (mobileRotationTimer) clearTimeout(mobileRotationTimer);
+    mobileRotationTimer = setTimeout(() => {
+      document.body.classList.remove('pano-is-rotating');
+    }, 180);
+  }
+
+  window.addEventListener('pointerdown', triggerMobileRotationState, { passive: true });
+  window.addEventListener('touchmove', triggerMobileRotationState, { passive: true });
+  window.addEventListener('pointerup', () => {
+    if (mobileRotationTimer) clearTimeout(mobileRotationTimer);
+    mobileRotationTimer = setTimeout(() => {
+      document.body.classList.remove('pano-is-rotating');
+    }, 180);
+  }, { passive: true });
+  window.addEventListener('touchend', () => {
+    if (mobileRotationTimer) clearTimeout(mobileRotationTimer);
+    mobileRotationTimer = setTimeout(() => {
+      document.body.classList.remove('pano-is-rotating');
+    }, 180);
+  }, { passive: true });
+
   // Update hotspot visibility, dynamic scale, and trigger UtilityHotspotController
   function updateHotspotVisibility() {
     if (!window.pano || typeof window.pano.getPan !== 'function') return;
+
+    const isMobile = window.innerWidth <= 1024;
+
+    // 60FPS Mobile Optimization: Throttle visibility checks during active touch drag panning
+    if (isMobile && document.body.classList.contains('pano-is-rotating')) {
+      const now = Date.now();
+      if (window._lastMobileVisCheck && (now - window._lastMobileVisCheck < 50)) {
+        return;
+      }
+      window._lastMobileVisCheck = now;
+    }
 
     try {
       const camPan = window.pano.getPan();
@@ -6363,7 +6402,6 @@ document.addEventListener("click", function(e) {
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
       const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
 
-      const isMobile = window.innerWidth <= 1024;
       const isSmallPhone = window.innerWidth <= 480;
       const baseScale = isSmallPhone ? 0.42 : (isMobile ? 0.48 : 0.95);
       const fovRatio = 90 / Math.max(30, Math.min(125, camFov));
