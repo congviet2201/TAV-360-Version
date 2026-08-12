@@ -6090,6 +6090,11 @@ document.addEventListener("click", function(e) {
       landmarks.forEach(lm => {
         let finalPan = parseFloat(lm.pan);
         let finalTilt = parseFloat(lm.tilt);
+        // Lock HÀ NỘI text banner position to 66.58 / 2.42 on mobile
+        if ((lm.id === 'hanoi_01' || lm.isTextOnly || lm.name === 'HÀ NỘI') && window.innerWidth <= 1024) {
+          finalPan = 66.58;
+          finalTilt = 2.42;
+        }
         const el = createLandmarkHotspot(lm);
         window.pano.addHotspot(`lm_${lm.id}`, finalPan, finalTilt, el);
         currentHotspotElements.push({
@@ -6098,6 +6103,8 @@ document.addEventListener("click", function(e) {
           tilt: finalTilt,
           id: `lm_${lm.id}`,
           isLandmark: true,
+          isTextOnly: !!lm.isTextOnly,
+          name: lm.name,
           baseHeight: lm.calculatedHeight || 70
         });
       });
@@ -6269,17 +6276,35 @@ document.addEventListener("click", function(e) {
         const isTextOnly = el.classList.contains('hs-text-only-container');
         const isNoViewLandmark = isLandmark || el.classList.contains('hs-no-view');
 
+        // BIRD VIEW MOBILE OPTIMIZATION: Convert view hotspots on Bird View into minimal glowing dots
+        if (isBirdView && isHasView) {
+          if (!el.classList.contains('is-bird-view-dot')) {
+            el.classList.add('is-bird-view-dot');
+          }
+        } else {
+          if (el.classList.contains('is-bird-view-dot')) {
+            el.classList.remove('is-bird-view-dot');
+          }
+        }
+
         if (isTextOnly || isHasView || !isNoViewLandmark) {
           applyVisibility('1', 'visible');
           return;
         }
 
         // Angular distance calculation from camera center
-        let dPan = pan - camPan;
+        let activePan = pan;
+        let activeTilt = tilt;
+        if ((item.id === 'lm_hanoi_01' || item.isTextOnly || (item.name && item.name.includes('HÀ NỘI'))) && isMobile) {
+          activePan = 66.58;
+          activeTilt = 2.42;
+        }
+
+        let dPan = activePan - camPan;
         while (dPan >  180) dPan -= 360;
         while (dPan < -180) dPan += 360;
         const absPan = Math.abs(dPan);
-        const absTilt = Math.abs(tilt - camTilt);
+        const absTilt = Math.abs(activeTilt - camTilt);
         const maxTiltDiff = isTopView ? 85 : 50;
 
         // Smooth Center View Cone (Within 20° pan from camera center)

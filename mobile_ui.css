@@ -609,14 +609,22 @@
    MOBILE HOTSPOT SIZE & TOUCH TARGET OPTIMIZATION
    ============================================================ */
 /* ============================================================
-   UNIVERSAL MOBILE HOTSPOT SCALING & RESPONSIVE FIT
-   Fits perfectly on any mobile screen (iPhone SE, Pro Max, Galaxy, Pixel)
+   UNIVERSAL MOBILE HOTSPOT SYNCHRONIZATION & RESPONSIVE FIT
+   Synchronizes all hotspot types (has-view, no-view, text-only, hologram)
+   perfectly across mobile viewports (iPhone SE, Pro Max, Galaxy, Pixel, iPad)
    ============================================================ */
 @media screen and (max-width: 1024px) {
-  /* Sleek, fine-detailed scale for overall hotspot containers */
-  .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
-    transform: scale(0.48) !important;
-    transform-origin: center center !important;
+  /* Master synchronized scale for ALL mobile hotspot containers */
+  .hs-container,
+  .lm-scale-wrap,
+  .hologram-marker-container,
+  .mm-luxury-hotspot,
+  .ggnode,
+  .hs-has-view,
+  .hs-no-view,
+  .hs-text-only-container {
+    transform: scale(var(--hs-dynamic-scale, 0.48)) !important;
+    transform-origin: center bottom !important;
   }
   
   /* Proportional 50% beam height preserved on mobile */
@@ -699,25 +707,51 @@
     letter-spacing: 0.2px !important;
   }
 
+  /* Mobile Floating Sky Typography (e.g. HÀ NỘI) - Transparent Background, Dynamic Zoom Scaling */
+  .hs-text-only-container,
+  .hs-text-only-container .lm-big-text-wrapper {
+    background: none !important;
+    background-color: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .hs-text-only-container .lm-big-text-content {
+    font-size: 26px !important;
+    font-weight: 800 !important;
+    letter-spacing: 5px !important;
+    color: #ffffff !important;
+    background: linear-gradient(180deg, #FFFFFF 0%, rgba(240, 248, 255, 0.85) 60%, rgba(200, 225, 255, 0.4) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.75)) drop-shadow(0 0 16px rgba(255, 255, 255, 0.5)) !important;
+    transform: scale(var(--hs-dynamic-scale, 0.48)) !important;
+    transform-origin: center center !important;
+  }
+
   /* Fine-detailed ground scan ring & core dot */
   .hs-container .lm-ground-scan-system,
   .hs-container .lm-ground-scan {
-    width: 22px !important;
-    height: 22px !important;
+    width: 20px !important;
+    height: 20px !important;
   }
   .hs-container .lm-scan-ring-2 {
-    width: 15px !important;
-    height: 15px !important;
+    width: 14px !important;
+    height: 14px !important;
   }
   .hs-container .lm-energy-core {
-    width: 7px !important;
-    height: 7px !important;
+    width: 6px !important;
+    height: 6px !important;
   }
 
-  /* Accessible tap target (>=44px) without inflating visual size */
+  /* Accessible tap target (>=36px) without inflating visual size */
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot, .ggnode {
-    min-width: 44px !important;
-    min-height: 44px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
     box-sizing: content-box !important;
   }
 }
@@ -729,7 +763,10 @@
 .lm-scale-wrap,
 .hologram-marker-container,
 .mm-luxury-hotspot,
-.ggnode {
+.ggnode,
+.hs-has-view,
+.hs-no-view,
+.hs-text-only-container {
   transform: scale(var(--hs-dynamic-scale, 0.48)) !important;
   transform-origin: center bottom !important;
 }
@@ -744,6 +781,61 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   BIRD VIEW MOBILE OPTIMIZATION: MINIMAL GLOWING DOT MARKERS
+   Converts view hotspots on Bird View (node2) into minimal 14px glowing dots
+   to eliminate mobile DOM overhead and maximize 60 FPS rotation speed.
+   ══════════════════════════════════════════════════════════════════ */
+@media screen and (max-width: 1024px) {
+  .hs-container.is-bird-view-dot {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .hs-container.is-bird-view-dot * {
+    display: none !important;
+  }
+
+  .hs-container.is-bird-view-dot::before {
+    content: '' !important;
+    display: block !important;
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50% !important;
+    background: #00ffaa !important;
+    border: 1.5px solid #ffffff !important;
+    box-shadow: 0 0 6px #00ffaa, 0 0 10px rgba(0, 255, 170, 0.8) !important;
+    animation: birdDotPulse 1.8s infinite ease-in-out !important;
+  }
+
+  @keyframes birdDotPulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 6px #00ffaa;
+    }
+    50% {
+      transform: scale(1.3);
+      box-shadow: 0 0 10px #00ffaa, 0 0 14px rgba(0, 255, 170, 0.9);
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hs-container.is-bird-view-dot::before {
+    width: 6px !important;
+    height: 6px !important;
+    border: 1px solid #ffffff !important;
+  }
 }
 
 /* Water Column Geyser Rising Keyframe Animations */
