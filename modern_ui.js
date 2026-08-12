@@ -4853,25 +4853,38 @@ document.addEventListener("click", function(e) {
 
   let compassAnimFrame = null;
   let lastRawPan = null;
+  let lastRawTilt = null;
+  let lastRawFov = null;
   let continuousPan = 0;
+  let cachedTextWrappers = null;
+  let lastScaledFov = null;
 
   function syncCompass() {
     if (!window.pano) return;
     try {
-      const rawPan = window.pano.getPan ? window.pano.getPan() : 0;
+      const rawPan = typeof window.pano.getPan === 'function' ? window.pano.getPan() : 0;
+      const rawTilt = typeof window.pano.getTilt === 'function' ? window.pano.getTilt() : 0;
+      const rawFov = typeof window.pano.getFov === 'function' ? window.pano.getFov() : 90;
       
       if (lastRawPan === null) {
         continuousPan = rawPan;
         lastRawPan = rawPan;
+        lastRawTilt = rawTilt;
+        lastRawFov = rawFov;
       } else {
         let dPan = rawPan - lastRawPan;
         if (dPan > 180) dPan -= 360;
         if (dPan < -180) dPan += 360;
+        const dTilt = Math.abs(rawTilt - lastRawTilt);
+        const dFov = Math.abs(rawFov - lastRawFov);
         
-        // OPTIMIZATION: Only process DOM updates if rotation changed significantly (>0.1 deg)
-        if (Math.abs(dPan) > 0.1) {
+        // 60FPS MOBILE PERFORMANCE OPTIMIZATION:
+        // Only run DOM updates, minimap sync, and hotspot calculations when camera actually rotates/tilts/zooms!
+        if (Math.abs(dPan) > 0.05 || dTilt > 0.05 || dFov > 0.05) {
           continuousPan += dPan;
           lastRawPan = rawPan;
+          lastRawTilt = rawTilt;
+          lastRawFov = rawFov;
     
           const dial = document.getElementById("compass-dial");
           const degDisplay = document.getElementById("compass-degree");
@@ -4885,27 +4898,35 @@ document.addEventListener("click", function(e) {
           }
     
           syncMinimap(continuousPan);
-        }
 
-        // Premium hotspot depth/visibility & label collision prevention (Always update every frame)
-        updateHotspotVisibility();
-        syncPerspectiveTextScale();
+          // Update hotspot visibility ONLY when camera actually rotates/tilts
+          updateHotspotVisibility();
+
+          // Update perspective text scale ONLY when FOV zoom actually changes
+          if (dFov > 0.05) {
+            syncPerspectiveTextScale();
+          }
+        }
       }
     } catch (e) {}
     compassAnimFrame = requestAnimationFrame(syncCompass);
   }
 
   // Scale text-only labels (HÀ NỘI) to match panorama image zoom:
-  // Pano2VR internally shrinks hotspot containers when zooming in (to keep pixel size fixed).
-  // We apply (refFov/currentFov)^2 to counteract that AND add proportional growth with the image.
-  // Result: Zoom IN → text BIGGER (like the image), Zoom OUT → text SMALLER (like the image).
   function syncPerspectiveTextScale() {
     if (!window.pano || typeof window.pano.getFov !== 'function') return;
     const currentFov = Math.max(10, Math.min(150, window.pano.getFov() || 90));
+    if (lastScaledFov !== null && Math.abs(currentFov - lastScaledFov) < 0.05) return;
+    lastScaledFov = currentFov;
+
     const refFov = 90;
     const scale = Math.pow(refFov / currentFov, 2);
 
-    document.querySelectorAll('.hs-text-only-container .lm-big-text-wrapper').forEach(wrapper => {
+    if (!cachedTextWrappers || cachedTextWrappers.length === 0) {
+      cachedTextWrappers = document.querySelectorAll('.hs-text-only-container .lm-big-text-wrapper');
+    }
+
+    cachedTextWrappers.forEach(wrapper => {
       wrapper.style.transform = `scale(${scale.toFixed(4)})`;
       wrapper.style.transformOrigin = 'center center';
     });
@@ -5690,7 +5711,7 @@ document.addEventListener("click", function(e) {
     const beamH = pin.lineHeight || pin.height || calculateBeamHeightFromTilt(pin.tilt, 40, 150);
 
     const container = document.createElement('div');
-    container.className = `hs-container hs-landmark-container hs-has-view hs-${pin.category}`;
+    container.className = `hs-container hs-landmark-container hs-has-view hs-${pin.category} ${isTopViewNode ? 'hs-topview-pin' : ''}`;
     container.id = `hs-${pin.id}`;
     container.setAttribute('aria-label', displayTitle);
     container.setAttribute('data-pin-id', pin.id);
@@ -6129,7 +6150,8 @@ document.addEventListener("click", function(e) {
       const posY = pos.y;
 
       const marker = document.createElement('div');
-      marker.className = `mm-luxury-hotspot`;
+      marker.className = `mm-hs-marker mm-hs-${pin.category || 'default'}`;
+      marker.setAttribute('data-target-node', pin.nodeTarget);
       
       // Highlight the active panorama
       if (pin.nodeTarget === nodeId || pin.id.replace(/_tv$/, '') === nodeId) {
@@ -6166,16 +6188,31 @@ document.addEventListener("click", function(e) {
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
       const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
 
-      // Do NOT stretch beam heights when zooming out — keep beams ultra-compact, short, and sleek at all times!
       const fovScale = 1.0;
 
       currentHotspotElements.forEach(({ el, pan, tilt, isLandmark, baseHeight }) => {
+        if (!el) return;
+
+        // HIGH PERFORMANCE STATE CACHING: Prevents DOM reflows and style recalculation overhead
+        const applyVisibility = (opacityVal, visState) => {
+          if (el._cachedOpacity !== opacityVal) {
+            el._cachedOpacity = opacityVal;
+            el.style.opacity = opacityVal;
+          }
+          if (el._cachedVis !== visState) {
+            el._cachedVis = visState;
+            el.style.visibility = visState;
+            if (visState === 'hidden' || opacityVal === '0') {
+              el.classList.remove('hs-visible');
+            } else {
+              el.classList.add('hs-visible');
+            }
+          }
+        };
+
         // Large Text Only (e.g. HÀ NỘI): ALWAYS 100% VISIBLE
-        if (el && el.classList.contains('hs-text-only-container')) {
-          el.classList.add('hs-visible');
-          el.style.opacity = '1';
-          el.style.visibility = 'visible';
-          el.style.display = 'block';
+        if (el.classList.contains('hs-text-only-container')) {
+          applyVisibility('1', 'visible');
           return;
         }
 
@@ -6185,49 +6222,36 @@ document.addEventListener("click", function(e) {
         while (dPan < -180) dPan += 360;
         const dTilt = tilt - camTilt;
 
-        const isHasView = el && el.classList.contains('hs-has-view');
-        const isNoViewLandmark = isLandmark || (el && el.classList.contains('hs-no-view'));
+        const isHasView = el.classList.contains('hs-has-view');
+        const isNoViewLandmark = isLandmark || el.classList.contains('hs-no-view');
 
         if (isHasView || !isNoViewLandmark) {
-          // Hotspot CÓ VIEW (Navigation Hotspots với panorama target):
-          // Mặc định luôn hiển thị đầy đủ toàn bộ trên tất cả các cảnh, không bao giờ ẩn khi xoay
-          el.classList.add('hs-visible');
-          el.style.opacity = '1';
-          el.style.visibility = 'visible';
-          el.style.display = 'block';
+          applyVisibility('1', 'visible');
           return;
         }
 
         // Center Viewport Visibility Zone CHỈ dành cho Landmark KHÔNG CÓ VIEW (hs-no-view):
         if (isNoViewLandmark) {
-          // Adapt beam height dynamically to FOV zoom level so vertical pixel gap is preserved
-          if (baseHeight) {
+          if (baseHeight && el._cachedBaseHeight !== baseHeight) {
+            el._cachedBaseHeight = baseHeight;
             const scaledH = Math.round(baseHeight * fovScale);
             el.style.setProperty('--lm-beam-h', `${scaledH}px`);
           }
 
-          const CENTER_PAN_THRESHOLD = Math.min(11, camFov * 0.12); // tight ~3-4cm window in screen center
-          const FADE_BUFFER = 6;                                    // quick smooth fade transition zone
+          const CENTER_PAN_THRESHOLD = Math.min(11, camFov * 0.12);
+          const FADE_BUFFER = 6;
 
           const absPan  = Math.abs(dPan);
           const absTilt = Math.abs(dTilt);
+          const maxTiltDiff = isTopView ? 85 : 50;
 
-          if (absPan > (CENTER_PAN_THRESHOLD + FADE_BUFFER) || absTilt > 50) {
-            // Outside 3-4cm center window — HIDE completely
-            el.classList.remove('hs-visible');
-            el.style.opacity = '0';
-            el.style.visibility = 'hidden';
+          if (absPan > (CENTER_PAN_THRESHOLD + FADE_BUFFER) || absTilt > maxTiltDiff) {
+            applyVisibility('0', 'hidden');
           } else if (absPan > CENTER_PAN_THRESHOLD) {
-            // Edge transition zone — quick smooth fade
-            el.classList.add('hs-visible');
-            el.style.visibility = 'visible';
             const fadeRatio = 1 - (absPan - CENTER_PAN_THRESHOLD) / FADE_BUFFER;
-            el.style.opacity = String(Math.max(0, Math.min(1, fadeRatio)));
+            applyVisibility(String(Math.max(0, Math.min(1, fadeRatio)).toFixed(2)), 'visible');
           } else {
-            // Inside ~3-4cm center strip — FULLY VISIBLE & OPAQUE
-            el.classList.add('hs-visible');
-            el.style.opacity = '1';
-            el.style.visibility = 'visible';
+            applyVisibility('1', 'visible');
           }
           return;
         }

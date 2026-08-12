@@ -331,19 +331,16 @@
 
   // ── Compass Synchronizer ─────────────────────────────────────────────
   function startCompassSync() {
+    let lastAngle = null;
     const update = () => {
-      const dial = document.querySelector('.ml6-compass-dial');
-      if (dial) {
-        const angle = window.TAV_CORE.getCompassAngle();
-        dial.style.transform = `rotate(${angle}deg)`;
+      const angle = window.TAV_CORE ? window.TAV_CORE.getCompassAngle() : 0;
+      if (lastAngle === null || Math.abs(angle - lastAngle) > 0.1) {
+        lastAngle = angle;
+        const dial = document.querySelector('.ml6-compass-dial');
+        if (dial) dial.style.transform = `rotate(${angle}deg)`;
+        const cone = document.getElementById('ml6-minimap-cone');
+        if (cone) cone.style.transform = `rotate(${angle}deg)`;
       }
-
-      const cone = document.getElementById('ml6-minimap-cone');
-      if (cone) {
-        const angle = window.TAV_CORE.getCompassAngle();
-        cone.style.transform = `rotate(${angle}deg)`;
-      }
-
       _compassRaf = requestAnimationFrame(update);
     };
     update();

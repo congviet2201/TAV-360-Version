@@ -266,18 +266,20 @@
 
   function renderLoop() {
     if (!isLoopRunning) return;
-    requestAnimationFrame(renderLoop);
 
     if (!flareContainerEl) return;
 
     const pano = getPanoInstance();
     const anchor = getSunAnchor();
 
-    if (!anchor.enabled || !pano) {
+    if (!anchor || !anchor.enabled || !pano) {
       flareContainerEl.style.opacity = '0';
       currentOpacity = 0;
+      isLoopRunning = false;
       return;
     }
+
+    requestAnimationFrame(renderLoop);
 
     // Capture camera state for idle check & projection
     if (typeof pano.getPan === 'function') {

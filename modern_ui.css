@@ -2138,6 +2138,75 @@
   transform: translateX(-50%) translateY(0) scale(1);
 }
 
+/* Top View (node1 & node3) Hotspot Center Pinned & Compact Non-Overlapping Styling */
+.hs-container.hs-topview-pin .hs-scale-wrap,
+body.node-node1 .hs-scale-wrap,
+body.node-node3 .hs-scale-wrap {
+  bottom: auto !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+  transform-origin: center center !important;
+}
+
+.hs-container.hs-topview-pin .lm-ground-scan-system,
+body.node-node1 .lm-ground-scan-system,
+body.node-node3 .lm-ground-scan-system {
+  width: 26px !important;
+  height: 26px !important;
+}
+.hs-container.hs-topview-pin .lm-ground-scan,
+body.node-node1 .lm-ground-scan,
+body.node-node3 .lm-ground-scan {
+  width: 26px !important;
+  height: 26px !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.hs-container.hs-topview-pin .lm-scan-ring-2,
+body.node-node1 .lm-scan-ring-2,
+body.node-node3 .lm-scan-ring-2 {
+  width: 18px !important;
+  height: 18px !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.hs-container.hs-topview-pin .lm-energy-core,
+body.node-node1 .lm-energy-core,
+body.node-node3 .lm-energy-core {
+  width: 10px !important;
+  height: 10px !important;
+  border: 1.5px solid #ffffff !important;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8) !important;
+}
+.hs-container.hs-topview-pin .hs-preview-card,
+body.node-node1 .hs-preview-card,
+body.node-node3 .hs-preview-card {
+  position: absolute !important;
+  bottom: 45px !important;
+  left: 50% !important;
+  transform: translateX(-50%) scale(0.9) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease !important;
+  z-index: 1000 !important;
+}
+.hs-container.hs-topview-pin:hover,
+body.node-node1 .hs-container:hover,
+body.node-node3 .hs-container:hover {
+  z-index: 9999 !important;
+}
+.hs-container.hs-topview-pin:hover .hs-preview-card,
+.hs-container.hs-topview-pin.hs-hovered .hs-preview-card,
+body.node-node1 .hs-container:hover .hs-preview-card,
+body.node-node3 .hs-container:hover .hs-preview-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  transform: translateX(-50%) scale(1) !important;
+}
+
 /* ===================================================================
    TYPE A â€” TOP VIEW DAY 1: Line-pin beacon with ALWAYS-VISIBLE label
    Label (hs-pin-text) is permanently shown. No hover required.
