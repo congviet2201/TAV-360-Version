@@ -613,19 +613,15 @@
    Fits perfectly on any mobile screen (iPhone SE, Pro Max, Galaxy, Pixel)
    ============================================================ */
 @media screen and (max-width: 1024px) {
-  /* Scale down overall hotspot containers cleanly */
+  /* Sleek, fine-detailed scale for overall hotspot containers */
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
-    transform: scale(0.56) !important;
+    transform: scale(0.48) !important;
     transform-origin: center center !important;
   }
   
-  /* Proportional 50% height reduction for mobile screens:
-     Lowers beam pole length and name badge elevation down by 50% while preserving
-     stair-step proportions and vertical label gaps to prevent overlaps. */
-  /* Override keyframe animation & lock 50% beam height on mobile for ALL hotspot types */
+  /* Proportional 50% beam height preserved on mobile */
   .hs-container .lm-vertical-beam,
   .hs-container.hs-no-view .lm-vertical-beam {
-    animation: none !important;
     opacity: 0.95 !important;
     height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     max-height: none !important;
@@ -635,58 +631,87 @@
     max-height: none !important;
   }
 
-  /* Centered holographic label badges sit rigidly on top of the 50% reduced beam tip */
+  /* Smooth bottom-to-top rising keyframe animations on mobile */
+  @keyframes lmBeamRiseMobile {
+    0% {
+      height: 0 !important;
+      opacity: 0 !important;
+    }
+    100% {
+      height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+      opacity: 0.95 !important;
+    }
+  }
+
+  @keyframes lmFlagRiseMobile {
+    0% {
+      bottom: 0 !important;
+      opacity: 0 !important;
+    }
+    100% {
+      bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+      opacity: 1 !important;
+    }
+  }
+
+  /* Play rising animation when hotspot becomes visible */
+  .hs-container.hs-visible .lm-vertical-beam,
+  .hs-container.hs-no-view.hs-visible .lm-vertical-beam {
+    animation: lmBeamRiseMobile 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+  }
+
+  .hs-container.hs-visible .lm-glass-flag,
+  .hs-container.hs-no-view.hs-visible .lm-glass-flag,
+  .hs-container.hs-visible .lm-holographic-label {
+    animation: lmFlagRiseMobile 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+  }
+
+  /* Micro-sized, fine-detailed holographic label badges */
   .hs-container .lm-holographic-label {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5 + 4px) !important;
-    padding: 3px 8px !important;
-    font-size: 10px !important;
-    max-width: 120px !important;
+    padding: 2px 6px !important;
+    font-size: 8.5px !important;
+    max-width: 110px !important;
+    border-radius: 4px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
   }
 
-  /* Glass flag badges lock directly centered onto the top tip of the 50% reduced beam pole */
+  /* Micro-sized, fine-detailed glass flag badges */
   .hs-container .lm-glass-flag,
   .hs-container.hs-no-view .lm-glass-flag {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     transform: translateY(50%) !important;
-    padding: 3px 8px !important;
-    font-size: 10px !important;
-    max-width: 120px !important;
+    padding: 2px 6px !important;
+    font-size: 8.5px !important;
+    max-width: 110px !important;
+    border-radius: 4px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
-  }
-  .hs-container .lm-holographic-label .lm-name,
-  .hs-container .lm-glass-flag .lm-name {
-    font-size: 9.5px !important;
-    letter-spacing: 0.3px !important;
-  }
-  .hs-container .lm-holographic-label .lm-icon svg,
-  .hs-container .lm-glass-flag .lm-icon svg {
-    width: 12px !important;
-    height: 12px !important;
   }
 
-  /* Compact ground scan ring & core dot */
-  .hs-container .lm-ground-scan-system {
-    width: 28px !important;
-    height: 28px !important;
+  .hs-container .lm-holographic-label .lm-name,
+  .hs-container .lm-glass-flag .lm-name {
+    font-size: 8.5px !important;
+    letter-spacing: 0.2px !important;
   }
+
+  /* Fine-detailed ground scan ring & core dot */
+  .hs-container .lm-ground-scan-system,
   .hs-container .lm-ground-scan {
-    width: 28px !important;
-    height: 28px !important;
+    width: 22px !important;
+    height: 22px !important;
   }
   .hs-container .lm-scan-ring-2 {
-    width: 20px !important;
-    height: 20px !important;
+    width: 15px !important;
+    height: 15px !important;
   }
   .hs-container .lm-energy-core {
-    width: 10px !important;
-    height: 10px !important;
+    width: 7px !important;
+    height: 7px !important;
   }
 
   /* Accessible tap target (>=44px) without inflating visual size */
@@ -695,18 +720,20 @@
     min-height: 44px !important;
     box-sizing: content-box !important;
   }
-
-  /* Hotspot text labels on mobile: clean responsive size */
-  .hs-label, .hotspot-label, .mm-tooltip {
-    font-size: 10px !important;
-    padding: 3px 8px !important;
-    max-width: 120px !important;
-  }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   GPU HARDWARE COMPOSITING & SMOOTH ROTATION ENGINE (60 FPS UNLOCK)
+   GPU HARDWARE COMPOSITING & DYNAMIC 3D PERSPECTIVE ZOOM SCALING
    ══════════════════════════════════════════════════════════════════ */
+.hs-container,
+.lm-scale-wrap,
+.hologram-marker-container,
+.mm-luxury-hotspot,
+.ggnode {
+  transform: scale(var(--hs-dynamic-scale, 0.48)) !important;
+  transform-origin: center bottom !important;
+}
+
 .hs-container,
 .lm-scale-wrap,
 .hologram-marker-container,
@@ -714,9 +741,47 @@
 .lm-glass-flag,
 .lm-holographic-label {
   will-change: transform, opacity !important;
-  transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}
+
+/* Water Column Geyser Rising Keyframe Animations */
+@keyframes lmBeamRiseWaterColumn {
+  0% {
+    height: 0 !important;
+    opacity: 0 !important;
+  }
+  40% {
+    opacity: 0.85 !important;
+  }
+  100% {
+    height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+    opacity: 0.95 !important;
+  }
+}
+
+@keyframes lmFlagRiseWaterColumn {
+  0% {
+    bottom: 0 !important;
+    opacity: 0 !important;
+    transform: translateY(50%) scale(0.6) !important;
+  }
+  100% {
+    bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+    opacity: 1 !important;
+    transform: translateY(50%) scale(1) !important;
+  }
+}
+
+/* Water Column Geyser Rising Animation Trigger */
+.hs-container.hs-no-view.lm-rising .lm-vertical-beam {
+  animation: lmBeamRiseWaterColumn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.hs-container.hs-no-view.lm-rising .lm-glass-flag,
+.hs-container.hs-no-view.lm-rising .lm-holographic-label {
+  animation: lmFlagRiseWaterColumn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
 }
 
 /* Touch Passthrough: Allows smooth WebGL panorama dragging without input stalling */
@@ -738,28 +803,28 @@ body.pano-is-rotating .hologram-marker-container * {
 /* Extra compact scaling for narrow portrait phones (iPhone SE / 360px - 414px) */
 @media screen and (max-width: 480px) {
   .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
-    transform: scale(0.48) !important;
+    transform: scale(0.42) !important;
   }
   .hs-container .lm-vertical-beam,
   .hs-container.hs-no-view .lm-vertical-beam {
     animation: none !important;
     opacity: 0.95 !important;
-    height: calc(var(--lm-beam-h, 70px) * 0.45) !important;
+    height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     max-height: none !important;
   }
   .hs-container .lm-holographic-label {
-    bottom: calc(var(--lm-beam-h, 70px) * 0.45 + 3px) !important;
-    padding: 2px 6px !important;
-    font-size: 9px !important;
-    max-width: 105px !important;
+    bottom: calc(var(--lm-beam-h, 70px) * 0.5 + 3px) !important;
+    padding: 2px 5px !important;
+    font-size: 8px !important;
+    max-width: 95px !important;
   }
   .hs-container .lm-glass-flag,
   .hs-container.hs-no-view .lm-glass-flag {
-    bottom: calc(var(--lm-beam-h, 70px) * 0.45) !important;
+    bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     transform: translateY(50%) !important;
-    padding: 2px 6px !important;
-    font-size: 9px !important;
-    max-width: 105px !important;
+    padding: 2px 5px !important;
+    font-size: 8px !important;
+    max-width: 95px !important;
   }
 }
 

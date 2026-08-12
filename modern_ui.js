@@ -6226,12 +6226,27 @@ document.addEventListener("click", function(e) {
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
       const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
 
-      const fovScale = 1.0;
+      // DYNAMIC 3D PERSPECTIVE ZOOM SCALING:
+      // Scales hotspot size proportionally with camera FOV (zoom in -> hotspot grows larger, zoom out -> hotspot shrinks smaller)
+      const isMobile = window.innerWidth <= 1024;
+      const isSmallPhone = window.innerWidth <= 480;
+      const baseScale = isSmallPhone ? 0.42 : (isMobile ? 0.48 : 0.95);
+      const fovRatio = 90 / Math.max(30, Math.min(125, camFov));
+      const dynamicScale = (baseScale * Math.pow(fovRatio, 0.75)).toFixed(3);
 
-      currentHotspotElements.forEach(({ el, pan, tilt, isLandmark, baseHeight }) => {
+      // First pass: collect angular distances for non-view landmark hotspots
+      const noViewLandmarkCandidates = [];
+
+      currentHotspotElements.forEach((item) => {
+        const { el, pan, tilt, isLandmark } = item;
         if (!el) return;
 
-        // HIGH PERFORMANCE STATE CACHING: Prevents DOM reflows and style recalculation overhead
+        // Apply dynamic 3D zoom scale to ALL hotspots (both with-view and non-view)
+        if (el._cachedDynamicScale !== dynamicScale) {
+          el._cachedDynamicScale = dynamicScale;
+          el.style.setProperty('--hs-dynamic-scale', dynamicScale);
+        }
+
         const applyVisibility = (opacityVal, visState) => {
           if (el._cachedOpacity !== opacityVal) {
             el._cachedOpacity = opacityVal;
@@ -6242,111 +6257,54 @@ document.addEventListener("click", function(e) {
             el.style.visibility = visState;
             if (visState === 'hidden' || opacityVal === '0') {
               el.classList.remove('hs-visible');
+              el.classList.remove('lm-rising');
             } else {
               el.classList.add('hs-visible');
             }
           }
         };
 
-        // Large Text Only (e.g. HÀ NỘI): ALWAYS 100% VISIBLE
-        if (el.classList.contains('hs-text-only-container')) {
+        // Text-only banners (e.g. HÀ NỘI) & Node Navigation Hotspots (hs-has-view): ALWAYS VISIBLE
+        const isHasView = el.classList.contains('hs-has-view');
+        const isTextOnly = el.classList.contains('hs-text-only-container');
+        const isNoViewLandmark = isLandmark || el.classList.contains('hs-no-view');
+
+        if (isTextOnly || isHasView || !isNoViewLandmark) {
           applyVisibility('1', 'visible');
           return;
         }
 
-        // Angular distance from camera center to hotspot (wrap-around safe)
+        // Angular distance calculation from camera center
         let dPan = pan - camPan;
         while (dPan >  180) dPan -= 360;
         while (dPan < -180) dPan += 360;
-        const dTilt = tilt - camTilt;
+        const absPan = Math.abs(dPan);
+        const absTilt = Math.abs(tilt - camTilt);
+        const maxTiltDiff = isTopView ? 85 : 50;
 
-        const isHasView = el.classList.contains('hs-has-view');
-        const isNoViewLandmark = isLandmark || el.classList.contains('hs-no-view');
-
-        if (isHasView || !isNoViewLandmark) {
-          applyVisibility('1', 'visible');
-          return;
-        }
-
-        // Center Viewport Visibility Zone CHỈ dành cho Landmark KHÔNG CÓ VIEW (hs-no-view):
-        if (isNoViewLandmark) {
-          if (baseHeight && el._cachedBaseHeight !== baseHeight) {
-            el._cachedBaseHeight = baseHeight;
-            const scaledH = Math.round(baseHeight * fovScale);
-            el.style.setProperty('--lm-beam-h', `${scaledH}px`);
-          }
-
-          const CENTER_PAN_THRESHOLD = Math.min(11, camFov * 0.12);
-          const FADE_BUFFER = 6;
-
-          const absPan  = Math.abs(dPan);
-          const absTilt = Math.abs(dTilt);
-          const maxTiltDiff = isTopView ? 85 : 50;
-
-          if (absPan > (CENTER_PAN_THRESHOLD + FADE_BUFFER) || absTilt > maxTiltDiff) {
-            applyVisibility('0', 'hidden');
-          } else if (absPan > CENTER_PAN_THRESHOLD) {
-            const fadeRatio = 1 - (absPan - CENTER_PAN_THRESHOLD) / FADE_BUFFER;
-            applyVisibility(String(Math.max(0, Math.min(1, fadeRatio)).toFixed(2)), 'visible');
-          } else {
-            applyVisibility('1', 'visible');
-          }
-          return;
-        }
-        if (isTopView || isBirdView) {
-          // Visibility zone cho Hotspot tiện ích KHÔNG CÓ VIEW trên Top View & Bird View:
-          // Xoay tới mới hiện (fade-in), xoay ra thì ẩn (fade-out)
-          const halfH = hFov / 6;       // ±FOV/6 from center (e.g. ±15° when FOV=90°)
-          const halfV = vFov * 0.5;     // full vertical FOV
-
-          const FADE_ZONE = 15; // degrees of smooth fade beyond the boundary
-
-          const absPan  = Math.abs(dPan);
-          const absTilt = Math.abs(dTilt);
-
-          // Fade factor: 0 = fully visible, 1 = fully hidden
-          const fadePan  = Math.max(0, Math.min(1, (absPan  - halfH) / FADE_ZONE));
-          const fadeTilt = Math.max(0, Math.min(1, (absTilt - halfV) / FADE_ZONE));
-
-          // Take the worst axis — if either is outside the zone, start fading
-          const fadeMax = Math.max(fadePan, fadeTilt);
-
-          if (fadeMax >= 1) {
-            // Fully outside — hidden
-            el.classList.remove('hs-visible');
-            el.style.opacity = '';
-          } else if (fadeMax > 0) {
-            // In fade zone — smooth transition
-            el.classList.add('hs-visible');
-            el.style.opacity = String(1 - fadeMax);
-          } else {
-            // Fully inside center zone — visible
-            el.classList.add('hs-visible');
-            el.style.opacity = '';
-          }
-
-          // Additional Focal Density Soft Fading for Amenity Landmarks to prevent visual clutter
-          if (isLandmark && el.classList.contains('hs-visible')) {
-            if (absPan > 28 && !el.classList.contains('hs-hovered')) {
-              const softOpacity = Math.max(0.3, 1 - (absPan - 28) / 14);
-              el.style.opacity = String(softOpacity);
-            }
-          }
-          return;
-        }
-
-        // Interior / Amenities nodes: hide when hotspot is clearly off-screen
-        const hideThreshold = 75;
-        if (Math.abs(dPan) > hideThreshold || Math.abs(dTilt) > hideThreshold) {
-          el.classList.remove('hs-visible');
-          el.style.opacity = '';
+        // Smooth Center View Cone (Within 20° pan from camera center)
+        if (absPan <= 20 && absTilt <= maxTiltDiff) {
+          const fadeOpacity = Math.max(0.1, 1 - Math.pow(absPan / 20, 1.5)).toFixed(2);
+          noViewLandmarkCandidates.push({ item, absPan, fadeOpacity, applyVisibility, el });
         } else {
-          el.classList.add('hs-visible');
-          el.style.opacity = '';
+          applyVisibility('0', 'hidden');
+          el.classList.remove('lm-rising');
         }
       });
 
-      // Hotspot positions are fixed by preset height ladder — no jittering
+      // Sort candidate landmarks by proximity to screen center and smoothly fade top 4 with water column geyser rise animation
+      noViewLandmarkCandidates.sort((a, b) => a.absPan - b.absPan);
+      noViewLandmarkCandidates.forEach((cand, rank) => {
+        if (rank < 4) {
+          cand.applyVisibility(String(cand.fadeOpacity), 'visible');
+          if (!cand.el.classList.contains('lm-rising')) {
+            cand.el.classList.add('lm-rising');
+          }
+        } else {
+          cand.applyVisibility('0', 'hidden');
+          cand.el.classList.remove('lm-rising');
+        }
+      });
     } catch (e) {}
   }
 
@@ -6486,15 +6444,30 @@ document.addEventListener("click", function(e) {
     syncStateWithNode(currentNodeId);
     updateMinimapPosition(currentNodeId);
 
-    // Set default viewing angle 210 degrees for Top View (node1) on reload / load
-    if (currentNodeId === 'node1' && window.pano && typeof window.pano.setPan === 'function') {
-      setTimeout(() => {
-        if (window.pano && typeof window.pano.setPan === 'function') {
-          window.pano.setPan(202);
-          if (typeof window.pano.setTilt === 'function') window.pano.setTilt(-90);
-          if (typeof window.pano.setFov === 'function') window.pano.setFov(120);
-        }
-      }, 100);
+    // Set default viewing angle on reload / load (further zoomed-out initial perspective on mobile)
+    if (window.pano && typeof window.pano.setFov === 'function') {
+      const isMobile = window.innerWidth <= 1024;
+      if (currentNodeId === 'node1') {
+        setTimeout(() => {
+          if (window.pano && typeof window.pano.setPan === 'function') {
+            window.pano.setPan(202);
+            if (typeof window.pano.setTilt === 'function') window.pano.setTilt(-90);
+            window.pano.setFov(isMobile ? 112 : 120);
+          }
+        }, 100);
+      } else if (currentNodeId === 'node2') {
+        setTimeout(() => {
+          if (window.pano && typeof window.pano.setFov === 'function') {
+            window.pano.setFov(isMobile ? 108 : 115);
+          }
+        }, 100);
+      } else if (!['node12', 'node13', 'node14', 'node15'].includes(currentNodeId) && isMobile) {
+        setTimeout(() => {
+          if (window.pano && typeof window.pano.setFov === 'function') {
+            window.pano.setFov(102);
+          }
+        }, 100);
+      }
     }
 
     // ARCHITECTURE & 1528px NODES FIX (node12, node13, node14, node15):
