@@ -6018,7 +6018,26 @@ document.addEventListener("click", function(e) {
     }
     currentHotspotElements = [];
 
-    const defs = window.hotspotData ? window.hotspotData[nodeId] : null;
+    const defsRaw = window.hotspotData ? window.hotspotData[nodeId] : null;
+    let defs = defsRaw;
+
+    // MOBILE-ONLY OPTIMIZATION:
+    // Remove interior hotspots from Bird View (node2) and Top View (node1, node3) on mobile screens.
+    // Desktop (window.innerWidth > 1024) remains 100% unchanged.
+    const isMobileViewport = window.innerWidth <= 1024;
+    const isBirdOrTopView = (window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(nodeId)) ||
+                            (window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(nodeId));
+
+    if (isMobileViewport && isBirdOrTopView && Array.isArray(defsRaw)) {
+      const interiorTargets = ['node7', 'node8', 'node9', 'node10', 'node11'];
+      defs = defsRaw.filter(pin => {
+        const isInteriorCat = pin.category === 'interior';
+        const isInteriorNode = interiorTargets.includes(pin.nodeTarget);
+        return !isInteriorCat && !isInteriorNode;
+      });
+      console.log(`[MobileOpt] Filtered interior hotspots for ${nodeId} on mobile: ${defsRaw.length} -> ${defs.length}`);
+    }
+
     if (defs && Array.isArray(defs)) {
       console.log(`[PremiumHotspot] Found ${defs.length} hotspots for node ${nodeId}`);
 
@@ -6416,11 +6435,36 @@ document.addEventListener("click", function(e) {
       }, 100);
     }
 
+    // MOBILE-ONLY FIX FOR ARCHITECTURE NODES (node12: Kiến Trúc 1 & node15: Kiến Trúc 2):
+    // Fixes edge folding/creasing distortion ("lỗi gấp khúc") caused by wide diagonal FOV on tall mobile screens
+    if (window.innerWidth <= 1024 && (currentNodeId === 'node12' || currentNodeId === 'node15')) {
+      setTimeout(() => {
+        if (window.pano) {
+          const container = document.getElementById("container");
+          if (container && typeof window.pano.setViewerSize === 'function') {
+            window.pano.setViewerSize(container.offsetWidth, container.offsetHeight);
+          }
+          if (typeof window.pano.setFov === 'function') {
+            window.pano.setFov(75); // Optimal architecture FOV on mobile portrait to prevent edge warping/folding
+          }
+        }
+      }, 80);
+    }
+
     // Clear old hotspots every node change
     currentHotspotElements = [];
     if (typeof window.pano.removeHotspots === 'function') {
       window.pano.removeHotspots();
     }
+
+    // Safety release for leftover transition blur filters on container (prevents blurred settings panel on mobile)
+    setTimeout(() => {
+      const container = document.getElementById("container");
+      if (container) {
+        container.style.filter = '';
+        container.style.webkitFilter = '';
+      }
+    }, 450);
 
     // === PREMIUM HOTSPOT SYSTEM ===
     // Hotspots are now injected into ALL layouts

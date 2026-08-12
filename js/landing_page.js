@@ -15,7 +15,7 @@
     logoSub: 'LUXURY RESIDENCE',
     eyebrowText: '• EXCLUSIVE VIRTUAL EXPERIENCE •',
     mainTitle: 'VR360 TOUR',
-    subtitle: 'TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP',
+    subtitle: 'TRẢI NGHIỆM CÁC VERSION SA BÀN 360° CAO CẤP',
     ctaText: 'THAM QUAN DỰ ÁN',
     scrollHintText: 'Khám phá trải nghiệm 360°',
     transitionDurationMs: 800,
@@ -60,7 +60,8 @@
 
     const welcomeText = dict.landing_welcome || 'CHÀO MỪNG BẠN ĐẾN VỚI TAV';
     const eyebrow = dict.landing_eyebrow || config.eyebrowText;
-    const subtitleText = dict.landing_subtitle || config.subtitle;
+    const rawSubtitle = dict.landing_subtitle || config.subtitle || '';
+    const subtitleText = rawSubtitle.replace(/(SA BÀN 360°|SA BÀN)/gi, '<span class="landing-nowrap">$1</span>');
     const ctaLabel = dict.landing_cta || config.ctaText;
     const hintText = dict.landing_hint || config.scrollHintText;
 

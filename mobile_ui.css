@@ -604,3 +604,378 @@
     pointer-events: none !important;
   }
 }
+
+/* ============================================================
+   MOBILE HOTSPOT SIZE & TOUCH TARGET OPTIMIZATION
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+  /* Visible hotspot scale: ~24px to ~32px responsive */
+  .hs-container, .hologram-marker-container, .mm-luxury-hotspot {
+    transform: scale(0.68) !important;
+  }
+  
+  /* Touch target area: minimum 44px for easy tapping */
+  .hs-container, .hologram-marker-container, .mm-luxury-hotspot, .ggnode {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    box-sizing: content-box !important;
+  }
+
+  /* Hotspot text labels on mobile: clean responsive size */
+  .hs-label, .hotspot-label, .mm-tooltip {
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+    max-width: 140px !important;
+  }
+}
+
+/* ============================================================
+   POWERED BY TAV LOGO MOBILE OPTIMIZATION
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+  .tav-copyright-watermark {
+    position: fixed !important;
+    bottom: calc(env(safe-area-inset-bottom, 12px) + 85px) !important;
+    right: 12px !important;
+    transform: scale(0.82) !important;
+    transform-origin: bottom right !important;
+    max-width: 160px !important;
+    z-index: 120 !important;
+    pointer-events: auto !important;
+  }
+  .tav-watermark-powered {
+    font-size: 8.5px !important;
+  }
+  .tav-watermark-title {
+    font-size: 10px !important;
+  }
+  .tav-watermark-subtitle {
+    font-size: 6.5px !important;
+  }
+}
+
+/* ============================================================
+   MOBILE GALLERY — VIEWPORT & SAFE AREA HANDLING
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+  .global-pano-gallery-overlay {
+    height: 100% !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    z-index: 99999 !important;
+    overflow: hidden !important;
+  }
+
+  .gpg-header {
+    padding-top: calc(env(safe-area-inset-top, 10px) + 10px) !important;
+    padding-left: calc(env(safe-area-inset-left, 0px) + 16px) !important;
+    padding-right: calc(env(safe-area-inset-right, 0px) + 16px) !important;
+    padding-bottom: 10px !important;
+  }
+
+  .gpg-thumbnails-wrapper {
+    padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 14px) !important;
+    padding-left: calc(env(safe-area-inset-left, 0px) + 16px) !important;
+    padding-right: calc(env(safe-area-inset-right, 0px) + 16px) !important;
+    padding-top: 10px !important;
+    background: rgba(5, 8, 16, 0.98) !important;
+  }
+
+  .gpg-thumb {
+    flex: 0 0 76px !important;
+    height: 50px !important;
+  }
+}
+
+/* ============================================================
+   UNIFIED MOBILE SCENE CARD & CONTAINER AUDIT (L1 - L10)
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+  /* Scene scroll containers across all mobile layouts */
+  .mob-menu-list,
+  .ml2-scene-grid,
+  .ml3-nav-scroll,
+  .ml4-nav-scroll,
+  .ml5-nav-scroll,
+  .ml6-nav-scroll,
+  .ml7-nav-scroll,
+  .ml8-nav-scroll,
+  .ml9-nav-scroll,
+  .ml10-nav-scroll {
+    max-height: calc(75dvh - 50px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: calc(env(safe-area-inset-bottom, 16px) + 20px) !important;
+  }
+
+  /* Universal image aspect ratio protection on mobile */
+  .mob-carousel-item img,
+  .ml2-scene-card img,
+  .ml3-card img,
+  .ml4-card img,
+  .ml5-card img,
+  .ml6-card img,
+  .ml7-card img,
+  .ml8-card img,
+  .ml9-card img,
+  .ml10-card img {
+    object-fit: cover !important;
+    max-width: 100% !important;
+  }
+
+  /* Prevent card overlapping in mobile grids */
+  .mob-scene-grid,
+  .ml2-scene-grid,
+  .ml3-grid,
+  .ml4-grid,
+  .ml5-grid,
+  .ml6-grid,
+  .ml7-grid,
+  .ml8-grid,
+  .ml9-grid,
+  .ml10-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Z-index stacking hierarchy & container bounds audit */
+  #container {
+    z-index: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    height: 100dvh !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    overflow: hidden !important;
+  }
+  .hologram-marker-container, .hs-container, .mm-luxury-hotspot { z-index: 20 !important; }
+  .mob-header, .ml2-top-strip, .ml3-top-strip, .ml4-top-strip, .ml5-top-strip, .ml6-top-strip, .ml7-top-strip, .ml8-top-strip, .ml9-top-strip, .ml10-top-strip { z-index: 100 !important; }
+  .tav-copyright-watermark { z-index: 120 !important; }
+  .mob-toolbar, .ml2-dock, .ml3-dock, .ml4-dock, .ml5-dock, .ml6-dock, .ml7-dock, .ml8-dock, .ml9-dock, .ml10-dock { z-index: 300 !important; }
+  .mob-overlay, .ml2-backdrop, .ml3-backdrop, .ml4-backdrop, .ml5-backdrop, .ml6-backdrop, .ml7-backdrop, .ml8-backdrop, .ml9-backdrop, .ml10-backdrop { z-index: 400 !important; }
+  .mob-side-panel, .ml2-scene-sheet, .ml3-sheet, .ml4-sheet, .ml5-sheet, .ml6-sheet, .ml7-sheet, .ml8-sheet, .ml9-sheet, .ml10-sheet { z-index: 500 !important; }
+  .global-pano-gallery-overlay { z-index: 99999 !important; }
+}
+
+/* ============================================================
+   MOBILE SETTINGS / TOOLS PANEL SHARPNESS & INTERACTION FIX
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+  /* Backdrops when open: clear dark dim layer, sit at z-index 4000 */
+  .mob-overlay.open,
+  .ml2-backdrop.ml2-open,
+  .ml3-backdrop.ml3-open,
+  .ml4-backdrop.ml4-open,
+  .ml5-backdrop.ml5-open,
+  .ml6-backdrop.ml6-open,
+  .ml7-backdrop.ml7-open,
+  .ml8-backdrop.ml8-open,
+  .ml9-backdrop.ml9-open,
+  .ml10-backdrop.ml10-open {
+    z-index: 4000 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Active Settings Panels / Sheets / Popup Drawers: elevated to z-index 9000 above backdrops & desktop overlays */
+  .mob-side-panel.open,
+  .ml2-tools-popup.ml2-open,
+  .ml2-scene-sheet.ml2-open,
+  #ml3-settings-sheet.ml3-open,
+  #ml3-nav-sheet.ml3-open,
+  #ml4-settings-sheet.ml4-open,
+  #ml4-nav-sheet.ml4-open,
+  #ml5-settings-sheet.ml5-open,
+  .ml5-tool-panel.ml5-open,
+  #ml6-settings-sheet.ml6-open,
+  .ml6-settings-sheet.ml6-open,
+  #ml7-settings-sheet.ml7-open,
+  #ml8-settings-sheet.ml8-open,
+  #ml9-settings-sheet.ml9-open,
+  #ml10-settings-sheet.ml10-open,
+  .ml7-sheet.ml7-open,
+  .ml8-sheet.ml8-open,
+  .ml9-sheet.ml9-open,
+  .ml10-sheet.ml10-open {
+    z-index: 9000 !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+  }
+
+  /* Ensure tool & setting buttons inside active panels are sharp, crisp, high contrast, and 100% interactive */
+  .mob-grid-tool,
+  .ml2-tool-item,
+  .ml3-setting-btn,
+  .ml4-setting-btn,
+  .ml5-tool-item,
+  .ml6-setting-btn,
+  .ml7-setting-btn,
+  .ml8-setting-btn,
+  .ml9-setting-btn,
+  .ml10-setting-btn {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    cursor: pointer !important;
+  }
+
+  /* SVG icons & text labels inside setting buttons must not block pointer event bubbling */
+  .mob-grid-tool *,
+  .ml2-tool-item *,
+  .ml3-setting-btn *,
+  .ml4-setting-btn *,
+  .ml5-tool-item *,
+  .ml6-setting-btn *,
+  .ml7-setting-btn *,
+  .ml8-setting-btn *,
+  .ml9-setting-btn *,
+  .ml10-setting-btn * {
+    pointer-events: none !important;
+  }
+
+  /* Make setting button labels high contrast so they are never dim/blurry */
+  .mob-grid-tool span,
+  .ml2-tool-label,
+  .ml3-setting-btn span,
+  .ml4-setting-btn span,
+  .ml5-tool-item span,
+  .ml6-setting-btn span,
+  .ml7-setting-btn span,
+  .ml8-setting-btn span,
+  .ml9-setting-btn span,
+  .ml10-setting-btn span {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+  }
+
+  /* SVG icon visibility inside settings panels */
+  .mob-grid-tool svg,
+  .ml2-tool-item svg,
+  .ml3-setting-btn svg,
+  .ml4-setting-btn svg,
+  .ml5-tool-item svg,
+  .ml6-setting-btn svg,
+  .ml7-setting-btn svg,
+  .ml8-setting-btn svg,
+  .ml9-setting-btn svg,
+  .ml10-setting-btn svg {
+    opacity: 1 !important;
+    stroke: #ffffff !important;
+  }
+}
+
+/* ============================================================
+   UNIVERSAL REAL-PHONE BOTTOM TOOLBAR & SAFE-AREA PROTECTION
+   ============================================================ */
+@media screen and (max-width: 1024px) {
+  /* 1. Global Panorama Gallery Thumbnail Strip */
+  .gpg-thumbnails-wrapper {
+    padding-bottom: max(calc(env(safe-area-inset-bottom, 24px) + 24px), 36px) !important;
+    padding-left: max(calc(env(safe-area-inset-left, 0px) + 16px), 16px) !important;
+    padding-right: max(calc(env(safe-area-inset-right, 0px) + 16px), 16px) !important;
+    padding-top: 12px !important;
+    background: rgba(5, 8, 16, 0.98) !important;
+    box-sizing: border-box !important;
+  }
+
+  .gpg-thumb {
+    flex: 0 0 76px !important;
+    height: 52px !important;
+  }
+
+  /* 2. Docks & Navigation Bars across Mobile Layouts 1 - 10 */
+  .mob-toolbar,
+  .ml2-dock,
+  .ml3-dock,
+  .ml4-dock,
+  .ml5-dock,
+  .ml6-dock,
+  .ml7-dock,
+  .ml8-dock,
+  .prism-m8-dock,
+  .nexus-m9-dock,
+  .horizon-m10-dock {
+    bottom: max(calc(env(safe-area-inset-bottom, 20px) + 14px), 24px) !important;
+  }
+
+  /* 3. Horizontal Scene Carousels across Mobile Layouts */
+  .mob-carousel-container,
+  .ml3-carousel-strip,
+  .ml4-carousel-strip,
+  .ml5-carousel-strip,
+  .ml6-carousel-strip,
+  .ml7-carousel-strip,
+  .ml8-carousel-strip,
+  .ml9-carousel-strip,
+  .ml10-carousel-strip {
+    bottom: max(calc(env(safe-area-inset-bottom, 20px) + 84px), 96px) !important;
+  }
+
+  /* 4. Floating Tools & Settings Sheets across Mobile Layouts */
+  .ml2-tools-popup,
+  #ml3-settings-sheet,
+  #ml4-settings-sheet,
+  #ml5-settings-sheet,
+  .ml5-tool-panel,
+  #ml6-settings-sheet,
+  .ml6-settings-sheet,
+  #ml7-settings-sheet,
+  #ml8-settings-sheet,
+  #ml9-settings-sheet,
+  #ml10-settings-sheet {
+    bottom: max(calc(env(safe-area-inset-bottom, 20px) + 84px), 96px) !important;
+  }
+
+  /* 5. Bottom Sheets & Drawers Padding & Max-Height */
+  .mob-side-panel,
+  .mob-bottom-sheet,
+  .ml2-scene-sheet,
+  .ml3-sheet,
+  .ml4-sheet,
+  .ml5-sheet,
+  .ml6-sheet,
+  .ml7-sheet,
+  .ml8-sheet,
+  .ml9-sheet,
+  .ml10-sheet {
+    padding-bottom: max(calc(env(safe-area-inset-bottom, 20px) + 24px), 36px) !important;
+    max-height: calc(85dvh - env(safe-area-inset-bottom, 20px)) !important;
+  }
+
+  /* 6. Floating Minimap Cards on Mobile */
+  #ml2-minimap-card,
+  #ml3-minimap-card,
+  #ml4-minimap-card,
+  #ml5-minimap-card,
+  #ml6-minimap-card,
+  #ml7-minimap-card,
+  #ml8-minimap-card,
+  #ml9-minimap-card,
+  #ml10-minimap-card,
+  .mob-minimap-card {
+    bottom: max(calc(env(safe-area-inset-bottom, 20px) + 84px), 96px) !important;
+  }
+
+  /* 7. Powered by TAV Logo Watermark */
+  .tav-copyright-watermark {
+    bottom: max(calc(env(safe-area-inset-bottom, 20px) + 84px), 96px) !important;
+    right: 12px !important;
+  }
+
+  /* 8. Global Modals & Dialogs (Info, Share, Contact) */
+  .global-modal-content {
+    padding-bottom: max(calc(env(safe-area-inset-bottom, 20px) + 24px), 32px) !important;
+    max-height: calc(85dvh - env(safe-area-inset-bottom, 20px)) !important;
+    box-sizing: border-box !important;
+  }
+}

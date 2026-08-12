@@ -1,3 +1,102 @@
+// ============================================================
+// UNIFIED MOBILE SCENE SYSTEM (Reference Architecture from L3)
+// ============================================================
+window.MobileSceneSystem = (function () {
+  'use strict';
+
+  function getScenes() {
+    return (window.TAV_CORE && window.TAV_CORE.scenes) ? window.TAV_CORE.scenes : (window.TAV_SCENES || []);
+  }
+
+  function getNavItems() {
+    return (window.TAV_CORE && window.TAV_CORE.config && window.TAV_CORE.config.navItems) ? window.TAV_CORE.config.navItems : {};
+  }
+
+  function renderCardHTML(scene, options) {
+    options = options || {};
+    const cardClass = options.cardClass || 'mob-scene-card';
+    const activeClass = options.activeClass || 'active';
+    const isActive = options.activeNode === scene.action || options.activeNode === scene.id;
+    const thumbSrc = scene.thumb || 'preview.jpg';
+
+    return `
+      <div class="${cardClass} ${isActive ? activeClass : ''} ml3-interactive" data-action="${scene.action}" data-node="${scene.action}" data-cat="${scene.category}" style="cursor:pointer; position:relative; overflow:hidden; border-radius:10px; height:64px; display:flex; align-items:center; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); padding:5px;">
+        <img src="${thumbSrc}" alt="${scene.title}" onerror="this.src='preview.jpg'" style="width:52px; height:52px; object-fit:cover; border-radius:6px; flex-shrink:0;">
+        <div class="mob-card-details" style="flex:1; min-width:0; padding-left:8px; display:flex; flex-direction:column; justify-content:center;">
+          <div class="mob-card-title" style="font-size:10px; font-weight:800; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-transform:uppercase; letter-spacing:0.5px;">${scene.title}</div>
+          ${scene.sub ? `<div class="mob-card-sub" style="font-size:8px; color:rgba(255,255,255,0.65); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-transform:uppercase; margin-top:2px;">${scene.sub}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }
+
+  function renderCategoryGroupsHTML(options) {
+    options = options || {};
+    const scenes = getScenes();
+    const activeNode = options.activeNode || (window.TAV_CORE ? window.TAV_CORE.currentScene : '');
+    const categories = [...new Set(scenes.map(s => s.category))];
+    let html = '';
+
+    categories.forEach(cat => {
+      const catScenes = scenes.filter(s => s.category === cat);
+      if (catScenes.length === 0) return;
+
+      const cardsHTML = catScenes.map(s => renderCardHTML(s, { ...options, activeNode })).join('');
+
+      html += `
+        <div class="mob-scene-group" style="margin-bottom:14px;">
+          <div class="mob-scene-group-title" style="font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:1.2px; color:rgba(255,255,255,0.6); margin-bottom:8px; padding-left:2px;">${cat}</div>
+          <div class="mob-scene-grid" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px;">
+            ${cardsHTML}
+          </div>
+        </div>
+      `;
+    });
+
+    return html;
+  }
+
+  function bindCardClick(containerEl, onSelectCallback) {
+    if (!containerEl) return;
+    containerEl.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-action]');
+      if (!card) return;
+      const action = card.getAttribute('data-action');
+      if (action) {
+        if (window.TAV_CORE && typeof window.TAV_CORE.navigateTo === 'function') {
+          window.TAV_CORE.navigateTo(action);
+        } else if (window.pano) {
+          window.pano.openNext(`{${action}}`);
+        }
+        if (typeof onSelectCallback === 'function') {
+          onSelectCallback(action, card);
+        }
+      }
+    });
+  }
+
+  function syncActiveScene(containerEl, activeNodeId, activeClass) {
+    if (!containerEl || !activeNodeId) return;
+    activeClass = activeClass || 'active';
+
+    const cards = containerEl.querySelectorAll('[data-action], [data-node]');
+    cards.forEach(card => {
+      const node = card.getAttribute('data-action') || card.getAttribute('data-node');
+      const isActive = node === activeNodeId;
+      card.classList.toggle(activeClass, isActive);
+    });
+  }
+
+  return {
+    getScenes,
+    getNavItems,
+    renderCardHTML,
+    renderCategoryGroupsHTML,
+    bindCardClick,
+    syncActiveScene
+  };
+})();
+
 function initMobileUI() {
   if (window.innerWidth > 1024) return;
 
@@ -162,24 +261,24 @@ function initMobileUI() {
 
     <div class="mob-side-panel" id="mob-nav-sheet">
       <div class="mob-sheet-handle"></div>
-          <div class="mob-sheet-title">Tất cả Cảnh (Navigation)</div>
-      <div class="mob-menu-list" id="mob-menu-list"></div>
+      <div class="mob-sheet-title">Tất cả Cảnh (Navigation)</div>
+      <div class="mob-menu-list" id="mob-menu-list" style="max-height: calc(75dvh - 60px); overflow-y: auto; -webkit-overflow-scrolling: touch;"></div>
     </div>
   `;
 
   document.body.appendChild(mobileUI);
 
-  // Generate Menu List from Shared Core scenes
-  const categories = [...new Set(scenes.map(s => s.category))];
+  // Generate Menu List using MobileSceneSystem reference renderer
   const menuList = document.getElementById('mob-menu-list');
-  categories.forEach(cat => {
-    let groupHTML = `<div class="mob-menu-group"><div class="mob-menu-group-title">${cat}</div>`;
-    window.TAV_SCENES.filter(s => s.category === cat).forEach(n => {
-      groupHTML += `<button class="mob-menu-item" data-action="${n.action}">${n.title}</button>`;
+  if (menuList && window.MobileSceneSystem) {
+    menuList.innerHTML = window.MobileSceneSystem.renderCategoryGroupsHTML();
+    window.MobileSceneSystem.bindCardClick(menuList, () => {
+      const sheet = document.getElementById('mob-nav-sheet');
+      const overlay = document.getElementById('mob-overlay');
+      if (sheet) sheet.classList.remove('open');
+      if (overlay) overlay.classList.remove('open');
     });
-    groupHTML += `</div>`;
-    menuList.innerHTML += groupHTML;
-  });
+  }
 
   // Hotspots optimization injection
   const cssInject = document.createElement("style");

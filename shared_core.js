@@ -193,10 +193,10 @@
   const I18N_DICTIONARY = {
     vi: {
       // Landing Page
-      landing_welcome: "CHÀO MỪNG BẠN ĐẾN VỚI TAV",
+      landing_welcome: "Chào Mừng Bạn Đến Với TAV",
       landing_eyebrow: "• TRẢI NGHIỆM THỰC TẾ ẢO ĐẲNG CẤP •",
       landing_title: "VR360 TOUR",
-      landing_subtitle: "TRẢI NGHIỆM CÁC VERSOIN SA BÀN 360° CAO CẤP",
+      landing_subtitle: "TRẢI NGHIỆM CÁC VERSION SA BÀN 360° CAO CẤP",
       landing_cta: "THAM QUAN DỰ ÁN",
       landing_hint: "Khám phá trải nghiệm 360°",
       
@@ -437,8 +437,10 @@
       landingEyebrow.textContent = dict.landing_eyebrow;
 
     const landingSubtitle = document.querySelector('.landing-subtitle');
-    if (landingSubtitle && !landingSubtitle.hasAttribute('data-i18n-key'))
-      landingSubtitle.textContent = dict.landing_subtitle;
+    if (landingSubtitle && !landingSubtitle.hasAttribute('data-i18n-key')) {
+      const subText = dict.landing_subtitle || '';
+      landingSubtitle.innerHTML = subText.replace(/(SA BÀN 360°|SA BÀN)/gi, '<span class="landing-nowrap">$1</span>');
+    }
 
     const landingCtaSpan = document.querySelector('#landing-cta-btn span');
     if (landingCtaSpan && !landingCtaSpan.hasAttribute('data-i18n-key'))
