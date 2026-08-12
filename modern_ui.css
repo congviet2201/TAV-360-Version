@@ -16450,14 +16450,58 @@ div:has(> .hs-container[id*="hs_wc"]) {
   --lm-glow: rgba(255, 255, 255, 0.6) !important;
 }
 
-/* Vertical Energy Beam (White Dashed Pole) */
-.hs-container.hs-no-view .lm-vertical-beam {
+/* ── Chỉ 1 chấm tròn đơn giản — không vòng, không xoay, không ring ── */
+
+/* Ẩn vòng scan và dashed ring */
+.hs-container.hs-no-view .lm-ground-scan,
+.hs-container.hs-no-view .lm-scan-ring-2 {
+  display: none !important;
+}
+
+/* Chấm đáy: sạch, tĩnh, luôn hiển thị — không animation loop */
+.hs-container.hs-no-view .lm-energy-core {
+  width: 8px !important;
+  height: 8px !important;
+  background: #ffffff !important;
+  border-radius: 50% !important;
+  border: 1.5px solid rgba(0, 0, 0, 0.55) !important;
+  box-shadow: 0 0 5px #ffffff, 0 0 10px rgba(255, 255, 255, 0.7) !important;
+  animation: none !important;
+  opacity: 1 !important;
+}
+
+/* Đưa hệ tọa độ của chấm và cột sáng về cùng một điểm gốc:
+   - dot system: 0×0, bottom:0 tại điểm gốc hotspot
+   - chấm 8px căn giữa tại điểm gốc đó bằng offset -4px
+   - beam: bottom:0 — khớp chính xác với tâm chấm */
+.hs-container.hs-no-view .lm-ground-scan-system {
   position: absolute !important;
   bottom: 0 !important;
   left: 50% !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: visible !important;
+  transform: none !important; /* tránh translateX(-50%) dịch điểm gốc */
+}
+
+.hs-container.hs-no-view .lm-energy-core {
+  position: absolute !important;
+  bottom: -4px !important; /* căn giữa 8px ↓ tại điểm gốc: -4px tới +4px */
+  left: -4px !important;   /* căn giữa 8px ↔ */
+  transform: none !important;
+  z-index: 6 !important;
+}
+
+/* Vertical Energy Beam — base: invisible by default.
+   NO clip-path here (element-level !important overrides animation keyframes).
+   The animation fully controls opacity + clip-path. */
+.hs-container.hs-no-view .lm-vertical-beam {
+  position: absolute !important;
+  bottom: 0 !important; /* khop voi tam cham - ca hai deu tai bottom:0 cua scale-wrap */
+  left: 50% !important;
   transform: translateX(-50%) !important;
   width: 2.5px !important;
-  height: 0;
+  height: var(--lm-beam-h, 170px) !important;
   background: repeating-linear-gradient(
     to top,
     transparent 0px,
@@ -16466,9 +16510,8 @@ div:has(> .hs-container[id*="hs_wc"]) {
     #ffffff 10px
   ) !important;
   box-shadow: 0 0 8px #ffffff, 0 0 14px rgba(255, 255, 255, 0.8) !important;
-  opacity: 0;
-  animation: lmBeamRise 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards 0.2s !important;
-  z-index: 4;
+  opacity: 0; /* animation will override this */
+  z-index: 5; /* above energy-core (z:6? no, keep below dot z-index:6 but animation makes it visible) */
   overflow: visible !important;
 }
 
@@ -16476,16 +16519,216 @@ div:has(> .hs-container[id*="hs_wc"]) {
   display: none !important;
 }
 
-@keyframes lmBeamRise {
-  0% { height: 0; opacity: 0; }
-  100% { height: var(--lm-beam-h, 170px); opacity: 0.95; }
+/* ═══════════════════════════════════════════════════════════════════════
+   MULTI-HOTSPOT CINEMATIC FIREWORK MOTION SYSTEM
+   Chấm đáy luôn hiển thị (chỉ 1 chấm tròn, không có vòng/ring/xoay)
+   Cột sáng trượt từ đáy lên như pháo hoa khi xoay đến vùng trung tâm
+   Tên hotspot leo theo cột sáng, lùi ~12% sau cột
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* Peak Spark Glow Container at top tip of beam */
+.hs-container.hs-no-view .lm-vertical-beam .lm-peak-burst {
+  position: absolute !important;
+  top: 0 !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) scale(0) !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, #ffffff 35%, rgba(255, 255, 255, 0.85) 65%, transparent 100%) !important;
+  box-shadow: 0 0 18px #ffffff, 0 0 32px rgba(255, 255, 255, 0.95) !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: 8 !important;
 }
 
-/* Glass Flag Box (ATTACHED DIRECTLY TO DASHED BEAM - LEFT/RIGHT HALVES) */
+/* PHASE 1: Dot pulse on appear (no !important in keyframes — browser ignores it) */
+@keyframes utEnergyCharge {
+  0%   { transform: scale(0.4); opacity: 0; filter: drop-shadow(0 0 0px #ffffff); }
+  60%  { transform: scale(1.35); opacity: 1; filter: drop-shadow(0 0 18px #ffffff) brightness(1.8); }
+  100% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)); }
+}
+
+/* PHASE 2: Beam grows FROM DOT UPWARD — correct clip-path direction.
+   clip-path: inset(T% 0 0 0):
+     T=100% → top edge of clip at element_bottom → visible height=0 at DOT level (bottom)
+     T=0%   → top edge at element_top              → full beam visible
+   As T shrinks 100%→0%, visible area EXPANDS UPWARD from the dot. ✓
+   NO !important in values (browser ignores !important in @keyframes). */
+@keyframes utBeamAscentDesktop {
+  0%   { clip-path: inset(100% 0 0 0); opacity: 0; }
+  5%   { clip-path: inset(97%  0 0 0); opacity: 0.7; }
+  35%  { clip-path: inset(62%  0 0 0); opacity: 0.88; }
+  68%  { clip-path: inset(22%  0 0 0); opacity: 0.93; }
+  88%  { clip-path: inset(2%   0 0 0); opacity: 0.96; }
+  95%  { clip-path: inset(-1%  0 0 0); opacity: 0.96; }
+  100% { clip-path: inset(0%   0 0 0); opacity: 0.95; }
+}
+
+/* PHASE 2 (Label): Label tracks the REVEALED portion of the beam (= inset-from-top).
+   Beam clip timeline: 100%→97%@8% → 60%@40% → 25%@72% → 0%@100%
+   Label lags ~12%: starts appearing when ~15% of beam is visible, reaches top when beam is full.
+   Blur fades out as label climbs: feels like energy condensing into text at the top. */
+/* Label rides upward WITH the beam, lagging ~12%. NO !important in keyframe values. */
+@keyframes utLabelAscent {
+  0%   { opacity: 0; visibility: hidden; bottom: 0; transform: translateY(50%) scale(0.3); filter: blur(6px) brightness(2); }
+  18%  { opacity: 0.08; visibility: visible; bottom: 0; transform: translateY(50%) scale(0.32); filter: blur(6px) brightness(2); }
+  42%  { opacity: 0.32; bottom: calc(var(--lm-beam-h, 170px) * 0.22); transform: translateY(50%) scale(0.54); filter: blur(3.5px) brightness(1.5); }
+  65%  { opacity: 0.62; bottom: calc(var(--lm-beam-h, 170px) * 0.52); transform: translateY(50%) scale(0.76); filter: blur(1.8px) brightness(1.2); }
+  84%  { opacity: 0.88; bottom: calc(var(--lm-beam-h, 170px) * 0.80); transform: translateY(50%) scale(0.94); filter: blur(0.5px) brightness(1.05); }
+  100% { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 170px); transform: translateY(50%) scale(1); filter: blur(0px) brightness(1); }
+}
+
+/* Firework bloom at beam tip — NO !important in keyframes */
+@keyframes utFireworkBloom {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.2); filter: drop-shadow(0 0 0px #ffffff); }
+  40%  { opacity: 1; transform: translate(-50%, -50%) scale(1.6); filter: drop-shadow(0 0 20px #ffffff) brightness(1.8); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.6); filter: drop-shadow(0 0 5px rgba(255,255,255,0.4)); }
+}
+
+/* Retract: beam shrinks FROM TOP back DOWN to dot (reverse of ascent)
+   T goes 0%→100%: visible area top rises to element_bottom = beam collapses downward to dot. */
+@keyframes utBeamRetractDesktop {
+  0%   { clip-path: inset(0%   0 0 0); opacity: 0.95; }
+  30%  { clip-path: inset(20%  0 0 0); opacity: 0.85; }
+  70%  { clip-path: inset(65%  0 0 0); opacity: 0.5; }
+  100% { clip-path: inset(100% 0 0 0); opacity: 0; }
+}
+
+/* Label retract: drops from beam top back to dot. NO !important in keyframe values. */
+@keyframes utLabelRetract {
+  0%   { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 170px); transform: translateY(50%) scale(1); filter: blur(0px); }
+  50%  { opacity: 0.5; bottom: calc(var(--lm-beam-h, 170px) * 0.4); transform: translateY(50%) scale(0.6); filter: blur(3px); }
+  100% { opacity: 0; visibility: hidden; bottom: 0; transform: translateY(50%) scale(0.2); filter: blur(6px); }
+}
+
+/* STATE 1: HIDDEN — Ground dot ALWAYS visible. Only beam + label are hidden. */
+.hs-container.hs-no-view.ut-state-hidden .lm-vertical-beam,
+.hs-container.hs-no-view.ut-state-hidden .lm-glass-flag,
+.hs-container.hs-no-view.ut-state-hidden .lm-holographic-label {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Ground dot idle state (when beam is hidden) — subtle constant breathe */
+.hs-container.hs-no-view.ut-state-hidden .lm-ground-scan-system,
+.hs-container.hs-no-view.ut-state-hidden .lm-energy-core {
+  display: block !important;
+  opacity: 0.55 !important;
+  visibility: visible !important;
+}
+
+/* STATE 2: IGNITION — Energy pulse on dot, beam not yet visible, label hidden */
+.hs-container.hs-no-view.ut-state-ignition .lm-ground-scan-system {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  animation: utEnergyCharge 0.10s ease-out forwards !important;
+}
+
+.hs-container.hs-no-view.ut-state-ignition .lm-vertical-beam {
+  display: block !important;
+  opacity: 0 !important;
+  clip-path: inset(100% 0 0 0) !important;
+}
+
+.hs-container.hs-no-view.ut-state-ignition .lm-glass-flag {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* STATE 3: ASCENDING — clip-path slides beam upward; label rides with it */
+.hs-container.hs-no-view.ut-state-ascending .lm-ground-scan-system {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hs-container.hs-no-view.ut-state-ascending .lm-vertical-beam {
+  display: block !important;
+  animation: utBeamAscentDesktop 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.hs-container.hs-no-view.ut-state-ascending .lm-glass-flag,
+.hs-container.hs-no-view.ut-state-ascending .lm-holographic-label {
+  display: inline-flex !important;
+  animation: utLabelAscent 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* STATE 4: BLOOMING — Beam fully visible, spark bloom fires at tip */
+.hs-container.hs-no-view.ut-state-blooming .lm-ground-scan-system {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hs-container.hs-no-view.ut-state-blooming .lm-vertical-beam {
+  display: block !important;
+  clip-path: inset(0% 0 0 0) !important;  /* T=0% = fully revealed from dot to top */
+  opacity: 0.95 !important;
+}
+
+.hs-container.hs-no-view.ut-state-blooming .lm-vertical-beam .lm-peak-burst {
+  animation: utFireworkBloom 0.30s ease-out forwards !important;
+}
+
+.hs-container.hs-no-view.ut-state-blooming .lm-glass-flag,
+.hs-container.hs-no-view.ut-state-blooming .lm-holographic-label {
+  display: inline-flex !important;
+  bottom: var(--lm-beam-h, 170px) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(50%) scale(1) !important;
+}
+
+/* STATE 5: VISIBLE — Full calm stable state, ground dot always visible */
+.hs-container.hs-no-view.ut-state-visible .lm-ground-scan-system {
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hs-container.hs-no-view.ut-state-visible .lm-vertical-beam {
+  display: block !important;
+  clip-path: inset(0% 0 0 0) !important;  /* T=0% = fully revealed from dot to top */
+  opacity: 0.95 !important;
+}
+
+.hs-container.hs-no-view.ut-state-visible .lm-glass-flag,
+.hs-container.hs-no-view.ut-state-visible .lm-holographic-label {
+  display: inline-flex !important;
+  bottom: var(--lm-beam-h, 170px) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(50%) scale(1) !important;
+  filter: blur(0px) !important;
+}
+
+/* STATE 6: HIDING — Beam slides back to ground; dot stays visible; label fades down */
+.hs-container.hs-no-view.ut-state-hiding .lm-ground-scan-system {
+  display: block !important;
+  opacity: 0.55 !important;
+  visibility: visible !important;
+}
+
+.hs-container.hs-no-view.ut-state-hiding .lm-vertical-beam {
+  display: block !important;
+  animation: utBeamRetractDesktop 0.45s ease-in forwards !important;
+}
+
+.hs-container.hs-no-view.ut-state-hiding .lm-glass-flag,
+.hs-container.hs-no-view.ut-state-hiding .lm-holographic-label {
+  animation: utLabelRetract 0.45s ease-in forwards !important;
+}
+
+/* Glass Flag Box — base: hidden. State classes (ut-state-ascending/blooming/visible/hiding) control visibility.
+   Position: absolute, anchored bottom = var(--lm-beam-h) so it sits at the top of the beam. */
 .hs-container.hs-no-view .lm-glass-flag {
   position: absolute !important;
   bottom: var(--lm-beam-h, 170px) !important;
-  transform: translateY(50%) !important;
+  transform: translateY(50%) scale(0.35) !important;
+  transform-origin: center bottom !important;
   display: inline-flex !important;
   align-items: center !important;
   gap: 7px !important;
@@ -16496,8 +16739,8 @@ div:has(> .hs-container[id*="hs_wc"]) {
   border: 1px solid rgba(255, 255, 255, 0.28) !important;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.4) !important;
   white-space: nowrap !important;
-  opacity: 1 !important;
-  visibility: visible !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
   transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
   z-index: 10;
   cursor: pointer;

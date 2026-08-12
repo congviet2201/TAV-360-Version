@@ -5915,7 +5915,7 @@ document.addEventListener("click", function(e) {
       "spring_01":          { side: "right", height: 90,  zIndex: 1900 }, // 7. Suối Ngọc
       "caodanghoabinh_01":  { side: "right", height: 60,  zIndex: 2400 }, // 8. Cao đẳng Hòa Bình
       "dapthuydien_01":     { side: "right", height: 20,  zIndex: 2300 }, // 9. Đập thủy điện Hòa Bình
-      "trungtamyte_01":     { side: "right", height: 50,  zIndex: 2200 }, // 10. Trung tâm y tế Hòa Bình
+"trungtamyte_01":     { side: "right", height: 50,  zIndex: 2200 }, // 10. Trung tâm y tế Hòa Bình
 
       // ADDITIONAL LANDMARKS
       "culture_01":         { side: "left",  height: 130, zIndex: 2000 },
@@ -6018,12 +6018,17 @@ document.addEventListener("click", function(e) {
             <span class="lm-p p3"></span>
             <span class="lm-p p4"></span>
           </div>
+          <div class="lm-peak-burst"></div>
         </div>
         <div class="lm-glass-flag ${sideClass}">
           <span class="lm-name">${formattedName}</span>
         </div>
       </div>
     `;
+
+    // Initial State: HIDDEN
+    container.classList.add('ut-state-hidden');
+    container.setAttribute('data-utility-state', 'HIDDEN');
 
     // Landmark hotspots DO NOT navigate on click — visual pulse feedback only
     container.addEventListener('click', (e) => {
@@ -6034,6 +6039,149 @@ document.addEventListener("click", function(e) {
     });
 
     return container;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // MULTI-HOTSPOT RESPONSIVE CENTER ZONE & CINEMATIC STAGGERED FIREWORK ENGINE
+  // Multi-Hotspot Activation: Allows MULTIPLE utility hotspots to activate simultaneously!
+  // Collision Avoidance: Automatically arranges nearby active labels into a staircase pattern.
+  // ═══════════════════════════════════════════════════════════════════════
+  const UTILITY_HOTSPOT_CONFIG = {
+    // Center Activation Zone (Responsive angular threshold in degrees)
+    horizontalThresholdDesktop: 18, // ±18° pan from camera center on desktop
+    verticalThresholdDesktop: 26,   // ±26° tilt from camera center on desktop
+    horizontalThresholdMobile: 14,  // ±14° pan on mobile
+    verticalThresholdMobile: 20,    // ±20° tilt on mobile
+
+    // No stagger — all hotspots in center zone launch simultaneously
+    launchStaggerMs: 0,
+
+    // Timings (ms)
+    ignitionDuration: 100, // Phase 1: Ignition energy pulse (100ms)
+    launchDuration: 900,   // Phase 2-5: Acceleration & Upward Launch (900ms)
+    bloomDuration: 300,    // Phase 3: Firework Bloom Spark (300ms)
+    settleDuration: 250,   // Phase 4: Soft Settle (250ms)
+    hideDuration: 450      // Reverse Retract Hiding (450ms)
+  };
+
+  const UTILITY_STATES = {
+    HIDDEN: 'HIDDEN',
+    IGNITION: 'IGNITION',
+    ASCENDING: 'ASCENDING',
+    BLOOMING: 'BLOOMING',
+    VISIBLE: 'VISIBLE',
+    HIDING: 'HIDING'
+  };
+
+  class UtilityHotspotController {
+    static transition(el, targetState, delayMs = 0) {
+      if (!el || el._utilityState === targetState) return;
+
+      if (el._utilityStateTimer) {
+        clearTimeout(el._utilityStateTimer);
+        el._utilityStateTimer = null;
+      }
+
+      if (delayMs > 0) {
+        el._utilityStateTimer = setTimeout(() => {
+          UtilityHotspotController.transition(el, targetState, 0);
+        }, delayMs);
+        return;
+      }
+
+      el._utilityState = targetState;
+      el.setAttribute('data-utility-state', targetState);
+
+      el.classList.remove('ut-state-hidden', 'ut-state-ignition', 'ut-state-ascending', 'ut-state-blooming', 'ut-state-visible', 'ut-state-hiding');
+      el.classList.add(`ut-state-${targetState.toLowerCase()}`);
+
+      if (targetState === UTILITY_STATES.HIDDEN) {
+        el.style.opacity = '0';
+        el.style.visibility = 'hidden';
+        el.classList.remove('hs-visible');
+        return;
+      }
+
+      el.style.opacity = '1';
+      el.style.visibility = 'visible';
+      el.classList.add('hs-visible');
+
+      if (targetState === UTILITY_STATES.IGNITION) {
+        // Skip IGNITION phase — go straight to ASCENDING for instant response
+        UtilityHotspotController.transition(el, UTILITY_STATES.ASCENDING);
+      } else if (targetState === UTILITY_STATES.ASCENDING) {
+        // Phase 2-5: Upward Acceleration & Launch (900ms)
+        el._utilityStateTimer = setTimeout(() => {
+          UtilityHotspotController.transition(el, UTILITY_STATES.BLOOMING);
+        }, UTILITY_HOTSPOT_CONFIG.launchDuration);
+      } else if (targetState === UTILITY_STATES.BLOOMING) {
+        // Phase 6: Firework Peak Spark Bloom (300ms)
+        el._utilityStateTimer = setTimeout(() => {
+          UtilityHotspotController.transition(el, UTILITY_STATES.VISIBLE);
+        }, UTILITY_HOTSPOT_CONFIG.bloomDuration);
+      } else if (targetState === UTILITY_STATES.HIDING) {
+        // Reverse Retract Hiding (450ms)
+        el._utilityStateTimer = setTimeout(() => {
+          UtilityHotspotController.transition(el, UTILITY_STATES.HIDDEN);
+        }, UTILITY_HOTSPOT_CONFIG.hideDuration);
+      }
+    }
+
+    static processHotspots(candidates, camPan, camTilt, isMobile) {
+      if (!Array.isArray(candidates) || candidates.length === 0) return;
+
+      const centerCandidates = [];
+
+      // 1. Filter candidates inside Responsive Center Activation Zone
+      candidates.forEach(cand => {
+        const { item, el } = cand;
+        let activePan = cand.pan;
+        let activeTilt = cand.tilt;
+
+        if ((item.id === 'lm_hanoi_01' || item.isTextOnly || (item.name && item.name.includes('HÀ NỘI'))) && isMobile) {
+          activePan = 66.58;
+          activeTilt = 2.42;
+        }
+
+        let dPan = activePan - camPan;
+        while (dPan > 180) dPan -= 360;
+        while (dPan < -180) dPan += 360;
+
+        const absPan = Math.abs(dPan);
+        const absTilt = Math.abs(activeTilt - camTilt);
+
+        const horizLimit = isMobile ? UTILITY_HOTSPOT_CONFIG.horizontalThresholdMobile : UTILITY_HOTSPOT_CONFIG.horizontalThresholdDesktop;
+        const vertLimit = isMobile ? UTILITY_HOTSPOT_CONFIG.verticalThresholdMobile : UTILITY_HOTSPOT_CONFIG.verticalThresholdDesktop;
+
+        const inCenter = absPan <= horizLimit && absTilt <= vertLimit;
+
+        if (inCenter) {
+          const angularDist = Math.sqrt(dPan * dPan + absTilt * absTilt);
+          centerCandidates.push({ item, el, pan: activePan, dPan, dist: angularDist });
+        } else {
+          // Outside center zone: retract to ground if currently visible
+          if (el._utilityState && el._utilityState !== UTILITY_STATES.HIDDEN && el._utilityState !== UTILITY_STATES.HIDING) {
+            UtilityHotspotController.transition(el, UTILITY_STATES.HIDING);
+          } else if (!el._utilityState) {
+            UtilityHotspotController.transition(el, UTILITY_STATES.HIDDEN);
+          }
+        }
+      });
+
+      if (centerCandidates.length === 0) return;
+
+      // Sort left-to-right for consistent stagger order
+      centerCandidates.sort((a, b) => a.dPan - b.dPan);
+
+      // Staggered Multi-Hotspot Firework Launch — each hotspot keeps its ORIGINAL --lm-beam-h
+      centerCandidates.forEach((cand, index) => {
+        const { el } = cand;
+        // NEVER override --lm-beam-h: original value set at creation time must be preserved
+        if (!el._utilityState || el._utilityState === UTILITY_STATES.HIDDEN || el._utilityState === UTILITY_STATES.HIDING) {
+          UtilityHotspotController.transition(el, UTILITY_STATES.ASCENDING);
+        }
+      });
+    }
   }
 
   // Inject all hotspots for a given node
@@ -6082,7 +6230,15 @@ document.addEventListener("click", function(e) {
     }
 
     // Inject Amenity Landmark Hotspots (Information-only landmarks)
-    const landmarks = window.landmarkData ? window.landmarkData[nodeId] : null;
+    let landmarks = window.landmarkData ? window.landmarkData[nodeId] : null;
+    if (!landmarks && window.landmarkData) {
+      if (window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(nodeId)) {
+        landmarks = window.landmarkData['node2'];
+      } else {
+        landmarks = window.landmarkData['node1'];
+      }
+    }
+
     if (landmarks && Array.isArray(landmarks)) {
       console.log(`[LandmarkHotspot] Found ${landmarks.length} landmark hotspots for node ${nodeId}`);
       // Calculate dynamic stair-step skyline heights before creating elements
@@ -6105,7 +6261,7 @@ document.addEventListener("click", function(e) {
           isLandmark: true,
           isTextOnly: !!lm.isTextOnly,
           name: lm.name,
-          baseHeight: lm.calculatedHeight || 70
+          baseHeight: lm.calculatedHeight || lm.height || 70
         });
       });
     }
@@ -6114,6 +6270,7 @@ document.addEventListener("click", function(e) {
 
     // After injecting, render minimap markers
     updateMinimapHotspots(nodeId);
+    updateHotspotVisibility();
   }
 
 
@@ -6186,44 +6343,17 @@ document.addEventListener("click", function(e) {
     });
   }
 
-  let _lastCamPan = null;
-  let _lastCamTilt = null;
-  let _lastCamFov = null;
-  let _isRotatingTimeout = null;
-
-  // Update hotspot depth/visibility every rAF frame — called from syncCompass
+  // Update hotspot visibility, dynamic scale, and trigger UtilityHotspotController
   function updateHotspotVisibility() {
-    if (!window.pano || currentHotspotElements.length === 0) return;
+    if (!window.pano || typeof window.pano.getPan !== 'function') return;
+
     try {
-      const camPan  = window.pano.getPan()  || 0;
-      const camTilt = window.pano.getTilt() || 0;
-      const camFov  = window.pano.getFov()  || 90;
+      const camPan = window.pano.getPan();
+      const camTilt = window.pano.getTilt();
+      const camFov = window.pano.getFov();
+      const currentNode = window.pano.getNode ? window.pano.getNode() : "";
 
-      // Active rotation detection to throttle GPU workload during panning
-      const panDelta  = Math.abs(camPan  - (_lastCamPan  !== null ? _lastCamPan  : camPan));
-      const tiltDelta = Math.abs(camTilt - (_lastCamTilt !== null ? _lastCamTilt : camTilt));
-      const fovDelta  = Math.abs(camFov  - (_lastCamFov  !== null ? _lastCamFov  : camFov));
-      const isMoving  = panDelta > 0.02 || tiltDelta > 0.02 || fovDelta > 0.02;
-
-      _lastCamPan  = camPan;
-      _lastCamTilt = camTilt;
-      _lastCamFov  = camFov;
-
-      if (isMoving) {
-        if (!document.body.classList.contains('pano-is-rotating')) {
-          document.body.classList.add('pano-is-rotating');
-        }
-        clearTimeout(_isRotatingTimeout);
-        _isRotatingTimeout = setTimeout(() => {
-          document.body.classList.remove('pano-is-rotating');
-        }, 150);
-      }
-
-      let currentNode = '';
-      try { currentNode = window.pano.getCurrentNode() || ''; } catch(e) {}
-
-      // Hard safety clamp for 1528px tile panoramas to prevent cubic face boundary clipping
-      if (['node12', 'node13', 'node14', 'node15'].includes(currentNode)) {
+      if (camFov > 90) {
         if (typeof window.pano.setFovMax === 'function') window.pano.setFovMax(90);
         if (camFov > 90 && typeof window.pano.setFov === 'function') {
           window.pano.setFov(90);
@@ -6233,25 +6363,29 @@ document.addEventListener("click", function(e) {
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
       const isBirdView = window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(currentNode);
 
-      // DYNAMIC 3D PERSPECTIVE ZOOM SCALING:
-      // Scales hotspot size proportionally with camera FOV (zoom in -> hotspot grows larger, zoom out -> hotspot shrinks smaller)
       const isMobile = window.innerWidth <= 1024;
       const isSmallPhone = window.innerWidth <= 480;
       const baseScale = isSmallPhone ? 0.42 : (isMobile ? 0.48 : 0.95);
       const fovRatio = 90 / Math.max(30, Math.min(125, camFov));
       const dynamicScale = (baseScale * Math.pow(fovRatio, 0.75)).toFixed(3);
 
-      // First pass: collect angular distances for non-view landmark hotspots
+      const utilityCandidatesDesktop = [];
       const noViewLandmarkCandidates = [];
 
       currentHotspotElements.forEach((item) => {
-        const { el, pan, tilt, isLandmark } = item;
+        const { el, pan, tilt, isLandmark, baseHeight } = item;
         if (!el) return;
 
-        // Apply dynamic 3D zoom scale to ALL hotspots (both with-view and non-view)
         if (el._cachedDynamicScale !== dynamicScale) {
           el._cachedDynamicScale = dynamicScale;
           el.style.setProperty('--hs-dynamic-scale', dynamicScale);
+        }
+
+        const effectiveHeight = baseHeight || 90;
+        if (el._cachedBeamHeight !== effectiveHeight) {
+          el._cachedBeamHeight = effectiveHeight;
+          const targetH = isMobile ? Math.round(effectiveHeight * 0.5) : effectiveHeight;
+          el.style.setProperty('--lm-beam-h', `${targetH}px`);
         }
 
         const applyVisibility = (opacityVal, visState) => {
@@ -6264,19 +6398,17 @@ document.addEventListener("click", function(e) {
             el.style.visibility = visState;
             if (visState === 'hidden' || opacityVal === '0') {
               el.classList.remove('hs-visible');
-              el.classList.remove('lm-rising');
             } else {
               el.classList.add('hs-visible');
             }
           }
         };
 
-        // Text-only banners (e.g. HÀ NỘI) & Node Navigation Hotspots (hs-has-view): ALWAYS VISIBLE
         const isHasView = el.classList.contains('hs-has-view');
         const isTextOnly = el.classList.contains('hs-text-only-container');
         const isNoViewLandmark = isLandmark || el.classList.contains('hs-no-view');
 
-        // BIRD VIEW MOBILE OPTIMIZATION: Convert view hotspots on Bird View into minimal glowing dots
+        // BIRD VIEW MOBILE OPTIMIZATION
         if (isBirdView && isHasView) {
           if (!el.classList.contains('is-bird-view-dot')) {
             el.classList.add('is-bird-view-dot');
@@ -6305,31 +6437,25 @@ document.addEventListener("click", function(e) {
         while (dPan < -180) dPan += 360;
         const absPan = Math.abs(dPan);
         const absTilt = Math.abs(activeTilt - camTilt);
-        const maxTiltDiff = isTopView ? 85 : 50;
-
-        // Smooth Center View Cone (Within 20° pan from camera center)
-        if (absPan <= 20 && absTilt <= maxTiltDiff) {
-          const fadeOpacity = Math.max(0.1, 1 - Math.pow(absPan / 20, 1.5)).toFixed(2);
-          noViewLandmarkCandidates.push({ item, absPan, fadeOpacity, applyVisibility, el });
-        } else {
-          applyVisibility('0', 'hidden');
-          el.classList.remove('lm-rising');
+        if (!isMobile) {
+          // DESKTOP: Collect for UtilityHotspotController
+          utilityCandidatesDesktop.push({ item, el, pan, tilt, baseHeight });
+          return;
         }
+
+        // MOBILE: also collect for UtilityHotspotController (same system, mobile thresholds)
+        noViewLandmarkCandidates.push({ item, el, pan, tilt: activeTilt, baseHeight, applyVisibility });
       });
 
-      // Sort candidate landmarks by proximity to screen center and smoothly fade top 4 with water column geyser rise animation
-      noViewLandmarkCandidates.sort((a, b) => a.absPan - b.absPan);
-      noViewLandmarkCandidates.forEach((cand, rank) => {
-        if (rank < 4) {
-          cand.applyVisibility(String(cand.fadeOpacity), 'visible');
-          if (!cand.el.classList.contains('lm-rising')) {
-            cand.el.classList.add('lm-rising');
-          }
-        } else {
-          cand.applyVisibility('0', 'hidden');
-          cand.el.classList.remove('lm-rising');
-        }
-      });
+      // Run UtilityHotspotController for Desktop
+      if (!isMobile && utilityCandidatesDesktop.length > 0) {
+        UtilityHotspotController.processHotspots(utilityCandidatesDesktop, camPan, camTilt, false);
+      }
+
+      // Run UtilityHotspotController for Mobile (same state machine, mobile thresholds)
+      if (isMobile && noViewLandmarkCandidates.length > 0) {
+        UtilityHotspotController.processHotspots(noViewLandmarkCandidates, camPan, camTilt, true);
+      }
     } catch (e) {}
   }
 
@@ -6531,11 +6657,8 @@ document.addEventListener("click", function(e) {
     const isPremiumLayout = true;
     
     if (isPremiumLayout) {
-      console.log(`[PremiumHotspot] layoutMode = ${layoutMode}, HasHotspots = ${!!window.hotspotData[currentNodeId]}`);
-      if (window.hotspotData && window.hotspotData[currentNodeId]) {
-        console.log(`[PremiumHotspot] Injecting hotspots for node ${currentNodeId}`);
-        injectPremiumHotspots(currentNodeId);
-      }
+      console.log(`[PremiumHotspot] Injecting hotspots for node ${currentNodeId}`);
+      injectPremiumHotspots(currentNodeId);
     }
     
     // Always update minimap for all layouts to keep markers synchronized

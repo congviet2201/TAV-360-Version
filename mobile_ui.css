@@ -627,9 +627,8 @@
     transform-origin: center bottom !important;
   }
   
-  /* Proportional 50% beam height preserved on mobile */
-  .hs-container .lm-vertical-beam,
-  .hs-container.hs-no-view .lm-vertical-beam {
+  /* Proportional 50% beam height for hs-HAS-VIEW beams only (not hs-no-view — ut-state controls those) */
+  .hs-container.hs-has-view .lm-vertical-beam {
     opacity: 0.95 !important;
     height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     max-height: none !important;
@@ -662,15 +661,13 @@
     }
   }
 
-  /* Play rising animation when hotspot becomes visible */
-  .hs-container.hs-visible .lm-vertical-beam,
-  .hs-container.hs-no-view.hs-visible .lm-vertical-beam {
+  /* Play rising animation ONLY for hs-has-view (hs-no-view uses ut-state system) */
+  .hs-container.hs-has-view.hs-visible .lm-vertical-beam {
     animation: lmBeamRiseMobile 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
   }
 
-  .hs-container.hs-visible .lm-glass-flag,
-  .hs-container.hs-no-view.hs-visible .lm-glass-flag,
-  .hs-container.hs-visible .lm-holographic-label {
+  .hs-container.hs-has-view.hs-visible .lm-glass-flag,
+  .hs-container.hs-has-view.hs-visible .lm-holographic-label {
     animation: lmFlagRiseMobile 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
   }
 
@@ -687,9 +684,8 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
   }
 
-  /* Micro-sized, fine-detailed glass flag badges */
-  .hs-container .lm-glass-flag,
-  .hs-container.hs-no-view .lm-glass-flag {
+  /* Glass flag badges: only for hs-has-view (hs-no-view has its own ut-state label system) */
+  .hs-container.hs-has-view .lm-glass-flag {
     bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
     transform: translateY(50%) !important;
     padding: 2px 6px !important;
@@ -733,17 +729,17 @@
     transform-origin: center center !important;
   }
 
-  /* Fine-detailed ground scan ring & core dot */
-  .hs-container .lm-ground-scan-system,
-  .hs-container .lm-ground-scan {
+  /* Ground scan system: hs-has-view giữ size bình thường, hs-no-view dùng 0×0 (ut-state system) */
+  .hs-container.hs-has-view .lm-ground-scan-system,
+  .hs-container.hs-has-view .lm-ground-scan {
     width: 20px !important;
     height: 20px !important;
   }
-  .hs-container .lm-scan-ring-2 {
+  .hs-container.hs-has-view .lm-scan-ring-2 {
     width: 14px !important;
     height: 14px !important;
   }
-  .hs-container .lm-energy-core {
+  .hs-container.hs-has-view .lm-energy-core {
     width: 6px !important;
     height: 6px !important;
   }
@@ -756,140 +752,376 @@
   }
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   GPU HARDWARE COMPOSITING & DYNAMIC 3D PERSPECTIVE ZOOM SCALING
-   ══════════════════════════════════════════════════════════════════ */
-.hs-container,
-.lm-scale-wrap,
-.hologram-marker-container,
-.mm-luxury-hotspot,
-.ggnode,
-.hs-has-view,
-.hs-no-view,
-.hs-text-only-container {
-  transform: scale(var(--hs-dynamic-scale, 0.48)) !important;
-  transform-origin: center bottom !important;
-}
-
-.hs-container,
-.lm-scale-wrap,
-.hologram-marker-container,
-.lm-vertical-beam,
-.lm-glass-flag,
-.lm-holographic-label {
-  will-change: transform, opacity !important;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transition: opacity 0.35s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.35s cubic-bezier(0.25, 1, 0.5, 1) !important;
-}
-
-/* ══════════════════════════════════════════════════════════════════
-   BIRD VIEW MOBILE OPTIMIZATION: MINIMAL GLOWING DOT MARKERS
-   Converts view hotspots on Bird View (node2) into minimal 14px glowing dots
-   to eliminate mobile DOM overhead and maximize 60 FPS rotation speed.
-   ══════════════════════════════════════════════════════════════════ */
 @media screen and (max-width: 1024px) {
-  .hs-container.is-bird-view-dot {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px !important;
-    min-height: 36px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border: none !important;
+  .hs-container,
+  .lm-scale-wrap,
+  .hologram-marker-container,
+  .mm-luxury-hotspot,
+  .ggnode,
+  .hs-has-view,
+  .hs-no-view,
+  .hs-text-only-container {
+    transform: scale(var(--hs-dynamic-scale, 0.48)) !important;
+    transform-origin: center bottom !important;
   }
 
-  .hs-container.is-bird-view-dot * {
+  .hs-container,
+  .lm-scale-wrap,
+  .hologram-marker-container,
+  .lm-vertical-beam,
+  .lm-glass-flag,
+  .lm-holographic-label {
+    will-change: transform, opacity !important;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     HOTSPOT CÓ VIEW (hs-has-view) — MOBILE: THU VỀ CHẤM ĐƠN
+     Ẩn toàn bộ beam / label / ring
+     Chỉ giữ energy-core với màu theo loại hotspot
+     ══════════════════════════════════════════════════════════ */
+
+  /* Giảm scale tổng thể để chống lag khi xoay */
+  .hs-container.hs-has-view {
+    transform: scale(0.38) !important;
+    transform-origin: center bottom !important;
+  }
+
+  /* Ẩn beam, label, scan rings — chỉ giữ chấm */
+  .hs-container.hs-has-view .lm-vertical-beam,
+  .hs-container.hs-has-view .lm-holographic-label,
+  .hs-container.hs-has-view .lm-glass-flag,
+  .hs-container.hs-has-view .lm-ground-scan,
+  .hs-container.hs-has-view .lm-scan-ring-2,
+  .hs-container.hs-has-view .lm-particles,
+  .hs-container.hs-has-view .lm-vertical-beam::after,
+  .hs-container.hs-has-view .lm-peak-burst {
+    display: none !important;
+    animation: none !important;
+  }
+
+  /* Ground scan system: thu về điểm gốc, overflow visible để chấm hiện ra */
+  .hs-container.hs-has-view .lm-ground-scan-system {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  /* Chấm interior (Cyan) — 14px */
+  .hs-container.hs-has-view.hs-interior .lm-energy-core {
+    position: absolute !important;
+    width: 14px !important;
+    height: 14px !important;
+    bottom: -7px !important;
+    left: -7px !important;
+    transform: none !important;
+    background: #00e5ff !important;
+    border: 2px solid #ffffff !important;
+    border-radius: 50% !important;
+    box-shadow:
+      0 0 0 2px rgba(0, 229, 255, 0.4),
+      0 0 12px #00e5ff,
+      0 0 24px rgba(0, 229, 255, 0.7) !important;
+    animation: mobileHsDotPulseBlue 2.4s ease-in-out infinite !important;
+    opacity: 1 !important;
+    z-index: 10 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+  }
+
+  /* Chấm amenities/architecture (Green) — 14px */
+  .hs-container.hs-has-view.hs-amenities .lm-energy-core,
+  .hs-container.hs-has-view.hs-architecture .lm-energy-core {
+    position: absolute !important;
+    width: 14px !important;
+    height: 14px !important;
+    bottom: -7px !important;
+    left: -7px !important;
+    transform: none !important;
+    background: #10b981 !important;
+    border: 2px solid #ffffff !important;
+    border-radius: 50% !important;
+    box-shadow:
+      0 0 0 2px rgba(16, 185, 129, 0.4),
+      0 0 12px #10b981,
+      0 0 24px rgba(16, 185, 129, 0.7) !important;
+    animation: mobileHsDotPulseGreen 2.4s ease-in-out infinite !important;
+    opacity: 1 !important;
+    z-index: 10 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+  }
+
+  /* Pulse animations — nhẹ, không gây lag */
+  @keyframes mobileHsDotPulseBlue {
+    0%, 100% {
+      box-shadow: 0 0 0 2px rgba(0,229,255,0.4), 0 0 10px #00e5ff, 0 0 20px rgba(0,229,255,0.6);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(0,229,255,0.2), 0 0 16px #00e5ff, 0 0 30px rgba(0,229,255,0.4);
+      transform: scale(1.08);
+    }
+  }
+
+  @keyframes mobileHsDotPulseGreen {
+    0%, 100% {
+      box-shadow: 0 0 0 2px rgba(16,185,129,0.4), 0 0 10px #10b981, 0 0 20px rgba(16,185,129,0.6);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 0 4px rgba(16,185,129,0.2), 0 0 16px #10b981, 0 0 30px rgba(16,185,129,0.4);
+      transform: scale(1.08);
+    }
+  }
+
+  /* Trong khi xoay: dừng pulse để giữ 60fps */
+  body.pano-is-rotating .hs-container.hs-has-view .lm-energy-core {
+    animation-play-state: paused !important;
+    box-shadow: none !important;
+  }
+
+  /* ══════════════════════════════════════════════════════════
+     UTILITY HOTSPOT (hs-no-view) — MOBILE ADAPTATION
+     Cột sáng: 70px, chạy từ dưới lên như pháo hoa (750ms)
+     Chấm đáy: 6px, tĩnh, luôn hiển thị
+     Label: nhỏ hơn desktop, leo theo cột
+     ══════════════════════════════════════════════════════════ */
+
+  /* Ẩn vòng scan và dashed ring */
+  .hs-container.hs-no-view .lm-ground-scan,
+  .hs-container.hs-no-view .lm-scan-ring-2 {
     display: none !important;
   }
 
-  .hs-container.is-bird-view-dot::before {
-    content: '' !important;
-    display: block !important;
-    width: 8px !important;
-    height: 8px !important;
-    border-radius: 50% !important;
-    background: #00ffaa !important;
-    border: 1.5px solid #ffffff !important;
-    box-shadow: 0 0 6px #00ffaa, 0 0 10px rgba(0, 255, 170, 0.8) !important;
-    animation: birdDotPulse 1.8s infinite ease-in-out !important;
-  }
-
-  @keyframes birdDotPulse {
-    0%, 100% {
-      transform: scale(1);
-      box-shadow: 0 0 6px #00ffaa;
-    }
-    50% {
-      transform: scale(1.3);
-      box-shadow: 0 0 10px #00ffaa, 0 0 14px rgba(0, 255, 170, 0.9);
-    }
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .hs-container.is-bird-view-dot::before {
+  /* Chấm đáy: nhỏ, sạch, tĩnh */
+  .hs-container.hs-no-view .lm-energy-core {
     width: 6px !important;
     height: 6px !important;
-    border: 1px solid #ffffff !important;
-  }
-}
-
-/* Water Column Geyser Rising Keyframe Animations */
-@keyframes lmBeamRiseWaterColumn {
-  0% {
-    height: 0 !important;
-    opacity: 0 !important;
-  }
-  40% {
-    opacity: 0.85 !important;
-  }
-  100% {
-    height: calc(var(--lm-beam-h, 70px) * 0.5) !important;
-    opacity: 0.95 !important;
-  }
-}
-
-@keyframes lmFlagRiseWaterColumn {
-  0% {
-    bottom: 0 !important;
-    opacity: 0 !important;
-    transform: translateY(50%) scale(0.6) !important;
-  }
-  100% {
-    bottom: calc(var(--lm-beam-h, 70px) * 0.5) !important;
+    animation: none !important;
     opacity: 1 !important;
+    border: 1.5px solid rgba(0, 0, 0, 0.55) !important;
+    box-shadow: 0 0 4px #ffffff, 0 0 8px rgba(255, 255, 255, 0.6) !important;
+  }
+
+  /* Hệ tọa độ 0×0 — dot center = beam bottom */
+  .hs-container.hs-no-view .lm-ground-scan-system {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+  }
+
+  .hs-container.hs-no-view .lm-energy-core {
+    position: absolute !important;
+    bottom: -3px !important;
+    left: -3px !important;
+    transform: none !important;
+    z-index: 6 !important;
+  }
+
+  /* Cột sáng mobile: 70px, 2px rộng */
+  .hs-container.hs-no-view .lm-vertical-beam {
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 2px !important;
+    height: var(--lm-beam-h, 70px) !important;
+    background: repeating-linear-gradient(
+      to top,
+      transparent 0px,
+      transparent 3px,
+      #ffffff 3px,
+      #ffffff 8px
+    ) !important;
+    box-shadow: 0 0 6px #ffffff, 0 0 10px rgba(255, 255, 255, 0.7) !important;
+    opacity: 0;
+    z-index: 5;
+    overflow: visible !important;
+  }
+
+  /* Keyframes mobile: từ dưới lên, 750ms (T% giảm 100%→0%) */
+  @keyframes utBeamAscentMobile {
+    0%   { clip-path: inset(100% 0 0 0); opacity: 0; }
+    5%   { clip-path: inset(97%  0 0 0); opacity: 0.65; }
+    38%  { clip-path: inset(60%  0 0 0); opacity: 0.85; }
+    70%  { clip-path: inset(20%  0 0 0); opacity: 0.92; }
+    90%  { clip-path: inset(1%   0 0 0); opacity: 0.95; }
+    100% { clip-path: inset(0%   0 0 0); opacity: 0.92; }
+  }
+
+  @keyframes utLabelAscentMobile {
+    0%   { opacity: 0; visibility: hidden; bottom: 0; transform: translateY(50%) scale(0.2); filter: blur(4px); }
+    20%  { opacity: 0.1; visibility: visible; bottom: 0; transform: translateY(50%) scale(0.25); filter: blur(4px); }
+    50%  { opacity: 0.5; bottom: calc(var(--lm-beam-h, 70px) * 0.45); transform: translateY(50%) scale(0.7); filter: blur(2px); }
+    80%  { opacity: 0.85; bottom: calc(var(--lm-beam-h, 70px) * 0.82); transform: translateY(50%) scale(0.95); filter: blur(0px); }
+    100% { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 70px); transform: translateY(50%) scale(1); filter: blur(0px); }
+  }
+
+  @keyframes utBeamRetractMobile {
+    0%   { clip-path: inset(0%   0 0 0); opacity: 0.92; }
+    40%  { clip-path: inset(30%  0 0 0); opacity: 0.7; }
+    100% { clip-path: inset(100% 0 0 0); opacity: 0; }
+  }
+
+  @keyframes utLabelRetractMobile {
+    0%   { opacity: 1; visibility: visible; bottom: var(--lm-beam-h, 70px); transform: translateY(50%) scale(1); }
+    100% { opacity: 0; visibility: hidden;  bottom: 0; transform: translateY(50%) scale(0.2); filter: blur(4px); }
+  }
+
+  /* STATE: HIDDEN */
+  .hs-container.hs-no-view.ut-state-hidden .lm-vertical-beam,
+  .hs-container.hs-no-view.ut-state-hidden .lm-glass-flag,
+  .hs-container.hs-no-view.ut-state-hidden .lm-holographic-label {
+    display: none !important;
+  }
+  .hs-container.hs-no-view.ut-state-hidden .lm-ground-scan-system {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* STATE: IGNITION (pass-through — go straight to ASCENDING) */
+  .hs-container.hs-no-view.ut-state-ignition .lm-ground-scan-system {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* STATE: ASCENDING — cột sáng trượt lên 750ms */
+  .hs-container.hs-no-view.ut-state-ascending .lm-ground-scan-system {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .hs-container.hs-no-view.ut-state-ascending .lm-vertical-beam {
+    display: block !important;
+    animation: utBeamAscentMobile 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  }
+  .hs-container.hs-no-view.ut-state-ascending .lm-glass-flag,
+  .hs-container.hs-no-view.ut-state-ascending .lm-holographic-label {
+    display: inline-flex !important;
+    animation: utLabelAscentMobile 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+  }
+
+  /* STATE: BLOOMING */
+  .hs-container.hs-no-view.ut-state-blooming .lm-ground-scan-system {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .hs-container.hs-no-view.ut-state-blooming .lm-vertical-beam {
+    display: block !important;
+    clip-path: inset(0% 0 0 0) !important;
+    opacity: 0.92 !important;
+  }
+  .hs-container.hs-no-view.ut-state-blooming .lm-glass-flag,
+  .hs-container.hs-no-view.ut-state-blooming .lm-holographic-label {
+    display: inline-flex !important;
+    bottom: var(--lm-beam-h, 70px) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
     transform: translateY(50%) scale(1) !important;
   }
-}
 
-/* Water Column Geyser Rising Animation Trigger */
-.hs-container.hs-no-view.lm-rising .lm-vertical-beam {
-  animation: lmBeamRiseWaterColumn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-}
+  /* STATE: VISIBLE */
+  .hs-container.hs-no-view.ut-state-visible .lm-ground-scan-system {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .hs-container.hs-no-view.ut-state-visible .lm-vertical-beam {
+    display: block !important;
+    clip-path: inset(0% 0 0 0) !important;
+    opacity: 0.92 !important;
+  }
+  .hs-container.hs-no-view.ut-state-visible .lm-glass-flag,
+  .hs-container.hs-no-view.ut-state-visible .lm-holographic-label {
+    display: inline-flex !important;
+    bottom: var(--lm-beam-h, 70px) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(50%) scale(1) !important;
+    filter: blur(0px) !important;
+  }
 
-.hs-container.hs-no-view.lm-rising .lm-glass-flag,
-.hs-container.hs-no-view.lm-rising .lm-holographic-label {
-  animation: lmFlagRiseWaterColumn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
-}
+  /* STATE: HIDING — cột thu về chấm */
+  .hs-container.hs-no-view.ut-state-hiding .lm-ground-scan-system {
+    display: block !important;
+    opacity: 0.7 !important;
+    visibility: visible !important;
+  }
+  .hs-container.hs-no-view.ut-state-hiding .lm-vertical-beam {
+    display: block !important;
+    animation: utBeamRetractMobile 0.4s ease-in forwards !important;
+  }
+  .hs-container.hs-no-view.ut-state-hiding .lm-glass-flag,
+  .hs-container.hs-no-view.ut-state-hiding .lm-holographic-label {
+    animation: utLabelRetractMobile 0.4s ease-in forwards !important;
+  }
 
-/* Touch Passthrough: Allows smooth WebGL panorama dragging without input stalling */
-.hs-container *,
-.lm-scale-wrap *,
-.lm-glass-flag * {
-  pointer-events: none !important;
-}
+  /* Label mobile: nhỏ hơn desktop */
+  .hs-container.hs-no-view .lm-glass-flag {
+    position: absolute !important;
+    bottom: var(--lm-beam-h, 70px) !important;
+    transform: translateY(50%) scale(0.2) !important;
+    transform-origin: center bottom !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 4px 9px 4px 7px !important;
+    background: rgba(10, 18, 36, 0.88) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.55), 0 0 8px rgba(255, 255, 255, 0.35) !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    z-index: 10 !important;
+    border-radius: 4px !important;
+  }
 
-/* During Active Camera Rotation: Pause heavy animations to maximize 60 FPS WebGL rendering */
-body.pano-is-rotating .hs-container *,
-body.pano-is-rotating .lm-scale-wrap *,
-body.pano-is-rotating .hologram-marker-container * {
-  animation-play-state: paused !important;
-  box-shadow: none !important;
-  filter: none !important;
+  /* Icon nhỏ hơn */
+  .hs-container.hs-no-view .lm-glass-flag .lm-icon,
+  .hs-container.hs-no-view .lm-glass-flag .lm-flag-icon {
+    width: 13px !important;
+    height: 13px !important;
+    min-width: 13px !important;
+    font-size: 9px !important;
+  }
+
+  /* Tên label nhỏ hơn */
+  .hs-container.hs-no-view .lm-glass-flag .lm-name,
+  .hs-container.hs-no-view .lm-glass-flag .lm-label-text {
+    font-size: 9px !important;
+    letter-spacing: 0.4px !important;
+  }
+
+  /* Touch Passthrough: Allows smooth WebGL panorama dragging */
+  .hs-container *,
+  .lm-scale-wrap *,
+  .lm-glass-flag * {
+    pointer-events: none !important;
+  }
+
+  /* During Active Camera Rotation: Pause heavy animations */
+  body.pano-is-rotating .hs-container *,
+  body.pano-is-rotating .lm-scale-wrap *,
+  body.pano-is-rotating .hologram-marker-container * {
+    animation-play-state: paused !important;
+    box-shadow: none !important;
+    filter: none !important;
+  }
 }
 
 /* Extra compact scaling for narrow portrait phones (iPhone SE / 360px - 414px) */
