@@ -203,7 +203,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Luxury Center Brand Card Frame — no transform/backdrop-filter to avoid isolating child mix-blend-mode */
+/* Luxury Center Brand Card Frame */
 .landing-brand-card {
   position: relative;
   display: flex;
@@ -211,23 +211,26 @@
   align-items: center;
   padding: 30px 48px 24px 48px;
   margin-bottom: 28px;
-  background: rgba(4, 7, 16, 0.92);
+  background: rgba(4, 7, 16, 0.78);
   border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 32px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 
               0 0 40px rgba(255, 140, 0, 0.30),
               inset 0 0 25px rgba(255, 255, 255, 0.08);
-  overflow: visible;
+  overflow: hidden;
   max-width: 680px;
-  transition: box-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 .landing-brand-card:hover {
+  transform: translateY(-4px) scale(1.015);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 
               0 0 50px rgba(255, 140, 0, 0.4);
 }
 
-/* Center Logo Wrapper — NO perspective/transform/z-index here to avoid isolating mix-blend-mode */
+/* Center Logo Wrapper */
 .landing-center-logo-wrap {
   position: relative;
   width: 320px;
@@ -242,9 +245,10 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  perspective: 1000px;
 }
 
-/* Video Logo Container — NO z-index here to avoid creating stacking context */
+/* Video Logo Container */
 .landing-logo-video-box {
   position: relative;
   width: 100%;
@@ -254,6 +258,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
@@ -261,23 +266,24 @@
   overflow: visible;
 }
 
-/* Video element is hidden — used only as data source for canvas chroma-key */
+/* Video element (Active in background for canvas decoding) */
 .landing-logo-video {
-  display: none !important;
   position: absolute !important;
-  opacity: 0 !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0.001 !important;
   pointer-events: none !important;
 }
 
-/* Canvas renders video frames with black pixels removed (chroma-key) */
+/* Canvas renders video frames with black background pixels knocked out to 100% transparent */
 .landing-logo-canvas {
+  display: block !important;
   width: 100% !important;
   height: 100% !important;
   min-width: 220px !important;
   min-height: 140px !important;
   object-fit: contain !important;
   pointer-events: none !important;
-  display: block !important;
   background: transparent !important;
 }
 
@@ -1191,3 +1197,27 @@ body:has(#landing-page-overlay:not(.dismissed)) .tav-lang-round-pill {
     height: 38px;
   }
 }
+
+/* Mobile Video Logo Frame (Matches PC layout, scaled for mobile) */
+@media screen and (max-width: 768px) {
+  .landing-center-logo-wrap {
+    width: 240px !important;
+    height: 150px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .landing-logo-video-box {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 200px !important;
+    min-height: 120px !important;
+  }
+
+  .landing-logo-video,
+  .landing-logo-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+}
+

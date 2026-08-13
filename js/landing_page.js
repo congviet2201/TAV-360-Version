@@ -117,12 +117,11 @@
                 x5-playsinline
                 preload="auto"
                 src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.mp4"
-                aria-label="LOGO TAV PANOTOUR 3 Video Animation"
-                style="display:none !important; position:absolute; opacity:0; pointer-events:none;">
+                aria-label="LOGO TAV PANOTOUR 3 Video Animation">
                 <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.mp4" type="video/mp4">
                 <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.webm" type="video/webm">
               </video>
-              <canvas class="landing-logo-canvas" style="width:100%;height:100%;display:block;background:transparent;"></canvas>
+              <canvas class="landing-logo-canvas"></canvas>
             </div>
           </div>
 
@@ -206,65 +205,65 @@
       });
     });
 
-    // Robust Auto-play & Canvas Chroma-Key Engine for Video Logo
-    // Renders video frames to canvas with black pixels made transparent
+    // Realtime Canvas Chroma-Key Engine: Knocks out black background pixels (R+G+B < 45) to 100% transparent
     const logoVideo = overlay.querySelector('.landing-logo-video');
     const logoCanvas = overlay.querySelector('.landing-logo-canvas');
     if (logoVideo && logoCanvas) {
       logoVideo.muted = true;
       logoVideo.defaultMuted = true;
       logoVideo.volume = 0;
+      logoVideo.loop = true;
       logoVideo.setAttribute('muted', '');
       logoVideo.setAttribute('playsinline', '');
       logoVideo.setAttribute('webkit-playsinline', '');
       logoVideo.setAttribute('x5-playsinline', '');
 
       const ctx = logoCanvas.getContext('2d', { willReadFrequently: true });
-      let chromaKeyActive = false;
-      const BLACK_THRESHOLD = 40; // pixels with R+G+B < this are made transparent
+      let isRendering = false;
+      const BLACK_THRESHOLD = 45; // Pixels with R+G+B < 45 become 100% transparent
 
-      function renderChromaKeyFrame() {
-        if (!chromaKeyActive) return;
-        if (logoVideo.paused || logoVideo.ended) {
-          requestAnimationFrame(renderChromaKeyFrame);
-          return;
+      function renderFrame() {
+        if (!isRendering) return;
+        if (!logoVideo.paused && !logoVideo.ended) {
+          const vw = logoVideo.videoWidth || 320;
+          const vh = logoVideo.videoHeight || 200;
+          if (logoCanvas.width !== vw) logoCanvas.width = vw;
+          if (logoCanvas.height !== vh) logoCanvas.height = vh;
+
+          ctx.drawImage(logoVideo, 0, 0, vw, vh);
+          try {
+            const imgData = ctx.getImageData(0, 0, vw, vh);
+            const data = imgData.data;
+            for (let i = 0; i < data.length; i += 4) {
+              // If pixel is black/dark (R+G+B < 45), set alpha to 0 (transparent)
+              if (data[i] + data[i + 1] + data[i + 2] < BLACK_THRESHOLD) {
+                data[i + 3] = 0;
+              }
+            }
+            ctx.putImageData(imgData, 0, 0);
+          } catch (e) {}
         }
-
-        const vw = logoVideo.videoWidth || 320;
-        const vh = logoVideo.videoHeight || 200;
-        if (logoCanvas.width !== vw) logoCanvas.width = vw;
-        if (logoCanvas.height !== vh) logoCanvas.height = vh;
-
-        ctx.drawImage(logoVideo, 0, 0, vw, vh);
-        const imageData = ctx.getImageData(0, 0, vw, vh);
-        const d = imageData.data;
-        for (let i = 0; i < d.length; i += 4) {
-          // If pixel is very dark (near black), make it fully transparent
-          if (d[i] + d[i + 1] + d[i + 2] < BLACK_THRESHOLD) {
-            d[i + 3] = 0; // alpha = 0
-          }
-        }
-        ctx.putImageData(imageData, 0, 0);
-        requestAnimationFrame(renderChromaKeyFrame);
+        requestAnimationFrame(renderFrame);
       }
 
       const startVideo = () => {
+        isRendering = true;
         const p = logoVideo.play();
         if (p && typeof p.then === 'function') {
           p.then(() => {
-            chromaKeyActive = true;
-            renderChromaKeyFrame();
+            requestAnimationFrame(renderFrame);
           }).catch(() => {
-            const forcePlayOnUserGesture = () => {
+            const forcePlayOnGesture = () => {
               logoVideo.play().then(() => {
-                chromaKeyActive = true;
-                renderChromaKeyFrame();
+                requestAnimationFrame(renderFrame);
               }).catch(() => {});
             };
-            window.addEventListener('click', forcePlayOnUserGesture, { once: true, capture: true });
-            window.addEventListener('touchstart', forcePlayOnUserGesture, { once: true, capture: true });
-            window.addEventListener('pointerdown', forcePlayOnUserGesture, { once: true, capture: true });
+            window.addEventListener('click', forcePlayOnGesture, { once: true, capture: true });
+            window.addEventListener('touchstart', forcePlayOnGesture, { once: true, capture: true });
+            window.addEventListener('pointerdown', forcePlayOnGesture, { once: true, capture: true });
           });
+        } else {
+          requestAnimationFrame(renderFrame);
         }
       };
 
