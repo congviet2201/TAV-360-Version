@@ -32,22 +32,24 @@
   // ─────────────────────────────────────────────────────────────────
   // CONFIGURATION
   // ─────────────────────────────────────────────────────────────────
+  var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+
   var CONFIG = {
-    // Blur amount at peak (px)
-    blurMax:          14,    // px — strong enough to fully obscure seam
+    // Blur amount at peak (px) — lightweight on Mobile to prevent GPU stutter/lag
+    blurMax:          isMobile ? 4 : 14,
 
     // Phase 1: Blur in (before scene switch)
-    blurInDuration:   350,   // ms
+    blurInDuration:   isMobile ? 200 : 350,
     blurInEase:       'ease-in',
 
     // Phase 3: Blur out (reveal new scene)
-    blurOutDuration:  650,   // ms — slower reveal feels more premium
-    blurOutEase:      'cubic-bezier(0.25, 0.46, 0.45, 0.94)', // easeOutQuad
+    blurOutDuration:  isMobile ? 400 : 650,
+    blurOutEase:      'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
 
     // Safety
-    lockTimeout:      1400,  // ms — full sequence + buffer
-    pollInterval:     80,    // ms
-    pollMaxAttempts:  150,   // 12s max wait
+    lockTimeout:      isMobile ? 900 : 1400,
+    pollInterval:     80,
+    pollMaxAttempts:  150,
 
     debug:            false,
   };

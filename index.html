@@ -122,11 +122,9 @@
 			pano=new pano2vrPlayer("container");
 			pano.startNode = startNode;
 			pano.startView = startView;
-			pano.setQueryParameter("ts=16073790")
-			// load the configuration
-			window.addEventListener("load", function() {
-				pano.readConfigUrlAsync("pano.xml?ts=16073790");
-			});
+			pano.setQueryParameter("ts=16073790");
+			// load configuration & start downloading 360 tiles immediately in parallel
+			pano.readConfigUrlAsync("pano.xml?ts=16073790");
 			if (window.navigator.userAgent.match(/Safari/i)) {
 				// fix for white borders, rotation on iPhone
 				function iosHfix(e) {

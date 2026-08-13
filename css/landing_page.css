@@ -266,30 +266,25 @@
   overflow: visible;
 }
 
-/* Video element (Active in layout for 100% touchless mobile autoplay, visually opacity: 0.001) */
+/* Video element (Hardware-accelerated inline playback, black background removed via screen blend mode) */
 .landing-logo-video {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-  opacity: 0.001 !important;
-  pointer-events: none !important;
-  z-index: 1 !important;
-}
-
-/* Canvas overlay element (Renders 100% transparent video frames without black background) */
-.landing-logo-canvas {
-  position: relative !important;
-  z-index: 2 !important;
   display: block !important;
+  position: relative !important;
   width: 100% !important;
   height: 100% !important;
   min-width: 220px !important;
   min-height: 140px !important;
   object-fit: contain !important;
   pointer-events: none !important;
+  mix-blend-mode: screen !important;
   background: transparent !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Canvas is hidden */
+.landing-logo-canvas {
+  display: none !important;
 }
 
 .landing-logo-split-container {
@@ -1205,6 +1200,12 @@ body:has(#landing-page-overlay:not(.dismissed)) .tav-lang-round-pill {
 
 /* Mobile Video Logo Frame (Matches PC layout, scaled for mobile) */
 @media screen and (max-width: 768px) {
+  .landing-brand-card {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(4, 7, 16, 0.88) !important;
+  }
+
   .landing-center-logo-wrap {
     width: 240px !important;
     height: 150px !important;
@@ -1218,11 +1219,27 @@ body:has(#landing-page-overlay:not(.dismissed)) .tav-lang-round-pill {
     min-height: 120px !important;
   }
 
-  .landing-logo-canvas {
+  .landing-logo-video {
     display: block !important;
+    position: relative !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
+    mix-blend-mode: screen !important;
   }
+
+  .landing-logo-canvas {
+    display: none !important;
+  }
+}
+
+/* Mobile Hardware-Accelerated 360 WebGL Canvas Performance Optimization */
+#container,
+#container canvas {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  will-change: transform;
 }
 
