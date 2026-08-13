@@ -6393,11 +6393,9 @@ document.addEventListener("click", function(e) {
       const camFov = window.pano.getFov();
       const currentNode = window.pano.getNode ? window.pano.getNode() : "";
 
-      if (camFov > 90) {
-        if (typeof window.pano.setFovMax === 'function') window.pano.setFovMax(90);
-        if (camFov > 90 && typeof window.pano.setFov === 'function') {
-          window.pano.setFov(90);
-        }
+      // Allow smooth full-range zoom-out up to 135° across all views
+      if (typeof window.pano.setFovMax === 'function') {
+        window.pano.setFovMax(135);
       }
 
       const isTopView  = window.HOTSPOT_TOP_VIEW_NODES  && window.HOTSPOT_TOP_VIEW_NODES.includes(currentNode);
@@ -6670,8 +6668,8 @@ document.addEventListener("click", function(e) {
             window.pano.setViewerSize(container.offsetWidth, container.offsetHeight);
           }
           if (typeof window.pano.setFovMode === 'function') window.pano.setFovMode(2);
-          if (typeof window.pano.setFovMax  === 'function') window.pano.setFovMax(90);
-          if (typeof window.pano.setFov     === 'function') window.pano.setFov(85);
+          if (typeof window.pano.setFovMax  === 'function') window.pano.setFovMax(135);
+          if (typeof window.pano.setFov     === 'function') window.pano.setFov(95);
         }
       }, 50);
     }
