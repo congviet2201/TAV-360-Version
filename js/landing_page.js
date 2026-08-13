@@ -115,6 +115,10 @@
                 playsinline 
                 webkit-playsinline 
                 x5-playsinline
+                tws-playsinline
+                controlslist="nodownload nofullscreen noremoteplayback"
+                disablepictureinpicture
+                disableremoteplayback
                 preload="auto"
                 src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.mp4"
                 aria-label="LOGO TAV PANOTOUR 3 Video Animation">
@@ -213,16 +217,21 @@
       logoVideo.defaultMuted = true;
       logoVideo.volume = 0;
       logoVideo.loop = true;
+      logoVideo.playsInline = true;
       logoVideo.setAttribute('muted', '');
       logoVideo.setAttribute('playsinline', '');
       logoVideo.setAttribute('webkit-playsinline', '');
       logoVideo.setAttribute('x5-playsinline', '');
+      logoVideo.setAttribute('tws-playsinline', '');
+      logoVideo.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback');
+      logoVideo.setAttribute('disablepictureinpicture', '');
+      logoVideo.setAttribute('disableremoteplayback', '');
 
       const ctx = logoCanvas.getContext('2d', { willReadFrequently: true });
       let isRendering = false;
       const BLACK_THRESHOLD = 45; // Pixels with R+G+B < 45 become 100% transparent
 
-      function renderFrame() {
+      function renderChromaKeyFrame() {
         if (!isRendering) return;
         if (!logoVideo.paused && !logoVideo.ended) {
           const vw = logoVideo.videoWidth || 320;
@@ -235,35 +244,36 @@
             const imgData = ctx.getImageData(0, 0, vw, vh);
             const data = imgData.data;
             for (let i = 0; i < data.length; i += 4) {
-              // If pixel is black/dark (R+G+B < 45), set alpha to 0 (transparent)
               if (data[i] + data[i + 1] + data[i + 2] < BLACK_THRESHOLD) {
-                data[i + 3] = 0;
+                data[i + 3] = 0; // Alpha = 0 (100% Transparent)
               }
             }
             ctx.putImageData(imgData, 0, 0);
           } catch (e) {}
         }
-        requestAnimationFrame(renderFrame);
+        requestAnimationFrame(renderChromaKeyFrame);
       }
 
       const startVideo = () => {
         isRendering = true;
+        logoVideo.muted = true;
         const p = logoVideo.play();
         if (p && typeof p.then === 'function') {
           p.then(() => {
-            requestAnimationFrame(renderFrame);
+            requestAnimationFrame(renderChromaKeyFrame);
           }).catch(() => {
+            logoVideo.muted = true;
+            logoVideo.play().then(() => requestAnimationFrame(renderChromaKeyFrame)).catch(() => {});
             const forcePlayOnGesture = () => {
-              logoVideo.play().then(() => {
-                requestAnimationFrame(renderFrame);
-              }).catch(() => {});
+              logoVideo.muted = true;
+              logoVideo.play().then(() => requestAnimationFrame(renderChromaKeyFrame)).catch(() => {});
             };
             window.addEventListener('click', forcePlayOnGesture, { once: true, capture: true });
             window.addEventListener('touchstart', forcePlayOnGesture, { once: true, capture: true });
             window.addEventListener('pointerdown', forcePlayOnGesture, { once: true, capture: true });
           });
         } else {
-          requestAnimationFrame(renderFrame);
+          requestAnimationFrame(renderChromaKeyFrame);
         }
       };
 

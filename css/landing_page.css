@@ -266,17 +266,22 @@
   overflow: visible;
 }
 
-/* Video element (Active in background for canvas decoding) */
+/* Video element (Active in layout for instant mobile inline autoplay, transparent visually) */
 .landing-logo-video {
   position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
   opacity: 0.001 !important;
   pointer-events: none !important;
+  z-index: 1 !important;
 }
 
-/* Canvas renders video frames with black background pixels knocked out to 100% transparent */
+/* Canvas element (Overlay that renders 100% transparent video frames without black background) */
 .landing-logo-canvas {
+  position: relative !important;
+  z-index: 2 !important;
   display: block !important;
   width: 100% !important;
   height: 100% !important;
@@ -1213,8 +1218,8 @@ body:has(#landing-page-overlay:not(.dismissed)) .tav-lang-round-pill {
     min-height: 120px !important;
   }
 
-  .landing-logo-video,
   .landing-logo-canvas {
+    display: block !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: contain !important;
