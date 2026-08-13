@@ -16267,9 +16267,25 @@ body.layout-command #pc-track {
    AMENITY LANDMARK HOTSPOTS (PERSPECTIVE GROUND SCAN SYSTEM)
    ========================================================================== */
 
+/* ==========================================================================
+   UTILITY VISUAL MARKER SYSTEM (NON-INTERACTIVE VISUAL-ONLY MARKERS)
+   ========================================================================== */
+.hs-landmark-container,
+.hs-no-view,
+[data-pin-type="landmark"],
+.hs-landmark-container *,
+.hs-no-view *,
+[data-pin-type="landmark"] * {
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  touch-action: none !important;
+  cursor: default !important;
+}
+
 .hs-landmark-container {
   position: absolute;
-  pointer-events: auto;
+  pointer-events: none !important;
   z-index: 700;
   transform: translate(-50%, -50%);
   user-select: none;
@@ -16767,11 +16783,7 @@ div:has(> .hs-container[id*="hs_wc"]) {
   border-radius: 12px 4px 4px 12px !important;
 }
 
-.hs-container.hs-no-view:hover .lm-glass-flag,
-.hs-container.hs-no-view.hs-hovered .lm-glass-flag {
-  border-color: rgba(255, 255, 255, 0.9) !important;
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.8) !important;
-}
+/* Hover rules removed for visual-only non-interactive utility markers */
 
 /* Category Icon & Name Typography */
 .hs-container.hs-no-view .lm-flag-icon {
@@ -17167,11 +17179,7 @@ div:has(> .hs-container[id*="hs_wc"]) {
   transform: translateX(-50%) translateY(0) scale(1) !important;
 }
 
-/* Hover & Active pulse effect for Landmark Label */
-.hs-landmark-container:hover .lm-holographic-label {
-  border-color: #ffffff !important;
-  box-shadow: 0 6px 25px var(--lm-color), inset 0 0 12px var(--lm-glow) !important;
-}
+/* Hover effects removed for visual-only landmark markers */
 
 .lm-pulse-active .lm-holographic-label {
   animation: lmPulseFeedback 0.4s ease-out;
@@ -17189,38 +17197,31 @@ div:has(> .hs-container[id*="hs_wc"]) {
 
 .tav-copyright-watermark {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
+  bottom: 12px;
+  right: 14px;
   z-index: 1200;
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 6px 16px 6px 14px;
-  background: rgba(8, 14, 28, 0.86);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 30px;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 229, 255, 0.15);
-  pointer-events: auto;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  background: rgba(8, 14, 28, 0.80);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
   user-select: none;
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   animation: tavWatermarkAppear 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.tav-copyright-watermark:hover {
-  transform: translateY(-2px) scale(1.03);
-  background: rgba(8, 14, 28, 0.94);
-  border-color: rgba(0, 229, 255, 0.6);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 229, 255, 0.35);
-}
-
 .tav-watermark-powered {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 9px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.85);
-  letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.2px;
   white-space: nowrap;
 }
 
@@ -17228,9 +17229,9 @@ div:has(> .hs-container[id*="hs_wc"]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 28px;
-  max-width: 45px;
-  border-radius: 4px;
+  height: 16px;
+  max-width: 35px;
+  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -17239,7 +17240,8 @@ div:has(> .hs-container[id*="hs_wc"]) {
   width: auto;
   max-width: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+  background: transparent !important;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
 }
 
 .tav-watermark-info {
@@ -17250,20 +17252,19 @@ div:has(> .hs-container[id*="hs_wc"]) {
 }
 
 .tav-watermark-title {
-  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
-  font-size: 13px;
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  font-size: 10px;
   font-weight: 800;
   color: #ffffff;
-  letter-spacing: 1.2px;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.8px;
 }
 
 .tav-watermark-subtitle {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 8px;
+  font-size: 6.5px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.75);
-  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.15px;
   white-space: nowrap;
 }
 

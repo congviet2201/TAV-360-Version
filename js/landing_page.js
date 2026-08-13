@@ -106,7 +106,6 @@
 
           <!-- CENTER LOGO CONTAINER USING VIDEO LOGO TAV PANOTOUR -->
           <div class="landing-center-logo-wrap">
-            <div class="landing-logo-glow-bg"></div>
             <div class="landing-logo-video-box">
               <video 
                 class="landing-logo-video" 
@@ -115,11 +114,15 @@
                 muted 
                 playsinline 
                 webkit-playsinline 
+                x5-playsinline
                 preload="auto"
-                aria-label="LOGO TAV PANOTOUR 3 Video Animation">
-                <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.webm" type="video/webm">
+                src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.mp4"
+                aria-label="LOGO TAV PANOTOUR 3 Video Animation"
+                style="display:none !important; position:absolute; opacity:0; pointer-events:none;">
                 <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.mp4" type="video/mp4">
+                <source src="video%20logo/LOGO%20TAV%20PANOTOUR%203/LOGO%20TAV%20PANOTOUR%203.webm" type="video/webm">
               </video>
+              <canvas class="landing-logo-canvas" style="width:100%;height:100%;display:block;background:transparent;"></canvas>
             </div>
           </div>
 
@@ -203,35 +206,74 @@
       });
     });
 
-    // Robust Auto-play & Display Engine for Video Logo
+    // Robust Auto-play & Canvas Chroma-Key Engine for Video Logo
+    // Renders video frames to canvas with black pixels made transparent
     const logoVideo = overlay.querySelector('.landing-logo-video');
-    if (logoVideo) {
+    const logoCanvas = overlay.querySelector('.landing-logo-canvas');
+    if (logoVideo && logoCanvas) {
       logoVideo.muted = true;
       logoVideo.defaultMuted = true;
+      logoVideo.volume = 0;
       logoVideo.setAttribute('muted', '');
       logoVideo.setAttribute('playsinline', '');
+      logoVideo.setAttribute('webkit-playsinline', '');
+      logoVideo.setAttribute('x5-playsinline', '');
 
-      const attemptPlay = () => {
+      const ctx = logoCanvas.getContext('2d', { willReadFrequently: true });
+      let chromaKeyActive = false;
+      const BLACK_THRESHOLD = 40; // pixels with R+G+B < this are made transparent
+
+      function renderChromaKeyFrame() {
+        if (!chromaKeyActive) return;
+        if (logoVideo.paused || logoVideo.ended) {
+          requestAnimationFrame(renderChromaKeyFrame);
+          return;
+        }
+
+        const vw = logoVideo.videoWidth || 320;
+        const vh = logoVideo.videoHeight || 200;
+        if (logoCanvas.width !== vw) logoCanvas.width = vw;
+        if (logoCanvas.height !== vh) logoCanvas.height = vh;
+
+        ctx.drawImage(logoVideo, 0, 0, vw, vh);
+        const imageData = ctx.getImageData(0, 0, vw, vh);
+        const d = imageData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          // If pixel is very dark (near black), make it fully transparent
+          if (d[i] + d[i + 1] + d[i + 2] < BLACK_THRESHOLD) {
+            d[i + 3] = 0; // alpha = 0
+          }
+        }
+        ctx.putImageData(imageData, 0, 0);
+        requestAnimationFrame(renderChromaKeyFrame);
+      }
+
+      const startVideo = () => {
         const p = logoVideo.play();
         if (p && typeof p.then === 'function') {
           p.then(() => {
-            logoVideo.style.opacity = '1';
-            logoVideo.style.visibility = 'visible';
-          }).catch(err => {
-            console.warn('Logo video autoplay deferred, attaching touch/click listener:', err);
-            const forcePlay = () => {
+            chromaKeyActive = true;
+            renderChromaKeyFrame();
+          }).catch(() => {
+            const forcePlayOnUserGesture = () => {
               logoVideo.play().then(() => {
-                logoVideo.style.opacity = '1';
-                logoVideo.style.visibility = 'visible';
+                chromaKeyActive = true;
+                renderChromaKeyFrame();
               }).catch(() => {});
             };
-            window.addEventListener('click', forcePlay, { once: true });
-            window.addEventListener('touchstart', forcePlay, { once: true });
+            window.addEventListener('click', forcePlayOnUserGesture, { once: true, capture: true });
+            window.addEventListener('touchstart', forcePlayOnUserGesture, { once: true, capture: true });
+            window.addEventListener('pointerdown', forcePlayOnUserGesture, { once: true, capture: true });
           });
         }
       };
 
-      attemptPlay();
+      startVideo();
+      logoVideo.addEventListener('loadeddata', startVideo, { once: true });
+      logoVideo.addEventListener('canplay', startVideo, { once: true });
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) startVideo();
+      });
     }
   }
 

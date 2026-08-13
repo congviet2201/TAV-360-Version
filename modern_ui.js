@@ -5950,6 +5950,7 @@ document.addEventListener("click", function(e) {
   }
 
   // Create Amenity Landmark Hotspot (Information Landmark or Floating Big Text)
+  // UTILITY VISUAL MARKER: 100% visual-only, pointer-events: none, activated strictly by camera rotation
   function createLandmarkHotspot(pin) {
     const container = document.createElement('div');
 
@@ -5960,9 +5961,11 @@ document.addEventListener("click", function(e) {
       container.className = `hs-container hs-landmark-container hs-no-view hs-text-only-container`;
       container.id = `hs-landmark-${pin.id}`;
       container.setAttribute('aria-label', displayName);
+      container.setAttribute('aria-hidden', 'true');
       container.setAttribute('data-pin-id', pin.id);
       container.setAttribute('data-pin-type', 'landmark');
       container.setAttribute('data-original-name', displayName);
+      container.style.pointerEvents = 'none';
 
       if (isHotspotsHidden) {
         container.style.visibility = "hidden";
@@ -5981,11 +5984,11 @@ document.addEventListener("click", function(e) {
     container.className = `hs-container hs-landmark-container hs-no-view hs-landmark-${catClass}`;
     container.id = `hs-landmark-${pin.id}`;
     container.setAttribute('aria-label', displayName);
+    container.setAttribute('aria-hidden', 'true');
     container.setAttribute('data-pin-id', pin.id);
     container.setAttribute('data-pin-type', 'landmark');
     container.setAttribute('data-original-name', displayName);
-    container.setAttribute('tabindex', '0');
-    container.setAttribute('role', 'region');
+    container.style.pointerEvents = 'none';
 
     const beamH = pin.calculatedHeight || pin.height || calculateBeamHeightFromTilt(pin.tilt, 30, 130);
     container.style.setProperty('--lm-beam-h', `${beamH}px`);
@@ -6030,13 +6033,8 @@ document.addEventListener("click", function(e) {
     container.classList.add('ut-state-hidden');
     container.setAttribute('data-utility-state', 'HIDDEN');
 
-    // Landmark hotspots DO NOT navigate on click — visual pulse feedback only
-    container.addEventListener('click', (e) => {
-      e.stopPropagation();
-      container.classList.remove('lm-pulse-active');
-      void container.offsetWidth;
-      container.classList.add('lm-pulse-active');
-    });
+    // NOTE: All pointer/click/touch/hover event listeners explicitly omitted.
+    // Utility visual markers are camera-driven ONLY and do not capture events.
 
     return container;
   }
@@ -6229,13 +6227,16 @@ document.addEventListener("click", function(e) {
       });
     }
 
-    // Inject Amenity Landmark Hotspots (Information-only landmarks)
-    let landmarks = window.landmarkData ? window.landmarkData[nodeId] : null;
-    if (!landmarks && window.landmarkData) {
-      if (window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(nodeId)) {
-        landmarks = window.landmarkData['node2'];
-      } else {
-        landmarks = window.landmarkData['node1'];
+    // Inject Amenity Landmark Hotspots (Information-only landmarks) - Keep ONLY for Topview and Birdview nodes
+    let landmarks = null;
+    if (isBirdOrTopView && window.landmarkData) {
+      landmarks = window.landmarkData[nodeId];
+      if (!landmarks) {
+        if (window.HOTSPOT_BIRD_VIEW_NODES && window.HOTSPOT_BIRD_VIEW_NODES.includes(nodeId)) {
+          landmarks = window.landmarkData['node2'];
+        } else {
+          landmarks = window.landmarkData['node1'];
+        }
       }
     }
 

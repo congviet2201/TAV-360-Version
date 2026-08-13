@@ -73,22 +73,21 @@
 }
 
 .landing-header-welcome-title {
-  font-family: 'Dancing Script', 'Alex Brush', 'Playfair Display', 'Cormorant Garamond', cursive, serif !important;
-  font-size: 38px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-family: 'Cormorant Garamond', 'Be Vietnam Pro', 'Plus Jakarta Sans', serif, sans-serif !important;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 2px;
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
-  text-transform: none !important;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95), 0 0 25px rgba(255, 215, 150, 0.5);
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 215, 150, 0.4);
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 @media screen and (max-width: 768px) {
   .landing-header-welcome-title {
-    font-size: 26px !important;
-    letter-spacing: 0.5px !important;
+    font-size: 21px !important;
+    letter-spacing: 1.2px !important;
   }
 }
 
@@ -204,7 +203,7 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Luxury Center Brand Card */
+/* Luxury Center Brand Card Frame — no transform/backdrop-filter to avoid isolating child mix-blend-mode */
 .landing-brand-card {
   position: relative;
   display: flex;
@@ -212,26 +211,23 @@
   align-items: center;
   padding: 30px 48px 24px 48px;
   margin-bottom: 28px;
-  background: rgba(4, 7, 16, 0.78);
+  background: rgba(4, 7, 16, 0.92);
   border: 1px solid rgba(255, 255, 255, 0.20);
   border-radius: 32px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 
               0 0 40px rgba(255, 140, 0, 0.30),
               inset 0 0 25px rgba(255, 255, 255, 0.08);
-  overflow: hidden;
+  overflow: visible;
   max-width: 680px;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transition: box-shadow 0.4s ease;
 }
 
 .landing-brand-card:hover {
-  transform: translateY(-4px) scale(1.015);
   box-shadow: 0 25px 70px rgba(0, 0, 0, 0.75), 
               0 0 50px rgba(255, 140, 0, 0.4);
 }
 
-/* Center Logo Wrapper with 3D Tilt Perspective */
+/* Center Logo Wrapper — NO perspective/transform/z-index here to avoid isolating mix-blend-mode */
 .landing-center-logo-wrap {
   position: relative;
   width: 320px;
@@ -241,53 +237,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 0;
   box-sizing: border-box;
-  perspective: 1000px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
-/* Ambient Radial Energy Glow Halo behind Logo */
-.landing-logo-glow-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 300px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse at 50% 50%, rgba(255, 85, 0, 0.45) 0%, rgba(255, 255, 255, 0.3) 50%, transparent 75%);
-  filter: blur(28px);
-  animation: logoAmbientPulse 3.5s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes logoAmbientPulse {
-  0% { opacity: 0.45; transform: translate(-50%, -50%) scale(0.92); filter: blur(22px); }
-  100% { opacity: 0.9; transform: translate(-50%, -50%) scale(1.12); filter: blur(30px); }
-}
-
-/* Counter-Rotating Ambient Light Ring */
-.landing-logo-ambient-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 280px;
-  height: 160px;
-  border-radius: 50%;
-  background: conic-gradient(from 0deg, rgba(255, 85, 0, 0.35), transparent 40%, rgba(255, 255, 255, 0.45), transparent 80%, rgba(255, 85, 0, 0.35));
-  filter: blur(16px);
-  animation: logoRingRotate 12s linear infinite;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-@keyframes logoRingRotate {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Video Logo Container for shape 2 */
+/* Video Logo Container — NO z-index here to avoid creating stacking context */
 .landing-logo-video-box {
   position: relative;
   width: 100%;
@@ -297,23 +254,31 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  border-radius: 12px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
   overflow: visible;
 }
 
+/* Video element is hidden — used only as data source for canvas chroma-key */
 .landing-logo-video {
+  display: none !important;
+  position: absolute !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Canvas renders video frames with black pixels removed (chroma-key) */
+.landing-logo-canvas {
   width: 100% !important;
   height: 100% !important;
   min-width: 220px !important;
   min-height: 140px !important;
   object-fit: contain !important;
   pointer-events: none !important;
-  mix-blend-mode: normal !important;
-  opacity: 1 !important;
-  visibility: visible !important;
   display: block !important;
-  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.5)) !important;
+  background: transparent !important;
 }
 
 .landing-logo-split-container {
@@ -910,18 +875,19 @@
   transform: translateX(4px);
 }
 
-/* Bottom Hint / Indicator */
+/* Bottom Hint / Indicator (Lifted higher up between CTA button and screen bottom) */
 .landing-bottom-bar {
   position: relative;
   z-index: 10;
-  padding-bottom: 32px;
+  padding-bottom: 76px;
+  margin-top: 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
+  opacity: 0.85;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .landing-bottom-bar:hover {
@@ -1028,13 +994,15 @@
     letter-spacing: 1.5px;
   }
   .landing-center-logo-wrap {
-    width: 180px;
-    height: 140px;
-    margin-bottom: 14px;
-    padding: 10px;
+    width: 240px !important;
+    height: 140px !important;
+    margin-bottom: 14px !important;
+    padding: 0 !important;
+    background: transparent !important;
   }
   .landing-bottom-bar {
-    padding-bottom: 20px;
+    padding-bottom: 58px;
+    margin-top: 14px;
   }
   .landing-hint-text {
     font-size: 10px;
@@ -1043,45 +1011,101 @@
 
 /* ═══════════════════════════════════════════════════════════════════════
    BOTTOM-RIGHT POWERED BY TAV WATERMARK INSIDE LANDING PAGE
+   (Graphic Watermark Badge — Non-Button, Overflow-Free)
    ═══════════════════════════════════════════════════════════════════════ */
 #landing-page-overlay .tav-landing-watermark {
   position: absolute !important;
-  bottom: 20px !important;
-  right: 24px !important;
+  bottom: 12px !important;
+  right: 14px !important;
   top: auto !important;
   left: auto !important;
   z-index: 100 !important;
   margin: 0 !important;
-  transform: scale(0.65) !important;
-  transform-origin: bottom right !important;
-  max-width: 140px !important;
-  pointer-events: auto !important;
+  width: auto !important;
+  max-width: none !important;
+  transform: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  padding: 3.5px 9px 3.5px 8px !important;
+  background: rgba(4, 7, 16, 0.75) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  border-radius: 14px !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.4) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  white-space: nowrap !important;
 }
 
 #landing-page-overlay .tav-landing-watermark .tav-watermark-powered {
-  font-size: 8px !important;
+  font-family: 'Inter', system-ui, sans-serif !important;
+  font-size: 8.5px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  letter-spacing: 0.2px !important;
+  white-space: nowrap !important;
 }
 
 #landing-page-overlay .tav-landing-watermark .tav-watermark-logo-box {
-  height: 18px !important;
-  max-width: 30px !important;
+  height: 15px !important;
+  width: auto !important;
+  max-width: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+#landing-page-overlay .tav-landing-watermark .tav-watermark-img {
+  height: 100% !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+#landing-page-overlay .tav-landing-watermark .tav-watermark-info {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  line-height: 1.1 !important;
 }
 
 #landing-page-overlay .tav-landing-watermark .tav-watermark-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif !important;
   font-size: 9.5px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.8px !important;
 }
 
 #landing-page-overlay .tav-landing-watermark .tav-watermark-subtitle {
+  font-family: 'Inter', system-ui, sans-serif !important;
   font-size: 6px !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.65) !important;
+  letter-spacing: 0.15px !important;
+  white-space: nowrap !important;
 }
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 768px) {
   #landing-page-overlay .tav-landing-watermark {
-    bottom: max(calc(env(safe-area-inset-bottom, 8px) + 8px), 12px) !important;
-    right: 10px !important;
-    transform: scale(0.55) !important;
-    transform-origin: bottom right !important;
-    max-width: 120px !important;
+    bottom: max(calc(env(safe-area-inset-bottom, 4px) + 6px), 8px) !important;
+    right: 8px !important;
+    padding: 3px 7px 3px 6px !important;
+    gap: 4px !important;
+    border-radius: 12px !important;
+  }
+  #landing-page-overlay .tav-landing-watermark .tav-watermark-powered {
+    font-size: 7.5px !important;
+  }
+  #landing-page-overlay .tav-landing-watermark .tav-watermark-logo-box {
+    height: 13px !important;
+  }
+  #landing-page-overlay .tav-landing-watermark .tav-watermark-title {
+    font-size: 8.5px !important;
+  }
+  #landing-page-overlay .tav-landing-watermark .tav-watermark-subtitle {
+    font-size: 5.5px !important;
   }
 }
 
