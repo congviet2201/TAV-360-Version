@@ -266,7 +266,7 @@
   overflow: visible;
 }
 
-/* Video element (Active in layout for instant mobile inline autoplay, transparent visually) */
+/* Video element (Active in layout for 100% touchless mobile autoplay, visually opacity: 0.001) */
 .landing-logo-video {
   position: absolute !important;
   inset: 0 !important;
@@ -278,7 +278,7 @@
   z-index: 1 !important;
 }
 
-/* Canvas element (Overlay that renders 100% transparent video frames without black background) */
+/* Canvas overlay element (Renders 100% transparent video frames without black background) */
 .landing-logo-canvas {
   position: relative !important;
   z-index: 2 !important;

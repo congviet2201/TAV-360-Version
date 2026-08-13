@@ -228,60 +228,58 @@
       logoVideo.setAttribute('disableremoteplayback', '');
 
       const ctx = logoCanvas.getContext('2d', { willReadFrequently: true });
-      let isRendering = false;
       const BLACK_THRESHOLD = 45; // Pixels with R+G+B < 45 become 100% transparent
 
       function renderChromaKeyFrame() {
-        if (!isRendering) return;
         if (!logoVideo.paused && !logoVideo.ended) {
           const vw = logoVideo.videoWidth || 320;
           const vh = logoVideo.videoHeight || 200;
-          if (logoCanvas.width !== vw) logoCanvas.width = vw;
-          if (logoCanvas.height !== vh) logoCanvas.height = vh;
+          if (vw > 0 && vh > 0) {
+            if (logoCanvas.width !== vw) logoCanvas.width = vw;
+            if (logoCanvas.height !== vh) logoCanvas.height = vh;
 
-          ctx.drawImage(logoVideo, 0, 0, vw, vh);
-          try {
-            const imgData = ctx.getImageData(0, 0, vw, vh);
-            const data = imgData.data;
-            for (let i = 0; i < data.length; i += 4) {
-              if (data[i] + data[i + 1] + data[i + 2] < BLACK_THRESHOLD) {
-                data[i + 3] = 0; // Alpha = 0 (100% Transparent)
+            ctx.drawImage(logoVideo, 0, 0, vw, vh);
+            try {
+              const imgData = ctx.getImageData(0, 0, vw, vh);
+              const data = imgData.data;
+              for (let i = 0; i < data.length; i += 4) {
+                // If pixel is black/dark (R+G+B < 45), set alpha to 0 (100% transparent)
+                if (data[i] + data[i + 1] + data[i + 2] < BLACK_THRESHOLD) {
+                  data[i + 3] = 0;
+                }
               }
-            }
-            ctx.putImageData(imgData, 0, 0);
-          } catch (e) {}
+              ctx.putImageData(imgData, 0, 0);
+            } catch (e) {}
+          }
         }
         requestAnimationFrame(renderChromaKeyFrame);
       }
 
-      const startVideo = () => {
-        isRendering = true;
+      const startAutoplay = () => {
         logoVideo.muted = true;
-        const p = logoVideo.play();
-        if (p && typeof p.then === 'function') {
-          p.then(() => {
+        const promise = logoVideo.play();
+        if (promise && typeof promise.then === 'function') {
+          promise.then(() => {
             requestAnimationFrame(renderChromaKeyFrame);
           }).catch(() => {
             logoVideo.muted = true;
-            logoVideo.play().then(() => requestAnimationFrame(renderChromaKeyFrame)).catch(() => {});
-            const forcePlayOnGesture = () => {
-              logoVideo.muted = true;
-              logoVideo.play().then(() => requestAnimationFrame(renderChromaKeyFrame)).catch(() => {});
-            };
-            window.addEventListener('click', forcePlayOnGesture, { once: true, capture: true });
-            window.addEventListener('touchstart', forcePlayOnGesture, { once: true, capture: true });
-            window.addEventListener('pointerdown', forcePlayOnGesture, { once: true, capture: true });
+            logoVideo.play().then(() => {
+              requestAnimationFrame(renderChromaKeyFrame);
+            }).catch(() => {});
           });
         } else {
           requestAnimationFrame(renderChromaKeyFrame);
         }
       };
 
-      startVideo();
-      logoVideo.addEventListener('loadeddata', startVideo, { once: true });
-      logoVideo.addEventListener('canplay', startVideo, { once: true });
+      startAutoplay();
+      logoVideo.addEventListener('loadeddata', startAutoplay, { once: true });
+      logoVideo.addEventListener('canplay', startAutoplay, { once: true });
+      logoVideo.addEventListener('playing', () => {
+        requestAnimationFrame(renderChromaKeyFrame);
+      });
       document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) startVideo();
+        if (!document.hidden) startAutoplay();
       });
     }
   }
