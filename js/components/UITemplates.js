@@ -572,13 +572,11 @@ window.TAVTemplates = window.TAVTemplates || {};
             </div>
         </div>
 
-        <!-- 4. TAV VILLA (Center logo-node with compact Mega Menu) -->
-        <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
-          <div class="logo-script-top">${PROJECT_CONTENT.projectTitle.top}</div>
+        <!-- 4. SA BÀN 3D (Center logo-node) -->
+        <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo" title="Sa Bàn 3D">
+          <div class="logo-script-top">SA BÀN</div>
           <div class="logo-script-wave"></div>
-          <div class="logo-script-sub">${PROJECT_CONTENT.projectTitle.sub}</div>
-
-
+          <div class="logo-script-sub">3D</div>
         </div>
 
         <!-- 5. KIẾN TRÚC -->

@@ -95,12 +95,8 @@ window.hotspotData = {
   // ─── node2: Bird View — complete navigation hub ──────────────────────
   // Staggered height tiers so labels never overlap along the panorama view
   "node2": [
-    { ...hs_thongtang, id: "hs_thongtang_bv", pan: -26.98, tilt: -35.06, title: "TAV THÔNG TẦNG", lineHeight: 60  },
-    { ...hs_living,    id: "hs_living_bv",    pan:  -2.64, tilt: -36.93, title: "TAV LIVING 1",   lineHeight: 85  },
-    { ...hs_living2,   id: "hs_living2_bv",   pan:   5,    tilt: -34,    title: "TAV LIVING 2",   lineHeight: 95  },
     { ...hs_park2,     id: "hs_park2_bv",     pan: -45,    tilt: -36,    title: "TAV PARK 2",     lineHeight: 45  },
     { ...hs_park,      id: "hs_park_bv",      pan: -35.94, tilt: -30.35, title: "TAV PARK",       lineHeight: 75  },
-    { ...hs_wc,        id: "hs_wc_bv",        pan: -15,    tilt: -33,    title: "TAV WC",         lineHeight: 70  },
     { ...hs_street,    id: "hs_street_bv",    pan:  15,    tilt: -35,    title: "TAV STREET",     lineHeight: 50  },
     { ...hs_street2,   id: "hs_street2_bv",   pan:  25,    tilt: -32,    title: "TAV STREET 2",   lineHeight: 70  },
     { ...hs_street3,   id: "hs_street3_bv",   pan:  27.78, tilt: -32.65, title: "TAV STREET 3",   lineHeight: 155 },

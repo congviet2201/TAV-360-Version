@@ -666,13 +666,11 @@ function generateSubmenuHTML(items, itemClass) {
             </div>
         </div>
 
-        <!-- 4. TAV VILLA (Center logo-node with compact Mega Menu) -->
-        <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo">
-          <div class="logo-script-top">${PROJECT_CONTENT.projectTitle.top}</div>
+        <!-- 4. SA BÀN 3D (Center logo-node) -->
+        <div class="nav-item center-logo-node" data-id="latien-brand" id="nav-logo" title="Sa Bàn 3D">
+          <div class="logo-script-top">SA BÀN</div>
           <div class="logo-script-wave"></div>
-          <div class="logo-script-sub">${PROJECT_CONTENT.projectTitle.sub}</div>
-
-
+          <div class="logo-script-sub">3D</div>
         </div>
 
         <!-- 5. KIẾN TRÚC -->
@@ -5382,6 +5380,14 @@ document.addEventListener("click", function(e) {
       return;
     }
 
+
+    // 0. Check if it's Sa Bàn 3D
+    if (id === "latien-brand" || id === "saban-3d" || action === "saban-3d" || element.id === "nav-logo") {
+      if (window.SaBan3DViewer && typeof window.SaBan3DViewer.open === 'function') {
+        window.SaBan3DViewer.open();
+        return;
+      }
+    }
 
     // 1. Check if it's Region Page
     if (id === "surrounding" || action === "region-page" || element.id === "nav-surrounding" || element.id === "nav-neo-logo") {
