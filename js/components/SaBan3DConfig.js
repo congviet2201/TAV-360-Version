@@ -35,6 +35,15 @@
     autoRotate: false,
     enableInertia: false,
     enableMomentum: false,
+
+    // 4 Standard Direction Frames (1-based frame numbers: North=4, East=35, South=68, West=93)
+    snapDirections: [4, 35, 68, 93],
+    enableSnap: true,
+    snapAllFrames: true,       // Divide full 121 frames into 4 quadrant sectors and snap to nearest direction
+    snapThreshold: 121,        // Full coverage: any frame across the 121 circle snaps to its quadrant target
+    snapDurationMin: 180,      // Silky soft min duration for micro-settling (ms)
+    snapDurationMax: 420,      // Calm, non-jerky max duration for far sector boundaries (ms)
+    snapEasing: 'easeInOutSine', // Zero initial acceleration jump, smooth continuous S-curve
     
     // Labels & i18n
     title: 'SA BÀN 3D',

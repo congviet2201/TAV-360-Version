@@ -24,11 +24,24 @@
         dragSensitivityMobile: 5.0,
         maxConcurrentPreload: 3,
         autoRotate: false,
-        enableInertia: false
+        enableInertia: false,
+        snapDirections: [4, 35, 68, 93],
+        enableSnap: true,
+        snapAllFrames: true,
+        snapThreshold: 121,
+        snapDurationMin: 120,
+        snapDurationMax: 240,
+        snapDuration: 160
       };
 
       this.totalFrames = this.config.totalFrames || 121;
       this.isMobile = window.innerWidth <= 768;
+
+      // 4 Standard Snap Directions (1-based [4, 35, 68, 93] -> 0-based [3, 34, 67, 92])
+      const rawSnapDirs = (this.config.snapDirections && this.config.snapDirections.length) 
+        ? this.config.snapDirections 
+        : [4, 35, 68, 93];
+      this.snapTargets = rawSnapDirs.map(f => this._wrapIndex(f - 1));
 
       // Frame State
       this.currentFrameIndex = 0;        // Currently rendered frame [0 .. totalFrames - 1]
@@ -38,12 +51,15 @@
       // Lifecycle & Flags
       this.isOpen = false;
       this.isDragging = false;
+      this.isSnapping = false;
       this.renderScheduled = false;
+      this.snapRafId = null;
 
       // Pointer Tracking
       this.startX = 0;
       this.lastX = 0;
       this.dragAccumulator = 0;
+      this.lastDragDirection = 1;        // +1 (forward) or -1 (reverse)
 
       // Cache & Priority Preload Queue
       this.frameCache = new Array(this.totalFrames); // Stores HTMLImageElement
@@ -57,6 +73,7 @@
       this.canvasEl = null;
       this.ctx = null;
       this.statusPillEl = null;
+      this.statusDotEl = null;
       this.dragHintEl = null;
       this.closeBtnEl = null;
       this.viewportEl = null;
@@ -159,7 +176,141 @@
     }
 
     /* ============================================================
-       ② FRAME URL RESOLVER
+       ② CIRCULAR DISTANCE & 4-DIRECTION SNAP MATH
+       ============================================================ */
+    _wrapIndex(idx) {
+      return ((idx % this.totalFrames) + this.totalFrames) % this.totalFrames;
+    }
+
+    /**
+     * Calculates shortest circular distance and signed step count
+     * to the nearest standard direction frame on the 121-frame loop.
+     * @param {number} currentIdx - 0-based frame index (0..120)
+     * @returns {{ targetIndex: number, signedDist: number, distance: number, targetFrame: number }}
+     */
+    _getNearestSnapDirection(currentIdx) {
+      const N = this.totalFrames;
+      const normalizedCurrent = this._wrapIndex(currentIdx);
+
+      let minDistance = Infinity;
+      let chosenSignedDist = 0;
+      let chosenTarget = this.snapTargets[0];
+
+      for (let i = 0; i < this.snapTargets.length; i++) {
+        const target = this.snapTargets[i];
+
+        // Forward steps (current -> target in +1 direction)
+        const forward = (target - normalizedCurrent + N) % N;
+        // Backward steps (current -> target in -1 direction)
+        const backward = (normalizedCurrent - target + N) % N;
+
+        let signedDist;
+        let dist;
+
+        if (forward <= backward) {
+          signedDist = forward;
+          dist = forward;
+        } else {
+          signedDist = -backward;
+          dist = backward;
+        }
+
+        if (dist < minDistance) {
+          minDistance = dist;
+          chosenSignedDist = signedDist;
+          chosenTarget = target;
+        }
+      }
+
+      return {
+        targetIndex: chosenTarget,
+        signedDist: chosenSignedDist,
+        distance: minDistance,
+        targetFrame: chosenTarget + 1
+      };
+    }
+
+    /**
+     * Executes an ultra-smooth, short easing animation (~140ms) to snap the viewer
+     * into exact standard direction alignment.
+     * Zero momentum / Zero inertia — direct controlled convergence.
+     */
+    _animateSnap(startIndex, signedDist, targetIndex) {
+      if (signedDist === 0) {
+        this.latestRequestedFrame = targetIndex;
+        this._scheduleRender();
+        this._updatePreloadQueue(targetIndex, 1);
+        return;
+      }
+
+      if (this.snapRafId) {
+        cancelAnimationFrame(this.snapRafId);
+        this.snapRafId = null;
+      }
+
+      this.isSnapping = true;
+      let startTime = null;
+
+      // Silky Smooth dynamic duration based on circular distance
+      const absDist = Math.abs(signedDist);
+      const minDur = this.config.snapDurationMin || 180;
+      const maxDur = this.config.snapDurationMax || 420;
+      const duration = Math.round(minDur + Math.pow(Math.min(absDist / 16, 1), 0.75) * (maxDur - minDur));
+
+      // Instant parallel background pre-decode of all frames on snap trajectory
+      const stepDir = signedDist > 0 ? 1 : -1;
+      for (let s = 1; s <= absDist; s++) {
+        const frameIdx = this._wrapIndex(startIndex + (s * stepDir));
+        if (!this.frameCache[frameIdx]) {
+          this._loadFrameImage(frameIdx);
+        }
+      }
+
+      const step = (currentTime) => {
+        if (!this.isOpen || this.isDragging) {
+          this.isSnapping = false;
+          this.snapRafId = null;
+          return;
+        }
+
+        const now = (typeof currentTime === 'number')
+          ? currentTime
+          : ((typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now());
+
+        if (startTime === null) {
+          startTime = now;
+        }
+
+        const elapsed = now - startTime;
+        const progress = Math.min(Math.max(elapsed / duration, 0), 1);
+
+        // Silky Continuous S-Curve (easeInOutSine): 0 initial jerk, smooth glide, soft arrival
+        const ease = 0.5 * (1 - Math.cos(Math.PI * progress));
+        const currentOffset = signedDist * ease;
+        const nextFrame = this._wrapIndex(Math.round(startIndex + currentOffset));
+
+        if (nextFrame !== this.latestRequestedFrame) {
+          this.latestRequestedFrame = nextFrame;
+          this._scheduleRender();
+        }
+
+        if (progress < 1) {
+          this.snapRafId = requestAnimationFrame(step);
+        } else {
+          this.latestRequestedFrame = targetIndex;
+          this._scheduleRender();
+          this.isSnapping = false;
+          this.snapRafId = null;
+          // Preload around final docked frame
+          this._updatePreloadQueue(targetIndex, 1);
+        }
+      };
+
+      this.snapRafId = requestAnimationFrame(step);
+    }
+
+    /* ============================================================
+       ③ FRAME URL RESOLVER
        ============================================================ */
     _getFrameUrl(index) {
       const normalizedIndex = this._wrapIndex(index);
@@ -174,12 +325,8 @@
       return isMob ? `assets/sa-ban-3d/mobile/frame_${num}.webp` : `assets/sa-ban-3d/frame_${num}.webp`;
     }
 
-    _wrapIndex(idx) {
-      return ((idx % this.totalFrames) + this.totalFrames) % this.totalFrames;
-    }
-
     /* ============================================================
-       ③ ASYNCHRONOUS BACKGROUND IMAGE PRELOADING & DECODING
+       ④ ASYNCHRONOUS BACKGROUND IMAGE PRELOADING & DECODING
        ============================================================ */
     _loadFrameImage(index) {
       const idx = this._wrapIndex(index);
@@ -230,7 +377,7 @@
     }
 
     /* ============================================================
-       ④ DYNAMIC PROXIMITY PRELOAD QUEUE (Rule 7, 8, 18, 19)
+       ⑤ DYNAMIC PROXIMITY PRELOAD QUEUE (Rule 7, 8, 18, 19)
        ============================================================ */
     _updatePreloadQueue(currentIdx, direction = 1) {
       // If user is actively dragging, pause/throttle background queue to avoid main-thread & network contention
@@ -239,20 +386,41 @@
       const queue = [];
       const total = this.totalFrames;
 
-      // Priority 1: Immediate adjacent neighbors in rotation direction (±1, ±2, ±3, ±4, ±5)
-      for (let dist = 1; dist <= 12; dist++) {
+      // Priority 1: Immediate adjacent neighbors in rotation direction (±1, ±2, ±3, ±4, ±5, ±6, ±7, ±8)
+      for (let dist = 1; dist <= 8; dist++) {
         const forwardIdx = this._wrapIndex(currentIdx + (dist * direction));
         const backwardIdx = this._wrapIndex(currentIdx - (dist * direction));
 
-        if (!this.frameCache[forwardIdx] && !this.loadingSet.has(forwardIdx)) {
+        if (!this.frameCache[forwardIdx] && !this.loadingSet.has(forwardIdx) && !queue.includes(forwardIdx)) {
           queue.push(forwardIdx);
         }
-        if (!this.frameCache[backwardIdx] && !this.loadingSet.has(backwardIdx)) {
+        if (!this.frameCache[backwardIdx] && !this.loadingSet.has(backwardIdx) && !queue.includes(backwardIdx)) {
           queue.push(backwardIdx);
         }
       }
 
-      // Priority 2: Keyframe milestones across remaining 360 circle
+      // Priority 2: 4 Standard Snap Frames (Frames 4, 35, 68, 93)
+      for (let i = 0; i < this.snapTargets.length; i++) {
+        const snapIdx = this.snapTargets[i];
+        if (!this.frameCache[snapIdx] && !this.loadingSet.has(snapIdx) && !queue.includes(snapIdx)) {
+          queue.push(snapIdx);
+        }
+      }
+
+      // Priority 3: Wider neighborhood up to ±16 frames
+      for (let dist = 9; dist <= 16; dist++) {
+        const forwardIdx = this._wrapIndex(currentIdx + (dist * direction));
+        const backwardIdx = this._wrapIndex(currentIdx - (dist * direction));
+
+        if (!this.frameCache[forwardIdx] && !this.loadingSet.has(forwardIdx) && !queue.includes(forwardIdx)) {
+          queue.push(forwardIdx);
+        }
+        if (!this.frameCache[backwardIdx] && !this.loadingSet.has(backwardIdx) && !queue.includes(backwardIdx)) {
+          queue.push(backwardIdx);
+        }
+      }
+
+      // Priority 4: Stride across remaining 360 circle
       for (let i = 0; i < total; i += 6) {
         const keyIdx = this._wrapIndex(currentIdx + i);
         if (!this.frameCache[keyIdx] && !this.loadingSet.has(keyIdx) && !queue.includes(keyIdx)) {
@@ -378,10 +546,19 @@
     }
 
     /* ============================================================
-       ⑥ DIRECT 1:1 POINTER INPUT (Rules 8, 9, 10, 11, 12)
+       ⑥ DIRECT 1:1 POINTER INPUT (Rules 8, 9, 10, 11, 12, Snap)
        ============================================================ */
     _onPointerDown(e) {
       if (e.button !== 0 && e.pointerType === 'mouse') return; // Left click only
+
+      // If a snap animation is currently playing, immediately interrupt and hand 1:1 control to user
+      if (this.isSnapping) {
+        if (this.snapRafId) {
+          cancelAnimationFrame(this.snapRafId);
+          this.snapRafId = null;
+        }
+        this.isSnapping = false;
+      }
 
       this.isDragging = true;
       this.startX = e.clientX;
@@ -411,6 +588,11 @@
       const currentX = e.clientX;
       const deltaX = currentX - this.lastX;
       this.lastX = currentX;
+
+      if (deltaX !== 0) {
+        // Dragging right rotates in one direction, dragging left in opposite
+        this.lastDragDirection = deltaX > 0 ? -1 : 1;
+      }
 
       this.dragAccumulator += deltaX;
 
@@ -443,7 +625,7 @@
       if (this.viewportEl) {
         this.viewportEl.classList.remove('dragging');
         try {
-          if (e.pointerId) this.viewportEl.releasePointerCapture(e.pointerId);
+          if (e && e.pointerId) this.viewportEl.releasePointerCapture(e.pointerId);
         } catch (_) {}
       }
 
@@ -451,8 +633,17 @@
       window.removeEventListener('pointerup', this._onPointerUp);
       window.removeEventListener('pointercancel', this._onPointerUp);
 
-      // Resume proximity preloader now that user has stopped dragging
-      this._updatePreloadQueue(this.latestRequestedFrame, 1);
+      // Check 4-Direction Snap Zone (Frames 4, 35, 68, 93)
+      if (this.config.enableSnap !== false) {
+        const nearest = this._getNearestSnapDirection(this.latestRequestedFrame);
+        if (nearest.distance > 0 && nearest.distance <= this.config.snapThreshold) {
+          this._animateSnap(this.latestRequestedFrame, nearest.signedDist, nearest.targetIndex);
+          return;
+        }
+      }
+
+      // Resume proximity preloader now that user has stopped dragging and is not snapping
+      this._updatePreloadQueue(this.latestRequestedFrame, this.lastDragDirection || 1);
     }
 
     /* ============================================================
@@ -501,7 +692,7 @@
         this._updatePreloadQueue(this.currentFrameIndex, 1);
       });
 
-      console.log('✨ [SaBan3DViewer] Opened successfully (Zero Inertia / Direct Input Mode).');
+      console.log('✨ [SaBan3DViewer] Opened successfully (Zero Inertia / 4-Direction Snap Mode).');
     }
 
     close() {
@@ -511,8 +702,13 @@
       this.modalEl.classList.remove('active');
       document.body.style.overflow = '';
 
-      // Clean up pointer drag state
+      // Clean up pointer drag and snap states
       this.isDragging = false;
+      if (this.snapRafId) {
+        cancelAnimationFrame(this.snapRafId);
+        this.snapRafId = null;
+      }
+      this.isSnapping = false;
       this.renderScheduled = false;
 
       // Clean up window listeners
