@@ -82,7 +82,10 @@
     startLoop();
 
     // Re-verify Pano2VR anchor registration continuously after transitions
-    setInterval(updateSunAnchor, 2000);
+    // Store ID so it can be cleared if needed (prevents dangling interval)
+    if (!window._sunAnchorInterval) {
+      window._sunAnchorInterval = setInterval(updateSunAnchor, 2000);
+    }
 
     console.log('[SunFlareController] Precision Sun Positions Initialized for Bird View and Top View only.');
   }

@@ -4857,8 +4857,14 @@ document.addEventListener("click", function(e) {
   let cachedTextWrappers = null;
   let lastScaledFov = null;
 
+  let compassIdleFrames = 0; // [FIX #3] counter for idle detection
+
   function syncCompass() {
-    if (!window.pano) return;
+    if (!window.pano) {
+      // Pano not ready yet — stop loop, will be restarted by initPanoHooks
+      compassAnimFrame = null;
+      return;
+    }
     try {
       const rawPan = typeof window.pano.getPan === 'function' ? window.pano.getPan() : 0;
       const rawTilt = typeof window.pano.getTilt === 'function' ? window.pano.getTilt() : 0;
@@ -4883,6 +4889,7 @@ document.addEventListener("click", function(e) {
           lastRawPan = rawPan;
           lastRawTilt = rawTilt;
           lastRawFov = rawFov;
+          compassIdleFrames = 0; // [FIX #3] reset idle counter on movement
     
           const dial = document.getElementById("compass-dial");
           const degDisplay = document.getElementById("compass-degree");
@@ -4904,11 +4911,30 @@ document.addEventListener("click", function(e) {
           if (dFov > 0.05) {
             syncPerspectiveTextScale();
           }
+        } else {
+          // [FIX #3] Camera is static — count idle frames
+          compassIdleFrames++;
+          // Stop after ~3 seconds of no movement (180 frames @ 60fps)
+          // wakeCompass() will restart the loop on next user interaction
+          if (compassIdleFrames > 180) {
+            compassAnimFrame = null;
+            return; // Do NOT requestAnimationFrame — loop stops here
+          }
         }
       }
     } catch (e) {}
     compassAnimFrame = requestAnimationFrame(syncCompass);
   }
+
+  // [FIX #3] Wake function — restarts compass loop on user interaction
+  function wakeCompass() {
+    compassIdleFrames = 0;
+    if (!compassAnimFrame) {
+      compassAnimFrame = requestAnimationFrame(syncCompass);
+    }
+  }
+  // Expose globally so other modules can wake the compass
+  window._wakeCompass = wakeCompass;
 
   // Scale text-only labels (HÀ NỘI) to match panorama image zoom:
   function syncPerspectiveTextScale() {
@@ -6719,12 +6745,26 @@ document.addEventListener("click", function(e) {
       console.log("Pano2VR Player ready. Attaching event hooks...");
       window.pano.addListener("configloaded", onNodeChange);
       window.pano.addListener("changenode", onNodeChange);
+
+      // [FIX #3] Wake compass on scene changes (camera snaps to new position)
+      window.pano.addListener("configloaded", wakeCompass);
+      window.pano.addListener("changenode", wakeCompass);
+
       onNodeChange();
       syncAllToolsAtStartup();
       
       // Start compass/minimap synchronization loop
       if (!compassAnimFrame) {
         syncCompass();
+      }
+
+      // [FIX #3] Hook wakeCompass to pano container interactions
+      // When user starts dragging the panorama, restart the compass loop
+      const panoContainer = document.getElementById("container");
+      if (panoContainer) {
+        panoContainer.addEventListener("mousedown",  wakeCompass, { passive: true });
+        panoContainer.addEventListener("touchstart", wakeCompass, { passive: true });
+        panoContainer.addEventListener("wheel",      wakeCompass, { passive: true });
       }
     } else {
       setTimeout(initPanoHooks, 200);

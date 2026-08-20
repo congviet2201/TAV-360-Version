@@ -514,29 +514,124 @@ function initMobileUI() {
     });
   });
 
-  // Pano Sync
-  setInterval(() => {
-    if (!window.pano) return;
-    const pan = window.pano.getPan();
-    const compass = document.getElementById("mob-compass");
-    if (compass) compass.style.transform = `rotate(${-pan}deg)`;
-    const radar = document.getElementById("mob-minimap-cone");
-    if (radar) radar.style.transform = `translate(-50%, -100%) rotate(${pan}deg)`;
+  // ─────────────────────────────────────────────────────────────────────────
+  // [FIX #2] PANO SYNC — Event-driven, replaces permanent setInterval(100ms)
+  //
+  // ROOT CAUSE: The old setInterval(100ms) ran 10×/sec forever:
+  //   · Called window.pano.getPan() every 100ms (Pano2VR API overhead)
+  //   · querySelectorAll(".mob-carousel-item") every 100ms (DOM traversal)
+  //   · scrollIntoView({ behavior:"smooth" }) every 100ms (forced layout)
+  //   · Combined: progressive main-thread load causing slowdown over time
+  //
+  // FIX:
+  //   · Compass/radar: RAF-based, wakes on pano interaction, auto-stops after
+  //     2 seconds of no camera movement (120 idle frames @ 60fps)
+  //   · Carousel active state: event-driven via pano changenode listener —
+  //     runs exactly once per scene change, zero polling overhead
+  // ─────────────────────────────────────────────────────────────────────────
 
-    if (typeof window.pano.getCurrentNode === "function") {
-      const activeNode = window.pano.getCurrentNode();
-      document.querySelectorAll(".mob-carousel-item").forEach(item => {
-        if (item.getAttribute("data-node") === activeNode) {
-          if (!item.classList.contains("active")) {
-            item.classList.add("active");
-            item.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-          }
-        } else {
-          item.classList.remove("active");
-        }
-      });
+  // --- Compass / Radar: Wake-on-interact RAF ---
+  let _mobCompassRaf = null;
+  let _mobCompassIdle = 0;
+  let _mobLastPan = null;
+
+  function _mobCompassTick() {
+    if (!window.pano) {
+      _mobCompassRaf = null;
+      return;
     }
-  }, 100);
+
+    const pan = window.pano.getPan ? window.pano.getPan() : 0;
+
+    // Only update DOM when pan actually changed (avoid layout work when static)
+    if (_mobLastPan === null || Math.abs(pan - _mobLastPan) > 0.1) {
+      _mobLastPan = pan;
+      _mobCompassIdle = 0;
+
+      const compass = document.getElementById("mob-compass");
+      if (compass) compass.style.transform = `rotate(${-pan}deg)`;
+
+      const radar = document.getElementById("mob-minimap-cone");
+      if (radar) radar.style.transform = `translate(-50%, -100%) rotate(${pan}deg)`;
+    } else {
+      _mobCompassIdle++;
+      // Stop after 2 seconds of no camera movement (~120 frames @ 60fps)
+      if (_mobCompassIdle > 120) {
+        _mobCompassRaf = null;
+        return; // Do NOT requestAnimationFrame → loop stops
+      }
+    }
+
+    _mobCompassRaf = requestAnimationFrame(_mobCompassTick);
+  }
+
+  function _mobWakeCompass() {
+    _mobCompassIdle = 0;
+    if (!_mobCompassRaf) {
+      _mobCompassRaf = requestAnimationFrame(_mobCompassTick);
+    }
+  }
+
+  // --- Carousel active state: event-driven via changenode ---
+  function _mobSyncCarouselActive(activeNode) {
+    if (!activeNode) {
+      if (window.pano && typeof window.pano.getCurrentNode === "function") {
+        activeNode = window.pano.getCurrentNode();
+      }
+    }
+    if (!activeNode) return;
+
+    const items = document.querySelectorAll(".mob-carousel-item");
+    items.forEach(item => {
+      const node = item.getAttribute("data-node");
+      if (node === activeNode) {
+        if (!item.classList.contains("active")) {
+          item.classList.add("active");
+          // scrollIntoView only when node actually changes (not every 100ms)
+          item.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
+      } else {
+        item.classList.remove("active");
+      }
+    });
+  }
+
+  // Hook into pano events when pano becomes available
+  function _mobAttachPanoSync() {
+    if (!window.pano || typeof window.pano.addListener !== "function") {
+      setTimeout(_mobAttachPanoSync, 300);
+      return;
+    }
+
+    // Carousel: sync exactly once per scene change
+    window.pano.addListener("changenode", () => {
+      const node = typeof window.pano.getCurrentNode === "function"
+        ? window.pano.getCurrentNode() : null;
+      _mobSyncCarouselActive(node);
+      _mobWakeCompass(); // Also wake compass on scene change
+    });
+
+    window.pano.addListener("configloaded", () => {
+      const node = typeof window.pano.getCurrentNode === "function"
+        ? window.pano.getCurrentNode() : null;
+      _mobSyncCarouselActive(node);
+      _mobWakeCompass();
+    });
+
+    // Wake compass when user interacts with the panorama
+    const container = document.getElementById("container");
+    if (container) {
+      container.addEventListener("mousedown",  _mobWakeCompass, { passive: true });
+      container.addEventListener("touchstart", _mobWakeCompass, { passive: true });
+      container.addEventListener("wheel",      _mobWakeCompass, { passive: true });
+    }
+
+    // Initial sync
+    _mobSyncCarouselActive(null);
+    _mobWakeCompass();
+  }
+
+  _mobAttachPanoSync();
 }
 
 if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", initMobileUI); } else { initMobileUI(); }

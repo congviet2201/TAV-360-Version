@@ -28,6 +28,18 @@
   // State tracking
   let isTransitioning = false;
 
+  // ─────────────────────────────────────────────────────────────────────────
+  // [FIX #1] Chroma-Key RAF lifecycle tracking
+  // Root cause: renderChromaKeyFrame() called requestAnimationFrame()
+  // unconditionally at the end — loop never stopped even after landing page
+  // was dismissed (display:none). getImageData() on every frame caused a
+  // synchronous GPU→CPU readback, stalling the entire render pipeline at 60fps.
+  // ─────────────────────────────────────────────────────────────────────────
+  let _chromaRafId = null;       // Active RAF handle — null = loop stopped
+  let _chromaActive = false;     // Master on/off switch for the chroma loop
+  let _chromaVideo = null;       // Reference kept for cleanup in dismissal
+  let _chromaCanvas = null;      // Reference kept for cleanup in dismissal
+
   // ═════════════════════════════════════════════════════════════════════════
   // ASSET PRELOADER
   // ═════════════════════════════════════════════════════════════════════════
@@ -54,7 +66,7 @@
     // Build Languages HTML dynamically based on stored active language
     const activeLang = window.currentLang || localStorage.getItem('tav_language') || 'vi';
     const dict = (window.I18N_DICTIONARY && window.I18N_DICTIONARY[activeLang]) || {};
-    const langBtnsHtml = config.languages.map(lang => 
+    const langBtnsHtml = config.languages.map(lang =>
       `<button type="button" class="landing-lang-btn ${lang.code === activeLang ? 'active' : ''}" data-lang="${lang.code}">${lang.label}</button>`
     ).join('');
 
@@ -209,10 +221,28 @@
       });
     });
 
-    // Realtime Canvas Chroma-Key Engine: Eliminates 100% of black background pixels (R+G+B < 50) to transparent
+    // ─────────────────────────────────────────────────────────────────────
+    // [FIX #1] Chroma-Key Canvas Loop — fully lifecycle-managed
+    //
+    // BEFORE: renderChromaKeyFrame() ended with requestAnimationFrame()
+    // unconditionally → loop ran at 60fps forever even after dismiss.
+    // getImageData() caused synchronous GPU→CPU readback every frame.
+    //
+    // AFTER:
+    //  · Loop only runs while _chromaActive === true
+    //  · RAF ID is stored in _chromaRafId for explicit cancellation
+    //  · stopChromaLoop() is called inside dismissLandingPage()
+    //  · visibilitychange only resumes if landing is still visible
+    //  · No chroma CPU cost after the landing page is gone
+    // ─────────────────────────────────────────────────────────────────────
     const logoVideo = overlay.querySelector('.landing-logo-video');
     const logoCanvas = overlay.querySelector('.landing-logo-canvas');
+
     if (logoVideo && logoCanvas) {
+      // Keep references for cleanup
+      _chromaVideo = logoVideo;
+      _chromaCanvas = logoCanvas;
+
       logoVideo.muted = true;
       logoVideo.defaultMuted = true;
       logoVideo.volume = 0;
@@ -231,6 +261,13 @@
       const BLACK_THRESHOLD = 50; // Pixels with R+G+B < 50 become 100% transparent
 
       function renderChromaKeyFrame() {
+        // [FIX #1] GATE: Stop immediately if loop has been deactivated.
+        // This replaces the old unconditional requestAnimationFrame() at end.
+        if (!_chromaActive) {
+          _chromaRafId = null;
+          return;
+        }
+
         if (!logoVideo.paused && !logoVideo.ended) {
           const vw = logoVideo.videoWidth || 320;
           const vh = logoVideo.videoHeight || 200;
@@ -252,7 +289,20 @@
             } catch (e) {}
           }
         }
-        requestAnimationFrame(renderChromaKeyFrame);
+
+        // [FIX #1] Store RAF ID so it can be cancelled explicitly
+        _chromaRafId = requestAnimationFrame(renderChromaKeyFrame);
+      }
+
+      function startChromaLoop() {
+        // [FIX #1] Guard: only start if landing is still active
+        if (window.isLandingDismissed) return;
+        if (_chromaActive && _chromaRafId) return; // Already running
+
+        _chromaActive = true;
+        if (!_chromaRafId) {
+          _chromaRafId = requestAnimationFrame(renderChromaKeyFrame);
+        }
       }
 
       const startAutoplay = () => {
@@ -260,15 +310,15 @@
         const promise = logoVideo.play();
         if (promise && typeof promise.then === 'function') {
           promise.then(() => {
-            requestAnimationFrame(renderChromaKeyFrame);
+            startChromaLoop();
           }).catch(() => {
             logoVideo.muted = true;
             logoVideo.play().then(() => {
-              requestAnimationFrame(renderChromaKeyFrame);
+              startChromaLoop();
             }).catch(() => {});
           });
         } else {
-          requestAnimationFrame(renderChromaKeyFrame);
+          startChromaLoop();
         }
       };
 
@@ -276,11 +326,41 @@
       logoVideo.addEventListener('loadeddata', startAutoplay, { once: true });
       logoVideo.addEventListener('canplay', startAutoplay, { once: true });
       logoVideo.addEventListener('playing', () => {
-        requestAnimationFrame(renderChromaKeyFrame);
+        startChromaLoop();
       });
+
+      // [FIX #1] visibilitychange: only resume if landing is still visible
       document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) startAutoplay();
+        if (!document.hidden && !window.isLandingDismissed) {
+          startAutoplay();
+        }
+        // If dismissed: do nothing — loop stays off
       });
+    }
+  }
+
+  // [FIX #1] Explicit cleanup — called from dismissLandingPage()
+  function stopChromaLoop() {
+    _chromaActive = false;
+
+    if (_chromaRafId) {
+      cancelAnimationFrame(_chromaRafId);
+      _chromaRafId = null;
+    }
+
+    // Pause video to free GPU decode resources
+    if (_chromaVideo && !_chromaVideo.paused) {
+      try { _chromaVideo.pause(); } catch (e) {}
+    }
+
+    // Clear canvas to release GPU texture memory
+    if (_chromaCanvas) {
+      try {
+        const ctx2 = _chromaCanvas.getContext('2d');
+        if (ctx2) ctx2.clearRect(0, 0, _chromaCanvas.width, _chromaCanvas.height);
+        _chromaCanvas.width = 1;
+        _chromaCanvas.height = 1;
+      } catch (e) {}
     }
   }
 
@@ -298,10 +378,13 @@
     // 1. Add fade-out transition class
     overlay.classList.add('landing-fade-out');
 
-    // 2. Mark session state
+    // 2. Mark session state — read by chroma loop gate + visibilitychange guard
     window.isLandingDismissed = true;
 
-    // 3. Smoothly unveil Pano2VR 360 tour beneath & remove landing page after transition
+    // [FIX #1] 3. Stop chroma-key RAF loop IMMEDIATELY — no more 60fps pixel reads
+    stopChromaLoop();
+
+    // 4. Smoothly unveil Pano2VR 360 tour beneath & remove landing page after transition
     setTimeout(() => {
       overlay.style.display = 'none';
       overlay.style.pointerEvents = 'none';
@@ -314,7 +397,7 @@
         }
       }
 
-      console.log('✨ Landing Page dismissed. 360° Virtual Tour active.');
+      console.log('[LandingPage] Dismissed. Chroma RAF stopped. Zero CPU background activity.');
 
       // Trigger Welcome Tutorial Modal over the loaded 360° tour
       if (typeof window.showWelcomeTutorial === 'function') {
