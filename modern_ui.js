@@ -5754,10 +5754,19 @@ document.addEventListener("click", function(e) {
     container.style.setProperty('--hs-line-h', `${beamH}px`);
 
     if (pin.id.includes('kient1') || pin.id.includes('park')) {
-      container.style.zIndex = '10';
+      container.style.zIndex = '100';
     } else if (pin.id.includes('living') || pin.id.includes('wc')) {
       container.style.zIndex = '1000';
+    } else if (pin.id.includes('street3')) {
+      container.style.zIndex = '400';
+    } else if (pin.id.includes('street2')) {
+      container.style.zIndex = '300';
+    } else if (pin.id.includes('street') && !pin.id.includes('street2') && !pin.id.includes('street3')) {
+      container.style.zIndex = '500';
+    } else if (pin.id.includes('kient2')) {
+      container.style.zIndex = '250';
     }
+
 
     if (isHotspotsHidden) {
       container.style.visibility = "hidden";
@@ -5858,13 +5867,15 @@ document.addEventListener("click", function(e) {
       `;
     }
 
-    // Hover interactions
+    // Hover interactions — z-index elevation handled entirely by CSS
+    // (.hs-container.hs-has-view.hs-amenities.hs-hovered { z-index: 9999 !important })
     container.addEventListener('mouseenter', () => {
       container.classList.add('hs-hovered');
     });
     container.addEventListener('mouseleave', () => {
       container.classList.remove('hs-hovered');
     });
+
 
     // Click — navigate
     const doNavigate = (e) => {
@@ -5889,6 +5900,21 @@ document.addEventListener("click", function(e) {
     };
     container.addEventListener('click', doNavigate);
     container.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') doNavigate(e); });
+
+    // Allow clicking directly on the holographic label / name text to navigate
+    // (label may be positioned outside the container's default click area)
+    setTimeout(() => {
+      const label = container.querySelector('.lm-holographic-label');
+      if (label) {
+        label.style.cursor = 'pointer';
+        label.addEventListener('click', doNavigate);
+      }
+      const nameEl = container.querySelector('.lm-name');
+      if (nameEl) {
+        nameEl.style.cursor = 'pointer';
+        nameEl.addEventListener('click', doNavigate);
+      }
+    }, 0);
 
     return container;
   }
@@ -6255,8 +6281,10 @@ document.addEventListener("click", function(e) {
         }
         const el = createPremiumHotspot(pin);
         window.pano.addHotspot(pin.id, finalPan, finalTilt, el);
-        currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: pin.id });
+        const pinBeamH = pin.lineHeight || pin.height || calculateBeamHeightFromTilt(finalTilt, 40, 150);
+        currentHotspotElements.push({ el, pan: finalPan, tilt: finalTilt, id: pin.id, baseHeight: pinBeamH });
       });
+
     }
 
     // Inject Amenity Landmark Hotspots (Information-only landmarks) - Keep ONLY for Topview and Birdview nodes
@@ -6455,6 +6483,7 @@ document.addEventListener("click", function(e) {
           el._cachedBeamHeight = effectiveHeight;
           const targetH = isMobile ? Math.round(effectiveHeight * 0.5) : effectiveHeight;
           el.style.setProperty('--lm-beam-h', `${targetH}px`);
+          el.style.setProperty('--hs-line-h', `${targetH}px`);
         }
 
         const applyVisibility = (opacityVal, visState) => {

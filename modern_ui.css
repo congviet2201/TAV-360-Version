@@ -16331,24 +16331,18 @@ body.layout-command #pc-track {
   --lm-flow-glow: rgba(0, 229, 255, 1) !important;
 }
 
+
 /* ══════════════════════════════════════════════════════════════════
-   SPECIFIC STACKING LAYERS FOR PANORAMA HOTSPOTS:
-   - Kiến trúc 1 & TAV Park: nằm sau cùng (z-index: 10)
-   - TAV Living 1 & TAV WC: nằm trước 2 cột trên (z-index: 1000)
+   HOVER ELEVATION — nâng CẢ wrapper cha khi hover để preview card
+   thoát khỏi stacking context thấp và hiển thị trên tất cả labels.
+   div:has(> :hover) được hỗ trợ trên Chrome 105+, Edge 105+, Firefox 121+
    ══════════════════════════════════════════════════════════════════ */
-.hs-container[id*="kient1"],
-.hs-container[id*="hs_park"],
-div:has(> .hs-container[id*="kient1"]),
-div:has(> .hs-container[id*="hs_park"]) {
-  z-index: 10 !important;
+div:has(> .hs-container.hs-has-view:hover),
+div:has(> .hs-container.hs-has-view.hs-hovered) {
+  z-index: 9999 !important;
 }
 
-.hs-container[id*="hs_living"],
-.hs-container[id*="hs_wc"],
-div:has(> .hs-container[id*="hs_living"]),
-div:has(> .hs-container[id*="hs_wc"]) {
-  z-index: 1000 !important;
-}
+
 
 .hs-container.hs-has-view.hs-interior .lm-vertical-beam {
   width: 3.5px !important;
@@ -16397,6 +16391,77 @@ div:has(> .hs-container[id*="hs_wc"]) {
   --lm-flow-color: #10b981 !important;
   --lm-flow-glow: rgba(16, 185, 129, 1) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   SPECIFIC STACKING LAYERS (Placed after base z-index 200)
+   - TAV Street (hs_street): z-index 500 (phía trước nhất)
+   - TAV Street 3 (hs_street3): z-index 400 (nằm TRÊN TAV Street 2)
+   - TAV Street 2 (hs_street2): z-index 300 (nằm DƯỚI TAV Street 3)
+   - Kiến trúc 2 (hs_kient2): z-index 250
+   - Kiến trúc 1 (kient1) & Park (hs_park): z-index 100
+   - Interior (Living, WC): z-index 1000
+   ══════════════════════════════════════════════════════════════════ */
+.hs-container.hs-has-view[id*="hs_street"]:not([id*="hs_street2"]):not([id*="hs_street3"]) {
+  z-index: 500 !important;
+}
+
+.hs-container.hs-has-view[id*="hs_street3"] {
+  z-index: 400 !important;
+}
+
+.hs-container.hs-has-view[id*="hs_street2"] {
+  z-index: 300 !important;
+}
+
+.hs-container.hs-has-view[id*="hs_kient2"] {
+  z-index: 250 !important;
+}
+
+.hs-container.hs-has-view[id*="kient1"],
+.hs-container.hs-has-view[id*="hs_park"] {
+  z-index: 100 !important;
+}
+
+.hs-container.hs-has-view[id*="hs_living"],
+.hs-container.hs-has-view[id*="hs_wc"] {
+  z-index: 1000 !important;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════
+   HOVER ELEVATION — ALL VIEWS
+   Specificity (0,4,0) beats base rules (0,3,0) → wins even with !important
+   when placed AFTER base rules and with higher specificity.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Nâng toàn bộ container khi hover — áp dụng cho tất cả loại hotspot */
+.hs-container.hs-has-view.hs-amenities:hover,
+.hs-container.hs-has-view.hs-amenities.hs-hovered,
+.hs-container.hs-has-view.hs-architecture:hover,
+.hs-container.hs-has-view.hs-architecture.hs-hovered,
+.hs-container.hs-has-view.hs-interior:hover,
+.hs-container.hs-has-view.hs-interior.hs-hovered,
+.hs-container.hs-has-view.hs-aerial:hover,
+.hs-container.hs-has-view.hs-aerial.hs-hovered {
+  z-index: 9999 !important;
+}
+
+/* Preview card của container đang hover luôn nằm TRÊN holographic label của pin khác */
+.hs-container.hs-has-view.hs-amenities:hover .hs-preview-card,
+.hs-container.hs-has-view.hs-amenities.hs-hovered .hs-preview-card,
+.hs-container.hs-has-view.hs-architecture:hover .hs-preview-card,
+.hs-container.hs-has-view.hs-architecture.hs-hovered .hs-preview-card,
+.hs-container.hs-has-view.hs-interior:hover .hs-preview-card,
+.hs-container.hs-has-view.hs-interior.hs-hovered .hs-preview-card {
+  z-index: 9999 !important;
+}
+
+/* Holographic label của pin KHÔNG hover bị ép xuống dưới preview card của pin đang hover */
+.hs-container.hs-has-view.hs-amenities:not(:hover):not(.hs-hovered) .lm-holographic-label,
+.hs-container.hs-has-view.hs-architecture:not(:hover):not(.hs-hovered) .lm-holographic-label {
+  z-index: 1 !important;
+}
+
 
 .hs-container.hs-has-view.hs-amenities .lm-vertical-beam,
 .hs-container.hs-has-view.hs-architecture .lm-vertical-beam {
@@ -17136,6 +17201,13 @@ div:has(> .hs-container[id*="hs_wc"]) {
   color: #ffffff;
   letter-spacing: 0.4px;
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+
+.lm-holographic-label:hover .lm-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: #a0e4ff;
 }
 
 /* In Top View (no vertical beam), position label above dot and reveal on hover */
@@ -17177,6 +17249,7 @@ div:has(> .hs-container[id*="hs_wc"]) {
   opacity: 1 !important;
   pointer-events: auto !important;
   transform: translateX(-50%) translateY(0) scale(1) !important;
+  z-index: 9999 !important;
 }
 
 /* Hover effects removed for visual-only landmark markers */

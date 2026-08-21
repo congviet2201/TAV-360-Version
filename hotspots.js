@@ -80,10 +80,10 @@ window.hotspotData = {
     { ...hs_park,      id: "hs_park_tv",      pan:  -72,    tilt: -78,   title: "TAV PARK",       lineHeight: 75  },
     { ...hs_wc,        id: "hs_wc_tv",        pan:  108,    tilt: -76,   title: "TAV WC",         lineHeight: 70  },
     { ...hs_street,    id: "hs_street_tv",    pan:  108,    tilt: -55,   title: "TAV STREET",     lineHeight: 50  },
-    { ...hs_street2,   id: "hs_street2_tv",   pan:   77,    tilt: -70.40,title: "TAV STREET 2",   lineHeight: 70  },
+    { ...hs_street2,   id: "hs_street2_tv",   pan:   77,    tilt: -70.40,title: "TAV STREET 2",   lineHeight: 120 },
     { ...hs_street3,   id: "hs_street3_tv",   pan: -170.87, tilt: -76.32,title: "TAV STREET 3",   lineHeight: 155 },
-    { ...hs_kientruct1,id: "hs_kient1_tv",    pan:  -63.12, tilt: -55.48,title: "KIẾN TRÚC 1",    lineHeight: 115 },
-    { ...hs_kientruct2,id: "hs_kient2_tv",    pan:  -62.25, tilt: -62.79,title: "KIẾN TRÚC 2",    lineHeight: 100 },
+    { ...hs_kientruct1,id: "hs_kient1_tv",    pan:  -63.12, tilt: -55.48,title: "KIẾN TRÚC 1",    lineHeight: 95  },
+    { ...hs_kientruct2,id: "hs_kient2_tv",    pan:  -62.25, tilt: -62.79,title: "KIẾN TRÚC 2",    lineHeight: 128 },
     { ...hs_birdview,  id: "hs_birdview_tv",  pan:   17.12, tilt: -45 },
   ],
 
@@ -93,18 +93,22 @@ window.hotspotData = {
   ],
 
   // ─── node2: Bird View — complete navigation hub ──────────────────────
-  // Staggered height tiers so labels never overlap along the panorama view
+  // Height stagger rule: pins within 15° of each other must differ by ≥60px
+  // Left group (pan -45 to -4):  PARK2=45 · KT2=170 · PARK=50 · KT1=120
+  // Right group (pan 15 to 28):  STREET=45 · STREET2=140 · STREET3=75
   "node2": [
     { ...hs_park2,     id: "hs_park2_bv",     pan: -45,    tilt: -36,    title: "TAV PARK 2",     lineHeight: 45  },
-    { ...hs_park,      id: "hs_park_bv",      pan: -35.94, tilt: -30.35, title: "TAV PARK",       lineHeight: 75  },
-    { ...hs_street,    id: "hs_street_bv",    pan:  15,    tilt: -35,    title: "TAV STREET",     lineHeight: 50  },
-    { ...hs_street2,   id: "hs_street2_bv",   pan:  25,    tilt: -32,    title: "TAV STREET 2",   lineHeight: 70  },
-    { ...hs_street3,   id: "hs_street3_bv",   pan:  27.78, tilt: -32.65, title: "TAV STREET 3",   lineHeight: 155 },
-    { ...hs_kientruct1,id: "hs_kient1_bv",    pan:  -4.95, tilt: -33.24, title: "KIẾN TRÚC 1",    lineHeight: 115 },
-    { ...hs_kientruct2,id: "hs_kient2_bv",    pan: -42.08, tilt: -27.90, title: "KIẾN TRÚC 2",    lineHeight: 105 },
+    { ...hs_kientruct2,id: "hs_kient2_bv",    pan: -42.08, tilt: -27.90, title: "KIẾN TRÚC 2",    lineHeight: 150 },
+    { ...hs_park,      id: "hs_park_bv",      pan: -35.94, tilt: -30.35, title: "TAV PARK",       lineHeight: 70  },
+    { ...hs_kientruct1,id: "hs_kient1_bv",    pan:  -4.95, tilt: -33.24, title: "KIẾN TRÚC 1",    lineHeight: 100 },
+    { ...hs_street,    id: "hs_street_bv",    pan:  15,    tilt: -35,    title: "TAV STREET",     lineHeight: 45  },
+    { ...hs_street2,   id: "hs_street2_bv",   pan:  25,    tilt: -32,    title: "TAV STREET 2",   lineHeight: 95  },
+    { ...hs_street3,   id: "hs_street3_bv",   pan:  27.78, tilt: -32.65, title: "TAV STREET 3",   lineHeight: 70  },
     { ...hs_topnight,  id: "hs_topnight_bv",  pan: -16.44, tilt: -20,    title: "TOP VIEW NIGHT"                  },
     { ...hs_top,       id: "hs_top_bv",       pan: 180,    tilt: -20,    title: "TOP VIEW DAY 1"                  },
   ],
+
+
 
   // ═══════════════════════════════════════════════════════════════════════
   // INTERIOR NODES — connected by physical spatial logic
